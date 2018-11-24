@@ -57,6 +57,7 @@ class DevelopCommand(Command):
         self.run_command("build")
         modules_path = os.path.abspath('./build/lib/')
         bins_path = './build/scripts-{0}.{1}/'.format(*sys.version_info)
+
         # PATH for the binaries to be searched in build/scripts-X.Y/
         self.env_prepend('PATH', os.path.abspath(bins_path))
         # modules must be searched in build/lib/
@@ -66,7 +67,8 @@ class DevelopCommand(Command):
         os.environ['XDG_CONFIG_HOME'] = os.path.abspath('./develop/config/')
         # XDG cache home in develop/cache/
         os.environ['XDG_CACHE_HOME'] = os.path.abspath('./develop/cache/')
-        # run emc
+
+        # run emc !
         # os.system('nepymc %s' % self.args)
         del sys.modules['nepymc']
         from nepymc.main import start_emc

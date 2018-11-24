@@ -1,7 +1,4 @@
 __pycache__
 build/
 develop/
-*.pyc
-*.qmlc
-
 .idea/
