@@ -19,14 +19,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
 class EmcMainLoop_Base(object):
-   def __init__(self):
-      pass
+    def __init__(self):
+        pass
 
-   def run(self):
-      pass
+    def run(self):
+        pass
 
-   def exit(self):
-      pass
-
+    def exit(self):
+        pass

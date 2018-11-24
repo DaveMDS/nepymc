@@ -20,7 +20,7 @@
 
 import os
 import sys
-import locale 
+import locale
 import gettext
 import logging
 import argparse
@@ -58,162 +58,171 @@ from nepymc import gui_qt as gui
 
 
 def LOG(*args):
-   print('MAIN:', *args)
+    print('MAIN:', *args)
+
 
 def ERR(*args):
-   print('MAIN ERROR:', *args)
+    print('MAIN ERROR:', *args)
 
 
 def start_emc(standalone=False):
+    # parse command line arguments
+    parser = argparse.ArgumentParser(
+        description='Emotion Media Center v%s' % emc_v)
+    parser.add_argument('-a', '--activity',
+                        help='start directy in the given activity')
+    parser.add_argument('-f', '--fullscreen', action='store_true',
+                        help='start in fullscreen')
+    parser.add_argument('-y', '--youtube-dl', action='store_true',
+                        help='use youtube-dl to scrape and play mediaurl')
+    parser.add_argument('--standalone', action='store_true',
+                        help='start in X without a WM (fullscreen)')
+    parser.add_argument('mediaurl', nargs='?',
+                        help='local file or remote url to play')
+    args = parser.parse_args()
 
-   # parse command line arguments
-   parser = argparse.ArgumentParser(description='Emotion Media Center v%s' % emc_v)
-   parser.add_argument('-a', '--activity',
-                       help='start directy in the given activity')
-   parser.add_argument('-f', '--fullscreen', action='store_true',
-                       help='start in fullscreen')
-   parser.add_argument('-y', '--youtube-dl', action='store_true',
-                       help='use youtube-dl to scrape and play mediaurl')
-   parser.add_argument('--standalone', action='store_true',
-                       help='start in X without a WM (fullscreen)')
-   parser.add_argument('mediaurl', nargs='?',
-                       help='local file or remote url to play')
-   args = parser.parse_args()
+    # tag for pulse audio... name not working here, icon yes  :/
+    os.environ['PULSE_PROP_media.role'] = 'video'
+    os.environ['PULSE_PROP_application.name'] = 'Emotion Media Center'
+    os.environ['PULSE_PROP_application.icon_name'] = 'emc'
 
-   # tag for pulse audio... name not working here, icon yes  :/
-   os.environ['PULSE_PROP_media.role'] = 'video'
-   os.environ['PULSE_PROP_application.name'] = 'Emotion Media Center'
-   os.environ['PULSE_PROP_application.icon_name'] = 'emc'
+    # create config/cache dirs if necessary
+    if not os.path.exists(utils.user_cache_dir):
+        os.makedirs(utils.user_cache_dir)
+    if not os.path.exists(utils.user_conf_dir):
+        os.makedirs(utils.user_conf_dir)
+    try:
+        os.mkdir(os.path.join(utils.user_conf_dir, 'plugins'))
+    except OSError:
+        pass
+    try:
+        os.mkdir(os.path.join(utils.user_conf_dir, 'themes'))
+    except OSError:
+        pass
+    try:
+        os.mkdir(os.path.join(utils.user_conf_dir, 'channels'))
+    except OSError:
+        pass
+    try:
+        os.mkdir(os.path.join(utils.user_conf_dir, 'subtitles'))
+    except OSError:
+        pass
 
-   # create config/cache dirs if necessary
-   if not os.path.exists(utils.user_cache_dir):
-      os.makedirs(utils.user_cache_dir)
-   if not os.path.exists(utils.user_conf_dir):
-      os.makedirs(utils.user_conf_dir)
-   try: os.mkdir(os.path.join(utils.user_conf_dir, 'plugins'))
-   except OSError: pass
-   try: os.mkdir(os.path.join(utils.user_conf_dir, 'themes'))
-   except OSError: pass
-   try: os.mkdir(os.path.join(utils.user_conf_dir, 'channels'))
-   except OSError: pass
-   try: os.mkdir(os.path.join(utils.user_conf_dir, 'subtitles'))
-   except OSError: pass
+    # TODO add a system dir...but where??
+    # ini.read_from_files(['epymc.conf',
+    # os.path.join(utils.user_conf_dir, 'epymc.conf')])
+    # ini.setup_defaults()
 
-   #TODO add a system dir...but where??
-   # ini.read_from_files(['epymc.conf',
-                        # os.path.join(utils.user_conf_dir, 'epymc.conf')])
-   # ini.setup_defaults()
+    """
+    # init internal components
+    sdb.init()
+    thumbnailer.init()
+    if not gui.init():
+       return 1
+    browser.init()
+    mainmenu.init()
+    config_gui.init()
+    mediaplayer.init()
+    storage.init()
+ 
+    # load & init modules
+    modules.load_all()
+    modules.init_all_by_config()
+ 
+    # show the mainmenu
+    mainmenu.show()
+ 
+    # use youtube-dl to scrape and play the url given on command line
+    if args.youtube_dl and args.mediaurl:
+       from epymc.youtubedl import YoutubeDL
+ 
+       ytdl = YoutubeDL()
+ 
+       def ytdl_url_cb(real_url):
+          if not real_url:
+             gui.EmcDialog(style='error',
+                           text=_('youtube-dl is unable to scrape the given url'))
+          else:
+             print('Real video url:',real_url)
+             mediaplayer.play_url(real_url)
+             mediaplayer.title_set('')
+ 
+       def ytdl_update_cb(success, dialog):
+          if dialog: dialog.delete()
+          print('Scraping url:', args.mediaurl)
+          ytdl.get_real_video_url(args.mediaurl, ytdl_url_cb)
+ 
+       print('Checking for ytdl updates')
+       if ini.get_bool('videochannels', 'autoupdate_ytdl') == True:
+          ytdl.check_update(verbose=True, done_cb=ytdl_update_cb)
+       else:
+          ytdl_update_cb(True, None)
+       
+    # if mediaurl given on command line play it (must be a video file)
+    elif args.mediaurl:
+       if args.mediaurl.startswith(('http://', 'https://')):
+          mediaplayer.play_url(args.mediaurl)
+          mediaplayer.title_set('')
+       elif os.path.exists(args.mediaurl):
+          mediaplayer.play_url(os.path.abspath(args.mediaurl))
+          mediaplayer.title_set(os.path.basename(args.mediaurl))
+    # or autostart the give activity (ex: --activity movies)
+    elif args.activity:
+       mainmenu.item_activate(args.activity)
+    # fullscreen requested from command line
+    if args.fullscreen:
+       gui.fullscreen_set(True)
+ 
+    # run standalone (inside X without a WM)
+    if standalone or args.standalone:
+       from efl import ecore_x
+       ecore_x.init()
+       # set fullscreen
+       x, y, w, h = gui.win.screen_size
+       gui.win.size = (w, h)
+       # give focus to the win
+       ecore_x_win = ecore_x.Window_from_xid(gui.win.xwindow_xid)
+       ecore_x_win.focus()
+ 
+    # alert if run from python < 3 (lots of translation issue with 2.7)
+    if utils.is_py2():
+       txt = '<b>PYTHON 2 IS NOT SUPPORTED ANYMORE!</b><br><br>' \
+             'You are using python2, it is old!<br>' \
+             'EpyMC works much better with py3, even more if you are not ' \
+             'using the english language.<br><br>' \
+             '<b>YOU MUST SWITCH TO PYTHON 3 !!!</b>'
+       gui.EmcDialog(style='warning', text=txt)
+    """
 
-   """
-   # init internal components
-   sdb.init()
-   thumbnailer.init()
-   if not gui.init():
-      return 1
-   browser.init()
-   mainmenu.init()
-   config_gui.init()
-   mediaplayer.init()
-   storage.init()
+    # create the mainloop
+    loop = mainloop.EmcMainLoop()
 
-   # load & init modules
-   modules.load_all()
-   modules.init_all_by_config()
+    # create and show the main window
+    win = gui.EmcWindow(loop, 'blackmirror')  # TODO: theme by config
+    if not win.create():
+        ERR('cannot create the main window')
+        return 1
 
-   # show the mainmenu
-   mainmenu.show()
+    # run the main loop
+    loop.run()
 
-   # use youtube-dl to scrape and play the url given on command line
-   if args.youtube_dl and args.mediaurl:
-      from epymc.youtubedl import YoutubeDL
+    """
+    # shutdown
+    modules.save_enabled()
+    modules.shutdown_all()
+    storage.shutdown()
+    config_gui.shutdown()
+    ini.write_to_file(os.path.join(utils.user_conf_dir, 'epymc.conf'))
+    mediaplayer.shutdown()
+    browser.shutdown()
+    gui.shutdown()
+    thumbnailer.shutdown()
+    sdb.shutdown()
+    """
 
-      ytdl = YoutubeDL()
+    print('Bye Bye...')
+    return 0
 
-      def ytdl_url_cb(real_url):
-         if not real_url:
-            gui.EmcDialog(style='error',
-                          text=_('youtube-dl is unable to scrape the given url'))
-         else:
-            print('Real video url:',real_url)
-            mediaplayer.play_url(real_url)
-            mediaplayer.title_set('')
-
-      def ytdl_update_cb(success, dialog):
-         if dialog: dialog.delete()
-         print('Scraping url:', args.mediaurl)
-         ytdl.get_real_video_url(args.mediaurl, ytdl_url_cb)
-
-      print('Checking for ytdl updates')
-      if ini.get_bool('videochannels', 'autoupdate_ytdl') == True:
-         ytdl.check_update(verbose=True, done_cb=ytdl_update_cb)
-      else:
-         ytdl_update_cb(True, None)
-      
-   # if mediaurl given on command line play it (must be a video file)
-   elif args.mediaurl:
-      if args.mediaurl.startswith(('http://', 'https://')):
-         mediaplayer.play_url(args.mediaurl)
-         mediaplayer.title_set('')
-      elif os.path.exists(args.mediaurl):
-         mediaplayer.play_url(os.path.abspath(args.mediaurl))
-         mediaplayer.title_set(os.path.basename(args.mediaurl))
-   # or autostart the give activity (ex: --activity movies)
-   elif args.activity:
-      mainmenu.item_activate(args.activity)
-   # fullscreen requested from command line
-   if args.fullscreen:
-      gui.fullscreen_set(True)
-
-   # run standalone (inside X without a WM)
-   if standalone or args.standalone:
-      from efl import ecore_x
-      ecore_x.init()
-      # set fullscreen
-      x, y, w, h = gui.win.screen_size
-      gui.win.size = (w, h)
-      # give focus to the win
-      ecore_x_win = ecore_x.Window_from_xid(gui.win.xwindow_xid)
-      ecore_x_win.focus()
-
-   # alert if run from python < 3 (lots of translation issue with 2.7)
-   if utils.is_py2():
-      txt = '<b>PYTHON 2 IS NOT SUPPORTED ANYMORE!</b><br><br>' \
-            'You are using python2, it is old!<br>' \
-            'EpyMC works much better with py3, even more if you are not ' \
-            'using the english language.<br><br>' \
-            '<b>YOU MUST SWITCH TO PYTHON 3 !!!</b>'
-      gui.EmcDialog(style='warning', text=txt)
-   """
-
-
-   # create the mainloop
-   loop = mainloop.EmcMainLoop()
-
-   # create and show the main window
-   win = gui.EmcWindow(loop, 'blackmirror')  # TODO: theme by config
-   if not win.create():
-      ERR('cannot create the main window')
-      return 1
-
-   # run the main loop
-   loop.run()
-
-   """
-   # shutdown
-   modules.save_enabled()
-   modules.shutdown_all()
-   storage.shutdown()
-   config_gui.shutdown()
-   ini.write_to_file(os.path.join(utils.user_conf_dir, 'epymc.conf'))
-   mediaplayer.shutdown()
-   browser.shutdown()
-   gui.shutdown()
-   thumbnailer.shutdown()
-   sdb.shutdown()
-   """
-
-   print('Bye Bye...')
-   return 0
 
 if __name__ == '__main__':
-   sys.exit(start_emc())
+    sys.exit(start_emc())

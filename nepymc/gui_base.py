@@ -23,22 +23,19 @@ from nepymc.mainloop_base import EmcMainLoop_Base
 
 
 def LOG(*args):
-   print('GUI_BASE:', *args)
+    print('GUI_BASE:', *args)
+
 
 def DBG(*args):
-   print('GUI_BASE:', *args)
-   pass
-
+    print('GUI_BASE:', *args)
+    pass
 
 
 class EmcWindow_Base(object):
-   def __init__(self, mainloop: EmcMainLoop_Base, theme_name: str):
-      DBG('Window.__init__()')
-      self._mainloop = mainloop
-      self._theme_name = theme_name
+    def __init__(self, mainloop: EmcMainLoop_Base, theme_name: str):
+        DBG('Window.__init__()')
+        self._mainloop = mainloop
+        self._theme_name = theme_name
 
-   def create(self) -> bool:
-      return False
-
-
-
+    def create(self) -> bool:
+        return False

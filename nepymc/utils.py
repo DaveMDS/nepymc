@@ -22,66 +22,63 @@ import os
 from typing import Tuple
 
 try:
-   from xdg.BaseDirectory import xdg_config_home as XDG_CONFIG_HOME
-   from xdg.BaseDirectory import xdg_cache_home as XDG_CACHE_HOME
+    from xdg.BaseDirectory import xdg_config_home as XDG_CONFIG_HOME
+    from xdg.BaseDirectory import xdg_cache_home as XDG_CACHE_HOME
 except ImportError:
-   XDG_CONFIG_HOME = None
-   XDG_CACHE_HOME = None
-
+    XDG_CONFIG_HOME = None
+    XDG_CACHE_HOME = None
 
 
 def LOG(*args):
-   print('UTILS:', *args)
+    print('UTILS:', *args)
+
 
 def DBG(msg):
-   # print('UTILS: %s' % msg)
-   pass
+    # print('UTILS: %s' % msg)
+    pass
 
 
 # base emc folder
 emc_base_dir = os.path.abspath(os.path.dirname(__file__))
 LOG('Running from:', emc_base_dir)
 
-
 # user config folder (xdg or default)
 if XDG_CONFIG_HOME and os.path.exists(XDG_CONFIG_HOME):
-   user_conf_dir = os.path.join(XDG_CONFIG_HOME, 'emc')
+    user_conf_dir = os.path.join(XDG_CONFIG_HOME, 'emc')
 else:
-   user_conf_dir = os.path.expanduser('~/.config/emc')
+    user_conf_dir = os.path.expanduser('~/.config/emc')
 LOG('Config folder:', user_conf_dir)
-
 
 # user cache folder (xdg or default)
 if XDG_CACHE_HOME and os.path.exists(XDG_CACHE_HOME):
-   user_cache_dir = os.path.join(XDG_CACHE_HOME, 'emc')
+    user_cache_dir = os.path.join(XDG_CACHE_HOME, 'emc')
 else:
-   user_cache_dir = os.path.expanduser('~/.cache/emc')
+    user_cache_dir = os.path.expanduser('~/.cache/emc')
 LOG('Cache folder:', user_cache_dir)
 
 
 def get_resource(*resource: str) -> str:
-   """ Return the full path for the given resource
+    """ Return the full path for the given resource
 
-   Params:
-      *resource (str): components of the resource to search (dirs and file name)
+    Params:
+        *resource (str): components of the resource to search (dirs and file name)
 
-   Return (str):
-      The full path for the given resource, or None if not found
+    Return (str):
+        The full path for the given resource, or None if not found
 
-   Example:
-      get_resource('themes', 'default', 'main_window.qml')
+    Example:
+        get_resource('themes', 'default', 'main_window.qml')
 
-   """
-   # search in user config dir
-   f = os.path.join(user_conf_dir, *resource)
-   if os.path.exists(f):
-      return f
+    """
+    # search in user config dir
+    f = os.path.join(user_conf_dir, *resource)
+    if os.path.exists(f):
+        return f
 
-   # or in the package base dir
-   f = os.path.join(emc_base_dir, *resource)
-   if os.path.exists(f):
-      return f
+    # or in the package base dir
+    f = os.path.join(emc_base_dir, *resource)
+    if os.path.exists(f):
+        return f
 
-   # not found :(
-   return None
-
+    # not found :(
+    return None
