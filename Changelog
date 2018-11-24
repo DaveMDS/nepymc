@@ -1,0 +1,172 @@
+
+
+===============================================================================
+Changes in version 1.3.0  (TO BE RELEASED)
+===============================================================================
+
+New features:
+
+ * Storage device support, using udev and udisks2
+ * Full DVD playback support, including DVD menu navigation
+ * Audio CD playback support, including MusicBrainz album info fetching
+ * RaspberryPI: use an external omx_player instance to play videos,
+                this enable FULL-HD playback on RPI !!
+ * MusicBrainz integration
+ * Activity Multitasking:
+   Using the EXIT action (ESC key) is now possible to jump to mainmenu; the
+   current state will be restored next time the activity is launched
+ * Movies: tagging ability. You can now organize your library using custom tags
+ * Movies: you can now choose favorite actors/directors for faster browsing
+ * Movies: while browsing by actor/director you can now see the person info panel
+ * Auto play media url (http/https) passed on command line
+ * Auto-scrape youtube-dl links passed on command line (epymc -y any_supported_url)
+ * Configurable volume adjustment step
+ * Configurable volume logarithmic adjustment (more natural linear feeling)
+ * Configurable volume maximum value (boost up to 200%)
+
+
+Improvements:
+
+ * Better and more flexible EmcMenu implementation
+ * Stronger, faster and more flexible EmcThumbnailer implementation
+ * Movie scanner now also clean not existent files (configurable)
+ * Better youtube-dl integration
+ * Fully redone the focus management, should fix all the focus related bug
+   on every efl releases
+ * Respect XDG config and cache folders (now require python-xdg)
+
+
+New Translations:
+
+ *
+
+
+Changes:
+
+ * Now require efl 1.20 (to fix the standalone mode)
+ * Better and more flexible EmcMenu implementation
+ * Check for runtime dependencies on install (--no-runtime-deps-check to disable)
+
+
+Bug fixed:
+
+ * Remove screensaver config item on module shutdown
+ * Fixed menu icons when using a FDO icon theme in elm config
+ * Fixed mouse hide feature when running on top of efl 1.19
+ * Fixed efl 1.19 compat (menu size, mouse hide)
+ * Fixed standalone mode (requiring efl 1.20)
+ * Fixed Virtual Keybord oversize when display the % character
+ * Thumbnailer no more stop working if the child process hang
+ * Hopefully fixed yt videos without sound
+ * Fixed wrong selected item in Online Channels root page
+
+
+===============================================================================
+Changes in version 1.2.0
+===============================================================================
+
+Changes:
+
+ * Dropped python 2 support, you MUST use python 3 from now on
+ * Removed broken traileraddict channel (use the new tmdb instead)
+ * Use elm focus in place of the custom EmcFocusManager
+ * We now use ecore_con.Url for fetching data from the net (instead of
+   ecore.file_download + file read + file delete)
+
+
+Bug fixed:
+
+ * Fixed poster hiding (and console errors) for efl >= 1.16
+ * Fixed posters for the vimeo channel
+ * Fixed tmdb language selector in config
+ * Fixed (hopefully) subs decoding
+ * Fixed video download to work again
+ * Fixed a bug that was causing fileman buttons to be clickable also when hidden
+ * Removed usage of elm deprecated ObjectItem.data_get() function
+ * Removed edc warning about "fixed: 1 1"
+ * Fixed compatibility with python 3.5 (os.path.exists no more accept unicode)
+ * Updated yt scraper to latest web changes
+
+
+Improvements:
+
+ * Initial music library scan is now 10 times faster (measured with the library
+   and the config folder on the same slow HDD) see Issue #2 for more info.
+ * Lots of improvements in the Music module and the AudioPlayer itself:
+   playlist is now visible and browsable, player/playlist controls are always
+   reachable in the UI, ability to set loop and shuffle.
+ * Better zapiks video schannel
+ 
+
+New features:
+
+ * New Photo module
+ * New PosterGrid/CoverGrid views
+ * New South Park Studios online video channel
+ * New themoviedb.org online video channel (with movie trailers)
+ * Added a new secret online channel
+ * Virtual keyboard is now also usable with the real keyboard
+ * Virtual keyboard now support multiple layouts
+ * Show the status of the downloads in progress (with ability to start/abort)
+ * Thumbnailing ability, using a custom Ethumb slave process
+ * Automatically (and manually) download and update youtube-dl
+ * New Watchdog module (sadly gstreamer1 sometimes hang the mainloop for me)
+ * Cache to file remote images for faster reloading
+ * Support remote urls also in the mediaplayer cover image
+ * Show current folders in the file-manager
+ * Option to hide the mouse cursor when not needed (not move or video playing)
+ * Support for subtitles embedded in the video files
+ * New check_po setup command, give translations stats with a nice bar
+
+
+New Translations:
+
+ * Finnish
+
+
+===============================================================================
+Changes in version 1.1.0
+===============================================================================
+
+Bug fixed:
+
+ * Fix the file-not-found dialog when the provided file is not a correct url
+ * Fix playback for file names that ends with a regex pattern
+ * Fix tmdb query for py3 when reply has non-ascii chars
+ * Fix songs listing when the song do not have the album tag
+ * Fix refresh of the browser when the music scan take less than 1 second
+ * Fix display of music items with chars that seems tags
+ * Fix playback for files given on cmd line without the full path
+ * Redone genlist slide without using elm Labels (elm 1.13 broke Label slide)
+ * Fix mainmenu item bring-in for elm 1.13
+ * Fix youtube scraper to work again after yt apiV2 dismission
+ * Fix display of tvshows with special characters in title/description
+
+
+New features:
+ 
+ * Music module is now py3 compatible (mutagen 1.25 support py3)
+ * New module: Two panes Filemanager
+ * Added browse by actors and directors in Movies
+ * Improved buffering dialog, less intrusive now
+ * Add command line switch to start in the given activity (ex: --start-music)
+ * Add .desktop Additional Actions to start in the given activity
+ * Remeber last visited url when going back in browser lists
+ * Better uninstall setup command
+ * New cmd line option: -f --fullscreen
+ * Standalone mode (run inside X witout a WM) plus xsession for your dm
+ * Animate the list scrolling in dialogs
+ * Keep the selected item in browser in the middle of the view
+
+
+New Translations:
+
+ * German
+ * Russian
+
+
+===============================================================================
+Changes in version 1.0.0
+===============================================================================
+
+ * First release, changelog start here.
