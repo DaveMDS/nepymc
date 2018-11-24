@@ -34,6 +34,7 @@ from distutils.core import setup, Command
 from nepymc import __version__ as emc_version
 
 
+# noinspection PyAttributeOutsideInit
 class DevelopCommand(Command):
     description = 'Run in-place from build dir without any install need'
     user_options = [('args=', 'a',
@@ -64,8 +65,9 @@ class DevelopCommand(Command):
         # XDG cache home in develop/cache/
         os.environ['XDG_CACHE_HOME'] = os.path.abspath('./develop/cache/')
         # run emc !
-        os.system('nepymc %s' % self.args)
-
+        # os.system('nepymc %s' % self.args)
+        from nepymc.main import start_emc
+        sys.exit(start_emc())
 
 setup(
     name="nepymc",
@@ -88,7 +90,7 @@ setup(
     ],
 
     requires=[
-        'pyside (>= 5.11.2)',
+        'PySide2 (>= 5.11.2)',
         'pyxdg',
         # 'beautifulsoup4',
         'lxml',

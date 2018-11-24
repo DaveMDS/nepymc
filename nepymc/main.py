@@ -22,7 +22,6 @@ import os
 import sys
 import locale
 import gettext
-import logging
 import argparse
 
 # from efl import evas

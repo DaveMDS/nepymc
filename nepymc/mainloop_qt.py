@@ -38,6 +38,7 @@ class EmcMainLoop(EmcMainLoop_Base):
     """ PySide2 implementation of the EmcMainLoop """
 
     def __init__(self):
+        super().__init__()
         self._app = QGuiApplication(sys.argv)
 
     def run(self):
