@@ -24,23 +24,7 @@ import locale
 import gettext
 import argparse
 
-# from efl import evas
-# from efl import ecore
-# from efl import edje
-# from efl import elementary
-# from efl import emotion
-
 from nepymc import utils
-
-# init gettext
-# install the _() and ngettext() func in the main namespace
-# localle .mo files are searched directly inside the emc package
-localedir = os.path.join(utils.emc_base_dir, 'locale')
-gettext.install('nepymc', names='ngettext', localedir=localedir)
-
-# set locale to user preferred (aka the one set in env) locale
-locale.setlocale(locale.LC_ALL, '')
-
 from nepymc import __version__ as emc_v
 # from emc import modules
 # from emc import mainmenu
@@ -52,8 +36,13 @@ from nepymc import __version__ as emc_v
 # from emc import storage
 # from emc import thumbnailer
 
-from nepymc import mainloop_qt as mainloop
-from nepymc import gui_qt as gui
+
+# install the _() and ngettext() func in the main namespace
+# locale .mo files are searched directly inside the emc package
+localedir = os.path.join(utils.emc_base_dir, 'locale')
+gettext.install('nepymc', names='ngettext', localedir=localedir)
+# set locale to user preferred (aka the one set in env) locale
+locale.setlocale(locale.LC_ALL, '')
 
 
 def LOG(*args):
@@ -192,6 +181,10 @@ def start_emc(standalone=False):
              '<b>YOU MUST SWITCH TO PYTHON 3 !!!</b>'
        gui.EmcDialog(style='warning', text=txt)
     """
+
+    # TODO factorize this import
+    from nepymc import mainloop_qt as mainloop
+    from nepymc import gui_qt as gui
 
     # create the mainloop
     loop = mainloop.EmcMainLoop()

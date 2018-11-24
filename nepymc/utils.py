@@ -19,7 +19,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-from typing import Tuple
 
 try:
     from xdg.BaseDirectory import xdg_config_home as XDG_CONFIG_HOME
@@ -38,19 +37,19 @@ def DBG(msg):
     pass
 
 
-# base emc folder
+# base emc package folder
 emc_base_dir = os.path.abspath(os.path.dirname(__file__))
 LOG('Running from:', emc_base_dir)
 
 # user config folder (xdg or default)
-if XDG_CONFIG_HOME and os.path.exists(XDG_CONFIG_HOME):
+if XDG_CONFIG_HOME:
     user_conf_dir = os.path.join(XDG_CONFIG_HOME, 'emc')
 else:
     user_conf_dir = os.path.expanduser('~/.config/emc')
 LOG('Config folder:', user_conf_dir)
 
 # user cache folder (xdg or default)
-if XDG_CACHE_HOME and os.path.exists(XDG_CACHE_HOME):
+if XDG_CACHE_HOME:
     user_cache_dir = os.path.join(XDG_CACHE_HOME, 'emc')
 else:
     user_cache_dir = os.path.expanduser('~/.cache/emc')
@@ -61,10 +60,10 @@ def get_resource(*resource: str) -> str:
     """ Return the full path for the given resource
 
     Params:
-        *resource (str): components of the resource to search (dirs and file name)
+        *resource (str): components of the resource to search (dirs and fname)
 
     Return (str):
-        The full path for the given resource, or None if not found
+        The full path for the given resource, or an empty string on errors
 
     Example:
         get_resource('themes', 'default', 'main_window.qml')
@@ -81,4 +80,4 @@ def get_resource(*resource: str) -> str:
         return f
 
     # not found :(
-    return None
+    return ''
