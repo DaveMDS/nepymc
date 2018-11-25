@@ -1,0 +1,2 @@
+# qmldir
+singleton EmcGlobals EmcGlobals.qml

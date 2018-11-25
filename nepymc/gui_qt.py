@@ -24,6 +24,7 @@ from nepymc.gui_base import EmcWindow_Base
 from nepymc import utils
 
 from PySide2.QtQml import QQmlApplicationEngine
+from PySide2.QtCore import Qt, QAbstractListModel
 
 
 def LOG(*args):
@@ -39,21 +40,14 @@ def DBG(*args):
     pass
 
 
-# from PySide2 import Qt
-from PySide2 import QtCore
-
-
-# class MainMenuModel(QtCore.QAbstractItemModel):
-# def __init__(self, parent=None):
-# super(MainMenuModel, self).__init__(parent)
-
-class MainMenuModel(QtCore.QAbstractListModel):
-    label_role = QtCore.Qt.UserRole + 1
-    icon_role = QtCore.Qt.UserRole + 2
+class MainMenuModel(QAbstractListModel):
+    # TODO use QAbstractItemModel instead for tree ability ??
+    label_role = Qt.UserRole + 1
+    icon_role = Qt.UserRole + 2
 
     def __init__(self, parent=None):
         print("***** __init__")
-        super(MainMenuModel, self).__init__(parent)
+        super().__init__(parent)
         self.items = [
             {'label': "UI tests", 'icon': 'star'},
             {'label': "Optical Discs", 'icon': 'optical'},
@@ -85,30 +79,72 @@ class MainMenuModel(QtCore.QAbstractListModel):
             return item['icon']
 
 
+class BrowserModel(QAbstractListModel):
+    label_role = Qt.UserRole + 1
+    icon_role = Qt.UserRole + 2
+
+    def __init__(self, parent=None):
+        print("***** __init__")
+        super().__init__(parent)
+
+    def roleNames(self):
+        return {
+            self.label_role: b'label',
+            self.icon_role: b'icon'
+        }
+
+    def rowCount(self, index):
+        # print("***** rowCount() -> %d" % len(self.items))
+        print("***** rowCount() -> %d" % 1000)
+        return 1000
+
+    def data(self, index, role):
+        print("***** data(%s, %s)" % (index.row(), role))
+        # item = self.items[index.row()]
+        # if role == self.label_role:
+        if role == self.label_role:
+            return 'Item #%d' % index.row()
+        # elif role == self.icon_role:
+        #     return item['icon']
+        print("@"*80)
+
+
 class EmcWindow(EmcWindow_Base):
     """ PySide2 implementation of the EmcWindow """
+    def __init__(self, *args, **kargs):
+        super().__init__(*args, **kargs)
+        self._qml_engine = None
+        self._model1 = None
+        self._model2 = None
 
     def create(self) -> bool:
         # search the main QML file
-        path = utils.get_resource('themes', self._theme_name, 'main_window.qml')
+        path = utils.get_resource('themes', self._theme_name, 'main.qml')
         if not path:
-            ERR('Cannot find the requested theme: "{}"'.format(
-                self._theme_name))
+            ERR('Cannot find theme: "{}"'.format(self._theme_name))
             return False
+        LOG('Loading theme: "{}"'.format(path))
 
         # create the QML engine
-        self._engine = QQmlApplicationEngine()
+        self._qml_engine = QQmlApplicationEngine()
 
-        # inject MainMenu model
-        ctxt = self._engine.rootContext()
-        model = MainMenuModel()
-        ctxt.setContextProperty('MainMenuModel', model)
+        # inject MainMenu and Browser model
+        ctxt = self._qml_engine.rootContext()
+        self._model1 = MainMenuModel()
+        ctxt.setContextProperty('MainMenuModel', self._model1)
+        self._model2 = BrowserModel()
+        ctxt.setContextProperty('BrowserModel', self._model2)
 
         # load and show the QML theme
-        self._engine.load(path)
-        if not self._engine.rootObjects():
+        self._qml_engine.load(path)
+        if not self._qml_engine.rootObjects():
             # TODO: find a decent way to detect load errors !!!!!!!!!!!!!!!!!!!!
             ERR('Cannot create the QML view')
             return False
 
         return True
+
+    def destroy(self) -> None:
+        del self._qml_engine
+        del self._model1
+        del self._model2

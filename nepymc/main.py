@@ -198,6 +198,8 @@ def start_emc(standalone=False):
     # run the main loop
     loop.run()
 
+    win.destroy()
+
     """
     # shutdown
     modules.save_enabled()
@@ -218,3 +220,4 @@ def start_emc(standalone=False):
 
 if __name__ == '__main__':
     sys.exit(start_emc())
+
