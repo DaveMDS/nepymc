@@ -50,7 +50,7 @@ def LOG(*args):
 
 
 def ERR(*args):
-    print('MAIN ERROR:', *args)
+    print('MAIN ERROR:', *args, file=sys.stderr)
 
 
 def start_emc(standalone=False):

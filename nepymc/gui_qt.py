@@ -18,6 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import sys
 
 from nepymc.gui_base import EmcWindow_Base
 from nepymc import utils
@@ -30,7 +31,7 @@ def LOG(*args):
 
 
 def ERR(*args):
-    print('GUI_QT ERROR:', *args)
+    print('GUI_QT ERROR:', *args, file=sys.stderr)
 
 
 def DBG(*args):

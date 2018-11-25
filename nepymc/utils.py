@@ -32,8 +32,8 @@ def LOG(*args):
     print('UTILS:', *args)
 
 
-def DBG(msg):
-    # print('UTILS: %s' % msg)
+def DBG(*args):
+    # print('UTILS:', *args)
     pass
 
 
