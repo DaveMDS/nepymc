@@ -3,8 +3,8 @@
 # usage:
 #
 # OK:
-# python setup.py develop  (run in place)
-# python setup.py clean --all
+# python setup.py develop  (run from the build dir, without any install need)
+# python setup.py clean    (always run clean --all)
 #
 # TODO:
 # python setup.py install [--prefix=]
@@ -30,13 +30,23 @@
 import sys
 import os
 from distutils.core import setup, Command
+from distutils.command.clean import clean
 
 from nepymc import __version__ as emc_version
 
 
 # noinspection PyAttributeOutsideInit
+class CustomCleanCommand(clean):
+    description = 'remove ALL build output'
+
+    def finalize_options(self):
+        super().finalize_options()
+        self.all = True
+
+
+# noinspection PyAttributeOutsideInit
 class DevelopCommand(Command):
-    description = 'Run in-place from build dir without any install need'
+    description = 'run in-place from build dir without any install need'
     user_options = [('args=', 'a',
                      'Additional arguments for the emc executable')]
 
@@ -54,6 +64,7 @@ class DevelopCommand(Command):
             os.environ[name] = value
 
     def run(self):
+        self.run_command("clean")
         self.run_command("build")
         modules_path = os.path.abspath('./build/lib/')
         bins_path = './build/scripts-{0}.{1}/'.format(*sys.version_info)
@@ -163,6 +174,7 @@ setup(
     ],
 
     cmdclass={
+        'clean': CustomCleanCommand,
         'develop': DevelopCommand,
     },
 )
