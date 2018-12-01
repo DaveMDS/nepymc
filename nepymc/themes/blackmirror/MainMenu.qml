@@ -6,7 +6,6 @@ import "utils/"
 FocusScope {
     anchors.fill: parent
 
-
     /***  Header  **************************************************************/
     BorderImage {  // background image
         width: parent.width
@@ -74,6 +73,7 @@ FocusScope {
     /***  List  ****************************************************************/
     BorderImage {
         id: listBackground
+
         width: parent.width
         height: 128
         y: headerText.height + 100
@@ -91,6 +91,8 @@ FocusScope {
     }
 
     ListView {
+        id: mainMenuList
+
         anchors.fill: listBackground
         anchors.leftMargin: 100
         anchors.rightMargin: 100
@@ -101,16 +103,29 @@ FocusScope {
         displayMarginBeginning: 100
         displayMarginEnd: 100
 
-        model: MainMenuModel  // impemented python (label, icon)
+        model: MainMenuModel  // implemented in python
+        delegate: itemDelegateComponent
+    }
 
-        delegate: FocusScope { // MainMenu items
-            //width: childrenRect.width
-            //height: childrenRect.height
-            width: 128
-            height: 128
+
+
+    // main item delegate
+    Component {
+        id: itemDelegateComponent
+
+        Item { // MainMenu items
+            id: delegateItem
+
+            width: 128  //width: childrenRect.width
+            height: 128   //height: childrenRect.height
             focus: true
 
-            Keys.onReturnPressed: console.log(model.icon) // TODO REMOVE ME
+            Keys.onReturnPressed: {
+                console.log(model.icon) // TODO REMOVE ME
+    //                EmcBackend.mainmenuItemSelected(model.icon)
+    //                var translated = EmcBackend.i18n(model.label)
+    //                console.log(translated)
+            }
 
             Rectangle {
                 id: positioner
@@ -121,20 +136,17 @@ FocusScope {
 
             Image {
                 id: itemIcon
+
                 source: "pics/icon_" + model.icon + ".png"
                 fillMode: Image.PreserveAspectFit
                 mipmap: true
                 anchors.fill: positioner
-
                 anchors.margins: 16
-//                anchors.margins: if (parent.activeFocus) 0; else 16;
-//                Behavior on anchors.margins {
-//                    NumberAnimation { duration: 200 }
-//                }
             }
 
             EmcTextBigger {
                 id: itemText
+
                 text: model.label
                 anchors {
                     bottom: positioner.top
@@ -143,15 +155,23 @@ FocusScope {
                 }
                 horizontalAlignment: Text.AlignHCenter
                 font.family: EmcGlobals.font3.name
-                style: Text.Outline
                 font.pixelSize: EmcGlobals.fontSizeBigger / 2
+                style: Text.Outline
                 opacity: 0.0;
+            }
+
+            Column {
+                anchors.top: positioner.bottom
+                Repeater {
+                    model: subItems
+                    delegate: subitemDelegate
+                }
             }
 
             states: [
                 State {
-                    name: "focused"
-                    when: activeFocus
+                    name: "active"
+                    when: delegateItem.ListView.isCurrentItem
                     PropertyChanges {
                         target: itemIcon
                         anchors.margins: 0
@@ -165,7 +185,7 @@ FocusScope {
             ]
 
             transitions: Transition {
-                from: ""; to: "focused"; reversible: true
+                from: ""; to: "active"; reversible: true
                 NumberAnimation {
                     duration: 200
                     properties: "anchors.margins, font.pixelSize, opacity"
@@ -175,5 +195,14 @@ FocusScope {
         }
     }
 
+    // subitems delegate
+    Component {
+        id: subitemDelegate
+        EmcTextBig {
+            text: modelData.label
+            font.family: EmcGlobals.font3.name
+            style: Text.Raised
+        }
+    }
 
 }

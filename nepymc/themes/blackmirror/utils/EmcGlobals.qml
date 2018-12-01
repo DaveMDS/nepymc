@@ -15,7 +15,7 @@ QtObject {
 
     // font colors
     property color fontColor: "#FFFFFFFF"
-    property color fontColorShadow: "#40000000"
+    property color fontColorShadow: "#AA000000"
 
     // font sizes     TODO pixel? or points
     property int fontSizeSmaller: 14

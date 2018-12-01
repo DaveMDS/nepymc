@@ -24,7 +24,7 @@ from nepymc.gui_base import EmcWindow_Base
 from nepymc import utils
 
 from PySide2.QtQml import QQmlApplicationEngine
-from PySide2.QtCore import Qt, QAbstractListModel
+from PySide2.QtCore import Qt, QObject, Slot, QAbstractListModel
 
 
 def LOG(*args):
@@ -41,42 +41,63 @@ def DBG(*args):
 
 
 class MainMenuModel(QAbstractListModel):
-    # TODO use QAbstractItemModel instead for tree ability ??
     label_role = Qt.UserRole + 1
     icon_role = Qt.UserRole + 2
+    subitems_role = Qt.UserRole + 3
 
     def __init__(self, parent=None):
-        print("***** __init__")
         super().__init__(parent)
         self.items = [
-            {'label': "UI tests", 'icon': 'star'},
-            {'label': "Optical Discs", 'icon': 'optical'},
-            {'label': "Musica", 'icon': 'music'},
-            {'label': "Film", 'icon': 'movie'},
-            {'label': "Serie TV", 'icon': 'tv'},
-            {'label': "Canali Online", 'icon': 'olvideo'},
-            {'label': "Photo", 'icon': 'photo'},
-            {'label': "Settings", 'icon': 'config'},
-            {'label': "Quit", 'icon': 'exit'},
+            {'label': "UI tests", 'icon': 'star',
+             'subitems': []},
+            {'label': "Optical Discs", 'icon': 'optical',
+             'subitems': [
+                 {'label': 'Play'},
+                 {'label': 'Eject'}
+             ]},
+            {'label': "Musica", 'icon': 'music',
+             'subitems': [
+                 {'label': 'Artists'},
+                 {'label': 'Albums'},
+                 {'label': 'Songs'},
+             ]},
+            {'label': "Film", 'icon': 'movie',
+             'subitems': [
+                 {'label': 'Folder 1'},
+                 {'label': 'Folder 2'},
+             ]},
+            {'label': "Serie TV", 'icon': 'tv',
+             'subitems': []},
+            {'label': "Canali Online", 'icon': 'olvideo',
+             'subitems': []},
+            {'label': "Photo", 'icon': 'photo',
+             'subitems': []},
+            {'label': "Settings", 'icon': 'config',
+             'subitems': []},
+            {'label': "Quit", 'icon': 'exit',
+             'subitems': []},
         ]
 
     def roleNames(self):
         return {
             self.label_role: b'label',
-            self.icon_role: b'icon'
+            self.icon_role: b'icon',
+            self.subitems_role: b'subItems',
         }
 
     def rowCount(self, index):
-        print("***** rowCount() -> %d" % len(self.items))
         return len(self.items)
 
     def data(self, index, role):
-        print("***** data(%s, %s)" % (index.row(), role))
+        # print("***** data(%s, %s)" % (index.row(), role))
         item = self.items[index.row()]
         if role == self.label_role:
             return item['label']
         elif role == self.icon_role:
             return item['icon']
+        elif role == self.subitems_role:
+            print("***** data(%s, %s)" % (index.row(), role))
+            return item['subitems']
 
 
 class BrowserModel(QAbstractListModel):
@@ -84,7 +105,6 @@ class BrowserModel(QAbstractListModel):
     icon_role = Qt.UserRole + 2
 
     def __init__(self, parent=None):
-        print("***** __init__")
         super().__init__(parent)
 
     def roleNames(self):
@@ -95,18 +115,29 @@ class BrowserModel(QAbstractListModel):
 
     def rowCount(self, index):
         # print("***** rowCount() -> %d" % len(self.items))
-        print("***** rowCount() -> %d" % 1000)
         return 1000
 
     def data(self, index, role):
-        print("***** data(%s, %s)" % (index.row(), role))
+        # print("***** data(%s, %s)" % (index.row(), role))
         # item = self.items[index.row()]
         # if role == self.label_role:
         if role == self.label_role:
             return 'Item #%d' % index.row()
         # elif role == self.icon_role:
         #     return item['icon']
-        print("@"*80)
+
+
+class GuiCommunicator(QObject):
+
+    @Slot(str)
+    @Slot(int)
+    def mainmenuItemSelected(self, item):
+        # TODO or we can use the model instead ??
+        print("mainmenu_item_selected(%s)" % item)
+
+    @Slot(str, result=str)
+    def i18n(self, string):
+        return string + 'pippo'
 
 
 class EmcWindow(EmcWindow_Base):
@@ -116,6 +147,7 @@ class EmcWindow(EmcWindow_Base):
         self._qml_engine = None
         self._model1 = None
         self._model2 = None
+        self._backend_instance = None
 
     def create(self) -> bool:
         # search the main QML file
@@ -134,6 +166,10 @@ class EmcWindow(EmcWindow_Base):
         ctxt.setContextProperty('MainMenuModel', self._model1)
         self._model2 = BrowserModel()
         ctxt.setContextProperty('BrowserModel', self._model2)
+
+        # inject the Communicator class
+        self._backend_instance = b = GuiCommunicator()
+        ctxt.setContextProperty("EmcBackend", b)
 
         # load and show the QML theme
         self._qml_engine.load(path)
