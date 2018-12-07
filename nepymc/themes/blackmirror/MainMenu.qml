@@ -6,7 +6,7 @@ import "utils/"
 FocusScope {
     anchors.fill: parent
 
-    /***  Header  **************************************************************/
+    /***  Header  *************************************************************/
     BorderImage {  // background image
         width: parent.width
         height: header_text.height + 35
@@ -16,6 +16,7 @@ FocusScope {
         border.top: 2
         border.bottom: 39
     }
+
     EmcTextBigger {  // header text
         id: header_text
         text: "Emotion Media Center"
@@ -25,7 +26,7 @@ FocusScope {
         opacity: 0.8
     }
 
-    /***  Clock  ***************************************************************/
+    /***  Clock  **************************************************************/
     Item {
         id: clock
         anchors.fill: parent
@@ -68,8 +69,7 @@ FocusScope {
         }
     }
 
-
-    /***  List  ****************************************************************/
+    /***  List  ***************************************************************/
     BorderImage {
         id: list_background
 
@@ -105,8 +105,7 @@ FocusScope {
         delegate: main_list_delegate
     }
 
-
-    // main list item delegate
+    /***  Main List item delegate  ********************************************/
     Component {
         id: main_list_delegate
 
@@ -115,7 +114,6 @@ FocusScope {
 
             width: 128  //width: childrenRect.width
             height: 128   //height: childrenRect.height
-            focus: true
 
             Keys.onReturnPressed: {
                 console.log(model.icon) // TODO REMOVE ME
@@ -160,7 +158,7 @@ FocusScope {
                 font.family: EmcGlobals.font3.name
                 font.pixelSize: EmcGlobals.fontSizeBigger / 2
                 style: Text.Outline
-                opacity: 0.0;
+                opacity: 0.0
             }
 
             ListView {
@@ -168,6 +166,7 @@ FocusScope {
 
                 anchors.top: parent.bottom
                 height: 1000  // TODO FILL IN WINDOW
+                opacity: 0.0
 
                 model: subItems
                 delegate: sub_list_delegate
@@ -195,6 +194,10 @@ FocusScope {
                     name: "active"
                     when: main_list_item.ListView.isCurrentItem
                     PropertyChanges {
+                        target: sub_list
+                        opacity: 1.0
+                    }
+                    PropertyChanges {
                         target: item_icon
                         anchors.margins: 0
                     }
@@ -216,7 +219,7 @@ FocusScope {
         }
     }
 
-    // subList delegate
+    /***  Sub List item delegate  *********************************************/
     Component {
         id: sub_list_delegate
 
