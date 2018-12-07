@@ -9,7 +9,7 @@ FocusScope {
     /***  Header  **************************************************************/
     BorderImage {  // background image
         width: parent.width
-        height: headerText.height + 35
+        height: header_text.height + 35
         source: "pics/header.png"
         border.left: 31
         border.right: 39
@@ -17,7 +17,7 @@ FocusScope {
         border.bottom: 39
     }
     EmcTextBigger {  // header text
-        id: headerText
+        id: header_text
         text: "Emotion Media Center"
         anchors.horizontalCenter: parent.horizontalCenter
         font.family: EmcGlobals.font3.name
@@ -25,14 +25,13 @@ FocusScope {
         opacity: 0.8
     }
 
-
     /***  Clock  ***************************************************************/
     Item {
         id: clock
         anchors.fill: parent
 
         EmcTextBig {  // date
-            id: clockDate
+            id: clock_date
             anchors {
                 bottom: parent.bottom
                 left: parent.left
@@ -43,10 +42,10 @@ FocusScope {
         }
 
         EmcTextBigger {  // hour
-            id: clockTime
+            id: clock_time
             anchors {
                 left: parent.left
-                bottom: clockDate.top
+                bottom: clock_date.top
                 leftMargin: 12
             }
             font.family: EmcGlobals.font3.name
@@ -56,8 +55,8 @@ FocusScope {
         function timeChanged() {
             var now = new Date
             //console.log(now)
-            clockTime.text = now.toLocaleTimeString(EmcGlobals.locale, Locale.ShortFormat)
-            clockDate.text = now.toLocaleDateString(EmcGlobals.locale, Locale.LongFormat)
+            clock_time.text = now.toLocaleTimeString(EmcGlobals.locale, Locale.ShortFormat)
+            clock_date.text = now.toLocaleDateString(EmcGlobals.locale, Locale.LongFormat)
         }
 
         Timer {
@@ -72,11 +71,11 @@ FocusScope {
 
     /***  List  ****************************************************************/
     BorderImage {
-        id: listBackground
+        id: list_background
 
         width: parent.width
         height: 128
-        y: headerText.height + 100
+        y: header_text.height + 100
         source: "pics/mainmenu_bg.png"
         border { top: 7; bottom: 13 }
         opacity: 0.7
@@ -86,14 +85,13 @@ FocusScope {
             anchors.top: parent.top
             anchors.topMargin: 4
             anchors.horizontalCenter: parent.horizontalCenter
-            opacity: 1.0
         }
     }
 
     ListView {
-        id: mainMenuList
+        id: main_list
 
-        anchors.fill: listBackground
+        anchors.fill: list_background
         anchors.leftMargin: 100
         anchors.rightMargin: 100
         orientation: ListView.Horizontal
@@ -103,18 +101,17 @@ FocusScope {
         displayMarginBeginning: 100
         displayMarginEnd: 100
 
-        model: MainMenuModel  // implemented in python
-        delegate: itemDelegateComponent
+        model: MainMenuModel  // injected from python
+        delegate: main_list_delegate
     }
 
 
-
-    // main item delegate
+    // main list item delegate
     Component {
-        id: itemDelegateComponent
+        id: main_list_delegate
 
         Item { // MainMenu items
-            id: delegateItem
+            id: main_list_item
 
             width: 128  //width: childrenRect.width
             height: 128   //height: childrenRect.height
@@ -127,15 +124,21 @@ FocusScope {
     //                console.log(translated)
             }
 
+            // give focus to the sublist on DOWN pressed
+            Keys.onDownPressed: {
+                sub_list.focus = true
+            }
+
             Rectangle {
                 id: positioner
+
                 width: 128
                 height: 128
                 visible: false
             }
 
             Image {
-                id: itemIcon
+                id: item_icon
 
                 source: "pics/icon_" + model.icon + ".png"
                 fillMode: Image.PreserveAspectFit
@@ -145,7 +148,7 @@ FocusScope {
             }
 
             EmcTextBigger {
-                id: itemText
+                id: item_text
 
                 text: model.label
                 anchors {
@@ -160,24 +163,43 @@ FocusScope {
                 opacity: 0.0;
             }
 
-            Column {
-                anchors.top: positioner.bottom
-                Repeater {
-                    model: subItems
-                    delegate: subitemDelegate
+            ListView {
+                id: sub_list
+
+                anchors.top: parent.bottom
+                height: 1000  // TODO FILL IN WINDOW
+
+                model: subItems
+                delegate: sub_list_delegate
+
+                // select the first item when the sublist take the focus
+                onFocusChanged: {
+                    if (focus) {
+                        currentIndex = 0
+                    }
                 }
+
+                // give focus back to the main item if UP pressed on first item
+                Keys.onUpPressed: {
+                    if (currentIndex == 0) {
+                        main_list_item.focus = true
+                    } else {
+                        event.accepted = false  // let the ListView manage it
+                    }
+                }
+
             }
 
             states: [
                 State {
                     name: "active"
-                    when: delegateItem.ListView.isCurrentItem
+                    when: main_list_item.ListView.isCurrentItem
                     PropertyChanges {
-                        target: itemIcon
+                        target: item_icon
                         anchors.margins: 0
                     }
                     PropertyChanges {
-                        target: itemText
+                        target: item_text
                         font.pixelSize: EmcGlobals.fontSizeBigger
                         opacity: 1.0
                     }
@@ -191,17 +213,35 @@ FocusScope {
                     properties: "anchors.margins, font.pixelSize, opacity"
                 }
             }
-
         }
     }
 
-    // subitems delegate
+    // subList delegate
     Component {
-        id: subitemDelegate
+        id: sub_list_delegate
+
         EmcTextBig {
+            property bool active: false
+
             text: modelData.label
             font.family: EmcGlobals.font3.name
             style: Text.Raised
+
+            BorderImage {
+                height: parent.height
+                width: 128  // TODO link with positioner.width
+                z: -1
+                source: "pics/menu_bg_submenu.png"
+                border { top: 1; bottom: 1 }
+
+                visible: parent.ListView.isCurrentItem && parent.activeFocus
+
+                Image {
+                    y: parent.y - 2
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    source: "pics/shine_large.png"
+                }
+            }
         }
     }
 
