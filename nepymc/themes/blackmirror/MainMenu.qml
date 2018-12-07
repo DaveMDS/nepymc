@@ -6,6 +6,54 @@ import "utils/"
 FocusScope {
     anchors.fill: parent
 
+    /*  This model can be used in place of the one from python for testing
+    ListModel {
+        id: mainMenuModelTEST
+
+        ListElement {
+            label: "Optical Discs"
+            icon: "optical"
+            subItems: [
+                ListElement { label: "Play" },
+                ListElement { label: "Eject" }
+            ]
+        }
+        ListElement {
+            label: "Music"
+            icon: "music"
+            subItems: [
+                ListElement { label: "Artists" },
+                ListElement { label: "Albums" },
+                ListElement { label: "Songs" }
+            ]
+        }
+        ListElement {
+            label: "Film"
+            icon: "movie"
+            subItems: [
+                ListElement { label: "Folder 1" },
+                ListElement { label: "Folder 2" }
+            ]
+        }
+        ListElement {
+            label: "Photo"
+            icon: "photo"
+            subItems: [ ]
+        }
+        ListElement {
+            label: "Settings"
+            icon: "config"
+            subItems: [ ]
+        }
+        ListElement {
+            label: "Quit"
+            icon: "exit"
+            subItems: [ ]
+        }
+    }
+    */
+
+
     /***  Header  *************************************************************/
     BorderImage {  // background image
         width: parent.width
@@ -102,6 +150,7 @@ FocusScope {
         displayMarginEnd: 100
 
         model: MainMenuModel  // injected from python
+        //model: mainMenuModelTEST  // defined in this file (for testing)
         delegate: main_list_delegate
     }
 
@@ -226,7 +275,8 @@ FocusScope {
         EmcTextBig {
             property bool active: false
 
-            text: modelData.label
+            // modelData when using python model, label otherwise (in testing)
+            text: modelData.label ? modelData.label : label
             font.family: EmcGlobals.font3.name
             style: Text.Raised
 
