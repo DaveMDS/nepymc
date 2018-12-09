@@ -20,11 +20,12 @@
 
 import sys
 
-from nepymc.gui_base import EmcWindow_Base
-from nepymc import utils
-
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import Qt, QObject, Slot, QAbstractListModel
+
+from nepymc.gui_base import EmcGui_Base
+from nepymc import utils
+from nepymc import mainmenu
 
 
 def LOG(*args):
@@ -47,36 +48,6 @@ class MainMenuModel(QAbstractListModel):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.items = [
-            {'label': "UI tests", 'icon': 'star',
-             'subitems': []},
-            {'label': "Optical Discs", 'icon': 'optical',
-             'subitems': [
-                 {'label': 'Play'},
-                 {'label': 'Eject'}
-             ]},
-            {'label': "Musica", 'icon': 'music',
-             'subitems': [
-                 {'label': 'Artists'},
-                 {'label': 'Albums'},
-                 {'label': 'Songs'},
-             ]},
-            {'label': "Film", 'icon': 'movie',
-             'subitems': [
-                 {'label': 'Folder 1'},
-                 {'label': 'Folder 2'},
-             ]},
-            {'label': "Serie TV", 'icon': 'tv',
-             'subitems': []},
-            {'label': "Canali Online", 'icon': 'olvideo',
-             'subitems': []},
-            {'label': "Photo", 'icon': 'photo',
-             'subitems': []},
-            {'label': "Settings", 'icon': 'config',
-             'subitems': []},
-            {'label': "Quit", 'icon': 'exit',
-             'subitems': []},
-        ]
 
     def roleNames(self):
         return {
@@ -86,18 +57,17 @@ class MainMenuModel(QAbstractListModel):
         }
 
     def rowCount(self, index):
-        return len(self.items)
+        # return len(self.items)
+        return mainmenu.model.count_get()
 
     def data(self, index, role):
         # print("***** data(%s, %s)" % (index.row(), role))
-        item = self.items[index.row()]
         if role == self.label_role:
-            return item['label']
+            return mainmenu.model.data_get(index.row(), 'label')
         elif role == self.icon_role:
-            return item['icon']
+            return mainmenu.model.data_get(index.row(), 'icon')
         elif role == self.subitems_role:
-            print("***** data(%s, %s)" % (index.row(), role))
-            return item['subitems']
+            return mainmenu.model.data_get(index.row(), 'subitems')
 
 
 class BrowserModel(QAbstractListModel):
@@ -140,7 +110,7 @@ class GuiCommunicator(QObject):
         return string + 'pippo'
 
 
-class EmcWindow(EmcWindow_Base):
+class EmcGui(EmcGui_Base):
     """ PySide2 implementation of the EmcWindow """
     def __init__(self, *args, **kargs):
         super().__init__(*args, **kargs)

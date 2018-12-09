@@ -31,7 +31,7 @@ def DBG(*args):
     pass
 
 
-class EmcWindow_Base(object):
+class EmcGui_Base(object):
     def __init__(self, mainloop: EmcMainLoop_Base, theme_name: str):
         DBG('Window.__init__()')
         self._mainloop = mainloop

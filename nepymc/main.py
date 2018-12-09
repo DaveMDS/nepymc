@@ -27,7 +27,7 @@ import argparse
 from nepymc import utils
 from nepymc import __version__ as emc_v
 # from emc import modules
-# from emc import mainmenu
+from nepymc import mainmenu
 # from emc import config_gui
 # from emc import mediaplayer
 # from emc import ini
@@ -189,16 +189,18 @@ def start_emc(standalone=False):
     # create the mainloop
     loop = mainloop.EmcMainLoop()
 
+    mainmenu.init()
+
     # create and show the main window
-    win = gui.EmcWindow(loop, 'blackmirror')  # TODO: theme by config
-    if not win.create():
+    gui = gui.EmcGui(loop, 'blackmirror')  # TODO: theme by config
+    if not gui.create():
         ERR('cannot create the main window')
         return 1
 
-    # run the main loop
+    # start the main loop
     loop.run()
 
-    win.destroy()
+    gui.destroy()
 
     """
     # shutdown
