@@ -99,11 +99,11 @@ class BrowserModel(QAbstractListModel):
 
 class GuiCommunicator(QObject):
 
-    @Slot(str)
     @Slot(int)
-    def mainmenuItemSelected(self, item):
+    def mainmenu_item_selected(self, index):
         # TODO or we can use the model instead ??
-        print("mainmenu_item_selected(%s)" % item)
+        print("mainmenu_item_selected(%s)" % index)
+        mainmenu.model.item_selected(index)
 
     @Slot(str, result=str)
     def i18n(self, string):

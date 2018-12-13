@@ -26,11 +26,12 @@ import argparse
 
 from nepymc import utils
 from nepymc import __version__ as emc_v
-# from emc import modules
+from nepymc import modules
 from nepymc import mainmenu
 # from emc import config_gui
 # from emc import mediaplayer
-# from emc import ini
+from nepymc import ini
+from nepymc import gui
 # from emc import sdb
 # from emc import browser
 # from emc import storage
@@ -96,10 +97,19 @@ def start_emc(standalone=False):
     except OSError:
         pass
 
-    # TODO add a system dir...but where??
-    # ini.read_from_files(['epymc.conf',
-    # os.path.join(utils.user_conf_dir, 'epymc.conf')])
-    # ini.setup_defaults()
+    # read config from file  # TODO add a system dir...but where??
+    ini.read_from_files([
+        'nepymc.conf',
+        os.path.join(utils.user_conf_dir, 'nepymc.conf')
+    ])
+    ini.setup_defaults()
+
+    # init internal components
+    mainmenu.init()
+
+    # load & init modules
+    modules.load_all()
+    modules.init_all_by_config()
 
     """
     # init internal components
@@ -112,10 +122,6 @@ def start_emc(standalone=False):
     config_gui.init()
     mediaplayer.init()
     storage.init()
- 
-    # load & init modules
-    modules.load_all()
-    modules.init_all_by_config()
  
     # show the mainmenu
     mainmenu.show()
@@ -184,18 +190,22 @@ def start_emc(standalone=False):
 
     # TODO factorize this import
     from nepymc import mainloop_qt as mainloop
-    from nepymc import gui_qt as gui
+    # from nepymc import gui_qt as gui
 
     # create the mainloop
     loop = mainloop.EmcMainLoop()
 
-    mainmenu.init()
+    from nepymc import gui
+
+    if not gui.init('qt', 'blackmirror', loop):  # TODO: theme  & backend by config
+        ERR('Cannot create the GUI')
+        return 1
 
     # create and show the main window
-    gui = gui.EmcGui(loop, 'blackmirror')  # TODO: theme by config
-    if not gui.create():
-        ERR('cannot create the main window')
-        return 1
+    # gui = gui.EmcGui(loop, 'blackmirror')
+    # if not gui.create():
+    #     ERR('cannot create the main window')
+    #     return 1
 
     # start the main loop
     loop.run()

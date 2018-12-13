@@ -18,36 +18,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from abc import ABC, abstractmethod
 
-class EmcModel(object):
+
+class EmcModel(ABC):
     """ Generic model class """
     def __init__(self):
         pass
 
+    @abstractmethod
     def data_get(self, index, field_name):
         pass
 
+    @abstractmethod
     def count_get(self):
         pass
 
-    """
-    def roleNames(self):
-        return {
-            self.label_role: b'label',
-            self.icon_role: b'icon',
-            self.subitems_role: b'subItems',
-        }
-
-    def rowCount(self, index):
-        return len(self.items)
-
-    def data(self, index, role):
-        # print("***** data(%s, %s)" % (index.row(), role))
-        item = self.items[index.row()]
-        if role == self.label_role:
-            return item['label']
-        elif role == self.icon_role:
-            return item['icon']
-        elif role == self.subitems_role:
-            return item['subitems']
-    """
+    @abstractmethod
+    def item_selected(self, index):
+        pass

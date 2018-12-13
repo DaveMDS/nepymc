@@ -68,6 +68,10 @@ class MainMenuModel(EmcModel):
         item = _ITEMS[index]
         return getattr(item, field_name, None)
 
+    def item_selected(self, index):
+        item = _ITEMS[index]
+        item.activate()  # TODO subitems ??
+
 
 _ITEMS = []
 model = MainMenuModel()

@@ -166,7 +166,8 @@ FocusScope {
 
             Keys.onReturnPressed: {
                 console.log(model.icon) // TODO REMOVE ME
-                    EmcBackend.mainmenuItemSelected(model.icon)
+//                    EmcBackend.mainmenu_item_selected(model.icon)
+                    EmcBackend.mainmenu_item_selected(ListView.view.currentIndex)
     //                var translated = EmcBackend.i18n(model.label)
     //                console.log(translated)
             }

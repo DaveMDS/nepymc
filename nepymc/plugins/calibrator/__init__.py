@@ -18,31 +18,4 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from abc import ABC, abstractmethod
-
-from nepymc.mainloop_base import EmcMainLoop_Base
-
-
-def LOG(*args):
-    print('GUI_BASE:', *args)
-
-
-def DBG(*args):
-    print('GUI_BASE:', *args)
-    pass
-
-
-class EmcGui_Base(ABC):
-    def __init__(self, mainloop: EmcMainLoop_Base, theme_name: str):
-        DBG('Window.__init__()')
-        self._mainloop = mainloop
-        self._theme_name = theme_name
-
-    @abstractmethod
-    def create(self) -> bool:
-        return False
-
-    @abstractmethod
-    def destroy(self) -> None:
-        pass
-
+from .calibrator import CalibratorModule
