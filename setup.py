@@ -47,11 +47,14 @@ class CustomCleanCommand(clean):
 # noinspection PyAttributeOutsideInit
 class DevelopCommand(Command):
     description = 'run in-place from build dir without any install need'
-    user_options = [('args=', 'a',
+    user_options = [('from-build', 'b',
+                     'Run from the build directory'),
+                    ('args=', 'a',
                      'Additional arguments for the emc executable')]
 
     def initialize_options(self):
         self.args = ''
+        self.from_build = False
 
     def finalize_options(self):
         pass
@@ -65,15 +68,21 @@ class DevelopCommand(Command):
 
     def run(self):
         self.run_command("clean")
-        self.run_command("build")
-        modules_path = os.path.abspath('./build/lib/')
-        bins_path = './build/scripts-{0}.{1}/'.format(*sys.version_info)
 
-        # PATH for the binaries to be searched in build/scripts-X.Y/
+        if self.from_build:
+            self.run_command("build")
+            bins_path = './build/scripts-{0}.{1}/'.format(*sys.version_info)
+            modules_path = os.path.abspath('./build/lib/')
+
+            # modules must be searched in build/lib/
+            self.env_prepend('PYTHONPATH', modules_path)
+            sys.path.insert(0, modules_path)
+        else:
+            bins_path = './bin/'
+
+        # PATH for the binaries to be searched in correct place
         self.env_prepend('PATH', os.path.abspath(bins_path))
-        # modules must be searched in build/lib/
-        self.env_prepend('PYTHONPATH', modules_path)
-        sys.path.insert(0, modules_path)
+
         # XDG config home in develop/config/
         os.environ['XDG_CONFIG_HOME'] = os.path.abspath('./develop/config/')
         # XDG cache home in develop/cache/
@@ -83,6 +92,7 @@ class DevelopCommand(Command):
         # os.system('nepymc %s' % self.args)
         del sys.modules['nepymc']
         from nepymc.main import start_emc
+        sys.argv = sys.argv[:1]  # TODO FIXME !!
         sys.exit(start_emc())
 
 
