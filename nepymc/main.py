@@ -28,12 +28,12 @@ from nepymc import utils
 from nepymc import __version__ as emc_v
 from nepymc import modules
 from nepymc import mainmenu
+from nepymc import browser
 # from emc import config_gui
 # from emc import mediaplayer
 from nepymc import ini
 from nepymc import gui
 # from emc import sdb
-# from emc import browser
 # from emc import storage
 # from emc import thumbnailer
 
@@ -105,6 +105,7 @@ def start_emc(standalone=False):
     ini.setup_defaults()
 
     # init internal components
+    browser.init()
     mainmenu.init()
 
     # load & init modules
@@ -210,7 +211,9 @@ def start_emc(standalone=False):
     # start the main loop
     loop.run()
 
-    gui.destroy()
+    # shutdown
+    browser.shutdown()
+    gui.shutdown()
 
     """
     # shutdown

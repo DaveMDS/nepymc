@@ -143,7 +143,7 @@ setup(
         # 'nepymc.plugins.onlinevideo',
         # 'nepymc.plugins.mame',
         # 'nepymc.plugins.music',
-        # 'nepymc.plugins.uitests',
+        'nepymc.plugins.uitests',
         'nepymc.plugins.calibrator',
         # 'nepymc.plugins.filemanager',
         # 'nepymc.plugins.photos',

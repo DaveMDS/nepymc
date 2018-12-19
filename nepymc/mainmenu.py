@@ -22,7 +22,7 @@
 from typing import Callable, Iterable
 
 # from epymc import gui, input_events
-from nepymc.model import EmcModel
+from nepymc.model import EmcModelViewInterface
 
 
 def LOG(*args):
@@ -57,14 +57,14 @@ class MenuItem(object):
             self.callback()
 
 
-class MainMenuModel(EmcModel):
+class MainMenuModel(EmcModelViewInterface):
     def __init__(self):
         super().__init__()
 
-    def count_get(self):
+    def item_count_get(self):
         return len(_ITEMS)
 
-    def data_get(self, index, field_name):
+    def item_data_get(self, index, field_name):
         item = _ITEMS[index]
         return getattr(item, field_name, None)
 
@@ -76,6 +76,7 @@ class MainMenuModel(EmcModel):
 _ITEMS = []
 model = MainMenuModel()
 
+"""
 _ITEMS = [
     MenuItem('uitests', 1, 'UI tests', 'star', None, None),
     MenuItem('optical', 2, 'Optical Discs', 'optical', None, [
@@ -94,6 +95,7 @@ _ITEMS = [
     MenuItem('config', 6, 'Settings', 'config', None, None),
     # MenuItem('exit', 6, 'Quit', 'exit', None, None),
 ]
+"""
 
 
 def init():

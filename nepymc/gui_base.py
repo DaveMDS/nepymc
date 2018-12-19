@@ -20,6 +20,7 @@
 
 from abc import ABC, abstractmethod
 
+from nepymc.model import EmcModelViewInterface
 from nepymc.mainloop_base import EmcMainLoop_Base
 
 
@@ -46,3 +47,14 @@ class EmcGui_Base(ABC):
     def destroy(self) -> None:
         pass
 
+    @abstractmethod
+    def activate_section(self, section: str) -> None:
+        """ sections: mainmenu,browser """
+
+    @abstractmethod
+    def model_set(self, section: str, model: EmcModelViewInterface):
+        """
+        :param section:
+        :param model:
+        :return:
+        """

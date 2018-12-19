@@ -4,83 +4,50 @@ import "utils/"
 
 
 FocusScope {
+    id: emcMainMenu
+
+    property bool emc_active: true
+
     anchors.fill: parent
 
-    /*  This model can be used in place of the one from python for testing
-    ListModel {
-        id: mainMenuModelTEST
-
-        ListElement {
-            label: "Optical Discs"
-            icon: "optical"
-            subItems: [
-                ListElement { label: "Play" },
-                ListElement { label: "Eject" }
-            ]
-        }
-        ListElement {
-            label: "Music"
-            icon: "music"
-            subItems: [
-                ListElement { label: "Artists" },
-                ListElement { label: "Albums" },
-                ListElement { label: "Songs" }
-            ]
-        }
-        ListElement {
-            label: "Film"
-            icon: "movie"
-            subItems: [
-                ListElement { label: "Folder 1" },
-                ListElement { label: "Folder 2" }
-            ]
-        }
-        ListElement {
-            label: "Photo"
-            icon: "photo"
-            subItems: [ ]
-        }
-        ListElement {
-            label: "Settings"
-            icon: "config"
-            subItems: [ ]
-        }
-        ListElement {
-            label: "Quit"
-            icon: "exit"
-            subItems: [ ]
-        }
-    }
-    */
-
+//    function show() {
+//        console.log("SHOW MAINMENU")
+//        emc_active = true
+//    }
+//    function hide() {
+//        console.log("HIDE MAINMENU")
+//        emc_active = false
+//    }
 
     /***  Header  *************************************************************/
-    BorderImage {  // background image
-        width: parent.width
-        height: header_text.height + 35
-        source: "pics/header.png"
-        border.left: 31
-        border.right: 39
-        border.top: 2
-        border.bottom: 39
-    }
-
     EmcTextBigger {  // header text
-        id: header_text
-        text: "Emotion Media Center"
-        anchors.horizontalCenter: parent.horizontalCenter
+        id: emcHeaderText
+
+        text: EmcBackend.application_name()
+        anchors.horizontalCenter: emcMainMenu.horizontalCenter
+        anchors.top: parent.top
         font.family: EmcGlobals.font3.name
         style: Text.Raised
         opacity: 0.8
+
+//        anchors.bottom: parent.emc_visible ? undefined : parent.top
+
+        BorderImage {  // background image
+            x: -parent.x
+            width: emcMainMenu.width
+            height: parent.height + 35
+            source: "pics/header.png"
+            border { left: 31; right: 39; top: 2; bottom: 39 }
+        }
     }
 
     /***  Clock  **************************************************************/
     Item {
-        id: clock
+        id: emcClock
         anchors.fill: parent
 
         EmcTextBig {  // date
-            id: clock_date
+            id: emcClockDate
             anchors {
                 bottom: parent.bottom
                 left: parent.left
@@ -91,10 +58,10 @@ FocusScope {
         }
 
         EmcTextBigger {  // hour
-            id: clock_time
+            id: emcClockTime
             anchors {
                 left: parent.left
-                bottom: clock_date.top
+                bottom: emcClockDate.top
                 leftMargin: 12
             }
             font.family: EmcGlobals.font3.name
@@ -104,8 +71,8 @@ FocusScope {
         function timeChanged() {
             var now = new Date
             //console.log(now)
-            clock_time.text = now.toLocaleTimeString(EmcGlobals.locale, Locale.ShortFormat)
-            clock_date.text = now.toLocaleDateString(EmcGlobals.locale, Locale.LongFormat)
+            emcClockTime.text = now.toLocaleTimeString(EmcGlobals.locale, Locale.ShortFormat)
+            emcClockDate.text = now.toLocaleDateString(EmcGlobals.locale, Locale.LongFormat)
         }
 
         Timer {
@@ -113,7 +80,7 @@ FocusScope {
             running: true
             repeat: true
             triggeredOnStart: true
-            onTriggered: clock.timeChanged()
+            onTriggered: emcClock.timeChanged()
         }
     }
 
@@ -123,7 +90,7 @@ FocusScope {
 
         width: parent.width
         height: 128
-        y: header_text.height + 100
+        y: emcHeaderText.height + 100
         source: "pics/mainmenu_bg.png"
         border { top: 7; bottom: 13 }
         opacity: 0.7
@@ -152,6 +119,33 @@ FocusScope {
         model: MainMenuModel  // injected from python
         //model: mainMenuModelTEST  // defined in this file (for testing)
         delegate: main_list_delegate
+    }
+
+    /***  Hidden state  *******************************************************/
+    states: State {
+        name: "hidden"
+        when: !emc_active
+        PropertyChanges {
+            target: emcHeaderText
+            anchors.topMargin: -(height + 35)
+            opacity: 0.0
+        }
+        PropertyChanges {
+            target: emcClock
+            opacity: 0.0
+        }
+        PropertyChanges {
+            target: list_background
+            y: -height
+        }
+    }
+
+    transitions: Transition {
+        from: ""; to: "hidden"; reversible: true
+        NumberAnimation {
+            duration: 200
+            properties: "anchors.topMargin, y, opacity"
+        }
     }
 
     /***  Main List item delegate  ********************************************/
@@ -299,4 +293,50 @@ FocusScope {
         }
     }
 
+    /*  This model can be used in place of the one from python for testing
+    ListModel {
+        id: mainMenuModelTEST
+
+        ListElement {
+            label: "Optical Discs"
+            icon: "optical"
+            subItems: [
+                ListElement { label: "Play" },
+                ListElement { label: "Eject" }
+            ]
+        }
+        ListElement {
+            label: "Music"
+            icon: "music"
+            subItems: [
+                ListElement { label: "Artists" },
+                ListElement { label: "Albums" },
+                ListElement { label: "Songs" }
+            ]
+        }
+        ListElement {
+            label: "Film"
+            icon: "movie"
+            subItems: [
+                ListElement { label: "Folder 1" },
+                ListElement { label: "Folder 2" }
+            ]
+        }
+        ListElement {
+            label: "Photo"
+            icon: "photo"
+            subItems: [ ]
+        }
+        ListElement {
+            label: "Settings"
+            icon: "config"
+            subItems: [ ]
+        }
+        ListElement {
+            label: "Quit"
+            icon: "exit"
+            subItems: [ ]
+        }
+    }
+    */
 }

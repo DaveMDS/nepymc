@@ -81,3 +81,12 @@ def get_resource(*resource: str) -> str:
 
     # not found :(
     return ''
+
+
+class Singleton(object):
+    __single = None
+
+    def __new__(classtype, *args, **kwargs):
+        if classtype != type(classtype.__single):
+            classtype.__single = object.__new__(classtype, *args, **kwargs)
+        return classtype.__single

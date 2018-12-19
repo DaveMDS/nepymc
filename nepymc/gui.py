@@ -19,7 +19,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from nepymc.mainloop_base import EmcMainLoop_Base
+
+from nepymc.model import EmcModelViewInterface
+# from nepymc.mainloop_base import EmcMainLoop_Base
 
 
 def LOG(*args):
@@ -55,7 +57,11 @@ def init(backend: str, theme: str, loop) -> bool:   # TODO remove loop !!!!!!
 
 
 def shutdown():
-    pass
+    global _backend_gui
+
+    _backend_gui.destroy()
+    del _backend_gui
+    _backend_gui = None
 
 
 def background_set(image: str) -> None:
@@ -76,3 +82,11 @@ def background_set(image: str) -> None:
     #    signal_emit(signal)
     # except: pass
     DBG("background_set", image)
+
+
+def activate_section(section: str) -> None:
+    _backend_gui.activate_section(section)
+
+
+def model_set(section: str, model: EmcModelViewInterface):
+    _backend_gui.model_set(section, model)

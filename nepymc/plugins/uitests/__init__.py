@@ -18,30 +18,4 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from abc import ABC, abstractmethod
-
-
-class EmcModelViewInterface(ABC):
-    """ Generic model class """
-
-    #
-    # ----  Abstracts for the model implementation (called by the view)
-    #
-    @abstractmethod
-    def item_data_get(self, index, field_name):
-        """ The view request data to the model """
-
-    @abstractmethod
-    def item_count_get(self):
-        """ The view request the items count to the model """
-
-    @abstractmethod
-    def item_selected(self, index):
-        """ The view notify the model that an item has been selected """
-
-    #
-    # ----  Hooks for views (called by the model implementation)
-    #
-    def view_reset(self):
-        """ The model has changed and request the view to reset """
-        raise NotImplementedError('The view are not hooking into reset()')
+from .uitests import UiTestsModule
