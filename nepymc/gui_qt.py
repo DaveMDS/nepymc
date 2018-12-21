@@ -77,12 +77,16 @@ class BrowserModel(QAbstractListModel):
     icon_role = Qt.UserRole + 3
     icon_end_role = Qt.UserRole + 4
     info_role = Qt.UserRole + 5
+    poster_role = Qt.UserRole + 6
+    cover_role = Qt.UserRole + 7
     role_names_qt = {
         label_role: b'label',
         label_end_role: b'label_end',
         icon_role: b'icon',
         icon_end_role: b'icon_end',
         info_role: b'info',
+        poster_role: b'poster',
+        cover_role: b'cover',
     }
     role_names = {
         label_role: 'label',
@@ -90,6 +94,8 @@ class BrowserModel(QAbstractListModel):
         icon_role: 'icon',
         icon_end_role: 'icon_end',
         info_role: 'info',
+        poster_role: 'poster',
+        cover_role: 'cover',
     }
 
     def __init__(self, parent=None):

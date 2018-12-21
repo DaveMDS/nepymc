@@ -11,19 +11,30 @@ Item {
 
     property int currentIndex: emcBrowserList.currentIndex
     property bool infoVisible: false
+    property bool posterVisible: false
 
     Timer {  // info box and big image are delayed
         id: emcInfoDelayTimer
         interval: 500; running: false; repeat: false
         onTriggered: {
-            var text = BrowserModel.get(currentIndex, 'info');
-            if (text) {
-                emcBrowserInfoText.text = text
+            var data = BrowserModel.get(currentIndex, "info");
+            if (data) {
+                emcBrowserInfoText.text = data
                 infoVisible = true
             } else {
                 // hide animation will run, not clearing the text
                 infoVisible = false
             }
+            data = BrowserModel.get(currentIndex, "poster") ||
+                   BrowserModel.get(currentIndex, "cover")
+            if (data) {
+                emcBrowserPoster.source = data
+                posterVisible = true
+            } else {
+                // hide animation will run, not clearing the image
+                posterVisible = false
+            }
+
         }
     }
 
@@ -69,7 +80,7 @@ Item {
         height: parent.height / 2.66
         anchors.right: parent.right  // align right
         anchors.bottom: parent.bottom  // align bottom
-        anchors.bottomMargin: -(height + 25) // hidden below the window
+        anchors.bottomMargin: -height // hidden below the window
 
         EmcText {
             id: emcBrowserInfoText
@@ -94,9 +105,41 @@ Item {
         transitions: Transition {
             from: ""; to: "visible"; reversible: true
             NumberAnimation {
-                easing.type: Easing.InCubic
+                easing.type: Easing.OutCubic
                 duration: 350
                 properties: "anchors.bottomMargin"
+            }
+        }
+    }
+
+    /**  Big poster/cover  ****************************************************/
+    Image {
+        id: emcBrowserPoster
+        source: ""
+
+        width: parent.width / 2
+        anchors.right: parent.right  // align right
+        anchors.bottom: emcBrowserInfo.top
+        anchors.bottomMargin: 7
+        anchors.top: parent.top
+        anchors.rightMargin: -(width + 25) // hidden outside the window
+
+        fillMode: Image.PreserveAspectFit
+
+        states: State {
+            name: "visible"
+            when: posterVisible
+            PropertyChanges {
+                target: emcBrowserPoster
+                anchors.rightMargin: 7
+            }
+        }
+        transitions: Transition {
+            from: ""; to: "visible"; reversible: true
+            NumberAnimation {
+                easing.type: Easing.OutCubic
+                duration: 350
+                properties: "anchors.rightMargin"
             }
         }
     }

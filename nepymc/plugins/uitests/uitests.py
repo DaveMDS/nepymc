@@ -739,7 +739,7 @@ class BrowserViewsItemClass(GenericItemClass):
             return 'second'
 
     def info_get(self, url, user_data):
-        if url != "two_labels":
+        if url not in ('two_labels', 'poster_no_info'):
             return '<title>Testing:</title><br>' + user_data
 
     def icon_get(self, url, user_data):
@@ -747,27 +747,26 @@ class BrowserViewsItemClass(GenericItemClass):
                    'two_labels_two_icon'):
             # return 'icon/home'  # TODO
             return 'home'
-        if url in ('poster', 'cover', 'poster_cover'):
+        if url in ('poster_no_info', 'poster', 'cover', 'poster_cover'):
             # return 'icon/views' # TODO
-            return 'icon/views'
+            return 'views'
 
     def icon_end_get(self, url, user_data):
         if url in ('two_icons', 'two_labels_two_icon'):
             # return 'icon/evas'  # TODO
             return 'star'
 
-    # def poster_get(self, url, user_data):
-    #     if url in ('poster', 'poster_cover'):
-    #         return os.path.join(self.path, 'poster.jpg')
-    #
-    # def cover_get(self, url, user_data):
-    #     if url in ('cover', 'poster_cover'):
-    #         return os.path.join(self.path, 'cover.jpg')
+    def poster_get(self, url, user_data):
+        if url in ('poster', 'poster_cover', 'poster_no_info'):
+            return os.path.join(self.path, 'poster.jpg')
+
+    def cover_get(self, url, user_data):
+        if url in ('cover', 'poster_cover'):
+            return os.path.join(self.path, 'cover.jpg')
 
 
 class Test_BrowserViews(GenericItemClass):
     def item_selected(self, url, user_data):
-        print("BROWSER", url, user_data)
         _mod._browser.page_add('uitests://views', 'Browser Views',
                                ('List', 'PosterGrid', 'CoverGrid'),
                                self.populate_views_page)
@@ -785,11 +784,13 @@ class Test_BrowserViews(GenericItemClass):
                                                    'two labels + one icon')
         _browser.item_add(BrowserViewsItemClass(), 'two_labels_two_icon',
                                                    'two labels + two icon')
-        # _mod._browser.item_add(ViewsItemClass(), 'poster',
-        #                        'with poster only')
-        # _mod._browser.item_add(ViewsItemClass(), 'cover', 'with cover only')
-        # _mod._browser.item_add(ViewsItemClass(), 'poster_cover',
-        #                        'with poster and cover')
+        _browser.item_add(BrowserViewsItemClass(), 'poster_no_info',
+                                                   'with poster only (no info)')
+        _browser.item_add(BrowserViewsItemClass(), 'poster',
+                                                   'with poster only')
+        _browser.item_add(BrowserViewsItemClass(), 'cover', 'with cover only')
+        _browser.item_add(BrowserViewsItemClass(), 'poster_cover',
+                                                   'with poster and cover')
 
 
 class UiTestsModule(EmcModule):

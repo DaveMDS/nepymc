@@ -222,6 +222,10 @@ class BrowserModel(EmcModelViewInterface):
             return item_class.icon_end_get(url, user_data)
         if field_name == 'info':
             return item_class.info_get(url, user_data)
+        if field_name == 'poster':
+            return item_class.poster_get(url, user_data)
+        if field_name == 'cover':
+            return item_class.cover_get(url, user_data)
 
     def item_count_get(self):
         try:
