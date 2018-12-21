@@ -746,16 +746,13 @@ class BrowserViewsItemClass(GenericItemClass):
     def icon_get(self, url, user_data):
         if url in ('one_icon', 'two_icons', 'two_labels_one_icon',
                    'two_labels_two_icon'):
-            # return 'icon/home'  # TODO
-            return 'home'
+            return 'icon/home'
         if url in ('poster_no_info', 'poster', 'cover', 'poster_cover'):
-            # return 'icon/views' # TODO
-            return 'views'
+            return 'icon/views'
 
     def icon_end_get(self, url, user_data):
         if url in ('two_icons', 'two_labels_two_icon'):
-            # return 'icon/evas'  # TODO
-            return 'star'
+            return 'icon/star'
 
     def poster_get(self, url, user_data):
         if url in ('poster', 'poster_cover', 'poster_no_info'):
@@ -796,8 +793,7 @@ class Test_BrowserViews(GenericItemClass):
 class UiTestsModule(EmcModule):
     name = 'uitests'
     label = 'UI tests'
-    # icon = 'icon/star'
-    icon = 'star'
+    icon = 'icon/star'
     info = 'This module serve as test for the various epymc components.'
     path = os.path.dirname(__file__)
 
@@ -806,7 +802,6 @@ class UiTestsModule(EmcModule):
         # img = os.path.join(self.path, 'menu_bg.png')
         # mainmenu.item_add('uitests', 3, 'UI tests', img, self.cb_mainmenu)
         mainmenu.item_add('uitests', 3, 'UI tests', self.icon, self.cb_mainmenu)
-        # self._browser = EmcBrowser('UI tests', 'List', 'icon/star')
         self._browser = EmcBrowser('UI tests', 'List', 'icon/star')
 
         global _mod, _browser

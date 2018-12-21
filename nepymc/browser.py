@@ -184,8 +184,7 @@ class BackItemClass(EmcItemClass):
         return _('Back')
 
     def icon_get(self, url, user_data):
-        # return 'icon/back'  # TODO fixme
-        return 'back'
+        return 'icon/back'
 
 
 class FolderItemClass(EmcItemClass):
@@ -199,8 +198,7 @@ class FolderItemClass(EmcItemClass):
         return os.path.basename(url)
 
     def icon_get(self, url, user_data):
-        # return 'icon/folder'  # TODO fixme
-        return 'folder'
+        return 'icon/folder'
 
     def poster_get(self, url, user_data):
         # return 'special/folder/' + elm.utf8_to_markup(os.path.basename(url))

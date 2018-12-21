@@ -100,7 +100,7 @@ _ITEMS = [
 
 def init():
     DBG("init")
-    item_add('exit', 200, _('Exit'), 'exit',
+    item_add('exit', 200, _('Exit'), 'icon/exit',
              # lambda: gui.ask_to_exit()
              lambda: print("pippo")
              )

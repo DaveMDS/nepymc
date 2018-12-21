@@ -182,7 +182,7 @@ FocusScope {
             Image {
                 id: item_icon
 
-                source: "pics/icon_" + model.icon + ".png"
+                source: "pics/" + model.icon + ".png"
                 fillMode: Image.PreserveAspectFit
                 mipmap: true
                 anchors.fill: positioner

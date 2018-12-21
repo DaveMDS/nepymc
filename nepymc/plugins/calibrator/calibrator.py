@@ -57,7 +57,7 @@ class CalibratorModule(EmcModule):
         DBG("__init__")
         # config_gui.root_item_add('calibrator', 100, _('Screen calibrator'),
         #                          icon='icon/calib', callback=self.startup)
-        mainmenu.item_add('calib', 100, _('Screen calibrator'), 'calib',
+        mainmenu.item_add('calib', 100, _('Screen calibrator'), 'icon/calib',
                           self.startup)
         self.current = -1
 

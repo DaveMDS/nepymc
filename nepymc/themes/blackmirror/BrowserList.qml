@@ -171,14 +171,14 @@ Item {
 
             Image {  // left icon
                 id: emcIcon
-                source: model.icon ? "pics/icon_" + model.icon + ".png" : ""
+                source: model.icon ? "pics/" + model.icon + ".png" : ""
                 width: source != "" ? parent.height : 0
                 height: parent.height
             }
 
             Image {  // right icon
                 id: emcIconEnd
-                source: model.icon_end ? "pics/icon_" + model.icon_end + ".png" : ""
+                source: model.icon_end ? "pics/" + model.icon_end + ".png" : ""
                 width: source != "" ? parent.height : 0
                 height: parent.height
                 anchors.right: parent.right
