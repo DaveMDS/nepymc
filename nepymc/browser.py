@@ -173,30 +173,38 @@ class EmcItemClass(utils.Singleton):
         return None
 
 
-# class BackItemClass(EmcItemClass):
-#    def item_selected(self, url, user_data):
-#       user_data.back()
-#
-#    def label_get(self, url, user_data):
-#       return _('Back')
-#
-#    def icon_get(self, url, user_data):
-#       return 'icon/back'
+class BackItemClass(EmcItemClass):
+    """ Base item class to be subclassed for ALL back items """
+
+    def item_selected(self, url, user_data):
+        # user_data.back()  // TODO sure ??
+        raise NotImplementedError
+
+    def label_get(self, url, user_data):
+        return _('Back')
+
+    def icon_get(self, url, user_data):
+        # return 'icon/back'  # TODO fixme
+        return 'back'
 
 
-# class FolderItemClass(EmcItemClass):
-#    """ Base item class to be subclassed for ALL folder items """
-#    def item_selected(self, url, user_data):
-#       raise NotImplementedError
-#
-#    def label_get(self, url, user_data):
-#       return elm.utf8_to_markup(os.path.basename(url))
-#
-#    def icon_get(self, url, user_data):
-#       return 'icon/folder'
-#
-#    def poster_get(self, url, user_data):
-#       return 'special/folder/' + elm.utf8_to_markup(os.path.basename(url))
+class FolderItemClass(EmcItemClass):
+    """ Base item class to be subclassed for ALL folder items """
+
+    def item_selected(self, url, user_data):
+        raise NotImplementedError
+
+    def label_get(self, url, user_data):
+        # return elm.utf8_to_markup(os.path.basename(url))
+        return os.path.basename(url)
+
+    def icon_get(self, url, user_data):
+        # return 'icon/folder'  # TODO fixme
+        return 'folder'
+
+    def poster_get(self, url, user_data):
+        # return 'special/folder/' + elm.utf8_to_markup(os.path.basename(url))
+        pass  # TODO
 
 
 class BrowserModel(EmcModelViewInterface):

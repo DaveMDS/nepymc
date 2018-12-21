@@ -23,7 +23,8 @@ import pprint
 
 from nepymc.modules import EmcModule
 from nepymc import mainmenu
-from nepymc.browser import EmcBrowser, EmcItemClass
+from nepymc.browser import EmcBrowser, \
+    EmcItemClass, BackItemClass, FolderItemClass
 # from epymc.gui import EmcDialog, EmcVKeyboard, EmcFolderSelector, \
 #    EmcButton, EmcNotify, EmcMenu, DownloadManager, EmcSlider
 
@@ -772,10 +773,9 @@ class Test_BrowserViews(GenericItemClass):
                                self.populate_views_page)
 
     def populate_views_page(self, browser, url):
-        # _mod._browser.item_add(BackItemClass(), 'back',
-        #                        'special BackItemClass')
-        # _mod._browser.item_add(FolderItemClass(), 'folder',
-        #                        'special FolderItemClass')
+        _browser.item_add(BackItemClass(), 'back', 'special BackItemClass')
+        _browser.item_add(FolderItemClass(), 'folder',
+                                             'special FolderItemClass')
         _browser.item_add(BrowserViewsItemClass(), 'one_label', 'one label')
         _browser.item_add(BrowserViewsItemClass(), 'one_icon', 'one icon')
         _browser.item_add(BrowserViewsItemClass(), 'two_icons', 'two icons')
