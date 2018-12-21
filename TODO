@@ -1,0 +1,19 @@
+
+Just a scratchpad for the moment
+================================
+
+
+QML
+---
+
+function item_changed() {
+    console.log("ITEM CHANGED", currentIndex)
+    emcInfoDelayTimer.restart()
+}
+
+
+signal sgnItemIndexChanged(int index)
+
+onSgnItemIndexChanged: {
+    console.log("sgn " + index)
+}

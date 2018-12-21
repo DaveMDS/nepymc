@@ -7,12 +7,39 @@ import "utils/"
 
 
 Item {
+    id: emcBrowserListView
+
+    property int currentIndex: emcBrowserList.currentIndex
+    property bool infoVisible: false
+
+    Timer {  // info box and big image are delayed
+        id: emcInfoDelayTimer
+        interval: 500; running: false; repeat: false
+        onTriggered: {
+            var text = BrowserModel.get(currentIndex, 'info');
+            if (text) {
+                emcBrowserInfoText.text = text
+                infoVisible = true
+            } else {
+                // hide animation will run, not clearing the text
+                infoVisible = false
+            }
+        }
+    }
+
+    /**  List View (inside a big frame)  **************************************/
     BorderImage {
         anchors.fill: parent
+        anchors.rightMargin: parent.width / 2
+        anchors.bottomMargin: -13
         source: "pics/frame.png"
         border { left: 32; right: 32; top: 92; bottom: 78 }
 
         ListView {
+            id: emcBrowserList
+
+            onCurrentIndexChanged: emcInfoDelayTimer.restart()
+
             anchors {
                 fill: parent
                 leftMargin: 19
@@ -23,17 +50,60 @@ Item {
             clip: true
             focus: true
 
-            model: BrowserModel  // impemented python (label, icon)
-            delegate: emcBrowserListComponent
+            model: BrowserModel  // implemented in python
+            delegate: emcBrowserListItemComponent
 
             ScrollBar.vertical: ScrollBar { }
 
         }
     }
 
+    /**  Info box  ************************************************************/
+    BorderImage {
+        id: emcBrowserInfo
+
+        source: "pics/frame2.png"
+        border { left: 8; right: 8; top: 8; bottom: 8 }
+
+        width: parent.width / 2
+        height: parent.height / 2.66
+        anchors.right: parent.right  // align right
+        anchors.bottom: parent.bottom  // align bottom
+        anchors.bottomMargin: -(height + 25) // hidden below the window
+
+        EmcText {
+            id: emcBrowserInfoText
+
+            anchors {
+                fill: parent
+                topMargin: 9
+                leftMargin: 15
+                rightMargin: 12
+                bottomMargin: 10
+            }
+        }
+
+        states: State {
+            name: "visible"
+            when: infoVisible
+            PropertyChanges {
+                target: emcBrowserInfo
+                anchors.bottomMargin: 7
+            }
+        }
+        transitions: Transition {
+            from: ""; to: "visible"; reversible: true
+            NumberAnimation {
+                easing.type: Easing.InCubic
+                duration: 350
+                properties: "anchors.bottomMargin"
+            }
+        }
+    }
+
     /**  List Items  **********************************************************/
     Component {
-        id: emcBrowserListComponent
+        id: emcBrowserListItemComponent
 
         Item {
             id: emcBrowserListItem

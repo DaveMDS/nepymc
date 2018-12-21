@@ -737,10 +737,11 @@ class BrowserViewsItemClass(GenericItemClass):
     def label_end_get(self, url, user_data):
         if url in ('two_labels', 'two_labels_one_icon', 'two_labels_two_icon'):
             return 'second'
-    #
-    # def info_get(self, url, user_data):
-    #     return '<title>Testing:</title><br>' + user_data
-    #
+
+    def info_get(self, url, user_data):
+        if url != "two_labels":
+            return '<title>Testing:</title><br>' + user_data
+
     def icon_get(self, url, user_data):
         if url in ('one_icon', 'two_icons', 'two_labels_one_icon',
                    'two_labels_two_icon'):
@@ -751,7 +752,6 @@ class BrowserViewsItemClass(GenericItemClass):
             return 'icon/views'
 
     def icon_end_get(self, url, user_data):
-        print("ICON END GET " * 10)
         if url in ('two_icons', 'two_labels_two_icon'):
             # return 'icon/evas'  # TODO
             return 'star'
@@ -780,7 +780,7 @@ class Test_BrowserViews(GenericItemClass):
         _browser.item_add(BrowserViewsItemClass(), 'one_label', 'one label')
         _browser.item_add(BrowserViewsItemClass(), 'one_icon', 'one icon')
         _browser.item_add(BrowserViewsItemClass(), 'two_icons', 'two icons')
-        _browser.item_add(BrowserViewsItemClass(), 'two_labels', 'two labels')
+        _browser.item_add(BrowserViewsItemClass(), 'two_labels', 'two labels (no info)')
         _browser.item_add(BrowserViewsItemClass(), 'two_labels_one_icon',
                                                    'two labels + one icon')
         _browser.item_add(BrowserViewsItemClass(), 'two_labels_two_icon',

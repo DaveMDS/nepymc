@@ -49,7 +49,6 @@ FocusScope {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
-            rightMargin: parent.width / 2
         }
     }
 

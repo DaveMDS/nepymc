@@ -76,17 +76,20 @@ class BrowserModel(QAbstractListModel):
     label_end_role = Qt.UserRole + 2
     icon_role = Qt.UserRole + 3
     icon_end_role = Qt.UserRole + 4
+    info_role = Qt.UserRole + 5
     role_names_qt = {
         label_role: b'label',
         label_end_role: b'label_end',
         icon_role: b'icon',
         icon_end_role: b'icon_end',
+        info_role: b'info',
     }
     role_names = {
         label_role: 'label',
         label_end_role: 'label_end',
         icon_role: 'icon',
         icon_end_role: 'icon_end',
+        info_role: 'info',
     }
 
     def __init__(self, parent=None):
@@ -122,6 +125,12 @@ class BrowserModel(QAbstractListModel):
     def data(self, index, role):
         if self._emc_model:
             return self._emc_model.item_data_get(index.row(), self.role_names[role])
+
+    @Slot(int, str, result=str)
+    def get(self, idx, role_name):
+        """ Same as data, but to be used from QML """
+        if self._emc_model:
+            return self._emc_model.item_data_get(idx, role_name)
 
 
 class GuiCommunicator(QObject):
