@@ -439,10 +439,11 @@ class EmcBrowser(object):
         """ TODO Function doc """
         # gui.signal_emit('topbar,show')
         gui.activate_section('browser')
+        gui.page_icon_set(self.icon)
 
         # global _active_browser
         # _active_browser = self
-        # gui.swallow_set('topbar.icon', EmcImage(self.icon))
+
         # input_events.listener_add('browser-' + self.name, self._input_event_cb)
 
     def hide(self):

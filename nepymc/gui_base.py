@@ -65,4 +65,8 @@ class EmcGui_Base(ABC):
 
     @abstractmethod
     def page_title_set(self, title: str):
-        """ Set the main title """
+        """ Set the page title """
+
+    @abstractmethod
+    def page_icon_set(self, icon: str):
+        """ Set the page icon """

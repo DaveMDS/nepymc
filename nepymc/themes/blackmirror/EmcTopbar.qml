@@ -8,6 +8,7 @@ Item {
     height: emcTitle.height
 
     property string title
+    property string icon
 
     BorderImage {  // background image
         id: emcBG
@@ -19,7 +20,7 @@ Item {
 
     Image {  // left icon
         id: emcIcon
-        source: "pics/icon/home.png"
+        source: "pics/" + icon + ".png"
         width: parent.height + 4
         height: parent.height + 4
         x: 20

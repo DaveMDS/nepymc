@@ -98,3 +98,7 @@ def model_set(section: str, model: EmcModelViewInterface):
 
 def page_title_set(title: str) -> None:
     _backend_gui.page_title_set(title)
+
+
+def page_icon_set(icon: str) -> None:
+    _backend_gui.page_icon_set(icon)

@@ -49,6 +49,10 @@ ApplicationWindow {
         emc_browser.page_title = title
     }
 
+    function page_icon_set(icon) {
+        emc_browser.page_icon = icon
+    }
+
     Component.onCompleted: {
         emc_mainmenu.emc_active = true
         emc_mainmenu.focus = true

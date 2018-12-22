@@ -232,3 +232,7 @@ class EmcGui(EmcGui_Base):
     def page_title_set(self, title: str):
         root = self._qml_engine.rootObjects()[0]
         root.page_title_set(title)
+
+    def page_icon_set(self, icon: str):
+        root = self._qml_engine.rootObjects()[0]
+        root.page_icon_set(icon)

@@ -8,6 +8,7 @@ FocusScope {
 
     property bool emc_active: false
     property string page_title: "page title"
+    property string page_icon: "icon/home"
 
 //    property bool focus: emcBrowserList.focus
 
@@ -25,6 +26,7 @@ FocusScope {
     EmcTopbar {
         id: emcBrowserHeader
         title: page_title
+        icon: page_icon
     }
 
     /***  ListView  ***********************************************************/
