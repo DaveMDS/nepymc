@@ -218,6 +218,10 @@ class EmcGui(EmcGui_Base):
         root = self._qml_engine.rootObjects()[0]
         root.activate_section(section)
 
+    def hide_section(self, section: str) -> None:
+        root = self._qml_engine.rootObjects()[0]
+        root.hide_section(section)
+
     def model_set(self, section: str, model: EmcModelViewInterface):
         if section == 'browser':
             # self._browser_model_qt.beginResetModel()

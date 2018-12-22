@@ -18,10 +18,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+import sys
 from typing import Callable, Iterable
 
-# from epymc import gui, input_events
+from nepymc import gui
+# from nepymc import input_events
 from nepymc.model import EmcModelViewInterface
 
 
@@ -151,32 +152,19 @@ def item_activate(name: str) -> None:
     item.activate(subitem)
 
 
-# ****************************************************************************
-# ****************************************************************************
-# ****************************************************************************
-
-
-"""
 def show():
-    _list.focus_allow = True
-    _list.focus = True
-    _list.callback_clicked_double_add(_cb_item_activated)
-    _list.callback_selected_add(_cb_item_selected)
-    if not _list.selected_item:
-        _list.first_item.selected = True
-    _list.go()
-    gui.signal_emit('mainmenu,show')
-    input_events.listener_add('mainmenu', input_event_cb)
-    gui.clock_update()
+    gui.activate_section('mainmenu')
+    # input_events.listener_add('mainmenu', input_event_cb)
+
 
 def hide():
-    _list.focus_allow = False
-    _list.callback_clicked_double_del(_cb_item_activated)
-    _list.callback_selected_del(_cb_item_selected)
-    input_events.listener_del('mainmenu')
-    gui.signal_emit('mainmenu,hide')
-"""
+    # input_events.listener_del('mainmenu')
+    gui.hide_section('mainmenu')
 
+
+# ****************************************************************************
+# ****************************************************************************
+# ****************************************************************************
 
 """
 def item_add_OLD(name, weight, label, icon, callback, subitems=[]):

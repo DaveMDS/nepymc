@@ -140,13 +140,28 @@ FocusScope {
         }
     }
 
-    transitions: Transition {
-        from: ""; to: "hidden"; reversible: true
-        NumberAnimation {
-            duration: 200
-            properties: "anchors.topMargin, y, opacity"
+    transitions: [
+        Transition {
+            from: ""; to: "hidden";
+            SequentialAnimation {
+                NumberAnimation {
+                    duration: 200
+                    properties: "anchors.topMargin, y, opacity"
+                }
+                ScriptAction { script: visible = false; }
+            }
+        },
+        Transition {
+            from: "hidden"; to: "";
+            SequentialAnimation {
+                ScriptAction { script: visible = true; }
+                NumberAnimation {
+                    duration: 200
+                    properties: "anchors.topMargin, y, opacity"
+                }
+            }
         }
-    }
+    ]
 
     /***  Main List item delegate  ********************************************/
     Component {

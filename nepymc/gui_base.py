@@ -52,6 +52,10 @@ class EmcGui_Base(ABC):
         """ sections: mainmenu,browser """
 
     @abstractmethod
+    def hide_section(self, section: str) -> None:
+        """ sections: mainmenu,browser """
+
+    @abstractmethod
     def model_set(self, section: str, model: EmcModelViewInterface):
         """
         :param section:

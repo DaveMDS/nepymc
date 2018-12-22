@@ -59,12 +59,10 @@ FocusScope {
         PropertyChanges {
             target: emcBrowserList
             opacity: 0.0
-            visible: false
         }
         PropertyChanges {
             target: emcBrowserHeader
             opacity: 0.0
-            visible: false
         }
         PropertyChanges {
             target: emcBrowser
@@ -72,11 +70,26 @@ FocusScope {
         }
     }
 
-    transitions: Transition {
-        from: ""; to: "hidden"; reversible: true
-        NumberAnimation {
-            duration: 200
-            properties: "opacity"
+    transitions: [
+        Transition {
+            from: ""; to: "hidden";
+            SequentialAnimation {
+                NumberAnimation {
+                    duration: 200
+                    properties: "opacity"
+                }
+                ScriptAction { script: visible = false; }
+            }
+        },
+        Transition {
+            from: "hidden"; to: "";
+            SequentialAnimation {
+                ScriptAction { script: visible = true; }
+                NumberAnimation {
+                    duration: 200
+                    properties: "opacity"
+                }
+            }
         }
-    }
+    ]
 }

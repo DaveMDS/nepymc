@@ -732,6 +732,10 @@ class BrowserViewsItemClass(GenericItemClass):
     #     print(url)
     path = os.path.dirname(__file__)
 
+    def item_selected(self, url, user_data):
+        if url == "one_label":
+            _browser.hide()
+
     def label_get(self, url, user_data):
         return user_data
 
@@ -765,18 +769,20 @@ class BrowserViewsItemClass(GenericItemClass):
 
 class Test_BrowserViews(GenericItemClass):
     def item_selected(self, url, user_data):
-        _mod._browser.page_add('uitests://views', 'Browser Views',
-                               ('List', 'PosterGrid', 'CoverGrid'),
-                               self.populate_views_page)
+        _browser.page_add('uitests://views', 'EmcBrowser',
+                          ('List', 'PosterGrid', 'CoverGrid'),
+                          self.populate_views_page)
 
     def populate_views_page(self, browser, url):
         _browser.item_add(BackItemClass(), 'back', 'special BackItemClass')
         _browser.item_add(FolderItemClass(), 'folder',
                                              'special FolderItemClass')
-        _browser.item_add(BrowserViewsItemClass(), 'one_label', 'one label')
+        _browser.item_add(BrowserViewsItemClass(), 'one_label',
+                                                   'one label (hide browser)')
         _browser.item_add(BrowserViewsItemClass(), 'one_icon', 'one icon')
         _browser.item_add(BrowserViewsItemClass(), 'two_icons', 'two icons')
-        _browser.item_add(BrowserViewsItemClass(), 'two_labels', 'two labels (no info)')
+        _browser.item_add(BrowserViewsItemClass(), 'two_labels',
+                                                   'two labels (no info)')
         _browser.item_add(BrowserViewsItemClass(), 'two_labels_one_icon',
                                                    'two labels + one icon')
         _browser.item_add(BrowserViewsItemClass(), 'two_labels_two_icon',
@@ -842,7 +848,7 @@ class UiTestsModule(EmcModule):
         # browser.item_add(MainPageItemClass(), 'uitests://dvd', 'Mediaplayer - DVD Playback (/dev/cdrom)')
         # browser.item_add(MainPageItemClass(), 'uitests://vkbd', 'Virtual Keyboard')
         # browser.item_add(MainPageItemClass(), 'uitests://encoding', 'Various string encoding tests')
-        browser.item_add(Test_BrowserViews(), 'uitests://views', 'Browser Views')
+        browser.item_add(Test_BrowserViews(), 'uitests://views', 'EmcBrowser')
         # browser.item_add(MainPageItemClass(), 'uitests://images', 'Browser + EmcImage')
         # browser.item_add(MainPageItemClass(), 'uitests://movies_name', 'Movies name test')
         # browser.item_add(MainPageItemClass(), 'uitests://sniffer', 'Event Sniffer')

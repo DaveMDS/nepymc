@@ -88,5 +88,9 @@ def activate_section(section: str) -> None:
     _backend_gui.activate_section(section)
 
 
+def hide_section(section: str) -> None:
+    _backend_gui.hide_section(section)
+
+
 def model_set(section: str, model: EmcModelViewInterface):
     _backend_gui.model_set(section, model)

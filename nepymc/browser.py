@@ -53,7 +53,7 @@ def DBG(*args):
     pass
 
 
-_views = {}  # key=>view_name  value=>view class instance
+_views = {}  # key=>view_name  value=>view class instance  # TODO still used ??
 _memorydb = None  # EmcDatabase  key=>page_url  value=style_name
 _instances = []  # keep track of EmcBrowser instances. just for dump_all()
 _topbar_btns = []  # Topbar buttons
@@ -177,8 +177,7 @@ class BackItemClass(EmcItemClass):
     """ Base item class to be subclassed for ALL back items """
 
     def item_selected(self, url, user_data):
-        # user_data.back()  // TODO sure ??
-        raise NotImplementedError
+        user_data.back()
 
     def label_get(self, url, user_data):
         return _('Back')
@@ -214,7 +213,7 @@ class BrowserModel(EmcModelViewInterface):
         # return "pippo %d" % (index + 1)
 
         try:
-            (item_class, url, user_data) = self._browser.pages[-1]['items'][index]
+            (item_class, url, user_data) = self._browser.items[index]
         except KeyError:
             return None
         DBG('data_get()', field_name)
@@ -234,17 +233,12 @@ class BrowserModel(EmcModelViewInterface):
             return item_class.cover_get(url, user_data)
 
     def item_count_get(self):
-        try:
-            page = self._browser.pages[-1]
-        except IndexError:
-            return 0
-        # DBG('count_get() =>', len(page['items']))
-        return len(page['items'])
+        return len(self._browser.items)
 
     def item_selected(self, index):
         try:
-            (item_class, url, user_data) = self._browser.pages[-1]['items'][index]
-        except KeyError:
+            (item_class, url, user_data) = self._browser.items[index]
+        except IndexError:
             return
         item_class.item_selected(url, user_data)
 
@@ -257,7 +251,8 @@ class EmcBrowser(object):
      1. implement at least one class that inherit from EmcItemClass
      2. create an instance of EmcBrowser
      3. add a page to the browser using the page_add() method
-     4. add items to the current page using item_add(MyItemClass(), url, user_data)
+     4. in the page populated callback add items to the current page using
+          item_add(MyItemClass(), url, user_data)
     Later you can create new pages or use back(), clear(), show(), hide()
     """
 
@@ -270,6 +265,7 @@ class EmcBrowser(object):
         self.icon = icon
 
         self.pages = []
+        self.items = []  # items of the current page (itemclass, url, userdata)
         self.current_view = None
         self.autoselect_url = None
         self._freezed = False
@@ -335,7 +331,7 @@ class EmcBrowser(object):
 
         # append the new page in the pages list
         page = {'view': view, 'url': url, 'title': title, 'styles': styles,
-                'cb': populate_cb, 'items': [], 'args': args, 'kwargs': kwargs}
+                'cb': populate_cb, 'args': args, 'kwargs': kwargs}
         self.pages.append(page)
 
         # first time, we don't have a current_view, set it
@@ -357,7 +353,7 @@ class EmcBrowser(object):
         """
         page = self.pages[-1]
         item_data = (item_class, url, user_data)
-        page['items'].append(item_data)
+        self.items.append(item_data)
         # self.current_view.item_add(item_class, url, user_data,
         #                            True if (url and url == self.autoselect_url) else False)
 
@@ -372,7 +368,7 @@ class EmcBrowser(object):
         self.autoselect_url = old_page['url']
         del old_page
 
-        # no more page to go back, hide the view and return to main menu
+        # no more page to go back, hide and return to main menu
         if len(self.pages) == 0:
             self.hide()
             mainmenu.show()
@@ -437,6 +433,7 @@ class EmcBrowser(object):
         self.autoselect_url = None
         self._freezed = False
         self.pages = []
+        self.items = []
 
     def show(self):
         """ TODO Function doc """
@@ -446,18 +443,13 @@ class EmcBrowser(object):
         # global _active_browser
         # _active_browser = self
         # gui.swallow_set('topbar.icon', EmcImage(self.icon))
-        # self.current_view.show()
         # input_events.listener_add('browser-' + self.name, self._input_event_cb)
-        # for b in _topbar_btns:
-        #     b.focus_allow = True
 
     def hide(self):
         """ TODO Function doc """
-        gui.signal_emit('topbar,hide')
-        input_events.listener_del('browser-' + self.name)
-        self.current_view.hide()
-        for b in _topbar_btns:
-            b.focus_allow = False
+        # gui.signal_emit('topbar,hide')
+        # input_events.listener_del('browser-' + self.name)
+        gui.hide_section('browser')
 
     @property
     def freezed(self):
@@ -490,6 +482,9 @@ class EmcBrowser(object):
         full = ' > '.join([p['title'] for p in self.pages])
         # gui.text_set('topbar.title', full)  # TODO
 
+        # clear the items list
+        self.items = []
+
         view = page['view']
         """
         if view == self.current_view:
@@ -514,9 +509,8 @@ class EmcBrowser(object):
         self.current_view = view
 
         # back item (optional)
-        # if ini.get_bool('general', 'back_in_lists') == True:
-        #     self.item_add(BackItemClass(), 'emc://back', self)
-        #     view.items_count -= 1
+        if ini.get_bool('general', 'back_in_lists'):
+            self.item_add(BackItemClass(), 'emc://back', self)
 
         # use this for extra debug
         # print(self)

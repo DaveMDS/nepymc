@@ -19,12 +19,29 @@ ApplicationWindow {
     /* theme API TODOC */
     function activate_section(section) {
         console.log("activate_section: " + section)
-        if (section === "browser") {
-//            emc_browser.show()
-//            emc_mainmenu.hide()
+        switch (section) {
+        case "browser":
+            emc_mainmenu.emc_active = false
+
             emc_browser.emc_active = true
             emc_browser.focus = true
-            emc_mainmenu.emc_active = false
+            break
+        case "mainmenu":
+            emc_browser.emc_active = false
+
+            emc_mainmenu.emc_active = true
+            emc_mainmenu.focus = true
+            break
+        }
+    }
+
+    function hide_section(section) {
+        console.log("hide_section: " + section)
+        switch (section) {
+        case "browser":
+            emc_browser.emc_active = false; break
+        case "mainmenu":
+            emc_mainmenu.emc_active = false; break
         }
     }
 
