@@ -7,6 +7,7 @@ FocusScope {
     id: emcBrowser
 
     property bool emc_active: false
+    property string page_title: "page title"
 
 //    property bool focus: emcBrowserList.focus
 
@@ -20,23 +21,10 @@ FocusScope {
 //        console.log("HIDE BROWSER")
 //    }
 
-
-
     /***  TopBar  *************************************************************/
-    EmcTextBig {  // header text
+    EmcTopbar {
         id: emcBrowserHeader
-
-        text: "TODO FILL"
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.family: EmcGlobals.font2.name
-
-        BorderImage {  // background image
-            x: -parent.x
-            width: emcBrowser.width
-            height: parent.height + 35
-            source: "pics/header.png"
-            border { left: 31; right: 39; top: 2; bottom: 39 }
-        }
+        title: page_title
     }
 
     /***  ListView  ***********************************************************/

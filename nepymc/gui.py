@@ -94,3 +94,7 @@ def hide_section(section: str) -> None:
 
 def model_set(section: str, model: EmcModelViewInterface):
     _backend_gui.model_set(section, model)
+
+
+def page_title_set(title: str) -> None:
+    _backend_gui.page_title_set(title)

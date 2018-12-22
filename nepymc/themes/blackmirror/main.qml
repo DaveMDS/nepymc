@@ -45,6 +45,10 @@ ApplicationWindow {
         }
     }
 
+    function page_title_set(title) {
+        emc_browser.page_title = title
+    }
+
     Component.onCompleted: {
         emc_mainmenu.emc_active = true
         emc_mainmenu.focus = true

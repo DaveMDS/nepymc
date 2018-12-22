@@ -62,3 +62,7 @@ class EmcGui_Base(ABC):
         :param model:
         :return:
         """
+
+    @abstractmethod
+    def page_title_set(self, title: str):
+        """ Set the main title """

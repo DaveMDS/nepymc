@@ -34,7 +34,6 @@ Item {
                 // hide animation will run, not clearing the image
                 posterVisible = false
             }
-
         }
     }
 
@@ -219,7 +218,4 @@ Item {
             }
         }
     }
-
-
-
 }

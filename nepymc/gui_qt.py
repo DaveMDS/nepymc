@@ -171,6 +171,7 @@ class GuiCommunicator(QObject):
 
 class EmcGui(EmcGui_Base):
     """ PySide2 implementation of the EmcWindow """
+
     def __init__(self, *args, **kargs):
         super().__init__(*args, **kargs)
         self._qml_engine = None
@@ -227,3 +228,7 @@ class EmcGui(EmcGui_Base):
             # self._browser_model_qt.beginResetModel()
             self._browser_model_qt.emc_model = model
             # self._browser_model_qt.endResetModel()
+
+    def page_title_set(self, title: str):
+        root = self._qml_engine.rootObjects()[0]
+        root.page_title_set(title)

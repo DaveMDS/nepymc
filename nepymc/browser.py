@@ -480,7 +480,7 @@ class EmcBrowser(object):
     def _populate_page(self, page, is_back=False, is_refresh=False,
                        is_unfreeze=False):
         full = ' > '.join([p['title'] for p in self.pages])
-        # gui.text_set('topbar.title', full)  # TODO
+        gui.page_title_set(full)
 
         # clear the items list
         self.items = []

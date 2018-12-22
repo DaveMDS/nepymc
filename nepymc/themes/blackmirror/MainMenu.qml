@@ -34,6 +34,7 @@ FocusScope {
 
         BorderImage {  // background image
             x: -parent.x
+            z: -1
             width: emcMainMenu.width
             height: parent.height + 35
             source: "pics/header.png"
@@ -48,39 +49,28 @@ FocusScope {
 
         EmcTextBig {  // date
             id: emcClockDate
+
+            text: EmcGlobals.date_long  // auto-updating property binding
+            font.family: EmcGlobals.font3.name
+            style: Text.Raised
             anchors {
                 bottom: parent.bottom
                 left: parent.left
                 margins: 12
             }
-            font.family: EmcGlobals.font3.name
-            style: Text.Raised
         }
 
         EmcTextBigger {  // hour
             id: emcClockTime
+
+            text: EmcGlobals.time_short  // auto-updating property binding
+            font.family: EmcGlobals.font3.name
+            style: Text.Raised
             anchors {
                 left: parent.left
                 bottom: emcClockDate.top
                 leftMargin: 12
             }
-            font.family: EmcGlobals.font3.name
-            style: Text.Raised
-        }
-
-        function timeChanged() {
-            var now = new Date
-            //console.log(now)
-            emcClockTime.text = now.toLocaleTimeString(EmcGlobals.locale, Locale.ShortFormat)
-            emcClockDate.text = now.toLocaleDateString(EmcGlobals.locale, Locale.LongFormat)
-        }
-
-        Timer {
-            interval: 1000
-            running: true
-            repeat: true
-            triggeredOnStart: true
-            onTriggered: emcClock.timeChanged()
         }
     }
 
