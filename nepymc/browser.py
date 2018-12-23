@@ -434,7 +434,6 @@ class EmcBrowser(object):
 
     def show(self):
         """ TODO Function doc """
-        # gui.signal_emit('topbar,show')
         gui.activate_section('browser')
         gui.page_icon_set(self.icon)
 
@@ -445,7 +444,6 @@ class EmcBrowser(object):
 
     def hide(self):
         """ TODO Function doc """
-        # gui.signal_emit('topbar,hide')
         # input_events.listener_del('browser-' + self.name)
         gui.hide_section('browser')
 
@@ -468,11 +466,11 @@ class EmcBrowser(object):
         self.show()
         self._freezed = False
 
-    def item_bring_in(self, pos='top', animated=True):
-        """ Move the view so that the currently selected item will go on 'pos'
-        pos can be: 'in', ', top', 'mid'
-        """
-        self.current_view.item_bring_in(pos, animated)
+    # def item_bring_in(self, pos='top', animated=True):
+    #     """ Move the view so that the currently selected item will go on 'pos'
+    #     pos can be: 'in', ', top', 'mid'
+    #     """
+    #     self.current_view.item_bring_in(pos, animated)
 
     # private stuff
     def _populate_page(self, page, is_back=False, is_refresh=False,
