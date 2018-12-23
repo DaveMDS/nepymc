@@ -109,3 +109,8 @@ def page_title_set(title: str) -> None:
 
 def page_icon_set(icon: str) -> None:
     _backend_gui.page_icon_set(icon)
+
+
+def dialog_factory(*args, **kargs):  # TODO  -> EmcDialogBase:
+    """ return an instance of type EmcDialog, see EmcDialog_Base for params """
+    _backend_gui.build_dialog(*args, **kargs)

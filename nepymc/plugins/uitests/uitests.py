@@ -23,6 +23,7 @@ import pprint
 
 from nepymc.modules import EmcModule
 from nepymc import mainmenu
+from nepymc import gui
 from nepymc.browser import EmcBrowser, \
     EmcItemClass, BackItemClass, FolderItemClass
 # from epymc.gui import EmcDialog, EmcVKeyboard, EmcFolderSelector, \
@@ -810,6 +811,14 @@ class Test_BrowserViews(GenericItemClass):
                           'with poster and cover')
 
 
+class Test_Dialogs(GenericItemClass):
+    def item_selected(self, url, user_data):
+        if url == 'uitests://dlg-info':
+            print("DIALOG INFO", url, user_data)
+            # EmcDialog(title='Dialog - Info', text=LOREM, style='info')
+            gui.dialog_factory(title='Dialog - Info', text=LOREM, style='info')
+
+
 class UiTestsModule(EmcModule):
     name = 'uitests'
     label = 'UI tests'
@@ -845,8 +854,8 @@ class UiTestsModule(EmcModule):
         self._browser.show()
 
     def populate_root(self, browser, url):
-        browser.item_add(Test_Buttons(), 'uitests://buttons', 'Buttons + Focus')
-        browser.item_add(Test_Focus(), 'uitests://focus_1', 'Focus corner case 1')
+        # browser.item_add(Test_Buttons(), 'uitests://buttons', 'Buttons + Focus')
+        # browser.item_add(Test_Focus(), 'uitests://focus_1', 'Focus corner case 1')
         # browser.item_add(MainPageItemClass(), 'uitests://focus_2', 'Focus corner case 2')
         # browser.item_add(MainPageItemClass(), 'uitests://focus_3', 'Focus corner case 3')
         # browser.item_add(MainPageItemClass(), 'uitests://storage', 'Storage devices')
@@ -870,11 +879,11 @@ class UiTestsModule(EmcModule):
         # browser.item_add(MainPageItemClass(), 'uitests://notify', 'Notify Stack')
         # browser.item_add(MainPageItemClass(), 'uitests://icons', 'Icons gallery')
         # browser.item_add(MainPageItemClass(), 'uitests://imagegal', 'Images gallery')
-        browser.item_add(Test_Styles(), 'uitests://styles', 'Text styles')
+        # browser.item_add(Test_Styles(), 'uitests://styles', 'Text styles')
         # browser.item_add(MainPageItemClass(), 'uitests://dm', 'Download Manager - start')
         # browser.item_add(MainPageItemClass(), 'uitests://dm2', 'Download Manager - show')
         # browser.item_add(MainPageItemClass(), 'uitests://tmdb', 'Themoviedb.org query with gui')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-info', 'Dialog - Info')
+        browser.item_add(Test_Dialogs(), 'uitests://dlg-info', 'Dialog - Info')
         # browser.item_add(MainPageItemClass(), 'uitests://dlg-warning', 'Dialog - Warning')
         # browser.item_add(MainPageItemClass(), 'uitests://dlg-warning2', 'Dialog - Warning (no title)')
         # browser.item_add(MainPageItemClass(), 'uitests://dlg-error', 'Dialog - Error')

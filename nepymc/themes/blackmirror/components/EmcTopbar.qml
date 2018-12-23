@@ -1,6 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
-import "utils/"
+import "../utils/"
 
 
 Item {
@@ -12,7 +12,7 @@ Item {
 
     BorderImage {  // background image
         id: emcBG
-        source: "pics/header.png"
+        source: "../pics/header.png"
         border { left: 31; right: 39; top: 2; bottom: 39 }
         width: parent.width
         height: parent.height + 33
@@ -20,7 +20,7 @@ Item {
 
     Image {  // left icon
         id: emcIcon
-        source: "pics/" + icon + ".png"
+        source: "../pics/" + icon + ".png"
         width: parent.height + 4
         height: parent.height + 4
         x: 20

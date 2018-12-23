@@ -3,6 +3,7 @@ import QtQuick.Controls 2.0
 
 
 ApplicationWindow {
+    id: emcApplicationWindow
 
     minimumWidth: 960
     minimumHeight: 600
@@ -55,6 +56,13 @@ ApplicationWindow {
 
     function page_item_select(index) {
         emc_browser.currentIndex = index
+    }
+
+    function build_dialog(title) {
+        var comp = Qt.createComponent("components/EmcDialog.qml")
+        var dia = comp.createObject(emcApplicationWindow)
+        console.log("COMPONENT")
+        console.log(dia)
     }
 
     Component.onCompleted: {

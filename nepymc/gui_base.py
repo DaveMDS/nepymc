@@ -70,3 +70,18 @@ class EmcGui_Base(ABC):
     @abstractmethod
     def page_icon_set(self, icon: str):
         """ Set the page icon """
+
+
+class EmcDialog_Base(ABC):
+
+    @abstractmethod
+    def __init__(self, title=None, text=None, content=None, spinner=False,
+                 style='panel', done_cb=None, canc_cb=None, user_data=None):
+        self._title = title
+        self._text = text
+        self._content = content
+        self._spinner = spinner
+        self._style = style
+        self._done_cb = done_cb
+        self._canc_cb = canc_cb
+        self._user_data = user_data

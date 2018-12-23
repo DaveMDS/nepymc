@@ -25,7 +25,7 @@ from PySide2.QtCore import Qt, QObject, Slot, QAbstractListModel
 
 from nepymc import utils
 from nepymc import mainmenu
-from nepymc.gui_base import EmcGui_Base
+from nepymc.gui_base import EmcGui_Base, EmcDialog_Base
 from nepymc.model import EmcModelViewInterface
 
 
@@ -249,3 +249,29 @@ class EmcGui(EmcGui_Base):
     def page_item_select(self, index: int):
         root = self._qml_engine.rootObjects()[0]
         root.page_item_select(index)
+
+    def build_dialog(self, *args, **kargs):
+        return EmcDialog(self, *args, **kargs)
+
+
+class EmcDialog(EmcDialog_Base):
+    """ TODO doc this
+      style can be 'panel' or 'minimal'
+
+      you can also apply special style that perform specific task:
+         'info', 'error', 'warning', 'yesno', 'cancel', 'progress',
+         'list', 'image_list_horiz', 'image_list_vert',
+         'buffering'
+      """
+    minimal_styles = ['info', 'error', 'warning', 'yesno', 'cancel', 'progress']
+    dialogs_counter = 0
+
+    def __init__(self, gui, title=None, text=None, content=None, spinner=False,
+                 style='panel', done_cb=None, canc_cb=None, user_data=None):
+        super().__init__(title, text, content, spinner, style,
+                         done_cb, canc_cb, user_data)
+        self._gui = gui
+        print("ECCOCI")
+        root = self._gui._qml_engine.rootObjects()[0]
+        root.build_dialog('titolo del dialog')
+
