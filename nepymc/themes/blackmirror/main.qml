@@ -53,6 +53,10 @@ ApplicationWindow {
         emc_browser.page_icon = icon
     }
 
+    function page_item_select(index) {
+        emc_browser.currentIndex = index
+    }
+
     Component.onCompleted: {
         emc_mainmenu.emc_active = true
         emc_mainmenu.focus = true

@@ -45,3 +45,6 @@ class EmcModelViewInterface(ABC):
     def view_reset(self):
         """ The model has changed and request the view to reset """
         raise NotImplementedError('The view are not hooking into reset()')
+
+    def select_item(self, index):
+        """ The model request the view to show the given index """

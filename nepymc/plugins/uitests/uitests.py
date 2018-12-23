@@ -733,8 +733,12 @@ class BrowserViewsItemClass(GenericItemClass):
     path = os.path.dirname(__file__)
 
     def item_selected(self, url, user_data):
-        if url == "one_label":
+        if url == "hide":
             _browser.hide()
+        elif url == "refresh":
+            _browser.refresh()
+        elif url == "refresh_hard":
+            _browser.refresh(hard=True)
 
     def label_get(self, url, user_data):
         return user_data
@@ -774,26 +778,36 @@ class Test_BrowserViews(GenericItemClass):
                           self.populate_views_page)
 
     def populate_views_page(self, browser, url):
-        _browser.item_add(BackItemClass(), 'back', 'special BackItemClass')
+        _browser.item_add(BackItemClass(), 'back',
+                          'special BackItemClass')
         _browser.item_add(FolderItemClass(), 'folder',
-                                             'special FolderItemClass')
+                          'special FolderItemClass')
+        _browser.item_add(BrowserViewsItemClass(), 'hide',
+                          'browser hide()')
+        _browser.item_add(BrowserViewsItemClass(), 'refresh',
+                          'browser refresh()')
+        _browser.item_add(BrowserViewsItemClass(), 'refresh_hard',
+                          'browser refresh(hard)')
         _browser.item_add(BrowserViewsItemClass(), 'one_label',
-                                                   'one label (hide browser)')
-        _browser.item_add(BrowserViewsItemClass(), 'one_icon', 'one icon')
-        _browser.item_add(BrowserViewsItemClass(), 'two_icons', 'two icons')
+                          'one label (hide browser)')
+        _browser.item_add(BrowserViewsItemClass(), 'one_icon',
+                          'one icon')
+        _browser.item_add(BrowserViewsItemClass(), 'two_icons',
+                          'two icons')
         _browser.item_add(BrowserViewsItemClass(), 'two_labels',
-                                                   'two labels (no info)')
+                          'two labels (no info)')
         _browser.item_add(BrowserViewsItemClass(), 'two_labels_one_icon',
-                                                   'two labels + one icon')
+                          'two labels + one icon')
         _browser.item_add(BrowserViewsItemClass(), 'two_labels_two_icon',
-                                                   'two labels + two icon')
+                          'two labels + two icon')
         _browser.item_add(BrowserViewsItemClass(), 'poster_no_info',
-                                                   'with poster only (no info)')
+                          'with poster only (no info)')
         _browser.item_add(BrowserViewsItemClass(), 'poster',
-                                                   'with poster only')
-        _browser.item_add(BrowserViewsItemClass(), 'cover', 'with cover only')
+                          'with poster only')
+        _browser.item_add(BrowserViewsItemClass(), 'cover',
+                          'with cover only')
         _browser.item_add(BrowserViewsItemClass(), 'poster_cover',
-                                                   'with poster and cover')
+                          'with poster and cover')
 
 
 class UiTestsModule(EmcModule):

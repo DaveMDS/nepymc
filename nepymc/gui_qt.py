@@ -50,6 +50,7 @@ class MainMenuModel(QAbstractListModel):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+    # Qt model implementation (just a proxy to the mainmenu emc model)
     def roleNames(self):
         return {
             self.label_role: b'label',
@@ -58,7 +59,6 @@ class MainMenuModel(QAbstractListModel):
         }
 
     def rowCount(self, index):
-        # return len(self.items)
         return mainmenu.model.item_count_get()
 
     def data(self, index, role):
@@ -69,6 +69,13 @@ class MainMenuModel(QAbstractListModel):
             return mainmenu.model.item_data_get(index.row(), 'icon')
         elif role == self.subitems_role:
             return mainmenu.model.item_data_get(index.row(), 'subitems')
+
+    # below methods are to be called from QML
+    @Slot(int)
+    def item_selected(self, index):
+        """ An in item has been selected in QML """
+        print("mainmenu_item_selected(%s)" % index)
+        mainmenu.model.item_selected(index)
 
 
 class BrowserModel(QAbstractListModel):
@@ -98,9 +105,10 @@ class BrowserModel(QAbstractListModel):
         cover_role: 'cover',
     }
 
-    def __init__(self, parent=None):
+    def __init__(self, gui, parent=None):
         super().__init__(parent)
         self._emc_model = None  # EmcModel to extract data from
+        self._gui = gui
 
     @property
     def emc_model(self):
@@ -111,15 +119,16 @@ class BrowserModel(QAbstractListModel):
         self.beginResetModel()
         self._emc_model = model
         model.view_reset = self.model_hook_reset
+        model.select_item = self.model_hook_select_item
         self.endResetModel()
 
-    def item_selected(self, index):
-        self._emc_model.item_selected(index)
-
-    # Emc model hooks implementation
+    # Emc model hooks implementation (called by the model)
     def model_hook_reset(self):
         self.beginResetModel()
         self.endResetModel()
+
+    def model_hook_select_item(self, index):
+        self._gui.page_item_select(index)
 
     # Qt model implementation (just a proxy to the emc model)
     def roleNames(self):
@@ -132,11 +141,18 @@ class BrowserModel(QAbstractListModel):
         if self._emc_model:
             return self._emc_model.item_data_get(index.row(), self.role_names[role])
 
+    # below methods are to be called from QML
     @Slot(int, str, result=str)
     def get(self, idx, role_name):
         """ Same as data, but to be used from QML """
         if self._emc_model:
             return self._emc_model.item_data_get(idx, role_name)
+
+    @Slot(int)
+    def item_selected(self, index):
+        """ An in item has been selected in QML """
+        print("item_selected(%s)" % index)
+        self._emc_model.item_selected(index)
 
 
 class GuiCommunicator(QObject):
@@ -146,18 +162,11 @@ class GuiCommunicator(QObject):
         super().__init__()
         self._gui = gui
 
-    @Slot(int)
-    def mainmenu_item_selected(self, index):
-        # TODO or we can use the model instead ??
-        print("mainmenu_item_selected(%s)" % index)
-        mainmenu.model.item_selected(index)
-
-    @Slot(int)
-    def browser_item_selected(self, index):
-        # TODO or we can use the model instead ??
-        print("browser_item_selected(%s)" % index)
-        # mainmenu.model.item_selected(index)
-        self._gui._browser_model_qt.item_selected(index)
+    # @Slot(int)
+    # def mainmenu_item_selected(self, index):
+    #     """ Called by QML to notify a mainmenu item has been selected """
+    #     print("mainmenu_item_selected(%s)" % index)
+    #     mainmenu.model.item_selected(index)
 
     @Slot(str, result=str)
     def i18n(self, string):
@@ -194,7 +203,7 @@ class EmcGui(EmcGui_Base):
         ctxt = self._qml_engine.rootContext()
         self._model1 = MainMenuModel()
         ctxt.setContextProperty('MainMenuModel', self._model1)
-        self._browser_model_qt = BrowserModel()
+        self._browser_model_qt = BrowserModel(self)
         ctxt.setContextProperty('BrowserModel', self._browser_model_qt)
 
         # inject the Communicator class
@@ -236,3 +245,7 @@ class EmcGui(EmcGui_Base):
     def page_icon_set(self, icon: str):
         root = self._qml_engine.rootObjects()[0]
         root.page_icon_set(icon)
+
+    def page_item_select(self, index: int):
+        root = self._qml_engine.rootObjects()[0]
+        root.page_item_select(index)

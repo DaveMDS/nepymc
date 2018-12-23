@@ -9,9 +9,10 @@ import "utils/"
 Item {
     id: emcBrowserListView
 
-    property int currentIndex: emcBrowserList.currentIndex
     property bool infoVisible: false
     property bool posterVisible: false
+
+    property alias currentIndex: emcBrowserList.currentIndex
 
     Timer {  // info box and big image are delayed
         id: emcInfoDelayTimer
@@ -155,9 +156,7 @@ Item {
             height: 42
 
             Keys.onReturnPressed: {
-                console.log(model.label) // TODO REMOVE ME
-//                EmcBackend.browser_item_selected(model.icon)
-                EmcBackend.browser_item_selected(ListView.view.currentIndex)
+                BrowserModel.item_selected(index)
             }
 
             BorderImage {  // selection highlight background
@@ -215,6 +214,12 @@ Item {
                 border { top: 1; bottom: 1 }
                 opacity: 0.25
                 visible: parent.ListView.isCurrentItem
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: emcBrowserList.currentIndex = index
+                onDoubleClicked: BrowserModel.item_selected(index)
             }
         }
     }

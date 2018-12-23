@@ -164,11 +164,7 @@ FocusScope {
             height: 128   //height: childrenRect.height
 
             Keys.onReturnPressed: {
-                console.log(model.icon) // TODO REMOVE ME
-//                    EmcBackend.mainmenu_item_selected(model.icon)
-                    EmcBackend.mainmenu_item_selected(ListView.view.currentIndex)
-    //                var translated = EmcBackend.i18n(model.label)
-    //                console.log(translated)
+                MainMenuModel.item_selected(index)
             }
 
             // give focus to the sublist on DOWN pressed
@@ -235,7 +231,12 @@ FocusScope {
                         event.accepted = false  // let the ListView manage it
                     }
                 }
+            }
 
+            MouseArea {
+                anchors.fill: parent
+                onClicked: main_list.currentIndex = index
+                onDoubleClicked: MainMenuModel.item_selected(index)
             }
 
             states: [

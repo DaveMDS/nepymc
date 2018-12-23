@@ -10,17 +10,9 @@ FocusScope {
     property string page_title: "page title"
     property string page_icon: "icon/home"
 
-//    property bool focus: emcBrowserList.focus
+    property alias currentIndex: emcBrowserList.currentIndex
 
     anchors.fill: parent
-
-//    function show() {
-//        console.log("SHOW BROWSER")
-//        emcBrowserList.focus = true
-//    }
-//    function hide() {
-//        console.log("HIDE BROWSER")
-//    }
 
     /***  TopBar  *************************************************************/
     EmcTopbar {

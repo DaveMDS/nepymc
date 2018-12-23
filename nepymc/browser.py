@@ -351,11 +351,8 @@ class EmcBrowser(object):
         file:///home/user/some/dir, it MUST be unique in all the browser
         and MUST not contain any strange chars.
         """
-        page = self.pages[-1]
         item_data = (item_class, url, user_data)
         self.items.append(item_data)
-        # self.current_view.item_add(item_class, url, user_data,
-        #                            True if (url and url == self.autoselect_url) else False)
 
     def group_add(self, label, icon=None):
         """ TODO DOC """
@@ -381,12 +378,12 @@ class EmcBrowser(object):
     def refresh(self, hard=False):
         if self.pages and self.current_view:
             if hard:
-                # try to keep the selected item selected
-                self.autoselect_url = self.current_view.selected_url_get()
+                # try to keep the selected item selected  TODO
+                # self.autoselect_url = self.current_view.selected_url_get()
                 # re-create the page
                 self._populate_page(self.pages[-1], is_refresh=True)
             else:
-                self.current_view.refresh()
+                self._model.view_reset()
 
     def change_style(self, style):
         # the current page is always the last one
@@ -525,6 +522,7 @@ class EmcBrowser(object):
 
         # tell the view that data has been resetted
         self._model.view_reset()
+        self._model.select_item(0)
 
     def _input_event_cb(self, event):
         # pass the event to the view
