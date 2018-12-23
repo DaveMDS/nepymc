@@ -29,7 +29,7 @@ from nepymc import __version__ as emc_v
 from nepymc import modules
 from nepymc import mainmenu
 from nepymc import browser
-# from emc import config_gui
+from nepymc import config_gui
 # from emc import mediaplayer
 from nepymc import ini
 from nepymc import gui
@@ -107,6 +107,7 @@ def start_emc(standalone=False):
     # init internal components
     browser.init()
     mainmenu.init()
+    config_gui.init()
 
     # load & init modules
     modules.load_all()
@@ -198,7 +199,7 @@ def start_emc(standalone=False):
 
     from nepymc import gui
 
-    if not gui.init('qt', 'blackmirror', loop):  # TODO: theme  & backend by config
+    if not gui.init('qt', loop):  # TODO: backend by config
         ERR('Cannot create the GUI')
         return 1
 
@@ -212,6 +213,7 @@ def start_emc(standalone=False):
     loop.run()
 
     # shutdown
+    config_gui.shutdown()
     browser.shutdown()
     gui.shutdown()
 

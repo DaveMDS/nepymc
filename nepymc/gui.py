@@ -20,6 +20,7 @@
 
 import sys
 
+from nepymc import ini
 from nepymc.model import EmcModelViewInterface
 # from nepymc.mainloop_base import EmcMainLoop_Base
 
@@ -43,17 +44,23 @@ from nepymc.gui_qt import EmcGui  # TODO factorize !!!
 _backend_gui = None
 
 
-def init(backend: str, theme: str, loop) -> bool:   # TODO remove loop !!!!!!
+def init(backend: str, loop) -> bool:   # TODO remove loop !!!!!!
     """ return: False=failed True=ok """
     global _backend_gui
 
-    _backend_gui = EmcGui(loop, theme)
-    # gui = EmcGui(None, theme)
-    if not _backend_gui.create():
-        ERR('cannot create the main window')
-        return False
+    # get config values, setting defaults if needed
+    theme = ini.get('general', 'theme', 'blackmirror')
+    ini.get('general', 'gui_engine', 'qt')
+    ini.get('general', 'fps', 30)
+    ini.get('general', 'scale', 1.0)
+    ini.get('general', 'fullscreen', False)
+    ini.get('general', 'hide_mouse', False)
+    ini.get('general', 'time_format', '%H:%M')
+    ini.get('general', 'date_format', '%A %d %B')
+    ini.get('general', 'keyb_layouts', 'en_abc symbols')
 
-    return True
+    _backend_gui = EmcGui(loop, theme)
+    return _backend_gui.create()
 
 
 def shutdown():

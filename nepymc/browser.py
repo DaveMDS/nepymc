@@ -210,13 +210,11 @@ class BrowserModel(EmcModelViewInterface):
         self._browser = browser
 
     def item_data_get(self, index, field_name):
-        # return "pippo %d" % (index + 1)
-
         try:
             (item_class, url, user_data) = self._browser.items[index]
-        except KeyError:
+        except (IndexError, ValueError):
             return None
-        DBG('data_get()', field_name)
+        # DBG('data_get()', field_name)
         if field_name == 'label':
             return item_class.label_get(url, user_data)
         if field_name == 'label_end':
@@ -238,7 +236,7 @@ class BrowserModel(EmcModelViewInterface):
     def item_selected(self, index):
         try:
             (item_class, url, user_data) = self._browser.items[index]
-        except IndexError:
+        except (IndexError, ValueError):
             return
         item_class.item_selected(url, user_data)
 
