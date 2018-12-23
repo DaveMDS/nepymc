@@ -184,6 +184,7 @@ class EmcGui(EmcGui_Base):
     def __init__(self, *args, **kargs):
         super().__init__(*args, **kargs)
         self._qml_engine = None
+        self._qml_root = None
         self._model1 = None
         self._browser_model_qt = None
         self._backend_instance = None
@@ -212,10 +213,13 @@ class EmcGui(EmcGui_Base):
 
         # load and show the QML theme
         self._qml_engine.load(path)
-        if not self._qml_engine.rootObjects():
-            # TODO: find a decent way to detect load errors !!!!!!!!!!!!!!!!!!!!
+        roots = self._qml_engine.rootObjects()
+        if not roots:
             ERR('Cannot create the QML view')
             return False
+
+        # keep a reference of the main QML object
+        self._qml_root = roots[0]
 
         return True
 
@@ -225,12 +229,10 @@ class EmcGui(EmcGui_Base):
         del self._browser_model_qt
 
     def activate_section(self, section: str) -> None:
-        root = self._qml_engine.rootObjects()[0]
-        root.activate_section(section)
+        self._qml_root.activate_section(section)
 
     def hide_section(self, section: str) -> None:
-        root = self._qml_engine.rootObjects()[0]
-        root.hide_section(section)
+        self._qml_root.hide_section(section)
 
     def model_set(self, section: str, model: EmcModelViewInterface):
         if section == 'browser':
@@ -239,18 +241,15 @@ class EmcGui(EmcGui_Base):
             # self._browser_model_qt.endResetModel()
 
     def page_title_set(self, title: str):
-        root = self._qml_engine.rootObjects()[0]
-        root.page_title_set(title)
+        self._qml_root.page_title_set(title)
 
     def page_icon_set(self, icon: str):
-        root = self._qml_engine.rootObjects()[0]
-        root.page_icon_set(icon)
+        self._qml_root.page_icon_set(icon)
 
     def page_item_select(self, index: int):
-        root = self._qml_engine.rootObjects()[0]
-        root.page_item_select(index)
+        self._qml_root.page_item_select(index)
 
-    def build_dialog(self, *args, **kargs):
+    def build_dialog(self, *args, **kargs) -> EmcDialog_Base:
         return EmcDialog(self, *args, **kargs)
 
 
