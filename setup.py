@@ -123,7 +123,7 @@ setup(
         'lxml',
         # 'mutagen',
         # 'dbus',
-        # 'pyudev',
+        'pyudev',
         # 'libdiscid',
     ],
 

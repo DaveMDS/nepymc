@@ -321,7 +321,7 @@ class EmcDialog(EmcDialog_Base):
         raise NotImplementedError
 
     def text_set(self, text: str):
-        raise NotImplementedError
+        self._qml_obj.setProperty('main_text', text)
 
     def text_append(self, text: str) -> None:
         raise NotImplementedError

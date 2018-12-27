@@ -166,8 +166,8 @@ class StdConfigItemStringFromList(StdConfigItemBase):
         StdConfigItemBase.__done__(self)
 
     def item_selected(self, url, user_data):
-        dia = EmcDialog(self._lbl, style='list',
-                        done_cb=self._dia_list_selected_cb)
+        dia = gui.dialog_factory(self._lbl, style='list',
+                                 done_cb=self._dia_list_selected_cb)
         for string in self._sli:
             if string == ini.get(self._sec, self._opt):
                 it = dia.list_item_append(string, end='icon/check_on')
@@ -203,8 +203,8 @@ class StdConfigItemLang(StdConfigItemBase):
         StdConfigItemBase.__done__(self)
 
     def item_selected(self, url, user_data):
-        dia = EmcDialog(self._lbl, style='list',
-                        done_cb=self._dia_list_selected_cb)
+        dia = gui.dialog_factory(self._lbl, style='list',
+                                 done_cb=self._dia_list_selected_cb)
 
         if self._mul:
             choosed = ini.get_string_list(self._sec, self._opt)
@@ -239,8 +239,8 @@ class StdConfigItemIntMeaning(StdConfigItemBase):
         StdConfigItemBase.__init__(self, *args)
 
     def item_selected(self, url, user_data):
-        dia = EmcDialog(self._lbl, style='list',
-                        done_cb=self._dia_list_selected_cb)
+        dia = gui.dialog_factory(self._lbl, style='list',
+                                 done_cb=self._dia_list_selected_cb)
         i = 0
         for string in self._vals:
             if i == ini.get_int(self._sec, self._opt):
@@ -296,7 +296,7 @@ class StdConfigItemNumber(StdConfigItemBase):
 
     def item_selected(self, url, user_data):
         self._val = ini.get_float(self._sec, self._opt)
-        self._dia = EmcDialog(style='minimal', title=self._lbl, text='')
+        self._dia = gui.dialog_factory(style='minimal', title=self._lbl, text='')
         self._dia.button_add(_('Ok'), self._btn_ok_cb)
         self._dia.button_add(None, self._btn_plus_cb, icon='icon/plus')
         self._dia.button_add(None, self._btn_minus_cb, icon='icon/minus')
@@ -354,8 +354,8 @@ def init():
     #               'icon/harddisk', _storage_list)
     # root_item_add('config://subtitles/', 7, _('Subtitles'),
     #               'icon/subs', _subtitles_list)
-    # root_item_add('config://sysinfo/', 90, _('System info'),
-    #               'icon/info', _sys_info)
+    root_item_add('config://sysinfo/', 90, _('System info'),
+                  'icon/info', _sys_info)
 
 
 def shutdown():
@@ -437,7 +437,6 @@ def _mainmenu_cb():
 
     _browser.page_add('config://root', _('Configuration'), None, _populate_root)
     _browser.show()
-    mainmenu.hide()
 
 
 def _populate_root(browser, url):
@@ -470,9 +469,9 @@ def _general_populate(browser, url):
     #                          cb=_vkeyb_layouts_list)
     # standard_item_string_add('general', 'download_folder',
     #                          _('Download folder'), 'icon/download')
-    # standard_item_number_add('general', 'max_concurrent_download',
-    #                          _('Max concurrent download'), 'icon/download',
-    #                          fmt='%.0f', min=1, max=10, step=1)
+    standard_item_number_add('general', 'max_concurrent_download',
+                             _('Max concurrent download'), 'icon/download',
+                             fmt='%.0f', min=1, max=10, step=1)
     standard_item_string_add('general', 'time_format', _('Time format'))
     standard_item_string_add('general', 'date_format', _('Date format'))
     #
@@ -491,10 +490,10 @@ def _general_populate(browser, url):
     standard_item_number_add('thumbnailer', 'max_concurrent_thumb',
                              _('Max concurrent thumbnails'), fmt='%.0f',
                              min=1, max=10, step=1, cb=_change_thumbs)
-    # standard_item_number_add('thumbnailer', 'max_generation_time',
-    #                          _('Max thumbnails generation time'), fmt='%.0f',
-    #                          udm=_('seconds'), min=5, max=60, step=5,
-    #                          cb=_change_thumbs)
+    standard_item_number_add('thumbnailer', 'max_generation_time',
+                             _('Max thumbnails generation time'), fmt='%.0f',
+                             udm=_('seconds'), min=5, max=60, step=5,
+                             cb=_change_thumbs)
     standard_item_action_add(_('Clear thumbnails cache'),
                              icon='icon/refresh', cb=_clear_thumbnails_cache)
     standard_item_action_add(_('Clear online images cache'),
@@ -502,7 +501,7 @@ def _general_populate(browser, url):
 
 
 def _restart_needed():
-    EmcDialog(style='info', title=_('Restart needed'),
+    gui.dialog_factory(style='info', title=_('Restart needed'),
         text=_('You need to restart the program to apply the new configuration.'))
 
 
@@ -525,15 +524,15 @@ def _clear_thumbnails_cache():
             os.remove(fname)
             dia.my_counter += 1
         except StopIteration:
-            EmcDialog(style='cancel', title=_('Clear thumbnails cache'),
-                      text='Operation completed, %d files deleted.' % dia.my_counter)
+            gui.dialog_factory(style='cancel',  title=_('Clear thumbnails cache'),
+                               text='Operation completed, %d files deleted.' % dia.my_counter)
             dia.delete()
             return ecore.ECORE_CALLBACK_CANCEL
         return ecore.ECORE_CALLBACK_RENEW
 
-    dia = EmcDialog(style='minimal', title=_('Clear thumbnails cache'),
-                    spinner=True,
-                    text=_('Operation in progress, please wait...'))
+    dia = gui.dialog_factory(style='minimal', title=_('Clear thumbnails cache'),
+                             spinner=True,
+                             text=_('Operation in progress, please wait...'))
     dia.my_counter = 0
     gen = utils.grab_files(os.path.join(utils.user_cache_dir, 'thumbs'))
     ecore.Idler(_idler_cb, gen)
@@ -546,23 +545,23 @@ def _clear_remotes_cache():
             os.remove(fname)
             dia.my_counter += 1
         except StopIteration:
-            EmcDialog(style='cancel', title=_('Clear online images cache'),
-                      text='Operation completed, %d files deleted.' % dia.my_counter)
+            gui.dialog_factory(style='cancel', title=_('Clear online images cache'),
+                               text='Operation completed, %d files deleted.' % dia.my_counter)
             dia.delete()
             return ecore.ECORE_CALLBACK_CANCEL
         return ecore.ECORE_CALLBACK_RENEW
 
-    dia = EmcDialog(style='minimal', title=_('Clear online images cache'),
-                    spinner=True,
-                    text=_('Operation in progress, please wait...'))
+    dia = gui.dialog_factory(style='minimal', title=_('Clear online images cache'),
+                             spinner=True,
+                             text=_('Operation in progress, please wait...'))
     dia.my_counter = 0
     gen = utils.grab_files(os.path.join(utils.user_cache_dir, 'remotes'))
     ecore.Idler(_idler_cb, gen)
 
 
 def _vkeyb_layouts_list():
-    dia = EmcDialog(title=_('Virtual keyboard layouts'), style='list',
-                    done_cb=_vkeyb_layouts_select_cb)
+    dia = gui.dialog_factory(title=_('Virtual keyboard layouts'), style='list',
+                             done_cb=_vkeyb_layouts_select_cb)
     dia.button_add(_('Close'),
                    selected_cb=_vkeyb_layouts_close_cb, cb_data=dia)
     dia.button_add(_('Select'), default=True,
@@ -745,45 +744,50 @@ def _storage_populate(browser, url):
 
 def _sys_info():
     import pyudev
-    from epymc.gui import _theme_generation
-    from epymc import __version__ as emc_version
+    from nepymc import __version__ as emc_version
+
     try:
         from efl import __version__ as efl_version
-    except:
-        efl_version = _('Unknown')
-   
-    downl_avail = ecore.file_download_protocol_available('http://')
-    win_w, win_h = gui.win.size
-    scr_x, scr_y, scr_w, scr_h = gui.win.screen_size
-    dpi_x, dpi_y = gui.win.screen_dpi
-    text = '<title>%s</><br>' \
-           '<name>%s:</name> %s<br>' \
-           '<name>%s:</name> %s - %s<br>' \
-           '<name>%s:</> %dx%d <name>%s:</> %dx%d+%d+%d <name>%s:</> %d %d<br>' \
-           '<br><title>%s</><br>' \
-           '<name>%s:</name> %s<br>' \
-           '<name>%s:</name> %s<br>' \
-           '<name>%s:</name> %s<br>' \
-           '<br><title>%s</><br>' \
-           '<name>%s:</name> %s <name> %s:</name> %s<br>' \
-           '<name>%s:</name> %s<br>' \
-           '<name>%s:</name> %s<br>' \
-           '<name>%s:</name> %s <name> %s:</name> %s<br>' % (
+    except ImportError:
+        efl_version = _('Not found')
+
+    try:
+        from PySide2 import __version__ as pyside_version
+    except ImportError:
+        pyside_version = _('Not found')
+
+    # win_w, win_h = gui.win.size
+    # scr_x, scr_y, scr_w, scr_h = gui.win.screen_size
+    # dpi_x, dpi_y = gui.win.screen_dpi
+
+    text = '<h3>{}</h3>' \
+           '<b>{}:</b> {}<br>' \
+           '<h3>{}</h3>' \
+           '<b>{}:</b> {}<br>'\
+           '<b>{}:</b> {}<br>' \
+           '<b>{}:</b> {}' \
+           '<h3>{}</h3>' \
+           '<b>{}:</b> {}<br>' \
+           '<b>{}:</b> {}<br>' \
+           '<b>{}:</b> {} <b>{}:</b> {}<br>' \
+           '<b>{}:</b> {}<br>' \
+           '<b>{}:</b> {}<br>'.format(
              _('Core'),
-             _('Download available'), _('yes') if downl_avail else _('no'),
-             _('Theme'), ini.get('general', 'theme'), gui.theme_file,
-             _('Window size'), win_w, win_h,
-             _('screen'), scr_w, scr_h, scr_x, scr_y,
-             _('dpi'), dpi_x, dpi_y,
+             _('Theme'), ini.get('general', 'theme'), #gui.theme_file,  # TODO
+             # _('Window size'), win_w, win_h,  # TODO
+             # _('screen'), scr_w, scr_h, scr_x, scr_y,  # TODO
+             # _('dpi'), dpi_x, dpi_y,  # TODO
              _('Paths'),
              _('Base folder'), utils.emc_base_dir,
              _('Config folder'), utils.user_conf_dir,
              _('Cache folder'), utils.user_cache_dir,
              _('Versions'),
-             _('EpyMC'), emc_version, _('EpyMC themes API'), _theme_generation,
+             _('NepyMC'), emc_version,
              _('Python'), sys.version,
-             _('Python-EFL'), efl_version,
              _('Udev'), pyudev.udev_version(), _('pyudev'), pyudev.__version__,
+             _('Python-EFL'), efl_version,
+             _('PySide'), pyside_version,
            )
-    EmcDialog(style='panel', title=_('System info'), text=text)
+    gui.dialog_factory(style='panel', title=_('System info'), text=text)
+
 

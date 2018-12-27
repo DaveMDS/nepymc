@@ -7,6 +7,13 @@ ScrollView {
 
 //    clip: true
 
+    function scrollUp() {
+        ScrollBar.vertical.decrease()
+    }
+    function scrollDown() {
+        ScrollBar.vertical.increase()
+    }
+
     ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
     ScrollBar.vertical.policy: ScrollBar.AlwaysOn
     TextArea {

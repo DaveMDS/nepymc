@@ -4,9 +4,10 @@ import "../utils/utils.js" as Utils
 
 
 EmcFocusManager {
-    id: emcDialog
+    id: root
     objectName: "EmcDialog: " + title
 
+    /* TODO THEME API */
     property string title: ""
     property string main_text: ""
     property string content: ""
@@ -34,15 +35,15 @@ EmcFocusManager {
         return btn
     }
 
-    function emcDestroy() { /* TODO THEME API */
+    function emcDestroy() {  /* TODO THEME API */
         opacity = 0.0  // fade out
         focusAllow = false
         focus = false
         destroy(500)  // destroy after the fadeout
     }
 
-    Keys.onUpPressed: emcMainText.ScrollBar.vertical.decrease()
-    Keys.onDownPressed: emcMainText.ScrollBar.vertical.increase()
+    Keys.onUpPressed: emcMainText.scrollUp()
+    Keys.onDownPressed: emcMainText.scrollDown()
 
     anchors.fill: parent
     opacity: 0.0
