@@ -79,22 +79,22 @@ model = MainMenuModel()
 
 """
 _ITEMS = [
-    MenuItem('uitests', 1, 'UI tests', 'star', None, None),
-    MenuItem('optical', 2, 'Optical Discs', 'optical', None, [
+    MenuItem('uitests', 1, 'UI tests', 'icon/star', None, None),
+    MenuItem('optical', 2, 'Optical Discs', 'icon/optical', None, [
         {'label': 'Play'},
         {'label': 'Eject'}]),
-    MenuItem('music', 3, 'Musica', 'music', None, [
+    MenuItem('music', 3, 'Musica', 'icon/music', None, [
         {'label': 'Artists'},
         {'label': 'Albums'},
         {'label': 'Songs'}]),
-    MenuItem('film', 4, 'Film', 'movie', None, [
+    MenuItem('film', 4, 'Film', 'icon/movie', None, [
         {'label': 'Folder 1'},
         {'label': 'Folder 2'}]),
-    MenuItem('tv', 5, 'Serie TV', 'tv', None, None),
-    MenuItem('olchannel', 6, 'Canali Online', 'olvideo', None, None),
-    MenuItem('photo', 6, 'Photo', 'photo', None, None),
-    MenuItem('config', 6, 'Settings', 'config', None, None),
-    # MenuItem('exit', 6, 'Quit', 'exit', None, None),
+    MenuItem('tv', 5, 'Serie TV', 'icon/tv', None, None),
+    MenuItem('olchannel', 6, 'Canali Online', 'icon/olvideo', None, None),
+    MenuItem('photo', 6, 'Photo', 'icon/photo', None, None),
+    MenuItem('config', 6, 'Settings', 'icon/config', None, None),
+    MenuItem('exit', 6, 'Quit', 'icon/exit', None, None),
 ]
 """
 
