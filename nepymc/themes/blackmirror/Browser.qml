@@ -1,13 +1,13 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import "components/"
 import "utils/"
 
 
-FocusScope {
+EmcFocusManager {
     id: emcBrowser
+    objectName: 'Browser'
 
-    property bool emc_active: false
     property string page_title: "page title"
     property string page_icon: "icon/home"
 
@@ -38,7 +38,7 @@ FocusScope {
     /***  Hidden state  *******************************************************/
     states: State {
         name: "hidden"
-        when: !emc_active
+        when: !focus
         PropertyChanges {
             target: emcBrowserList
             opacity: 0.0
@@ -46,10 +46,6 @@ FocusScope {
         PropertyChanges {
             target: emcBrowserHeader
             opacity: 0.0
-        }
-        PropertyChanges {
-            target: emcBrowser
-            focus: false
         }
     }
 

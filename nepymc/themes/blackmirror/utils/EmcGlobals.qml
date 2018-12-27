@@ -1,5 +1,5 @@
 pragma Singleton
-import QtQuick 2.0
+import QtQuick 2.12
 
 Item {
 
@@ -18,6 +18,7 @@ Item {
     property color fontColorDisable: "#FF969696"
     property color fontColorTopbar: "#C8FFFFFF"
     property color fontColorTopbarShadow: "#AA000000"
+    property color fontColorTitle: "#FF3399FF"  // blue
 
     // font sizes     TODO pixel? or points
     property int fontSizeSmaller: 14

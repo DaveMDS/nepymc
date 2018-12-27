@@ -32,11 +32,8 @@ from nepymc.browser import EmcBrowser, \
 # import epymc.utils as utils
 # import epymc.events as events
 # import epymc.ini as ini
-# import epymc.gui as gui
 # import epymc.mediaplayer as mediaplayer
 # import epymc.storage as storage
-# import epymc.browser as browser
-# from epymc.browser import EmcBrowser, EmcItemClass, FolderItemClass, BackItemClass
 # from epymc.musicbrainz import MusicBrainz
 
 
@@ -113,7 +110,9 @@ class EncodingItemClass(EmcItemClass):
 
          EmcVKeyboard(title='Just press Accept!', text='千と千尋の神隠し',
                       accept_cb=_done_cb)
+"""
 
+"""
 class ImagesItemClass(EmcItemClass):
    path = os.path.dirname(__file__)
 
@@ -144,80 +143,50 @@ class ImagesItemClass(EmcItemClass):
          return None
       #TODO failure for local and remote
 
-class ViewsItemClass(EmcItemClass):
-   path = os.path.dirname(__file__)
-
-   def label_get(self, url, user_data):
-      return user_data
-
-   def label_end_get(self, url, user_data):
-      if url in ('two_labels', 'two_labels_one_icon', 'two_labels_two_icon'):
-         return 'second'
-
-   def info_get(self, url, user_data):
-      return '<title>Testing:</title><br>' + user_data
-
-   def icon_get(self, url, user_data):
-      if url in ('one_icon', 'two_icons', 'two_labels_one_icon', 'two_labels_two_icon'):
-         return 'icon/home'
-      if url in ('poster', 'cover', 'poster_cover'):
-         return 'icon/views'
-
-   def icon_end_get(self, url, user_data):
-      if url in ('two_icons', 'two_labels_two_icon'):
-         return 'icon/evas'
-
-   def poster_get(self, url, user_data):
-      if url in ('poster', 'poster_cover'):
-         return os.path.join(self.path, 'poster.jpg')
-
-   def cover_get(self, url, user_data):
-      if url in ('cover', 'poster_cover'):
-         return os.path.join(self.path, 'cover.jpg')
 """
 
-"""
+""" 
 class MyItemClass(EmcItemClass):
 
    def label_get(self, url, user_data):
-      if url == 'uitests://styles':
+      if url == 'uitest://styles':
          return 'Text styles <small>(<b>bold</b> <i>italic</i> <info>info</info> ' \
                 '<success>success</success> <failure>failure</failure> <warning>warning</warning>)</small>'
       else:
          return user_data
 
    def info_get(self, url, user_data):
-      if url == 'uitests://styles':
+      if url == 'uitest://styles':
          return TEST_STYLE
 
    def item_selected(self, url, user_data):
 
       # Sub-pages
-      if url == 'uitests://encoding':
-         _mod._browser.page_add('uitests://encoding', 'Encoding tests', None,
+      if url == 'uitest://encoding':
+         _mod._browser.page_add('uitest://encoding', 'Encoding tests', None,
                                 _mod.populate_encoding_page)
 
-      elif url == 'uitests://images':
-         _mod._browser.page_add('uitests://images', 'Image tests',
+      elif url == 'uitest://images':
+         _mod._browser.page_add('uitest://images', 'Image tests',
                                 ('List', 'PosterGrid'),
                                 _mod.populate_image_page)
 
-      elif url == 'uitests://views':
-         _mod._browser.page_add('uitests://views', 'Browser Views',
+      elif url == 'uitest://views':
+         _mod._browser.page_add('uitest://views', 'Browser Views',
                                 ('List', 'PosterGrid', 'CoverGrid'),
                                 _mod.populate_views_page)
 
       # Events Sniffer
-      elif url == 'uitests://sniffer':
+      elif url == 'uitest://sniffer':
          events.listener_add('sniffer', lambda ev: EmcNotify('<title>Event sniffer</><br>' + ev))
          n = EmcNotify('Sniffer enabled.', hidein = 2)
 
       # Event Emit
-      elif url == 'uitests://ev_emit':
+      elif url == 'uitest://ev_emit':
          events.event_emit('TEST_EVENT')
 
       # Notify
-      elif url == 'uitests://notify':
+      elif url == 'uitest://notify':
          EmcNotify('<title>Title 1</><br>' \
              'Without icon.<br>' \
              'Will hide in 10 seconds.',
@@ -236,7 +205,7 @@ class MyItemClass(EmcItemClass):
               icon = 'icon/movie')
 
       # Menu
-      elif url == 'uitests://menu':
+      elif url == 'uitest://menu':
          def _cb_menu(menu, item):
             print("Selected item: " + item.text)
 
@@ -257,7 +226,7 @@ class MyItemClass(EmcItemClass):
          it.disabled = True
          m.show()
 
-      elif url == 'uitests://menu_long':
+      elif url == 'uitest://menu_long':
          def _cb_menu(menu, item):
             print('Selected item: ' + item.text)
 
@@ -267,20 +236,20 @@ class MyItemClass(EmcItemClass):
          m.show()
 
       # TMDB
-      # elif url == 'uitests://tmdb':
+      # elif url == 'uitest://tmdb':
          # s = TMDB_WithGui()
          # s.movie_search('alien')
 
       # Download Manager
-      elif url == 'uitests://dm':
+      elif url == 'uitest://dm':
          DownloadManager().queue_download('http://fredrik.hubbe.net/plugger/xvidtest.avi', 'dm_test1')
          DownloadManager().queue_download('http://www.archive.org/download/TheMakingOfSuzanneVegasSecondLifeGuitar/3-TheMakingOfSuzanneVega_sSecondLifeGuitar.mp4', 'TheMakingOfSuzanneVega')
 
-      elif url == 'uitests://dm2':
+      elif url == 'uitest://dm2':
          DownloadManager().in_progress_show()
 
       # Mediaplayer Local Video
-      elif url == 'uitests://mpv':
+      elif url == 'uitest://mpv':
          f = os.path.expanduser('~/Video/testvideo.avi')
          # f = os.path.expanduser('~/Video/testvideo.mp4')
          mediaplayer.play_url(f)#, start_from=0)
@@ -288,166 +257,42 @@ class MyItemClass(EmcItemClass):
          mediaplayer.poster_set('image/dvd_cover_blank.png')
 
       # Mediaplayer Online Video (good)
-      # elif url == 'uitests://mpvo':
+      # elif url == 'uitest://mpvo':
          # mediaplayer.play_url('http://trailers.apple.com/movies/independent/airracers/airracers-tlr1_h480p.mov')
 
       # http://samples.mplayerhq.hu/
       # http://download.wavetlan.com/SVV/Media/HTTP/http-mp4.htm
       
       # Mediaplayer Online Video (med)
-      elif url == 'uitests://mpvom':
+      elif url == 'uitest://mpvom':
          mediaplayer.play_url('http://fredrik.hubbe.net/plugger/xvidtest.avi')
 
       # Mediaplayer Online Video (bad)
-      elif url == 'uitests://mpvob':
+      elif url == 'uitest://mpvob':
          mediaplayer.play_url('http://www.archive.org/download/TheMakingOfSuzanneVegasSecondLifeGuitar/3-TheMakingOfSuzanneVega_sSecondLifeGuitar.mp4')
 
       # Mediaplayer DVD
-      elif url == 'uitests://dvd':
+      elif url == 'uitest://dvd':
          mediaplayer.play_url('dvd:///dev/cdrom')
          
       # VKeyboard
-      elif url == 'uitests://vkbd':
+      elif url == 'uitest://vkbd':
          EmcVKeyboard(title='Virtual Keyboard', text='This is the keyboard test!',
                       accept_cb=lambda vk, t: print('ACCEPT "%s"' % t),
                       dismiss_cb=lambda vk: print('DISMISS'))
 
       # Source Selector
-      elif url == 'uitests://sselector':
+      elif url == 'uitest://sselector':
          EmcFolderSelector(title='Folder Selector Test',
                            done_cb=lambda p: DBG('Selected: ' + p))
 
-      # Dialog - Info
-      elif url == 'uitests://dlg-info':
-         EmcDialog(title='Dialog - Info', text=LOREM, style='info')
-
-      # Dialog - Warning
-      elif url == 'uitests://dlg-warning':
-         text = 'This is an <br><br><b>Warning</><br>dialog<br>'
-         EmcDialog(title='Dialog - Warning', text=text, style='warning')
-
-      # Dialog - Warning (no title)
-      elif url == 'uitests://dlg-warning2':
-         text = 'This is an <br><br><b>Warning</><br>dialog<br>'
-         EmcDialog(text=text, style='warning')
-
-      # Dialog - Error
-      elif url == 'uitests://dlg-error':
-         text = 'This is an <br><br><b>Error</><br>dialog<br>'
-         EmcDialog(title='Dialog - Error', text=text, style='error')
-
-      # Dialog - YesNo
-      elif url == 'uitests://dlg-yesno':
-         text = 'This is an <br><br><b>Yes/No</><br>dialog<br>'
-         EmcDialog(title='Dialog - YesNo', text=text, style='yesno',
-                   done_cb=lambda btn: DBG('done'))
-
-      # Dialog - Cancel
-      elif url == 'uitests://dlg-cancel':
-         text = 'This is an <br><br><b>Cancel operation</><br>dialog<br>'
-         EmcDialog(title='Dialog - Cancel', text=text, style='cancel',
-                   spinner=True)
-
-      # Dialog - Progress
-      elif url.startswith('uitests://dlg-progress'):
-         def _canc_cb(dialog):
-            t.delete()
-            d.delete()
-
-         def _progress_timer():
-            d.progress_set(self._progress)
-            self._progress += 0.01
-            if self._progress > 1: self._progress = 0;
-            return True # renew the callback
-
-         text = 'This is a <br><br><b>Progress operation</><br>dialog<br>'
-         d = EmcDialog(title='Dialog - Progress', text=text,
-                       style='progress', done_cb=_canc_cb, canc_cb=_canc_cb)
-         if url.endswith('btn'):
-            d.button_add("btn1", selected_cb=lambda b: print('btn1 callback'))
-            d.button_add("btn2", selected_cb=lambda b: print('btn2 callback'))
-            d.button_add("btn3", selected_cb=lambda b: print('btn3 callback'))
-         self._progress = 0.0
-         t = ecore.Timer(0.2, _progress_timer)
-
-      # Dialog - List
-      elif url == 'uitests://dlg-list':
-         def _dia_list_cb(dia):
-            item = dia.list_item_selected_get()
-            print('Selected: ' + str(item))
-            # dia.delete()
-         d = EmcDialog(title='Dialog - List', style='list', done_cb=_dia_list_cb)
-         d.list_item_append('item 1', 'icon/home')
-         d.list_item_append('item 2', 'icon/star', 'icon/check_on')
-         d.list_item_append('item 3 <b>bold</> <info>info</> <success>success</> <failure>failure</> <i>etc...</>',
-                            'icon/star', 'icon/check_on')
-         d.list_item_append('item 4', 'icon/tag', 'text/End Text')
-         d.list_item_append('item 5', 'icon/tag', 'text/<b>End</> <info>Text</>')
-         for i in range(6, 101):
-            d.list_item_append('item %d'%i)
-         d.list_go()
-
-      elif url == 'uitests://dlg-list-btn':
-         d = EmcDialog(title='Dialog - List with buttons', style='list')
-         for i in range(1, 40):
-            d.list_item_append('item %d'%i)
-         d.button_add('One', selected_cb=lambda b: print('btn1 callback'))
-         d.button_add('Two', selected_cb=lambda b: print('btn2 callback'))
-         d.button_add('Tree', selected_cb=lambda b: print('btn3 callback'))
-         d.list_go()
-
-      # Dialog - Panel full
-      elif url == 'uitests://dlg-panel1':
-         text = LOREM*4
-         d = EmcDialog(title='Dialog - Panel full', text=text, style='panel',
-                       spinner=True)
-         d.button_add('One', selected_cb=lambda b: print('btn1 callback'))
-         d.button_add('Two', selected_cb=lambda b: print('btn2 callback'))
-         d.button_add('Tree', selected_cb=lambda b: print('btn3 callback'))
-
-      # Dialog - Panel full more
-      elif url == 'uitests://dlg-panel4':
-         text = LOREM*8
-         
-         d = EmcDialog(title='Dialog - Panel full', text=text, style='panel',
-                       spinner=False, content=gui.load_image('dvd_cover_blank.png'))
-         d.button_add('One', selected_cb=lambda b: print('btn1 callback'))
-         d.button_add('Two', selected_cb=lambda b: print('btn2 callback'))
-         d.button_add('Tree', selected_cb=lambda b: print('btn3 callback'))
-
-      # Dialog - Panel no buttons
-      elif url == 'uitests://dlg-panel2':
-         text = LOREM
-         d = EmcDialog(title='Dialog - Panel full', text=text, style='panel',
-                       spinner=True)
-
-      # Dialog - Panel no title
-      elif url == 'uitests://dlg-panel3':
-         text = LOREM
-         d = EmcDialog(text=text, style='panel', spinner=True)
-
-      # Dialog - Buffering
-      elif url == 'uitests://dlg-buffering':
-         def _progress_timer2():
-            self._progress += 0.05
-            d.progress_set(self._progress)
-            if self._progress >= 1.0:
-               d.delete()
-               return False # stop the timer
-            else:
-               return True # renew the callback
-
-         d = EmcDialog(style='buffering', title=_('Buffering'))
-         self._progress = 0.0
-         ecore.Timer(0.2, _progress_timer2)
-
       # Browser Dump
-      elif url == 'uitests://brdump':
+      elif url == 'uitest://brdump':
          DBG('Dumping Browser')
          browser.dump_everythings()
 
       # Buttons Theme + Focus
-      elif url == 'uitests://buttons':
+      elif url == 'uitest://buttons':
          def _buttons_cb(btn):
             print(btn)
 
@@ -542,7 +387,7 @@ class MyItemClass(EmcItemClass):
                hbox2.pack_end(b)
                i += 1
 
-      elif url.startswith('uitests://focus_'):
+      elif url.startswith('uitest://focus_'):
          grid = Grid(gui.win, size=(100, 100))
          d = EmcDialog(title='Focus corner cases', content=grid, style='panel')
 
@@ -576,7 +421,7 @@ class MyItemClass(EmcItemClass):
              btn_add('center', 40, 45, 20, 10, True)
 
       # Sliders
-      elif url == 'uitests://sliders':
+      elif url == 'uitest://sliders':
          vbox = Box(gui.win)
          d = EmcDialog(title='Slider test', content=vbox, style='panel')
 
@@ -616,7 +461,7 @@ class MyItemClass(EmcItemClass):
          vbox.pack_end(sl)
 
       # Icons gallery
-      elif url == 'uitests://icons':
+      elif url == 'uitest://icons':
          d = EmcDialog(title='Icons gallery', style='list')
          for group in sorted(edje.file_collection_list(gui.theme_file)):
             if group.startswith('icon/'):
@@ -624,7 +469,7 @@ class MyItemClass(EmcItemClass):
          d.list_go()
 
       # Images gallery
-      elif url == 'uitests://imagegal':
+      elif url == 'uitest://imagegal':
          d = EmcDialog(title='Images gallery (names in console)',
                        style='image_list_horiz',
                        done_cb=lambda x, t: print(t))
@@ -634,11 +479,11 @@ class MyItemClass(EmcItemClass):
          d.list_go()
 
       # Text style in dialog
-      elif url == 'uitests://styles':
+      elif url == 'uitest://styles':
          EmcDialog(title='Text styles', text=TEST_STYLE)
 
       # Storage devices
-      elif url == 'uitests://storage':
+      elif url == 'uitest://storage':
 
          def storage_events_cb(event):
             if event != 'STORAGE_CHANGED':
@@ -664,7 +509,7 @@ class MyItemClass(EmcItemClass):
          events.listener_add('uit_storage', storage_events_cb)
 
       # Music Brainz AudioCD 
-      elif url == 'uitests://mbrainz':
+      elif url == 'uitest://mbrainz':
          def info_cb(album):
             txt = utf8_to_markup(pprint.pformat(album))
             EmcDialog(title='Result', text='<small>{}</>'.format(txt))
@@ -674,7 +519,7 @@ class MyItemClass(EmcItemClass):
          
 
       # Movie name test
-      # elif url == 'uitests://movies_name':
+      # elif url == 'uitest://movies_name':
          # urls = [ 'alien.avi',
                   # 'alien (1978).avi',
                   # '(2003)alien 3.avi',
@@ -703,8 +548,7 @@ class GenericItemClass(EmcItemClass):
         return user_data
 
     def info_get(self, url, user_data):
-        if url == 'uitests://styles':
-            return TEST_STYLE
+        return '<title>Test name:</title><br>' + user_data
 
 
 class Test_Styles(GenericItemClass):
@@ -714,8 +558,8 @@ class Test_Styles(GenericItemClass):
             '<success>success</success> <failure>failure</failure> ' \
             '<warning>warning</warning>)</small>'
 
-    def item_selected(self, url, user_data):
-        print("STYLES", url, user_data)
+    def info_get(self, url, user_data):
+        return TEST_STYLE
 
 
 class Test_Buttons(GenericItemClass):
@@ -728,95 +572,238 @@ class Test_Focus(GenericItemClass):
         print("FOCUS", url, user_data)
 
 
-class BrowserViewsItemClass(GenericItemClass):
-    # def item_selected(self, url, user_data):
-    #     print(url)
+class Test_Browser(GenericItemClass):
+
     path = os.path.dirname(__file__)
 
     def item_selected(self, url, user_data):
-        if url == "hide":
+        # main item
+        if url == 'uitest://browser':
+            _browser.page_add(url, user_data, None, self.populate_subpage)
+        # subitems
+        elif url.endswith('/hide'):
             _browser.hide()
-        elif url == "refresh":
+        elif url.endswith('/refresh'):
             _browser.refresh()
-        elif url == "refresh_hard":
+        elif url.endswith('/refresh_hard'):
             _browser.refresh(hard=True)
 
-    def label_get(self, url, user_data):
-        return user_data
+    def populate_subpage(self, browser, url):
+        browser.item_add(BackItemClass(), url + '/back',
+                         'special BackItemClass')
+        browser.item_add(FolderItemClass(), url + '/folder',
+                         'special FolderItemClass')
+        browser.item_add(self, url + '/hide',
+                         'browser hide()')
+        browser.item_add(self, url + '/refresh',
+                         'browser refresh()')
+        browser.item_add(self, url + '/refresh_hard',
+                         'browser refresh(hard)')
+        browser.item_add(self, url + '/one_label',
+                         'one label')
+        browser.item_add(self, url + '/one_icon',
+                         'one icon')
+        browser.item_add(self, url + '/two_icons',
+                         'two icons')
+        browser.item_add(self, url + '/two_labels',
+                         'two labels (no info)')
+        browser.item_add(self, url + '/two_labels_one_icon',
+                         'two labels + one icon')
+        browser.item_add(self, url + '/two_labels_two_icon',
+                         'two labels + two icon')
+        browser.item_add(self, url + '/poster_no_info',
+                         'with poster only (no info)')
+        browser.item_add(self, url + '/poster',
+                         'with poster only')
+        browser.item_add(self, url + '/cover',
+                         'with cover only')
+        browser.item_add(self, url + '/poster_cover',
+                         'with poster and cover')
 
     def label_end_get(self, url, user_data):
-        if url in ('two_labels', 'two_labels_one_icon', 'two_labels_two_icon'):
+        if url.endswith(('/two_labels', '/two_labels_one_icon',
+                         '/two_labels_two_icon')):
             return 'second'
 
-    def info_get(self, url, user_data):
-        if url not in ('two_labels', 'poster_no_info'):
-            return '<title>Testing:</title><br>' + user_data
-
     def icon_get(self, url, user_data):
-        if url in ('one_icon', 'two_icons', 'two_labels_one_icon',
-                   'two_labels_two_icon'):
+        if url.endswith(('/one_icon', '/two_icons', '/two_labels_one_icon',
+                         '/two_labels_two_icon')):
             return 'icon/home'
-        if url in ('poster_no_info', 'poster', 'cover', 'poster_cover'):
+        if url.endswith(('/poster_no_info', '/poster', '/cover',
+                         '/poster_cover')):
             return 'icon/views'
 
     def icon_end_get(self, url, user_data):
-        if url in ('two_icons', 'two_labels_two_icon'):
+        if url.endswith(('/two_icons', '/two_labels_two_icon')):
             return 'icon/star'
 
+    def info_get(self, url, user_data):
+        if url.endswith(('/two_labels', '/poster_no_info')):
+            return None
+        return super().info_get(url, user_data)
+
     def poster_get(self, url, user_data):
-        if url in ('poster', 'poster_cover', 'poster_no_info'):
+        if url.endswith(('/poster', '/poster_cover', '/poster_no_info')):
             return os.path.join(self.path, 'poster.jpg')
 
     def cover_get(self, url, user_data):
-        if url in ('cover', 'poster_cover'):
+        if url.endswith(('/cover', '/poster_cover')):
             return os.path.join(self.path, 'cover.jpg')
 
 
-class Test_BrowserViews(GenericItemClass):
+class Test_Dialog(GenericItemClass):
+
+    def populate_subpage(self, browser, url):
+        browser.item_add(self, url + '/info', 'Dialog - Info')
+        browser.item_add(self, url + '/warning', 'Dialog - Warning')
+        browser.item_add(self, url + '/warning2', 'Dialog - Warning (no title)')
+        browser.item_add(self, url + '/error', 'Dialog - Error')
+        browser.item_add(self, url + '/yesno', 'Dialog - YesNo')
+        browser.item_add(self, url + '/cancel', 'Dialog - Cancel')
+        browser.item_add(self, url + '/progress', 'Dialog - Progress  **TODO**')
+        browser.item_add(self, url + '/progress-btn', 'Dialog - Progress + buttons  **TODO**')
+        browser.item_add(self, url + '/list', 'Dialog - List  **TODO**')
+        browser.item_add(self, url + '/list-btn', 'Dialog - List with buttons  **TODO**')
+        browser.item_add(self, url + '/panel1', 'Dialog - Panel full')
+        browser.item_add(self, url + '/panel4', 'Dialog - Panel full more')
+        browser.item_add(self, url + '/panel2', 'Dialog - Panel no buttons ')
+        browser.item_add(self, url + '/panel3', 'Dialog - Panel no title')
+        browser.item_add(self, url + '/buffering', 'Dialog - Buffering  **TODO**')
+
     def item_selected(self, url, user_data):
-        _browser.page_add('uitests://views', 'EmcBrowser',
-                          ('List', 'PosterGrid', 'CoverGrid'),
-                          self.populate_views_page)
+        # main item selected, create the subpage
+        if url == 'uitest://dialog':
+            _browser.page_add(url, user_data, None, self.populate_subpage)
 
-    def populate_views_page(self, browser, url):
-        _browser.item_add(BackItemClass(), 'back',
-                          'special BackItemClass')
-        _browser.item_add(FolderItemClass(), 'folder',
-                          'special FolderItemClass')
-        _browser.item_add(BrowserViewsItemClass(), 'hide',
-                          'browser hide()')
-        _browser.item_add(BrowserViewsItemClass(), 'refresh',
-                          'browser refresh()')
-        _browser.item_add(BrowserViewsItemClass(), 'refresh_hard',
-                          'browser refresh(hard)')
-        _browser.item_add(BrowserViewsItemClass(), 'one_label',
-                          'one label (hide browser)')
-        _browser.item_add(BrowserViewsItemClass(), 'one_icon',
-                          'one icon')
-        _browser.item_add(BrowserViewsItemClass(), 'two_icons',
-                          'two icons')
-        _browser.item_add(BrowserViewsItemClass(), 'two_labels',
-                          'two labels (no info)')
-        _browser.item_add(BrowserViewsItemClass(), 'two_labels_one_icon',
-                          'two labels + one icon')
-        _browser.item_add(BrowserViewsItemClass(), 'two_labels_two_icon',
-                          'two labels + two icon')
-        _browser.item_add(BrowserViewsItemClass(), 'poster_no_info',
-                          'with poster only (no info)')
-        _browser.item_add(BrowserViewsItemClass(), 'poster',
-                          'with poster only')
-        _browser.item_add(BrowserViewsItemClass(), 'cover',
-                          'with cover only')
-        _browser.item_add(BrowserViewsItemClass(), 'poster_cover',
-                          'with poster and cover')
-
-
-class Test_Dialogs(GenericItemClass):
-    def item_selected(self, url, user_data):
-        if url == 'uitests://dlg-info':
+        # Dialog - Info
+        elif url.endswith('/info'):
             print("DIALOG INFO", url, user_data)
             # EmcDialog(title='Dialog - Info', text=LOREM, style='info')
             gui.dialog_factory(title='Dialog - Info', text=LOREM, style='info')
+
+        # Dialog - Warning
+        elif url.endswith('/warning'):
+            text = 'This is an <br><br><b>Warning</><br>dialog<br>'
+            gui.dialog_factory(title='Dialog - Warning',
+                               text=text, style='warning')
+
+        # Dialog - Warning (no title)
+        elif url.endswith('/warning2'):
+            text = 'This is an <br><br><b>Warning</><br>dialog<br>'
+            gui.dialog_factory(text=text, style='warning')
+
+        # Dialog - Error **
+        elif url.endswith('/error'):
+            text = 'This is an <br><br><b>Error</><br>dialog<br>'
+            gui.dialog_factory(title='Dialog - Error', text=text, style='error')
+
+        # Dialog - YesNo
+        elif url.endswith('/yesno'):
+            text = 'This is an <br><br><b>Yes/No</><br>dialog<br>'
+            gui.dialog_factory(title='Dialog - YesNo', text=text, style='yesno',
+                               done_cb=lambda btn: DBG('done'))
+
+        # Dialog - Cancel
+        elif url.endswith('/cancel'):
+            text = 'This is an <br><br><b>Cancel operation</><br>dialog<br>'
+            gui.dialog_factory(title='Dialog - Cancel', text=text,
+                               style='cancel', spinner=True)
+
+        # Dialog - Progress ** TODO **
+        elif url.startswith('uitest://dialog/progress'):
+            def _canc_cb(dialog):
+                t.delete()
+                d.delete()
+
+            def _progress_timer():
+                d.progress_set(self._progress)
+                self._progress += 0.01
+                if self._progress > 1:
+                    self._progress = 0;
+                return True # renew the callback
+
+            text = 'This is a <br><br><b>Progress operation</><br>dialog<br>'
+            d = gui.dialog_factory(title='Dialog - Progress', text=text,
+                                   style='progress', done_cb=_canc_cb,
+                                   canc_cb=_canc_cb)
+            if url.endswith('btn'):
+                d.button_add("btn1", selected_cb=lambda b: print('btn1 callback'))
+                d.button_add("btn2", selected_cb=lambda b: print('btn2 callback'))
+                d.button_add("btn3", selected_cb=lambda b: print('btn3 callback'))
+            self._progress = 0.0
+            t = ecore.Timer(0.2, _progress_timer)
+
+        # Dialog - List ** TODO **
+        elif url.endswith('/list'):
+            def _dia_list_cb(dia):
+                item = dia.list_item_selected_get()
+                print('Selected: ' + str(item))
+                # dia.delete()
+            d = gui.dialog_factory(title='Dialog - List', style='list',
+                                   done_cb=_dia_list_cb)
+            d.list_item_append('item 1', 'icon/home')
+            d.list_item_append('item 2', 'icon/star', 'icon/check_on')
+            d.list_item_append('item 3 <b>bold</> <info>info</> <success>success</> <failure>failure</> <i>etc...</>',
+                               'icon/star', 'icon/check_on')
+            d.list_item_append('item 4', 'icon/tag', 'text/End Text')
+            d.list_item_append('item 5', 'icon/tag', 'text/<b>End</> <info>Text</>')
+            for i in range(6, 101):
+                d.list_item_append('item %d'%i)
+            d.list_go()
+
+        # Dialog - List with buttons ** TODO **
+        elif url.endswith('/list-btn'):
+            d = gui.dialog_factory(title='Dialog - List with buttons',
+                                   style='list')
+            for i in range(1, 40):
+                d.list_item_append('item %d'%i)
+            d.button_add('One', selected_cb=lambda b: print('btn1 callback'))
+            d.button_add('Two', selected_cb=lambda b: print('btn2 callback'))
+            d.button_add('Tree', selected_cb=lambda b: print('btn3 callback'))
+            d.list_go()
+
+        # Dialog - Panel full
+        elif url.endswith('/panel1'):
+            d = gui.dialog_factory(title='Dialog - Panel full', text=LOREM * 8,
+                                   style='panel', spinner=True)
+            d.button_add('One', selected_cb=lambda b: print('btn1 callback'))
+            d.button_add('Two', selected_cb=lambda b: print('btn2 callback'))
+            d.button_add('Tree', selected_cb=lambda b: print('btn3 callback'))
+
+        # Dialog - Panel full more
+        elif url.endswith('/panel4'):
+            d = gui.dialog_factory(title='Dialog - Panel full more', text=LOREM * 8,
+                                   style='panel', spinner=False,
+                                   content='image/dvd_cover_blank.png')
+            d.button_add('One', selected_cb=lambda b: print('btn1 callback'))
+            d.button_add('Two', selected_cb=lambda b: print('btn2 callback'))
+            d.button_add('Tree', selected_cb=lambda b: print('btn3 callback'))
+
+        # Dialog - Panel no buttons
+        elif url.endswith('/panel2'):
+            text = LOREM
+            d = gui.dialog_factory(title='Dialog - Panel full', text=text,
+                                   style='panel', spinner=True)
+
+        # Dialog - Panel no title
+        elif url.endswith('/panel3'):
+            text = LOREM
+            d = gui.dialog_factory(text=text, style='panel', spinner=True)
+
+        # Dialog - Buffering ** TODO **
+        elif url.endswith('/buffering'):
+            def _progress_timer2():
+                self._progress += 0.05
+                d.progress_set(self._progress)
+                if self._progress >= 1.0:
+                    d.delete()
+                    return False  # stop the timer
+                else:
+                    return True  # renew the callback
+
+            d = gui.dialog_factory(style='buffering', title=_('Buffering'))
+            self._progress = 0.0
+            ecore.Timer(0.2, _progress_timer2)
 
 
 class UiTestsModule(EmcModule):
@@ -828,10 +815,8 @@ class UiTestsModule(EmcModule):
 
     def __init__(self):
         DBG('__init__')
-        # img = os.path.join(self.path, 'menu_bg.png')
-        # mainmenu.item_add('uitests', 3, 'UI tests', img, self.cb_mainmenu)
         mainmenu.item_add('uitests', 3, 'UI tests', self.icon, self.cb_mainmenu)
-        self._browser = EmcBrowser('UI tests', 'List', 'icon/star')
+        self._browser = EmcBrowser('UI tests', 'List', self.icon)
 
         global _mod, _browser
         _mod = self
@@ -848,57 +833,49 @@ class UiTestsModule(EmcModule):
         #     return
         #
         # self._browser.clear()
-        self._browser.page_add('uitests://root', 'UI tests', None,
+        self._browser.page_add('uitest://root', 'UI tests', None,
                                self.populate_root)
         # mainmenu.hide()
         self._browser.show()
 
     def populate_root(self, browser, url):
-        # browser.item_add(Test_Buttons(), 'uitests://buttons', 'Buttons + Focus')
-        # browser.item_add(Test_Focus(), 'uitests://focus_1', 'Focus corner case 1')
-        # browser.item_add(MainPageItemClass(), 'uitests://focus_2', 'Focus corner case 2')
-        # browser.item_add(MainPageItemClass(), 'uitests://focus_3', 'Focus corner case 3')
-        # browser.item_add(MainPageItemClass(), 'uitests://storage', 'Storage devices')
-        # browser.item_add(MainPageItemClass(), 'uitests://sselector', 'Folder Selector')
-        # browser.item_add(MainPageItemClass(), 'uitests://mbrainz', 'Music Brainz AudioCD (/dev/cdrom)')
-        # browser.item_add(MainPageItemClass(), 'uitests://menu', 'Menu small (dismiss on select)')
-        # browser.item_add(MainPageItemClass(), 'uitests://menu_long', 'Menu long (no dismiss on select)')
-        # browser.item_add(MainPageItemClass(), 'uitests://sliders', 'Sliders')
-        # browser.item_add(MainPageItemClass(), 'uitests://mpv', 'Mediaplayer - Local Video')
-        # browser.item_add(MainPageItemClass(), 'uitests://mpvo', 'Mediaplayer - Online Video (good)')
-        # browser.item_add(MainPageItemClass(), 'uitests://mpvom', 'Mediaplayer - Online Video (med)')
-        # browser.item_add(MainPageItemClass(), 'uitests://mpvob', 'Mediaplayer - Online Video (bad video)')
-        # browser.item_add(MainPageItemClass(), 'uitests://dvd', 'Mediaplayer - DVD Playback (/dev/cdrom)')
-        # browser.item_add(MainPageItemClass(), 'uitests://vkbd', 'Virtual Keyboard')
-        # browser.item_add(MainPageItemClass(), 'uitests://encoding', 'Various string encoding tests')
-        browser.item_add(Test_BrowserViews(), 'uitests://views', 'EmcBrowser')
-        # browser.item_add(MainPageItemClass(), 'uitests://images', 'Browser + EmcImage')
-        # browser.item_add(MainPageItemClass(), 'uitests://movies_name', 'Movies name test')
-        # browser.item_add(MainPageItemClass(), 'uitests://sniffer', 'Event Sniffer')
-        # browser.item_add(MainPageItemClass(), 'uitests://ev_emit', 'Event Emit')
-        # browser.item_add(MainPageItemClass(), 'uitests://notify', 'Notify Stack')
-        # browser.item_add(MainPageItemClass(), 'uitests://icons', 'Icons gallery')
-        # browser.item_add(MainPageItemClass(), 'uitests://imagegal', 'Images gallery')
-        # browser.item_add(Test_Styles(), 'uitests://styles', 'Text styles')
-        # browser.item_add(MainPageItemClass(), 'uitests://dm', 'Download Manager - start')
-        # browser.item_add(MainPageItemClass(), 'uitests://dm2', 'Download Manager - show')
-        # browser.item_add(MainPageItemClass(), 'uitests://tmdb', 'Themoviedb.org query with gui')
-        browser.item_add(Test_Dialogs(), 'uitests://dlg-info', 'Dialog - Info')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-warning', 'Dialog - Warning')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-warning2', 'Dialog - Warning (no title)')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-error', 'Dialog - Error')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-yesno', 'Dialog - YesNo')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-cancel', 'Dialog - Cancel')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-progress', 'Dialog - Progress')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-progress-btn', 'Dialog - Progress with buttons')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-list', 'Dialog - List')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-list-btn', 'Dialog - List with buttons')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-panel1', 'Dialog - Panel full')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-panel4', 'Dialog - Panel full more')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-panel2', 'Dialog - Panel no buttons')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-panel3', 'Dialog - Panel no title')
-        # browser.item_add(MainPageItemClass(), 'uitests://dlg-buffering', 'Dialog - Buffering')
-        # browser.item_add(MainPageItemClass(), 'uitests://brdump', 'Dump Browser pages')
+        browser.item_add(Test_Dialog(), 'uitest://dialog', 'EmcDialog')
+        browser.item_add(Test_Browser(), 'uitest://browser', 'EmcBrowser')
+
+        # browser.item_add(Test_Buttons(), 'uitest://buttons', 'Buttons + Focus')
+        # browser.item_add(Test_Focus(), 'uitest://focus_1', 'Focus corner case 1')
+        # browser.item_add(MainPageItemClass(), 'uitest://focus_2', 'Focus corner case 2')
+        # browser.item_add(MainPageItemClass(), 'uitest://focus_3', 'Focus corner case 3')
+        # browser.item_add(MainPageItemClass(), 'uitest://storage', 'Storage devices')
+        # browser.item_add(MainPageItemClass(), 'uitest://sselector', 'Folder Selector')
+        # browser.item_add(MainPageItemClass(), 'uitest://mbrainz', 'Music Brainz AudioCD (/dev/cdrom)')
+        # browser.item_add(MainPageItemClass(), 'uitest://menu', 'Menu small (dismiss on select)')
+        # browser.item_add(MainPageItemClass(), 'uitest://menu_long', 'Menu long (no dismiss on select)')
+        # browser.item_add(MainPageItemClass(), 'uitest://sliders', 'Sliders')
+        # browser.item_add(MainPageItemClass(), 'uitest://mpv', 'Mediaplayer - Local Video')
+        # browser.item_add(MainPageItemClass(), 'uitest://mpvo', 'Mediaplayer - Online Video (good)')
+        # browser.item_add(MainPageItemClass(), 'uitest://mpvom', 'Mediaplayer - Online Video (med)')
+        # browser.item_add(MainPageItemClass(), 'uitest://mpvob', 'Mediaplayer - Online Video (bad video)')
+        # browser.item_add(MainPageItemClass(), 'uitest://dvd', 'Mediaplayer - DVD Playback (/dev/cdrom)')
+        # browser.item_add(MainPageItemClass(), 'uitest://vkbd', 'Virtual Keyboard')
+        # browser.item_add(MainPageItemClass(), 'uitest://encoding', 'Various string encoding tests')
+
+        # browser.item_add(MainPageItemClass(), 'uitest://images', 'Browser + EmcImage')
+        # browser.item_add(MainPageItemClass(), 'uitest://movies_name', 'Movies name test')
+        # browser.item_add(MainPageItemClass(), 'uitest://sniffer', 'Event Sniffer')
+        # browser.item_add(MainPageItemClass(), 'uitest://ev_emit', 'Event Emit')
+        # browser.item_add(MainPageItemClass(), 'uitest://notify', 'Notify Stack')
+        # browser.item_add(MainPageItemClass(), 'uitest://icons', 'Icons gallery')
+        # browser.item_add(MainPageItemClass(), 'uitest://imagegal', 'Images gallery')
+        # browser.item_add(Test_Styles(), 'uitest://styles', 'Text styles')
+        # browser.item_add(MainPageItemClass(), 'uitest://dm', 'Download Manager - start')
+        # browser.item_add(MainPageItemClass(), 'uitest://dm2', 'Download Manager - show')
+        # browser.item_add(MainPageItemClass(), 'uitest://tmdb', 'Themoviedb.org query with gui')
+
+
+
+
+        # browser.item_add(MainPageItemClass(), 'uitest://brdump', 'Dump Browser pages')
 
     # def populate_encoding_page(self, browser, url):
     #     _mod._browser.item_add(EncodingItemClass(), 'test1', 'Test 1: tmdb.org json parser')

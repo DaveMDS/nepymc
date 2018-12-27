@@ -1,9 +1,7 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import "."
 import "utils/"
-
-
 
 
 Item {
@@ -144,7 +142,7 @@ Item {
         }
     }
 
-    /**  List Items  **********************************************************/
+    /**  List Items Delegate **************************************************/
     Component {
         id: emcBrowserListItemComponent
 
@@ -172,6 +170,7 @@ Item {
                 source: model.icon ? "pics/" + model.icon + ".png" : ""
                 width: source != "" ? parent.height : 0
                 height: parent.height
+                x: 3
             }
 
             Image {  // right icon
@@ -216,9 +215,17 @@ Item {
                 visible: parent.ListView.isCurrentItem
             }
 
+            EmcFocusLight {
+                anchors.fill: parent
+                visible: emcBrowserListItem.activeFocus
+            }
+
             MouseArea {
                 anchors.fill: parent
-                onClicked: emcBrowserList.currentIndex = index
+                onClicked: {
+                    emcBrowserList.currentIndex = index
+                    emcBrowserListItem.forceActiveFocus()
+                }
                 onDoubleClicked: BrowserModel.item_selected(index)
             }
         }

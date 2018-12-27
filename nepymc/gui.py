@@ -18,9 +18,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 import sys
 
 from nepymc import ini
+from nepymc import utils
 from nepymc.model import EmcModelViewInterface
 # from nepymc.mainloop_base import EmcMainLoop_Base
 
@@ -113,4 +115,4 @@ def page_icon_set(icon: str) -> None:
 
 def dialog_factory(*args, **kargs):  # TODO  -> EmcDialogBase:
     """ return an instance of type EmcDialog, see EmcDialog_Base for params """
-    _backend_gui.build_dialog(*args, **kargs)
+    return _backend_gui.build_dialog(*args, **kargs)

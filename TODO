@@ -11,9 +11,58 @@ function item_changed() {
     emcInfoDelayTimer.restart()
 }
 
+---
 
 signal sgnItemIndexChanged(int index)
 
 onSgnItemIndexChanged: {
     console.log("sgn " + index)
+}
+
+---
+
+NumberAnimation on opacity {
+    to: 0
+    duration: 1000
+
+    onRunningChanged: {
+        if (!running) {
+            console.log("Destroying...")
+//                rect.destroy();
+        }
+    }
+}
+
+---
+
+function show() {
+    stateGroup.state = "visible"
+}
+function showMaximized() {
+    stateGroup.state = "maximized"
+}
+
+---
+
+function showModal(item) {
+    mouseGrabber.opacity = 0.9 // FIXME: this should probably become a confluence state
+    var currentFocusedItem = runtime.view.focusItem();
+    var onClosedHandler = function() {
+        mouseGrabber.opacity = 0;
+        if (currentFocusedItem)
+            currentFocusedItem.forceActiveFocus()
+        item.closed.disconnect(onClosedHandler)
+    }
+    item.closed.connect(onClosedHandler)
+    item.parent = confluence // ## restore parent?
+    item.z = UIConstants.screenZValues.diplomaticImmunity
+    item.open()
+    item.forceActiveFocus()
+}
+
+function showFullScreen(item) {
+    item.z = background.z + 2
+    item.parent = confluence
+    item.opacity = 1
+    item.forceActiveFocus()
 }

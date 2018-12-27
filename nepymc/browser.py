@@ -33,7 +33,6 @@ import sys
 from nepymc import utils
 from nepymc import ini
 from nepymc import gui
-from nepymc import mainmenu
 from nepymc.model import EmcModelViewInterface
 
 
@@ -366,7 +365,6 @@ class EmcBrowser(object):
         # no more page to go back, hide and return to main menu
         if len(self.pages) == 0:
             self.hide()
-            mainmenu.show()
             return
 
         # switch to the previous page
@@ -454,12 +452,12 @@ class EmcBrowser(object):
         """ TODO Function doc """
         self.autoselect_url = self.current_view.selected_url_get()
         self.hide()
-        mainmenu.show()
+        # mainmenu.show()
         self._freezed = True
 
     def unfreeze(self):
         """ TODO Function doc """
-        mainmenu.hide()
+        # mainmenu.hide()
         self._populate_page(self.pages[-1], is_unfreeze=True)
         self.show()
         self._freezed = False

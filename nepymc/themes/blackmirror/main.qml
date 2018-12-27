@@ -1,49 +1,35 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import "utils/utils.js" as Utils
 
 
 ApplicationWindow {
     id: emcApplicationWindow
+    objectName: "main_win"
 
     minimumWidth: 960
     minimumHeight: 600
     visible: true
     title: EmcBackend.application_name()
 
-    Image {
-        anchors.fill: parent
-        source: "pics/background.jpg"
-        //source: "pics/TESTBG.jpg"
-        fillMode: Image.PreserveAspectCrop
-    }
+    property var emcFocusStack: []  // TODO find a better place for this
 
     /* theme API TODOC */
     function activate_section(section) {
         console.log("activate_section: " + section)
         switch (section) {
         case "browser":
-            emc_mainmenu.emc_active = false
-
-            emc_browser.emc_active = true
-            emc_browser.focus = true
+            emc_browser.forceActiveFocus()
             break
         case "mainmenu":
-            emc_browser.emc_active = false
-
-            emc_mainmenu.emc_active = true
-            emc_mainmenu.focus = true
+            emc_mainmenu.forceActiveFocus()
             break
         }
     }
 
     function hide_section(section) {
         console.log("hide_section: " + section)
-        switch (section) {
-        case "browser":
-            emc_browser.emc_active = false; break
-        case "mainmenu":
-            emc_mainmenu.emc_active = false; break
-        }
+        emc_mainmenu.focus_stack_pop()
     }
 
     function page_title_set(title) {
@@ -58,30 +44,41 @@ ApplicationWindow {
         emc_browser.currentIndex = index
     }
 
-    function build_dialog(title) {
-        var comp = Qt.createComponent("components/EmcDialog.qml")
-        var dia = comp.createObject(emcApplicationWindow)
-        console.log("COMPONENT")
-        console.log(dia)
+    function build_dialog(title, style, text, content, spinner) {
+        var dia = Utils.load_qml_obj("components/EmcDialog.qml",
+                                     emcApplicationWindow, {
+                                         title: title,
+                                         bigger: style === "panel",
+                                         main_text: text,
+                                         content: content,
+                                         spinner: spinner
+                                    })
+        dia.forceActiveFocus()
+        return dia
     }
 
     Component.onCompleted: {
-        emc_mainmenu.emc_active = true
-        emc_mainmenu.focus = true
-//        emc_browser.emc_active = true
-//        emc_browser.focus = true
+        emc_mainmenu.forceActiveFocus()
+    }
+
+//    onActiveFocusItemChanged: {
+//        print("**********  activeFocusItem  > ", activeFocusItem)
+//        print(emcFocusStack)
+//    }
+
+    Image {
+        anchors.fill: parent
+        source: "pics/background.jpg"
+        //source: "pics/TESTBG.jpg"
+        fillMode: Image.PreserveAspectCrop
     }
 
     Browser {
         id: emc_browser
-//        focus: true
     }
 
     MainMenu {
         id: emc_mainmenu
-//        focus: true
     }
-
-
 
 }

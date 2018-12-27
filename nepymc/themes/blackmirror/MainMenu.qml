@@ -1,23 +1,14 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import "utils/"
+import "components/"
 
 
-FocusScope {
+EmcFocusManager {
     id: emcMainMenu
-
-    property bool emc_active: true
+    objectName: "MainMenu"
 
     anchors.fill: parent
-
-//    function show() {
-//        console.log("SHOW MAINMENU")
-//        emc_active = true
-//    }
-//    function hide() {
-//        console.log("HIDE MAINMENU")
-//        emc_active = false
-//    }
 
     /***  Header  *************************************************************/
     EmcTextBigger {  // header text
@@ -114,7 +105,7 @@ FocusScope {
     /***  Hidden state  *******************************************************/
     states: State {
         name: "hidden"
-        when: !emc_active
+        when: !focus
         PropertyChanges {
             target: emcHeaderText
             anchors.topMargin: -(height + 35)
@@ -169,7 +160,7 @@ FocusScope {
 
             // give focus to the sublist on DOWN pressed
             Keys.onDownPressed: {
-                sub_list.focus = true
+                sub_list.forceActiveFocus()
             }
 
             Rectangle {
@@ -226,7 +217,7 @@ FocusScope {
                 // give focus back to the main item if UP pressed on first item
                 Keys.onUpPressed: {
                     if (currentIndex == 0) {
-                        main_list_item.focus = true
+                        main_list_item.forceActiveFocus()
                     } else {
                         event.accepted = false  // let the ListView manage it
                     }
