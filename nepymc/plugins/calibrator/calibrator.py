@@ -23,7 +23,7 @@ import os
 from nepymc.modules import EmcModule
 from nepymc import mainmenu
 from nepymc import gui
-# import epymc.config_gui as config_gui
+from nepymc import config_gui
 # import epymc.input_events as input_events
 
 
@@ -55,10 +55,8 @@ class CalibratorModule(EmcModule):
 
     def __init__(self):
         DBG("__init__")
-        # config_gui.root_item_add('calibrator', 100, _('Screen calibrator'),
-        #                          icon='icon/calib', callback=self.startup)
-        mainmenu.item_add('calib', 100, _('Screen calibrator'), 'icon/calib',
-                          self.startup)
+        config_gui.root_item_add('calibrator', 100, _('Screen calibrator'),
+                                 icon='icon/calib', callback=self.startup)
         self.current = -1
 
     def __shutdown__(self):
