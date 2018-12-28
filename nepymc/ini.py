@@ -53,6 +53,13 @@ def setup_defaults():
     if not _config.has_option(s, 'max_concurrent_download'):
         _config.set(s, 'max_concurrent_download', '3')
 
+    s = 'backend'
+    add_section(s)
+    if not _config.has_option(s, 'mainloop'):
+        _config.set(s, 'mainloop', 'qt')
+    if not _config.has_option(s, 'gui'):
+        _config.set(s, 'gui', 'qt')
+
 
 def add_section(section):
     if not _config.has_section(section):

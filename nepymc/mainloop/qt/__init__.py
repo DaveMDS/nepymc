@@ -18,13 +18,4 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-class EmcMainLoop_Base(object):
-    def __init__(self):
-        pass
-
-    def run(self):
-        pass
-
-    def exit(self):
-        pass
+from .mainloop import EmcMainLoop_Qt as EmcMainLoop

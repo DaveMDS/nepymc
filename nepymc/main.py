@@ -30,6 +30,7 @@ from nepymc import modules
 from nepymc import mainmenu
 from nepymc import browser
 from nepymc import config_gui
+from nepymc.mainloop import EmcMainLoop
 # from emc import mediaplayer
 from nepymc import ini
 from nepymc import gui
@@ -191,11 +192,10 @@ def start_emc(standalone=False):
     """
 
     # TODO factorize this import
-    from nepymc import mainloop_qt as mainloop
     # from nepymc import gui_qt as gui
 
-    # create the mainloop
-    loop = mainloop.EmcMainLoop()
+    # create the mainloop instance
+    loop = EmcMainLoop(sys.argv)
 
     from nepymc import gui
 

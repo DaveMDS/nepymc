@@ -18,32 +18,4 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
-
-from PySide2.QtGui import QGuiApplication
-
-from nepymc.mainloop_base import EmcMainLoop_Base
-
-
-def LOG(*args):
-    print('MAINLOOP:', *args)
-
-
-def DBG(*args):
-    print('MAINLOOP:', *args)
-    pass
-
-
-class EmcMainLoop(EmcMainLoop_Base):
-    """ PySide2 implementation of the EmcMainLoop """
-
-    def __init__(self):
-        super().__init__()
-        self._app = QGuiApplication(sys.argv)
-
-    def run(self):
-        DBG('run()')
-        self._app.exec_()
-
-    def exit(self):
-        self._app.quit()
+from .mainloop import EmcMainLoop_Base as EmcMainLoop

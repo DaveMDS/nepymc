@@ -22,7 +22,7 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 from nepymc.model import EmcModelViewInterface
-from nepymc.mainloop_base import EmcMainLoop_Base
+from nepymc.mainloop import EmcMainLoop
 
 
 def LOG(*args):
@@ -35,7 +35,7 @@ def DBG(*args):
 
 
 class EmcGui_Base(ABC):
-    def __init__(self, mainloop: EmcMainLoop_Base, theme_name: str):
+    def __init__(self, mainloop: EmcMainLoop, theme_name: str):
         DBG('Window.__init__()')
         self._mainloop = mainloop
         self._theme_name = theme_name

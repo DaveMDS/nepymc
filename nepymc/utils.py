@@ -19,6 +19,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import importlib
+from abc import ABC
+
+from nepymc import ini
 
 try:
     from xdg.BaseDirectory import xdg_config_home as XDG_CONFIG_HOME
@@ -86,7 +90,31 @@ def get_resource(*resource: str) -> str:
 class Singleton(object):
     __single = None
 
-    def __new__(classtype, *args, **kwargs):
-        if classtype != type(classtype.__single):
-            classtype.__single = object.__new__(classtype, *args, **kwargs)
-        return classtype.__single
+    def __new__(cls, *args, **kwargs):
+        if cls != type(cls.__single):
+            cls.__single = object.__new__(cls, *args, **kwargs)
+        return cls.__single
+
+
+class EmcBackendableABC(ABC):
+    """ TODO DOC """
+
+    backendable_pkg = 'Subclass MUST override'  # fe: 'mainloop', 'gui'
+    backendable_cls = 'Subclass MUST override'  # fe: 'EmcMainLoop', 'EmcDialog'
+
+    def __new__(cls, desc):
+
+        # get the backend to use from ini [backend] backendable_pkg
+        backend_name = ini.get('backend', cls.backendable_pkg)
+        if backend_name is None:
+            raise RuntimeError(
+                'Cannot find backend "%s" in ini file section "backend"' %
+                cls.backendable_pkg)
+
+        # import the backend package (fe: nepymc.mainloop.qt)
+        pkg_name = '.'.join(('nepymc', cls.backendable_pkg, backend_name))
+        pkg = importlib.import_module(pkg_name)
+
+        # instantiate the class from the backend package
+        pkg_cls = getattr(pkg, cls.backendable_cls)
+        return super().__new__(pkg_cls)
