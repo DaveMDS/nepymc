@@ -23,16 +23,16 @@ import pprint
 
 from nepymc.modules import EmcModule
 from nepymc import mainmenu
-from nepymc import gui
+# from nepymc import mediaplayer
 from nepymc.browser import EmcBrowser, \
     EmcItemClass, BackItemClass, FolderItemClass
+from nepymc.gui import EmcDialog
 # from epymc.gui import EmcDialog, EmcVKeyboard, EmcFolderSelector, \
 #    EmcButton, EmcNotify, EmcMenu, DownloadManager, EmcSlider
 
 # import epymc.utils as utils
 # import epymc.events as events
 # import epymc.ini as ini
-# import epymc.mediaplayer as mediaplayer
 # import epymc.storage as storage
 # from epymc.musicbrainz import MusicBrainz
 
@@ -247,33 +247,6 @@ class MyItemClass(EmcItemClass):
 
       elif url == 'uitest://dm2':
          DownloadManager().in_progress_show()
-
-      # Mediaplayer Local Video
-      elif url == 'uitest://mpv':
-         f = os.path.expanduser('~/Video/testvideo.avi')
-         # f = os.path.expanduser('~/Video/testvideo.mp4')
-         mediaplayer.play_url(f)#, start_from=0)
-         mediaplayer.title_set('Testing title')
-         mediaplayer.poster_set('image/dvd_cover_blank.png')
-
-      # Mediaplayer Online Video (good)
-      # elif url == 'uitest://mpvo':
-         # mediaplayer.play_url('http://trailers.apple.com/movies/independent/airracers/airracers-tlr1_h480p.mov')
-
-      # http://samples.mplayerhq.hu/
-      # http://download.wavetlan.com/SVV/Media/HTTP/http-mp4.htm
-      
-      # Mediaplayer Online Video (med)
-      elif url == 'uitest://mpvom':
-         mediaplayer.play_url('http://fredrik.hubbe.net/plugger/xvidtest.avi')
-
-      # Mediaplayer Online Video (bad)
-      elif url == 'uitest://mpvob':
-         mediaplayer.play_url('http://www.archive.org/download/TheMakingOfSuzanneVegasSecondLifeGuitar/3-TheMakingOfSuzanneVega_sSecondLifeGuitar.mp4')
-
-      # Mediaplayer DVD
-      elif url == 'uitest://dvd':
-         mediaplayer.play_url('dvd:///dev/cdrom')
          
       # VKeyboard
       elif url == 'uitest://vkbd':
@@ -572,6 +545,39 @@ class Test_Focus(GenericItemClass):
         print("FOCUS", url, user_data)
 
 
+class Test_MediaPlayer(GenericItemClass):
+    def item_selected(self, url, user_data):
+        print("M P ", url, user_data)
+
+        # Mediaplayer Local Video
+        if url == 'uitest://mpv':
+            f = os.path.expanduser('~/Video/testvideo.avi')
+            # f = os.path.expanduser('~/Video/testvideo.mp4')
+            mediaplayer.play_url(f)  # , start_from=0)
+            mediaplayer.title_set('Testing title')
+            mediaplayer.poster_set('image/dvd_cover_blank.png')
+
+        # Mediaplayer Online Video (good)
+        elif url == 'uitest://mpvo':
+            pass
+            # mediaplayer.play_url('http://trailers.apple.com/movies/independent/airracers/airracers-tlr1_h480p.mov')
+            # http://samples.mplayerhq.hu/
+            # http://download.wavetlan.com/SVV/Media/HTTP/http-mp4.htm
+
+        # Mediaplayer Online Video (med)
+        elif url == 'uitest://mpvom':
+            mediaplayer.play_url('http://fredrik.hubbe.net/plugger/xvidtest.avi')
+
+        # Mediaplayer Online Video (bad)
+        elif url == 'uitest://mpvob':
+            mediaplayer.play_url(
+                'http://www.archive.org/download/TheMakingOfSuzanneVegasSecondLifeGuitar/3-TheMakingOfSuzanneVega_sSecondLifeGuitar.mp4')
+
+        # Mediaplayer DVD
+        elif url == 'uitest://dvd':
+            mediaplayer.play_url('dvd:///dev/cdrom')
+
+
 class Test_Browser(GenericItemClass):
 
     path = os.path.dirname(__file__)
@@ -679,35 +685,35 @@ class Test_Dialog(GenericItemClass):
         elif url.endswith('/info'):
             print("DIALOG INFO", url, user_data)
             # EmcDialog(title='Dialog - Info', text=LOREM, style='info')
-            gui.dialog_factory(title='Dialog - Info', text=LOREM, style='info')
+            EmcDialog(title='Dialog - Info', text=LOREM, style='info')
 
         # Dialog - Warning
         elif url.endswith('/warning'):
             text = 'This is an <br><br><b>Warning</><br>dialog<br>'
-            gui.dialog_factory(title='Dialog - Warning',
-                               text=text, style='warning')
+            EmcDialog(title='Dialog - Warning',
+                      text=text, style='warning')
 
         # Dialog - Warning (no title)
         elif url.endswith('/warning2'):
             text = 'This is an <br><br><b>Warning</><br>dialog<br>'
-            gui.dialog_factory(text=text, style='warning')
+            EmcDialog(text=text, style='warning')
 
         # Dialog - Error **
         elif url.endswith('/error'):
             text = 'This is an <br><br><b>Error</><br>dialog<br>'
-            gui.dialog_factory(title='Dialog - Error', text=text, style='error')
+            EmcDialog(title='Dialog - Error', text=text, style='error')
 
         # Dialog - YesNo
         elif url.endswith('/yesno'):
             text = 'This is an <br><br><b>Yes/No</><br>dialog<br>'
-            gui.dialog_factory(title='Dialog - YesNo', text=text, style='yesno',
+            EmcDialog(title='Dialog - YesNo', text=text, style='yesno',
                                done_cb=lambda btn: DBG('done'))
 
         # Dialog - Cancel
         elif url.endswith('/cancel'):
             text = 'This is an <br><br><b>Cancel operation</><br>dialog<br>'
-            gui.dialog_factory(title='Dialog - Cancel', text=text,
-                               style='cancel', spinner=True)
+            EmcDialog(title='Dialog - Cancel', text=text,
+                      style='cancel', spinner=True)
 
         # Dialog - Progress ** TODO **
         elif url.startswith('uitest://dialog/progress'):
@@ -723,9 +729,9 @@ class Test_Dialog(GenericItemClass):
                 return True # renew the callback
 
             text = 'This is a <br><br><b>Progress operation</><br>dialog<br>'
-            d = gui.dialog_factory(title='Dialog - Progress', text=text,
-                                   style='progress', done_cb=_canc_cb,
-                                   canc_cb=_canc_cb)
+            d = EmcDialog(title='Dialog - Progress', text=text,
+                          style='progress', done_cb=_canc_cb,
+                          canc_cb=_canc_cb)
             if url.endswith('btn'):
                 d.button_add("btn1", selected_cb=lambda b: print('btn1 callback'))
                 d.button_add("btn2", selected_cb=lambda b: print('btn2 callback'))
@@ -739,8 +745,8 @@ class Test_Dialog(GenericItemClass):
                 item = dia.list_item_selected_get()
                 print('Selected: ' + str(item))
                 # dia.delete()
-            d = gui.dialog_factory(title='Dialog - List', style='list',
-                                   done_cb=_dia_list_cb)
+            d = EmcDialog(title='Dialog - List', style='list',
+                          done_cb=_dia_list_cb)
             d.list_item_append('item 1', 'icon/home')
             d.list_item_append('item 2', 'icon/star', 'icon/check_on')
             d.list_item_append('item 3 <b>bold</> <info>info</> <success>success</> <failure>failure</> <i>etc...</>',
@@ -753,8 +759,8 @@ class Test_Dialog(GenericItemClass):
 
         # Dialog - List with buttons ** TODO **
         elif url.endswith('/list-btn'):
-            d = gui.dialog_factory(title='Dialog - List with buttons',
-                                   style='list')
+            d = EmcDialog(title='Dialog - List with buttons',
+                          style='list')
             for i in range(1, 40):
                 d.list_item_append('item %d'%i)
             d.button_add('One', selected_cb=lambda b: print('btn1 callback'))
@@ -764,17 +770,17 @@ class Test_Dialog(GenericItemClass):
 
         # Dialog - Panel full
         elif url.endswith('/panel1'):
-            d = gui.dialog_factory(title='Dialog - Panel full', text=LOREM * 8,
-                                   style='panel', spinner=True)
+            d = EmcDialog(title='Dialog - Panel full', text=LOREM * 8,
+                          style='panel', spinner=True)
             d.button_add('One', selected_cb=lambda b: print('btn1 callback'))
             d.button_add('Two', selected_cb=lambda b: print('btn2 callback'))
             d.button_add('Tree', selected_cb=lambda b: print('btn3 callback'))
 
         # Dialog - Panel full more
         elif url.endswith('/panel4'):
-            d = gui.dialog_factory(title='Dialog - Panel full more', text=LOREM * 8,
-                                   style='panel', spinner=False,
-                                   content='image/dvd_cover_blank.png')
+            d = EmcDialog(title='Dialog - Panel full more', text=LOREM * 8,
+                          style='panel', spinner=False,
+                          content='image/dvd_cover_blank.png')
             d.button_add('One', selected_cb=lambda b: print('btn1 callback'))
             d.button_add('Two', selected_cb=lambda b: print('btn2 callback'))
             d.button_add('Tree', selected_cb=lambda b: print('btn3 callback'))
@@ -782,13 +788,13 @@ class Test_Dialog(GenericItemClass):
         # Dialog - Panel no buttons
         elif url.endswith('/panel2'):
             text = LOREM
-            d = gui.dialog_factory(title='Dialog - Panel full', text=text,
-                                   style='panel', spinner=True)
+            d = EmcDialog(title='Dialog - Panel full', text=text,
+                          style='panel', spinner=True)
 
         # Dialog - Panel no title
         elif url.endswith('/panel3'):
             text = LOREM
-            d = gui.dialog_factory(text=text, style='panel', spinner=True)
+            d = EmcDialog(text=text, style='panel', spinner=True)
 
         # Dialog - Buffering ** TODO **
         elif url.endswith('/buffering'):
@@ -801,7 +807,7 @@ class Test_Dialog(GenericItemClass):
                 else:
                     return True  # renew the callback
 
-            d = gui.dialog_factory(style='buffering', title=_('Buffering'))
+            d = EmcDialog(style='buffering', title=_('Buffering'))
             self._progress = 0.0
             ecore.Timer(0.2, _progress_timer2)
 
@@ -839,8 +845,19 @@ class UiTestsModule(EmcModule):
         self._browser.show()
 
     def populate_root(self, browser, url):
-        browser.item_add(Test_Dialog(), 'uitest://dialog', 'EmcDialog')
         browser.item_add(Test_Browser(), 'uitest://browser', 'EmcBrowser')
+        browser.item_add(Test_Dialog(), 'uitest://dialog', 'EmcDialog')
+
+        browser.item_add(Test_MediaPlayer(), 'uitest://mpv',
+                         'MediaPlayer - Local video')
+        browser.item_add(Test_MediaPlayer(), 'uitest://mpvo',
+                         'Mediaplayer - Online Video (good)')
+        browser.item_add(Test_MediaPlayer(), 'uitest://mpvom',
+                         'Mediaplayer - Online Video (med)')
+        browser.item_add(Test_MediaPlayer(), 'uitest://mpvob',
+                         'Mediaplayer - Online Video (bad video)')
+        browser.item_add(Test_MediaPlayer(), 'uitest://dvd',
+                         'Mediaplayer - DVD Playback (/dev/cdrom)')
 
         # browser.item_add(Test_Buttons(), 'uitest://buttons', 'Buttons + Focus')
         # browser.item_add(Test_Focus(), 'uitest://focus_1', 'Focus corner case 1')
@@ -852,11 +869,6 @@ class UiTestsModule(EmcModule):
         # browser.item_add(MainPageItemClass(), 'uitest://menu', 'Menu small (dismiss on select)')
         # browser.item_add(MainPageItemClass(), 'uitest://menu_long', 'Menu long (no dismiss on select)')
         # browser.item_add(MainPageItemClass(), 'uitest://sliders', 'Sliders')
-        # browser.item_add(MainPageItemClass(), 'uitest://mpv', 'Mediaplayer - Local Video')
-        # browser.item_add(MainPageItemClass(), 'uitest://mpvo', 'Mediaplayer - Online Video (good)')
-        # browser.item_add(MainPageItemClass(), 'uitest://mpvom', 'Mediaplayer - Online Video (med)')
-        # browser.item_add(MainPageItemClass(), 'uitest://mpvob', 'Mediaplayer - Online Video (bad video)')
-        # browser.item_add(MainPageItemClass(), 'uitest://dvd', 'Mediaplayer - DVD Playback (/dev/cdrom)')
         # browser.item_add(MainPageItemClass(), 'uitest://vkbd', 'Virtual Keyboard')
         # browser.item_add(MainPageItemClass(), 'uitest://encoding', 'Various string encoding tests')
 
