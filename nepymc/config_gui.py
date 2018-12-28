@@ -31,7 +31,7 @@ from nepymc import ini
 from nepymc import modules
 from nepymc import utils
 from nepymc.browser import EmcBrowser, EmcItemClass
-# from nepymc.gui import EmcDialog, EmcVKeyboard
+from nepymc.gui import EmcDialog  #, EmcVKeyboard
 # from nepymc.thumbnailer import emc_thumbnailer
 
 
@@ -166,8 +166,8 @@ class StdConfigItemStringFromList(StdConfigItemBase):
         StdConfigItemBase.__done__(self)
 
     def item_selected(self, url, user_data):
-        dia = gui.dialog_factory(self._lbl, style='list',
-                                 done_cb=self._dia_list_selected_cb)
+        dia = EmcDialog(self._lbl, style='list',
+                        done_cb=self._dia_list_selected_cb)
         for string in self._sli:
             if string == ini.get(self._sec, self._opt):
                 it = dia.list_item_append(string, end='icon/check_on')
@@ -203,8 +203,8 @@ class StdConfigItemLang(StdConfigItemBase):
         StdConfigItemBase.__done__(self)
 
     def item_selected(self, url, user_data):
-        dia = gui.dialog_factory(self._lbl, style='list',
-                                 done_cb=self._dia_list_selected_cb)
+        dia = EmcDialog(self._lbl, style='list',
+                        done_cb=self._dia_list_selected_cb)
 
         if self._mul:
             choosed = ini.get_string_list(self._sec, self._opt)
@@ -239,8 +239,8 @@ class StdConfigItemIntMeaning(StdConfigItemBase):
         StdConfigItemBase.__init__(self, *args)
 
     def item_selected(self, url, user_data):
-        dia = gui.dialog_factory(self._lbl, style='list',
-                                 done_cb=self._dia_list_selected_cb)
+        dia = EmcDialog(self._lbl, style='list',
+                        done_cb=self._dia_list_selected_cb)
         i = 0
         for string in self._vals:
             if i == ini.get_int(self._sec, self._opt):
@@ -296,7 +296,7 @@ class StdConfigItemNumber(StdConfigItemBase):
 
     def item_selected(self, url, user_data):
         self._val = ini.get_float(self._sec, self._opt)
-        self._dia = gui.dialog_factory(style='minimal', title=self._lbl, text='')
+        self._dia = EmcDialog(style='minimal', title=self._lbl, text='')
         self._dia.button_add(_('Ok'), self._btn_ok_cb)
         self._dia.button_add(None, self._btn_plus_cb, icon='icon/plus')
         self._dia.button_add(None, self._btn_minus_cb, icon='icon/minus')
@@ -501,8 +501,8 @@ def _general_populate(browser, url):
 
 
 def _restart_needed():
-    gui.dialog_factory(style='info', title=_('Restart needed'),
-        text=_('You need to restart the program to apply the new configuration.'))
+    EmcDialog(style='info', title=_('Restart needed'),
+              text=_('You need to restart the program to apply the new configuration.'))
 
 
 def _change_fps():
@@ -524,15 +524,15 @@ def _clear_thumbnails_cache():
             os.remove(fname)
             dia.my_counter += 1
         except StopIteration:
-            gui.dialog_factory(style='cancel',  title=_('Clear thumbnails cache'),
-                               text='Operation completed, %d files deleted.' % dia.my_counter)
+            EmcDialog(style='cancel',  title=_('Clear thumbnails cache'),
+                      text='Operation completed, %d files deleted.' % dia.my_counter)
             dia.delete()
             return ecore.ECORE_CALLBACK_CANCEL
         return ecore.ECORE_CALLBACK_RENEW
 
-    dia = gui.dialog_factory(style='minimal', title=_('Clear thumbnails cache'),
-                             spinner=True,
-                             text=_('Operation in progress, please wait...'))
+    dia = EmcDialog(style='minimal', title=_('Clear thumbnails cache'),
+                    spinner=True,
+                    text=_('Operation in progress, please wait...'))
     dia.my_counter = 0
     gen = utils.grab_files(os.path.join(utils.user_cache_dir, 'thumbs'))
     ecore.Idler(_idler_cb, gen)
@@ -545,23 +545,23 @@ def _clear_remotes_cache():
             os.remove(fname)
             dia.my_counter += 1
         except StopIteration:
-            gui.dialog_factory(style='cancel', title=_('Clear online images cache'),
-                               text='Operation completed, %d files deleted.' % dia.my_counter)
+            EmcDialog(style='cancel', title=_('Clear online images cache'),
+                      text='Operation completed, %d files deleted.' % dia.my_counter)
             dia.delete()
             return ecore.ECORE_CALLBACK_CANCEL
         return ecore.ECORE_CALLBACK_RENEW
 
-    dia = gui.dialog_factory(style='minimal', title=_('Clear online images cache'),
-                             spinner=True,
-                             text=_('Operation in progress, please wait...'))
+    dia = EmcDialog(style='minimal', title=_('Clear online images cache'),
+                    spinner=True,
+                    text=_('Operation in progress, please wait...'))
     dia.my_counter = 0
     gen = utils.grab_files(os.path.join(utils.user_cache_dir, 'remotes'))
     ecore.Idler(_idler_cb, gen)
 
 
 def _vkeyb_layouts_list():
-    dia = gui.dialog_factory(title=_('Virtual keyboard layouts'), style='list',
-                             done_cb=_vkeyb_layouts_select_cb)
+    dia = EmcDialog(title=_('Virtual keyboard layouts'), style='list',
+                    done_cb=_vkeyb_layouts_select_cb)
     dia.button_add(_('Close'),
                    selected_cb=_vkeyb_layouts_close_cb, cb_data=dia)
     dia.button_add(_('Select'), default=True,
@@ -788,6 +788,6 @@ def _sys_info():
              _('Python-EFL'), efl_version,
              _('PySide'), pyside_version,
            )
-    gui.dialog_factory(style='panel', title=_('System info'), text=text)
+    EmcDialog(style='panel', title=_('System info'), text=text)
 
 
