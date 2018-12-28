@@ -20,10 +20,10 @@
 
 from PySide2.QtGui import QGuiApplication
 
-from ..mainloop import EmcMainLoop_Base
+from nepymc.mainloop import EmcMainLoop
 
 
-class EmcMainLoop_Qt(EmcMainLoop_Base):
+class EmcMainLoop_Qt(EmcMainLoop):
     """ PySide2 implementation of the EmcMainLoop """
 
     def __init__(self, argv=None):

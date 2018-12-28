@@ -102,7 +102,7 @@ class EmcBackendableABC(ABC):
     backendable_pkg = 'Subclass MUST override'  # fe: 'mainloop', 'gui'
     backendable_cls = 'Subclass MUST override'  # fe: 'EmcMainLoop', 'EmcDialog'
 
-    def __new__(cls, desc):
+    def __new__(cls, *args, **kargs):
 
         # get the backend to use from ini [backend] backendable_pkg
         backend_name = ini.get('backend', cls.backendable_pkg)

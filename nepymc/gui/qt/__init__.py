@@ -18,23 +18,5 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from abc import abstractmethod
-
-from nepymc.utils import EmcBackendableABC
-
-
-class EmcMainLoop(EmcBackendableABC):
-
-    backendable_pkg = 'mainloop'
-    backendable_cls = 'EmcMainLoop'
-
-    def __init__(self, argv=None):
-        self._argv = argv
-
-    @abstractmethod
-    def run(self):
-        pass
-
-    @abstractmethod
-    def exit(self):
-        pass
+from .gui_qt import EmcGui_Qt as EmcGui
+from .dialog_qt import EmcDialog_Qt as EmcDialog

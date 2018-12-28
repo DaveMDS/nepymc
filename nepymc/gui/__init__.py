@@ -18,41 +18,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
-import sys
+from .gui import EmcGui
+from .dialog import EmcDialog
+
 
 from nepymc import ini
-from nepymc import utils
 from nepymc.model import EmcModelViewInterface
-# from nepymc.mainloop_base import EmcMainLoop_Base
 
-
-def LOG(*args):
-    print('GUI:', *args)
-
-
-def DBG(*args):
-    print('GUI:', *args)
-    pass
-
-
-def ERR(*args):
-    print('GUI ERROR:', *args, file=sys.stderr)
-
-
-# from nepymc import gui_qt as gui  # TODO factorize !!!
-from nepymc.gui_qt import EmcGui  # TODO factorize !!!
-
-_backend_gui = None
+_gui_instance = None
 
 
 def init(backend: str, loop) -> bool:   # TODO remove loop !!!!!!
     """ return: False=failed True=ok """
-    global _backend_gui
+    global _gui_instance
 
     # get config values, setting defaults if needed
     theme = ini.get('general', 'theme', 'blackmirror')
-    ini.get('general', 'gui_engine', 'qt')
     ini.get('general', 'fps', 30)
     ini.get('general', 'scale', 1.0)
     ini.get('general', 'fullscreen', False)
@@ -61,16 +42,20 @@ def init(backend: str, loop) -> bool:   # TODO remove loop !!!!!!
     ini.get('general', 'date_format', '%A %d %B')
     ini.get('general', 'keyb_layouts', 'en_abc symbols')
 
-    _backend_gui = EmcGui(loop, theme)
-    return _backend_gui.create()
+    _gui_instance = EmcGui(loop, theme)
+    return _gui_instance.create()
 
 
 def shutdown():
-    global _backend_gui
+    global _gui_instance
 
-    _backend_gui.destroy()
-    del _backend_gui
-    _backend_gui = None
+    _gui_instance.destroy()
+    del _gui_instance
+    _gui_instance = None
+
+
+def gui_instance_get() -> EmcGui:
+    return _gui_instance
 
 
 def background_set(image: str) -> None:
@@ -90,29 +75,25 @@ def background_set(image: str) -> None:
     #    _backdrop_curr.file_set(image)
     #    signal_emit(signal)
     # except: pass
-    DBG("background_set", image)
+    raise NotImplementedError("background_set " + image)
 
 
 def activate_section(section: str) -> None:
-    _backend_gui.activate_section(section)
+    _gui_instance.activate_section(section)
 
 
 def hide_section(section: str) -> None:
-    _backend_gui.hide_section(section)
+    _gui_instance.hide_section(section)
 
 
 def model_set(section: str, model: EmcModelViewInterface):
-    _backend_gui.model_set(section, model)
+    _gui_instance.model_set(section, model)
 
 
 def page_title_set(title: str) -> None:
-    _backend_gui.page_title_set(title)
+    _gui_instance.page_title_set(title)
 
 
 def page_icon_set(icon: str) -> None:
-    _backend_gui.page_icon_set(icon)
+    _gui_instance.page_icon_set(icon)
 
-
-def dialog_factory(*args, **kargs):  # TODO  -> EmcDialogBase:
-    """ return an instance of type EmcDialog, see EmcDialog_Base for params """
-    return _backend_gui.build_dialog(*args, **kargs)

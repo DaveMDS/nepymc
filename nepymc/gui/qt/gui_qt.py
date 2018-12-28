@@ -19,14 +19,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from typing import Any
 
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import Qt, QObject, Slot, QAbstractListModel
 
 from nepymc import utils
 from nepymc import mainmenu
-from nepymc.gui_base import EmcGui_Base, EmcDialog_Base
+from nepymc.gui import EmcGui
 from nepymc.model import EmcModelViewInterface
 
 
@@ -179,7 +178,7 @@ class GuiCommunicator(QObject):
         return "Not Emotion Media Center"
 
 
-class EmcGui(EmcGui_Base):
+class EmcGui_Qt(EmcGui):
     """ PySide2 implementation of the EmcWindow """
 
     def __init__(self, *args, **kargs):
@@ -249,108 +248,3 @@ class EmcGui(EmcGui_Base):
 
     def page_item_select(self, index: int):
         self._qml_root.page_item_select(index)
-
-    def build_dialog(self, *args, **kargs) -> EmcDialog_Base:
-        return EmcDialog(self, *args, **kargs)
-
-
-class EmcDialog(EmcDialog_Base):
-    """ PySide2 implementation of the EmcDialog """
-
-    # dialogs_counter = 0
-
-    def __init__(self, gui, title=None, text=None, content=None, spinner=False,
-                 style='panel', done_cb=None, canc_cb=None, user_data=None):
-        super().__init__(title, text, content, spinner, style,
-                         done_cb, canc_cb, user_data)
-
-        self._buttons = []
-        self._gui = gui
-        self._qml_obj = gui._qml_root.build_dialog(title, style, text,
-                                                   content, spinner)
-
-        # EmcDialog.dialogs_counter += 1
-        # self._name = 'Dialog-' + str(EmcDialog.dialogs_counter)
-
-        # automatic buttons
-        if style in ('info', 'error', 'warning'):
-            self.button_add(_('Ok'), lambda btn: self.delete())
-
-        if style == 'yesno':
-            if self._canc_cb:
-                self.button_add(_('No'), lambda btn: self._canc_cb(self))
-            else:
-                self.button_add(_('No'), lambda btn: self.delete())
-
-            if self._done_cb:
-                self.button_add(_('Yes'), lambda btn: self._done_cb(self))
-            else:
-                self.button_add(_('Yes'), lambda btn: self.delete())
-
-        if style == 'cancel':
-            if canc_cb:
-                self.button_add(_('Cancel'), lambda btn: self._canc_cb(self))
-            else:
-                self.button_add(_('Cancel'), lambda btn: self.delete())
-
-    def delete(self) -> None:
-        print("DEL")
-        # del self._qml_obj
-        self._qml_obj.emcDestroy()
-
-    def main_content_set(self, content) -> None:
-        raise NotImplementedError
-
-    def button_add(self, label: str, selected_cb: callable = None,
-                   cb_data: Any = None, icon: str = None,
-                   default: bool = False) -> None:
-
-        def button_clicked_cb(idx):
-            b = self._buttons[idx]
-            b['cb'](b['data'])
-
-        newidx = len(self._buttons)
-        btn = self._qml_obj.action_add(newidx, label, icon)
-        btn.emcButtonClicked.connect(button_clicked_cb)
-        self._buttons.append({'btn': btn, 'cb': selected_cb, 'data': cb_data})
-
-    def buttons_clear(self):
-        raise NotImplementedError
-
-    def title_set(self, text: str):
-        raise NotImplementedError
-
-    def text_set(self, text: str):
-        self._qml_obj.setProperty('main_text', text)
-
-    def text_append(self, text: str) -> None:
-        raise NotImplementedError
-
-    def list_item_append(self, label: str, icon: str = None, end: str = None,
-                         *args, **kwargs):
-        raise NotImplementedError
-
-    def list_clear(self):
-        raise NotImplementedError
-
-    def list_item_selected_get(self):
-        raise NotImplementedError
-
-    def list_item_icon_set(self, it, icon, end=False):
-        raise NotImplementedError
-
-    def spinner_start(self):
-        raise NotImplementedError
-
-    def spinner_stop(self):
-        raise NotImplementedError
-
-    def progress_set(self, val: float):
-        raise NotImplementedError
-
-    def autoscroll_enable(self, speed_scale: float = 1.0,
-                          start_delay: float = 3.0):
-        raise NotImplementedError
-
-
-

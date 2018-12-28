@@ -18,62 +18,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from abc import ABC, abstractmethod
 from typing import Any
+from abc import ABC, abstractmethod
 
+from nepymc.utils import EmcBackendableABC
 from nepymc.model import EmcModelViewInterface
-from nepymc.mainloop import EmcMainLoop
+# from nepymc.mainloop import EmcMainLoop
 
 
-def LOG(*args):
-    print('GUI_BASE:', *args)
-
-
-def DBG(*args):
-    print('GUI_BASE:', *args)
-    pass
-
-
-class EmcGui_Base(ABC):
-    def __init__(self, mainloop: EmcMainLoop, theme_name: str):
-        DBG('Window.__init__()')
-        self._mainloop = mainloop
-        self._theme_name = theme_name
-
-    @abstractmethod
-    def create(self) -> bool:
-        return False
-
-    @abstractmethod
-    def destroy(self) -> None:
-        pass
-
-    @abstractmethod
-    def activate_section(self, section: str) -> None:
-        """ sections: mainmenu,browser """
-
-    @abstractmethod
-    def hide_section(self, section: str) -> None:
-        """ sections: mainmenu,browser """
-
-    @abstractmethod
-    def model_set(self, section: str, model: EmcModelViewInterface):
-        """
-        :param section:
-        :param model:
-        :return:
-        """
-
-    @abstractmethod
-    def page_title_set(self, title: str):
-        """ Set the page title """
-
-    @abstractmethod
-    def page_icon_set(self, icon: str):
-        """ Set the page icon """
-
-
-class EmcDialog_Base(ABC):
+class EmcDialog(EmcBackendableABC):
     """
       style can be 'panel' or 'minimal'
 
@@ -82,6 +35,8 @@ class EmcDialog_Base(ABC):
          'list', 'image_list_horiz', 'image_list_vert',
          'buffering'
     """
+    backendable_pkg = 'gui'
+    backendable_cls = 'EmcDialog'
 
     minimal_styles = ['info', 'error', 'warning', 'yesno', 'cancel', 'progress']
 
