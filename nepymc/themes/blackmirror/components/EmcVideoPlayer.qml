@@ -78,14 +78,14 @@ EmcFocusManager {
         Image {  // poster image
             id: emcControlsCover
 
-//            source: "../pics/image/dvd_cover_blank.png"
-            source: "../pics/" + root.poster
+            source: root.poster != "" ? "../pics/" + root.poster : ""
             fillMode: Image.PreserveAspectFit
 
             x: 6
             y: -(height / 2)  // start hidden in the top
-            width: parent.width / 4
+            width: root.poster ? parent.width / 4 : 0
             height: width * 1.1
+            DebugRect{}
         }
 
         EmcTextTopbar {  // clock

@@ -595,19 +595,16 @@ class Test_MediaPlayer(GenericItemClass):
 
         # Mediaplayer Online Video (good)
         elif url == 'uitest://mpvo':
-            pass
-            # mediaplayer.play_url('http://trailers.apple.com/movies/independent/airracers/airracers-tlr1_h480p.mov')
+            mediaplayer.play_url('http://trailers.apple.com/movies/independent/'
+                                 'airracers/airracers-tlr1_h480p.mov')
             # http://samples.mplayerhq.hu/
             # http://download.wavetlan.com/SVV/Media/HTTP/http-mp4.htm
 
-        # Mediaplayer Online Video (med)
-        elif url == 'uitest://mpvom':
-            mediaplayer.play_url('http://fredrik.hubbe.net/plugger/xvidtest.avi')
-
         # Mediaplayer Online Video (bad)
         elif url == 'uitest://mpvob':
-            mediaplayer.play_url(
-                'http://www.archive.org/download/TheMakingOfSuzanneVegasSecondLifeGuitar/3-TheMakingOfSuzanneVega_sSecondLifeGuitar.mp4')
+            mediaplayer.play_url('http://www.archive.org/download/'
+                                 'TheMakingOfSuzanneVegasSecondLifeGuitar/3-'
+                                 'TheMakingOfSuzanneVega_sSecondLifeGuitar.mp4')
 
         # Mediaplayer DVD
         elif url == 'uitest://dvd':
@@ -889,8 +886,6 @@ class UiTestsModule(EmcModule):
                          'MediaPlayer - Local video')
         browser.item_add(Test_MediaPlayer(), 'uitest://mpvo',
                          'Mediaplayer - Online Video (good)')
-        browser.item_add(Test_MediaPlayer(), 'uitest://mpvom',
-                         'Mediaplayer - Online Video (med)')
         browser.item_add(Test_MediaPlayer(), 'uitest://mpvob',
                          'Mediaplayer - Online Video (bad video)')
         browser.item_add(Test_MediaPlayer(), 'uitest://dvd',
