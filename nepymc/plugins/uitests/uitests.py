@@ -23,7 +23,7 @@ import pprint
 
 from nepymc.modules import EmcModule
 from nepymc import mainmenu
-# from nepymc import mediaplayer
+from nepymc import mediaplayer
 from nepymc.browser import EmcBrowser, \
     EmcItemClass, BackItemClass, FolderItemClass
 from nepymc.gui import EmcDialog

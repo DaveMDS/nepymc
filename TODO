@@ -1,4 +1,11 @@
 
+TODO
+====
+ * mediaplayer.py should die, everyone should just directly use
+    EmcVideoPlayer or EmcAudioPlayer
+
+
+
 Just a scratchpad for the moment
 ================================
 

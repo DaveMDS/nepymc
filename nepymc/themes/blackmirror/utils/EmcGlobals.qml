@@ -14,11 +14,12 @@ Item {
 
     // font colors
     property color fontColor: "#FFFFFFFF"
-    property color fontColorShadow: "#AA000000"
-    property color fontColorDisable: "#FF969696"
-    property color fontColorTopbar: "#C8FFFFFF"
-    property color fontColorTopbarShadow: "#AA000000"
-    property color fontColorTitle: "#FF3399FF"  // blue
+    property color fontColorShadow: "#AA000000"  // white
+    property color fontColorDisable: "#FF969696"  // gray
+    property color fontColorTopbar: "#C8FFFFFF"  // a bit trasparent white
+    property color fontColorTopbarShadow: "#AA000000"  // half trasparent black
+    property color fontColorTitle: "#FF3399FF"  // efl blue
+    property color fontColorInverse: "#FF303030" // "quite black" gray
 
     // font sizes     TODO pixel? or points
     property int fontSizeSmaller: 14

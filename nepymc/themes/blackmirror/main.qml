@@ -57,6 +57,15 @@ ApplicationWindow {
         return dia
     }
 
+    function build_video_player(url) {
+        var player = Utils.load_qml_obj("components/EmcVideoPlayer.qml",
+                                        emcApplicationWindow, {
+                                            url: url
+                                       })
+        player.forceActiveFocus()
+        return player
+    }
+
     Component.onCompleted: {
         emc_mainmenu.forceActiveFocus()
     }

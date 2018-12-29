@@ -18,6 +18,41 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from .gui_qt import EmcGui_Qt as EmcGui
-from .dialog_qt import EmcDialog_Qt as EmcDialog
-from .video_player_qt import EmcVideoPlayer_Qt as EmcVideoPlayer
+import sys
+
+# from PySide2.QtCore import Qt, QObject, Slot, QAbstractListModel
+
+from nepymc import gui
+from nepymc.gui import EmcVideoPlayer
+
+
+def LOG(*args):
+    print('VP_QT:', *args)
+
+
+def ERR(*args):
+    print('VP_QT ERROR:', *args, file=sys.stderr)
+
+
+def DBG(*args):
+    print('VP_QT:', *args)
+    pass
+
+
+class EmcVideoPlayer_Qt(EmcVideoPlayer):
+
+    def __init__(self, url: str=None):
+        super().__init__(url)
+        print("INIT VIDEO PLAYER QT")
+
+        self._gui = gui.gui_instance_get()
+        self._qml_obj = self._gui._qml_root.build_video_player(url)
+
+    def delete(self) -> None:
+        self._qml_obj.emcDestroy()
+
+    def title_set(self, title: str) -> None:
+        self._qml_obj.setProperty('title', title)
+
+    def poster_set(self, poster: str) -> None:
+        self._qml_obj.setProperty('poster', poster)

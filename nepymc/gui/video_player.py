@@ -18,6 +18,29 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from .gui_qt import EmcGui_Qt as EmcGui
-from .dialog_qt import EmcDialog_Qt as EmcDialog
-from .video_player_qt import EmcVideoPlayer_Qt as EmcVideoPlayer
+from abc import abstractmethod
+
+from nepymc.utils import EmcBackendableABC
+
+
+class EmcVideoPlayer(EmcBackendableABC):
+    """ TODO DOC """
+    backendable_pkg = 'gui'
+    backendable_cls = 'EmcVideoPlayer'
+
+    @abstractmethod
+    def __init__(self, url: str=None):
+        self._url = url
+
+    @abstractmethod
+    def delete(self) -> None:
+        """ TODOC """
+
+    @abstractmethod
+    def title_set(self, title: str) -> None:
+        """ TODOC """
+
+    @abstractmethod
+    def poster_set(self, poster: str) -> None:
+        """ TODOC """
+

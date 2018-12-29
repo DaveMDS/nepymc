@@ -20,6 +20,7 @@
 
 from .gui import EmcGui
 from .dialog import EmcDialog
+from .video_player import EmcVideoPlayer
 
 
 from nepymc import ini
