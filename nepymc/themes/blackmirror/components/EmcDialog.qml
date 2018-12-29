@@ -13,6 +13,7 @@ EmcFocusManager {
     property string content: ""
     property bool bigger: false
     property bool spinner: false
+    property double progress: -1.0  // 0->1  -1=do not show
 
     function action_add(idx, label, icon) { /* TODO THEME API */
         console.log("QML button add " + idx + " " + label)
@@ -102,10 +103,25 @@ EmcFocusManager {
 
         EmcSpinner {
             id: emcSpinner
+
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: emcFooter.top
+            anchors.bottom: emcProgress.top
             visible: spinner
             height: spinner ? 40 : 0
+        }
+
+        EmcProgressBar {  // optional progress bar
+            id: emcProgress
+
+            value: root.progress
+
+            anchors {
+                left: parent.left
+                leftMargin: 18
+                right: parent.right
+                rightMargin: 18
+                bottom: emcFooter.top
+            }
         }
 
         Row {  // row of buttons in the footer

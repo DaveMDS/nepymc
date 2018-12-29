@@ -85,7 +85,6 @@ EmcFocusManager {
             y: -(height / 2)  // start hidden in the top
             width: root.poster ? parent.width / 4 : 0
             height: width * 1.1
-            DebugRect{}
         }
 
         EmcTextTopbar {  // clock

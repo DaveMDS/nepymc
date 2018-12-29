@@ -32,7 +32,7 @@ class EmcTimer_Qt(EmcTimer):
 
         self._timer = QTimer()
         self._timer.timeout.connect(self._call_user_callback)
-        self._timer.setInterval(1000)
+        self._timer.setInterval(interval)
         self._timer.start()
 
     def delete(self) -> None:

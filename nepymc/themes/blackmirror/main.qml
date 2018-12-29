@@ -51,7 +51,8 @@ ApplicationWindow {
                                          bigger: style === "panel",
                                          main_text: text,
                                          content: content,
-                                         spinner: spinner
+                                         spinner: spinner,
+                                         progress: style === "progress" ? 0 : -1
                                     })
         dia.forceActiveFocus()
         return dia

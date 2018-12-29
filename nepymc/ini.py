@@ -75,10 +75,11 @@ def has_option(section, option):
 
 
 def has_options(options):
-    for option in options:
-        if not _config.has_option(option):
-            return False
-    return True
+    raise NotImplementedError("NEED TO BE CHECKED, IMPL SEEMS WRONG")
+    # for option in options:
+    #     if not _config.has_option(option):
+    #         return False
+    # return True
 
 
 def get_options(section):

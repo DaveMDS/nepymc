@@ -699,8 +699,8 @@ class Test_Dialog(GenericItemClass):
         browser.item_add(self, url + '/error', 'Dialog - Error')
         browser.item_add(self, url + '/yesno', 'Dialog - YesNo')
         browser.item_add(self, url + '/cancel', 'Dialog - Cancel')
-        browser.item_add(self, url + '/progress', 'Dialog - Progress  **TODO**')
-        browser.item_add(self, url + '/progress-btn', 'Dialog - Progress + buttons  **TODO**')
+        browser.item_add(self, url + '/progress', 'Dialog - Progress')
+        browser.item_add(self, url + '/progress-btn', 'Dialog - Progress + btns')
         browser.item_add(self, url + '/list', 'Dialog - List  **TODO**')
         browser.item_add(self, url + '/list-btn', 'Dialog - List with buttons  **TODO**')
         browser.item_add(self, url + '/panel1', 'Dialog - Panel full')
@@ -740,7 +740,7 @@ class Test_Dialog(GenericItemClass):
         elif url.endswith('/yesno'):
             text = 'This is an <br><br><b>Yes/No</><br>dialog<br>'
             EmcDialog(title='Dialog - YesNo', text=text, style='yesno',
-                               done_cb=lambda btn: DBG('done'))
+                      done_cb=lambda btn: DBG('done'))
 
         # Dialog - Cancel
         elif url.endswith('/cancel'):
@@ -748,7 +748,7 @@ class Test_Dialog(GenericItemClass):
             EmcDialog(title='Dialog - Cancel', text=text,
                       style='cancel', spinner=True)
 
-        # Dialog - Progress ** TODO **
+        # Dialog - Progress
         elif url.startswith('uitest://dialog/progress'):
             def _canc_cb(dialog):
                 t.delete()
@@ -759,7 +759,6 @@ class Test_Dialog(GenericItemClass):
                 self._progress += 0.01
                 if self._progress > 1:
                     self._progress = 0;
-                return True # renew the callback
 
             text = 'This is a <br><br><b>Progress operation</><br>dialog<br>'
             d = EmcDialog(title='Dialog - Progress', text=text,
@@ -770,7 +769,7 @@ class Test_Dialog(GenericItemClass):
                 d.button_add("btn2", selected_cb=lambda b: print('btn2 callback'))
                 d.button_add("btn3", selected_cb=lambda b: print('btn3 callback'))
             self._progress = 0.0
-            t = ecore.Timer(0.2, _progress_timer)
+            t = EmcTimer(200, _progress_timer)
 
         # Dialog - List ** TODO **
         elif url.endswith('/list'):

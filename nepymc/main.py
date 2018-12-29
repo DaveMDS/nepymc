@@ -110,30 +110,20 @@ def start_emc(standalone=False):
 
     # init internal components
     sdb.init()
+    # thumbnailer.init()
+    # if not gui.init():
+    #     return 1
     browser.init()
     mainmenu.init()
     config_gui.init()
     mediaplayer.init()
+    # storage.init()
 
     # load & init modules
     modules.load_all()
     modules.init_all_by_config()
 
     """
-    # init internal components
-    sdb.init()
-    thumbnailer.init()
-    if not gui.init():
-       return 1
-    browser.init()
-    mainmenu.init()
-    config_gui.init()
-    mediaplayer.init()
-    storage.init()
- 
-    # show the mainmenu
-    mainmenu.show()
- 
     # use youtube-dl to scrape and play the url given on command line
     if args.youtube_dl and args.mediaurl:
        from epymc.youtubedl import YoutubeDL
@@ -205,26 +195,16 @@ def start_emc(standalone=False):
     loop.run()
 
     # shutdown
+    # modules.save_enabled()
+    # modules.shutdown_all()
+    # storage.shutdown()
     config_gui.shutdown()
     # ini.write_to_file(os.path.join(utils.user_conf_dir, 'epymc.conf'))
     mediaplayer.shutdown()
     browser.shutdown()
     gui.shutdown()
+    # thumbnailer.shutdown()
     sdb.shutdown()
-
-    """
-    # shutdown
-    modules.save_enabled()
-    modules.shutdown_all()
-    storage.shutdown()
-    config_gui.shutdown()
-    ini.write_to_file(os.path.join(utils.user_conf_dir, 'epymc.conf'))
-    mediaplayer.shutdown()
-    browser.shutdown()
-    gui.shutdown()
-    thumbnailer.shutdown()
-    sdb.shutdown()
-    """
 
     print('Bye Bye...')
     return 0

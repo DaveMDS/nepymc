@@ -96,10 +96,10 @@ class EmcDialog_Qt(EmcDialog):
 
         def button_clicked_cb(idx):
             b = self._buttons[idx]
-            if (b['data']):
-                b['cb'](b['data'])
+            if b['data']:
+                b['cb'](b, b['data'])
             else:
-                b['cb']()
+                b['cb'](b)
 
         newidx = len(self._buttons)
         btn = self._qml_obj.action_add(newidx, label, icon)
@@ -138,7 +138,7 @@ class EmcDialog_Qt(EmcDialog):
         raise NotImplementedError
 
     def progress_set(self, val: float):
-        raise NotImplementedError
+        self._qml_obj.setProperty('progress', val)
 
     def autoscroll_enable(self, speed_scale: float = 1.0,
                           start_delay: float = 3.0):
