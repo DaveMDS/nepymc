@@ -24,6 +24,7 @@ import pprint
 from nepymc.modules import EmcModule
 from nepymc import mainmenu
 from nepymc import mediaplayer
+from nepymc.mainloop import EmcTimer
 from nepymc.browser import EmcBrowser, \
     EmcItemClass, BackItemClass, FolderItemClass
 from nepymc.gui import EmcDialog
@@ -545,6 +546,41 @@ class Test_Focus(GenericItemClass):
         print("FOCUS", url, user_data)
 
 
+class Test_Timer(GenericItemClass):
+    def __init__(self):
+        super().__init__()
+        self.dialog = None
+        self.timer = None
+        self.iter_count = 0
+
+    def item_selected(self, url, user_data):
+        self.dialog = dia = EmcDialog('EmcTimer test', 'Press "create"')
+        dia.button_add('Create oneshot', self.timer_create_oneshot)
+        dia.button_add('Create onstart', self.timer_create_onstart)
+        dia.button_add('reset()', lambda: self.timer.reset())
+        dia.button_add('start()', lambda: self.timer.start())
+        dia.button_add('stop()', lambda: self.timer.stop())
+        dia.button_add('destroy()', lambda: self.timer.delete())
+        dia.button_add('Close test', self.close_test)
+
+    def timer_create_oneshot(self):
+        self.iter_count = 0
+        self.timer = EmcTimer(1000, self.timer_cb, oneshot=True, key1="V1", key2="V2")
+
+    def timer_create_onstart(self):
+        self.iter_count = 0
+        self.timer = EmcTimer(1000, self.timer_cb, onstart=True)
+
+    def timer_cb(self, key1=None, key2=None):
+        self.iter_count += 1
+        self.dialog.text_set("Triggered: %d<br>key1=%s key2=%s" % (
+                             self.iter_count, key1, key2))
+
+    def close_test(self):
+        self.timer.delete()
+        self.dialog.delete()
+
+
 class Test_MediaPlayer(GenericItemClass):
     def item_selected(self, url, user_data):
         print("M P ", url, user_data)
@@ -845,6 +881,7 @@ class UiTestsModule(EmcModule):
         self._browser.show()
 
     def populate_root(self, browser, url):
+        browser.item_add(Test_Timer(), 'uitest://timer', 'EmcTimer')
         browser.item_add(Test_Browser(), 'uitest://browser', 'EmcBrowser')
         browser.item_add(Test_Dialog(), 'uitest://dialog', 'EmcDialog')
 

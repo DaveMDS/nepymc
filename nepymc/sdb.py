@@ -24,14 +24,13 @@ import shelve
 import glob
 from queue import Queue
 
-# from efl import ecore
-
 from nepymc import utils
 from nepymc.gui import EmcDialog
+from nepymc.mainloop import EmcTimer
 
 
-def DBG(msg):
-    # print('SDB: %s' % msg)
+def DBG(*args):
+    # print('SDB:', *args)
     pass
 
 
@@ -154,9 +153,7 @@ class EmcDatabase(object):
 
     def _delayed_sync(self):
         if self._sync_timer is None:
-            # TODO TODO TODO
-            pass
-            # self._sync_timer = ecore.Timer(5.0, self._sync_timer_cb)
+            self._sync_timer = EmcTimer(5000, self._sync_timer_cb, oneshot=True)
         else:
             self._sync_timer.reset()
 
@@ -164,7 +161,6 @@ class EmcDatabase(object):
         DBG("Syncing database %s" % self._name)
         self._sh.sync()
         self._sync_timer = None
-        return ecore.ECORE_CALLBACK_CANCEL
 
 
 ##################
@@ -176,8 +172,7 @@ def init():
 
     _queue = Queue()
 
-    # TODO TODO TODO
-    # _queue_timer = ecore.Timer(0.2, _process_queue)
+    _queue_timer = EmcTimer(200, _process_queue)
 
 
 def shutdown():
@@ -205,5 +200,3 @@ def _process_queue():
         (db, key, data) = _queue.get_nowait()
         db._sh[key] = data
     db._delayed_sync()
-
-    return ecore.ECORE_CALLBACK_RENEW

@@ -18,4 +18,5 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from .mainloop import EmcMainLoop_Qt as EmcMainLoop
+from .mainloop_qt import EmcMainLoop_Qt as EmcMainLoop
+from .timer_qt import EmcTimer_Qt as EmcTimer

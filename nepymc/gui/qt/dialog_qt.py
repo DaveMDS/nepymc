@@ -96,7 +96,10 @@ class EmcDialog_Qt(EmcDialog):
 
         def button_clicked_cb(idx):
             b = self._buttons[idx]
-            b['cb'](b['data'])
+            if (b['data']):
+                b['cb'](b['data'])
+            else:
+                b['cb']()
 
         newidx = len(self._buttons)
         btn = self._qml_obj.action_add(newidx, label, icon)

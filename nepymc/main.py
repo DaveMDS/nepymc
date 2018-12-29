@@ -105,6 +105,9 @@ def start_emc(standalone=False):
     ])
     ini.setup_defaults()
 
+    # create the mainloop instance
+    loop = EmcMainLoop(sys.argv)
+
     # init internal components
     sdb.init()
     browser.init()
@@ -193,23 +196,10 @@ def start_emc(standalone=False):
        gui.EmcDialog(style='warning', text=txt)
     """
 
-    # TODO factorize this import
-    # from nepymc import gui_qt as gui
-
-    # create the mainloop instance
-    loop = EmcMainLoop(sys.argv)
-
-    from nepymc import gui
-
+    # create and show the main gui
     if not gui.init('qt', loop):  # TODO: backend by config
         ERR('Cannot create the GUI')
         return 1
-
-    # create and show the main window
-    # gui = gui.EmcGui(loop, 'blackmirror')
-    # if not gui.create():
-    #     ERR('cannot create the main window')
-    #     return 1
 
     # start the main loop
     loop.run()
