@@ -25,6 +25,8 @@ from typing import Any
 
 from PySide2.QtCore import Qt, Slot, QAbstractListModel
 
+from PySide2.QtCore import Qt, Slot, QAbstractListModel
+
 # from nepymc import utils
 from nepymc import gui
 from nepymc.gui import EmcDialog
@@ -177,6 +179,10 @@ class EmcDialog_Qt(EmcDialog):
 
     def list_item_icon_set(self, it, icon, end=False):
         raise NotImplementedError
+
+    def list_go(self):
+        self._list_model.beginResetModel()
+        self._list_model.endResetModel()
 
     def list_go(self):
         self._list_model.beginResetModel()

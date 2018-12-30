@@ -27,7 +27,7 @@ from nepymc import mediaplayer
 from nepymc.mainloop import EmcTimer
 from nepymc.browser import EmcBrowser, \
     EmcItemClass, BackItemClass, FolderItemClass
-from nepymc.gui import EmcDialog
+from nepymc.gui import EmcDialog, EmcSourcesManager, EmcFolderSelector
 # from epymc.gui import EmcDialog, EmcVKeyboard, EmcFolderSelector, \
 #    EmcButton, EmcNotify, EmcMenu, DownloadManager, EmcSlider
 
@@ -459,28 +459,7 @@ class MyItemClass(EmcItemClass):
       # Storage devices
       elif url == 'uitest://storage':
 
-         def storage_events_cb(event):
-            if event != 'STORAGE_CHANGED':
-               return
-            dia.list_clear()
-            for device in storage.list_devices():
-               txt = '{0.label} [ {0.device} ➙ {0.mount_point} ]'.format(device)
-               dia.list_item_append(txt, device.icon, device=device)
-            dia.list_go()
 
-         def dia_canc_cb(dia):
-            events.listener_del('uit_storage')
-            dia.delete()
-
-         def dia_sel_cb(dia, device):
-            print(device)
-            txt = '<small>{}</>'.format(utf8_to_markup(str(device)))
-            EmcDialog(style='info', title='Device info', text=txt)
-
-         dia = EmcDialog(title='Storage devices', style='list',
-                         done_cb=dia_sel_cb, canc_cb=dia_canc_cb)
-         storage_events_cb('STORAGE_CHANGED')
-         events.listener_add('uit_storage', storage_events_cb)
 
       # Music Brainz AudioCD 
       elif url == 'uitest://mbrainz':
@@ -850,7 +829,54 @@ class Test_Dialog(GenericItemClass):
 
             d = EmcDialog(style='buffering', title=_('Buffering'))
             self._progress = 0.0
-            ecore.Timer(0.2, _progress_timer2)
+            EmcTimer(200, _progress_timer2)
+
+
+class Test_FolderSelector(GenericItemClass):
+    def item_selected(self, url, user_data):
+        print("Folder Selector", url, user_data)
+        fs = EmcFolderSelector(title='Choose a path or a file',
+                               done_cb=self.selector_cb)
+
+    def selector_cb(self):
+        print("sel cb")
+
+
+class Test_SourceManager(GenericItemClass):
+    def item_selected(self, url, user_data):
+        print("Source Manager", url, user_data)
+        sm = EmcSourcesManager('movies', done_cb=self.manager_cb)
+
+    def manager_cb(self):
+        print("man cb")
+
+
+class Test_Storage(GenericItemClass):
+    def item_selected(self, url, user_data):
+
+        def storage_events_cb(event):
+            if event != 'STORAGE_CHANGED':
+                return
+            dia.list_clear()
+            for device in storage.list_devices():
+                txt = '{0.label} [ {0.device} ➙ {0.mount_point} ]'.format(
+                    device)
+                dia.list_item_append(txt, device.icon, device=device)
+            dia.list_go()
+
+        def dia_canc_cb(dia):
+            # events.listener_del('uit_storage')
+            dia.delete()
+
+        def dia_sel_cb(dia, device):
+            print(device)
+            txt = '<small>{}</>'.format(utf8_to_markup(str(device)))
+            EmcDialog(style='info', title='Device info', text=txt)
+
+        dia = EmcDialog(title='Storage devices', style='list',
+                        done_cb=dia_sel_cb, canc_cb=dia_canc_cb)
+        storage_events_cb('STORAGE_CHANGED')
+        # events.listener_add('uit_storage', storage_events_cb)
 
 
 class UiTestsModule(EmcModule):
@@ -886,9 +912,15 @@ class UiTestsModule(EmcModule):
         self._browser.show()
 
     def populate_root(self, browser, url):
+        browser.item_add(Test_Dialog(), 'uitest://dialog', 'EmcDialog')
+        browser.item_add(Test_Storage(), 'uitest://storage', 'Storage devices')
+        browser.item_add(Test_FolderSelector(), 'uitest://sselector',
+                         'EmcFolderSelector')
+        browser.item_add(Test_SourceManager(), 'uitest://srcmngr',
+                         'EmcSourceManager')
+
         browser.item_add(Test_Timer(), 'uitest://timer', 'EmcTimer')
         browser.item_add(Test_Browser(), 'uitest://browser', 'EmcBrowser')
-        browser.item_add(Test_Dialog(), 'uitest://dialog', 'EmcDialog')
 
         browser.item_add(Test_MediaPlayer(), 'uitest://mpv',
                          'MediaPlayer - Local video')
@@ -903,8 +935,9 @@ class UiTestsModule(EmcModule):
         # browser.item_add(Test_Focus(), 'uitest://focus_1', 'Focus corner case 1')
         # browser.item_add(MainPageItemClass(), 'uitest://focus_2', 'Focus corner case 2')
         # browser.item_add(MainPageItemClass(), 'uitest://focus_3', 'Focus corner case 3')
-        # browser.item_add(MainPageItemClass(), 'uitest://storage', 'Storage devices')
-        # browser.item_add(MainPageItemClass(), 'uitest://sselector', 'Folder Selector')
+
+
+
         # browser.item_add(MainPageItemClass(), 'uitest://mbrainz', 'Music Brainz AudioCD (/dev/cdrom)')
         # browser.item_add(MainPageItemClass(), 'uitest://menu', 'Menu small (dismiss on select)')
         # browser.item_add(MainPageItemClass(), 'uitest://menu_long', 'Menu long (no dismiss on select)')
