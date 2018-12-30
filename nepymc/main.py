@@ -35,8 +35,8 @@ from nepymc.mainloop import EmcMainLoop
 from nepymc import ini
 from nepymc import gui
 from nepymc import sdb
-# from emc import storage
-# from emc import thumbnailer
+from nepymc import storage
+# from nepymc import thumbnailer
 
 
 # install the _() and ngettext() func in the main namespace
@@ -117,7 +117,7 @@ def start_emc(standalone=False):
     mainmenu.init()
     config_gui.init()
     mediaplayer.init()
-    # storage.init()
+    storage.init()
 
     # load & init modules
     modules.load_all()
@@ -197,7 +197,7 @@ def start_emc(standalone=False):
     # shutdown
     # modules.save_enabled()
     # modules.shutdown_all()
-    # storage.shutdown()
+    storage.shutdown()
     config_gui.shutdown()
     # ini.write_to_file(os.path.join(utils.user_conf_dir, 'epymc.conf'))
     mediaplayer.shutdown()

@@ -350,8 +350,8 @@ def init():
     #               'icon/theme', _themes_list)
     root_item_add('config://views/', 5, _('Views'),
                   'icon/views', _views_list)
-    # root_item_add('config://storage/', 6, _('Storage devices'),
-    #               'icon/harddisk', _storage_list)
+    root_item_add('config://storage/', 6, _('Storage devices'),
+                  'icon/harddisk', _storage_list)
     # root_item_add('config://subtitles/', 7, _('Subtitles'),
     #               'icon/subs', _subtitles_list)
     root_item_add('config://sysinfo/', 90, _('System info'),

@@ -24,6 +24,7 @@ import pprint
 from nepymc.modules import EmcModule
 from nepymc import mainmenu
 from nepymc import mediaplayer
+from nepymc import storage
 from nepymc.mainloop import EmcTimer
 from nepymc.browser import EmcBrowser, \
     EmcItemClass, BackItemClass, FolderItemClass
@@ -34,7 +35,6 @@ from nepymc.gui import EmcDialog, EmcSourcesManager, EmcFolderSelector
 # import epymc.utils as utils
 # import epymc.events as events
 # import epymc.ini as ini
-# import epymc.storage as storage
 # from epymc.musicbrainz import MusicBrainz
 
 
@@ -710,7 +710,7 @@ class Test_Dialog(GenericItemClass):
             text = 'This is an <br><br><b>Warning</><br>dialog<br>'
             EmcDialog(text=text, style='warning')
 
-        # Dialog - Error **
+        # Dialog - Error
         elif url.endswith('/error'):
             text = 'This is an <br><br><b>Error</><br>dialog<br>'
             EmcDialog(title='Dialog - Error', text=text, style='error')
@@ -750,7 +750,7 @@ class Test_Dialog(GenericItemClass):
             self._progress = 0.0
             t = EmcTimer(200, _progress_timer)
 
-        # Dialog - List ** TODO **
+        # Dialog - List
         elif url.endswith('/list'):
             def _dia_list_cb(dia):
                 item = dia.list_item_selected_get()
