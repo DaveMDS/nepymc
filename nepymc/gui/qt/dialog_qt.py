@@ -25,8 +25,6 @@ from typing import Any
 
 from PySide2.QtCore import Qt, Slot, QAbstractListModel
 
-from PySide2.QtCore import Qt, Slot, QAbstractListModel
-
 # from nepymc import utils
 from nepymc import gui
 from nepymc.gui import EmcDialog
@@ -89,9 +87,14 @@ class DialogListModel(QAbstractListModel):
 
 
 class EmcDialog_Qt(EmcDialog):
-    """ PySide2 implementation of the EmcDialog """
+    """ PySide2 implementation of the EmcDialog
 
-    # dialogs_counter = 0
+      style can be 'panel' or 'minimal'
+      or you can also apply special style that perform specific task:
+         'info', 'error', 'warning', 'yesno', 'cancel', 'progress',
+         'list', 'image_list_horiz', 'image_list_vert',
+         'buffering'
+    """
 
     def __init__(self, title=None, text=None, content=None, spinner=False,
                  style='panel', done_cb=None, canc_cb=None, user_data=None):
@@ -103,10 +106,12 @@ class EmcDialog_Qt(EmcDialog):
         self._buttons = []
         self._gui = gui.gui_instance_get()
         self._qml_obj = self._gui._qml_root.build_dialog(title, style, text,
-                                                         content, spinner)
+                                                         content, spinner,
+                                                         self._list_model)
 
-        # EmcDialog.dialogs_counter += 1
-        # self._name = 'Dialog-' + str(EmcDialog.dialogs_counter)
+        # This is needed to keep the object alive (the qt model in particular)
+        # maybe the user don't keep a ref because dialog can auto-delete
+        self._auto_reference = self
 
         # automatic buttons
         if style in ('info', 'error', 'warning'):
@@ -179,10 +184,6 @@ class EmcDialog_Qt(EmcDialog):
 
     def list_item_icon_set(self, it, icon, end=False):
         raise NotImplementedError
-
-    def list_go(self):
-        self._list_model.beginResetModel()
-        self._list_model.endResetModel()
 
     def list_go(self):
         self._list_model.beginResetModel()

@@ -91,9 +91,9 @@ class EmcDialog(EmcBackendableABC):
                          *args, **kwargs):
         """ TODOC """
 
-    # @abstractmethod
-    # def list_go(self):
-    #     pass
+    @abstractmethod
+    def list_go(self):
+        """ TODOC """
 
     @abstractmethod
     def list_clear(self):

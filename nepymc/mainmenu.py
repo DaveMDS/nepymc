@@ -155,11 +155,13 @@ def item_activate(name: str) -> None:
 def show():
     gui.activate_section('mainmenu')
     # input_events.listener_add('mainmenu', input_event_cb)
+    raise DeprecationWarning('should not explicitly show the menu')
 
 
 def hide():
     # input_events.listener_del('mainmenu')
     gui.hide_section('mainmenu')
+    raise DeprecationWarning('should not explicitly hide the menu')
 
 
 # ****************************************************************************
