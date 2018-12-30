@@ -199,7 +199,7 @@ def start_emc(standalone=False):
     # modules.shutdown_all()
     storage.shutdown()
     config_gui.shutdown()
-    # ini.write_to_file(os.path.join(utils.user_conf_dir, 'epymc.conf'))
+    ini.write_to_file(os.path.join(utils.user_conf_dir, 'nepymc.conf'))
     mediaplayer.shutdown()
     browser.shutdown()
     gui.shutdown()
