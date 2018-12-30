@@ -14,6 +14,7 @@ EmcFocusManager {
     property bool bigger: false
     property bool spinner: false
     property double progress: -1.0  // 0->1  -1=do not show
+    property var list_model: undefined
 
     function action_add(idx, label, icon) { /* TODO THEME API */
         console.log("QML button add " + idx + " " + label)
@@ -43,8 +44,20 @@ EmcFocusManager {
         destroy(500)  // destroy after the fadeout
     }
 
-    Keys.onUpPressed: emcMainText.scrollUp()
-    Keys.onDownPressed: emcMainText.scrollDown()
+    Keys.onUpPressed: {
+        if (root.list_model) {
+            emcList.decrementCurrentIndex()
+        } else {
+            emcMainText.scrollUp()
+        }
+    }
+    Keys.onDownPressed: {
+        if (root.list_model) {
+            emcList.incrementCurrentIndex()
+        } else {
+            emcMainText.scrollDown()
+        }
+    }
 
     anchors.fill: parent
     opacity: 0.0
@@ -89,6 +102,8 @@ EmcFocusManager {
         EmcScrollText {  // main scrollable text content
             id: emcMainText
 
+            visible: !list_model
+
             text: main_text
 //            focusPolicy: Qt.NoFocus  // doesn't seems to work
 
@@ -98,6 +113,21 @@ EmcFocusManager {
                 left: emcContentImage.right
                 right: parent.right
                 rightMargin: 9
+            }
+        }
+
+        EmcList {
+            id: emcList
+
+            model: root.list_model
+
+            anchors {
+                top: emcTitle.bottom
+                bottom: emcSpinner.top
+                left: parent.left
+                right: parent.right
+                leftMargin: 10
+                rightMargin: 10
             }
         }
 
@@ -114,6 +144,7 @@ EmcFocusManager {
             id: emcProgress
 
             value: root.progress
+            visible: root.progress != -1
 
             anchors {
                 left: parent.left

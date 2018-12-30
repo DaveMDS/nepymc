@@ -701,8 +701,8 @@ class Test_Dialog(GenericItemClass):
         browser.item_add(self, url + '/cancel', 'Dialog - Cancel')
         browser.item_add(self, url + '/progress', 'Dialog - Progress')
         browser.item_add(self, url + '/progress-btn', 'Dialog - Progress + btns')
-        browser.item_add(self, url + '/list', 'Dialog - List  **TODO**')
-        browser.item_add(self, url + '/list-btn', 'Dialog - List with buttons  **TODO**')
+        browser.item_add(self, url + '/list', 'Dialog - List')
+        browser.item_add(self, url + '/list-btn', 'Dialog - List with buttons')
         browser.item_add(self, url + '/panel1', 'Dialog - Panel full')
         browser.item_add(self, url + '/panel4', 'Dialog - Panel full more')
         browser.item_add(self, url + '/panel2', 'Dialog - Panel no buttons ')
@@ -781,23 +781,32 @@ class Test_Dialog(GenericItemClass):
                           done_cb=_dia_list_cb)
             d.list_item_append('item 1', 'icon/home')
             d.list_item_append('item 2', 'icon/star', 'icon/check_on')
-            d.list_item_append('item 3 <b>bold</> <info>info</> <success>success</> <failure>failure</> <i>etc...</>',
+            d.list_item_append('item 3 <b>bold</> <info>info</> '
+                               '<success>success</> <failure>failure</> '
+                               '<i>etc...</>',
                                'icon/star', 'icon/check_on')
             d.list_item_append('item 4', 'icon/tag', 'text/End Text')
-            d.list_item_append('item 5', 'icon/tag', 'text/<b>End</> <info>Text</>')
-            for i in range(6, 101):
-                d.list_item_append('item %d'%i)
+            d.list_item_append('item 5', 'icon/tag', 'text/Styled <b>End</> <info>Text</>')
+            d.list_item_append('item 6 ' + ('A really long text, ' * 6))
+            for i in range(7, 101):
+                d.list_item_append('item #%d' % i)
             d.list_go()
 
-        # Dialog - List with buttons ** TODO **
+        # Dialog - List with buttons
         elif url.endswith('/list-btn'):
             d = EmcDialog(title='Dialog - List with buttons',
                           style='list')
             for i in range(1, 40):
                 d.list_item_append('item %d'%i)
-            d.button_add('One', selected_cb=lambda b: print('btn1 callback'))
-            d.button_add('Two', selected_cb=lambda b: print('btn2 callback'))
-            d.button_add('Tree', selected_cb=lambda b: print('btn3 callback'))
+
+            def _btn_cb(b):
+                item = d.list_item_selected_get()
+                print('Selected:', item)
+                d.delete()
+
+            d.button_add('One', selected_cb=_btn_cb)
+            d.button_add('Two', selected_cb=_btn_cb)
+            d.button_add('Tree', selected_cb=_btn_cb)
             d.list_go()
 
         # Dialog - Panel full
@@ -888,7 +897,7 @@ class UiTestsModule(EmcModule):
         browser.item_add(Test_MediaPlayer(), 'uitest://mpvob',
                          'Mediaplayer - Online Video (bad video)')
         browser.item_add(Test_MediaPlayer(), 'uitest://dvd',
-                         'Mediaplayer - DVD Playback (/dev/cdrom)')
+                         'Mediaplayer - DVD Playback (/dev/cdrom) **TODO**')
 
         # browser.item_add(Test_Buttons(), 'uitest://buttons', 'Buttons + Focus')
         # browser.item_add(Test_Focus(), 'uitest://focus_1', 'Focus corner case 1')

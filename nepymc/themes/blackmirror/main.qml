@@ -44,14 +44,15 @@ ApplicationWindow {
         emc_browser.currentIndex = index
     }
 
-    function build_dialog(title, style, text, content, spinner) {
+    function build_dialog(title, style, text, content, spinner, list_model) {
         var dia = Utils.load_qml_obj("components/EmcDialog.qml",
                                      emcApplicationWindow, {
                                          title: title,
-                                         bigger: style === "panel",
+                                         bigger: style === "panel" || style === "list",
                                          main_text: text,
                                          content: content,
                                          spinner: spinner,
+                                         list_model: list_model,
                                          progress: style === "progress" ? 0 : -1
                                     })
         dia.forceActiveFocus()

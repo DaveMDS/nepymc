@@ -21,8 +21,9 @@
 import sys
 from typing import Any
 
-
 # from PySide2.QtCore import Qt, QObject, Slot, QAbstractListModel
+
+from PySide2.QtCore import Qt, Slot, QAbstractListModel
 
 # from nepymc import utils
 from nepymc import gui
@@ -42,6 +43,49 @@ def DBG(*args):
     pass
 
 
+class DialogListModel(QAbstractListModel):
+    label_role = Qt.UserRole + 1
+    label_end_role = Qt.UserRole + 2
+    icon_role = Qt.UserRole + 3
+    icon_end_role = Qt.UserRole + 4
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.items = []  # list of tuple: (label, icon, end, args, kargs)
+        self.current_index = 0
+
+    # Qt model implementation
+    def roleNames(self):
+        return {
+            self.label_role: b'label',
+            self.label_end_role: b'label_end',
+            self.icon_role: b'icon',
+            self.icon_end_role: b'icon_end',
+        }
+
+    def rowCount(self, index):
+        return len(self.items)
+
+    def data(self, index, role):
+        label, icon, end, args, kargs = self.items[index.row()]
+        if role == self.label_role:
+            return label
+        if role == self.label_end_role:
+            if end and end.startswith('text/'):
+                return end[5:]
+        elif role == self.icon_role:
+            return icon
+        elif role == self.icon_end_role:
+            if end and end.startswith('icon/'):
+                return end
+
+    # below methods are to be called from QML
+    @Slot(int)
+    def selection_changed(self, index):
+        """ An in item has been selected in QML """
+        self.current_index = index
+
+
 class EmcDialog_Qt(EmcDialog):
     """ PySide2 implementation of the EmcDialog """
 
@@ -53,6 +97,7 @@ class EmcDialog_Qt(EmcDialog):
                          done_cb, canc_cb, user_data)
 
         print("INIT DIALOG QT")
+        self._list_model = DialogListModel() if style == 'list' else None
         self._buttons = []
         self._gui = gui.gui_instance_get()
         self._qml_obj = self._gui._qml_root.build_dialog(title, style, text,
@@ -83,8 +128,7 @@ class EmcDialog_Qt(EmcDialog):
                 self.button_add(_('Cancel'), lambda btn: self.delete())
 
     def delete(self) -> None:
-        print("DEL")
-        # del self._qml_obj
+        self._auto_reference = None
         self._qml_obj.emcDestroy()
 
     def main_content_set(self, content) -> None:
@@ -118,18 +162,25 @@ class EmcDialog_Qt(EmcDialog):
     def text_append(self, text: str) -> None:
         raise NotImplementedError
 
-    def list_item_append(self, label: str, icon: str = None, end: str = None,
-                         *args, **kwargs):
-        raise NotImplementedError
+    def list_item_append(self, label: str, icon: str=None, end: str=None,
+                         *args, **kargs):
+        item_data = (label, icon, end, args, kargs)
+        self._list_model.items.append(item_data)
 
     def list_clear(self):
-        raise NotImplementedError
+        self._list_model.beginResetModel()
+        self._list_model.items = []
+        self._list_model.endResetModel()
 
     def list_item_selected_get(self):
-        raise NotImplementedError
+        return self._list_model.current_index
 
     def list_item_icon_set(self, it, icon, end=False):
         raise NotImplementedError
+
+    def list_go(self):
+        self._list_model.beginResetModel()
+        self._list_model.endResetModel()
 
     def spinner_start(self):
         raise NotImplementedError

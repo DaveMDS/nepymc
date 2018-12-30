@@ -40,7 +40,7 @@ _instances = []
 
 
 class EmcDatabase(object):
-    """ TODO doc this """
+    """ TODOC """
 
     def __init__(self, name, version=None):
         self._name = name

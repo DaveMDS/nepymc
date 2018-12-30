@@ -1,0 +1,120 @@
+import QtQuick 2.12
+import "../utils/"
+
+/*
+ *  A standard emc list item, the model must implement the fields:
+ *   -label
+ *   -label_end
+ *   -icon
+ *   -icon_end
+ */
+
+Item {
+    id: root
+
+    property var view: ListView.view  // ... hmmm :/
+
+    width: parent.width
+    height: emcLabel.height
+
+
+    BorderImage {  // selection highlight background
+        anchors.fill: parent
+//        anchors.bottomMargin: parent.height / 2  // FOR BROWSER
+//        source: "../pics/list_item_sel_fg.png"  // FOR BROWSER
+//        opacity: 0.25 // FOR BROWSER
+        source: "../pics/list_selection.png"
+        border { top: 2; bottom: 2 }
+        visible: view.currentIndex === model.index
+
+        Image { // shine
+            source: "../pics/shine.png"
+            anchors.top: parent.top
+            anchors.topMargin: -2
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+        BorderImage { //shadow
+            source: "../pics/shadow_rounded_horiz.png"
+            border.top: 9
+            border.bottom: 9
+            anchors.fill: parent
+            anchors.topMargin: -4
+            anchors.bottomMargin: -6
+            z: -1
+        }
+    }
+
+    Row {
+        id: emcRightRow
+        anchors.right: parent.right
+        anchors.rightMargin: 4
+        spacing: 3
+
+        EmcText { // right (end) label
+            id: emcLabelEnd
+
+            text: model.label_end ? model.label_end : ""
+            font.pixelSize: EmcGlobals.fontSize - 2
+            color: EmcGlobals.fontColorDisable
+
+            verticalAlignment: Text.AlignVCenter
+            height: emcLabel.height
+        }
+
+        Image {  // right (end) icon
+            id: emcIconEnd
+            source: model.icon_end ? "../pics/" + model.icon_end + ".png" : ""
+            fillMode: Image.PreserveAspectFit
+            visible: source != ""
+            height: emcLabel.height
+            width: height
+        }
+    }
+
+    Row {
+        id: emcLeftRow
+
+        anchors.left: parent.left
+        anchors.leftMargin: 4
+        anchors.right: emcRightRow.left
+        spacing: 3
+
+        Image {  // main (left) icon
+            id: emcIcon
+            source: model.icon ? "../pics/" + model.icon + ".png" : ""
+            fillMode: Image.PreserveAspectFit
+            visible: source != ""
+            height: emcLabel.height
+            width: height
+        }
+
+        // TODO make this text "slide-able"
+        EmcText {  // main (left) label
+            id: emcLabel
+            padding: 4
+            text: model.label
+        }
+    }
+//    DebugRect {color:"blue";anchors.fill: emcLeftRow}
+
+
+    Image {  // separator
+        source: "../pics/separator.png"
+        height: 2
+        width: parent.width
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -2
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            print("click", view.currentIndex)
+            view.currentIndex = index
+//            emcBrowserListItem.forceActiveFocus()
+        }
+//        DebugRect {color:"green"}
+//        onDoubleClicked: BrowserModel.item_selected(index)
+    }
+
+}

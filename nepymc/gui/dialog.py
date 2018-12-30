@@ -38,7 +38,8 @@ class EmcDialog(EmcBackendableABC):
     backendable_pkg = 'gui'
     backendable_cls = 'EmcDialog'
 
-    minimal_styles = ['info', 'error', 'warning', 'yesno', 'cancel', 'progress']
+    # minimal_styles = ['info', 'error', 'warning', 'yesno', 'cancel', 'progress']
+    # list_styles = ['list', 'image_list_horiz', 'image_list_vert']
 
     @abstractmethod
     def __init__(self, title: str=None, text: str=None,
