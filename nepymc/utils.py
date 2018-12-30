@@ -19,7 +19,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import pwd
+import re
 import importlib
+import hashlib
 from abc import ABC
 
 from nepymc import ini
@@ -85,6 +88,34 @@ def get_resource(*resource: str) -> str:
 
     # not found :(
     return ''
+
+
+def md5(txt):
+    """ calc the md5 of the given str """
+    txt = bytes(txt, 'utf-8')
+    return hashlib.md5(txt).hexdigest()
+
+
+def user_name():
+    return pwd.getpwuid(os.getuid())[0]
+
+
+def natural_sort(l):
+    convert = lambda text: int(text) if text.isdigit() else text.lower()
+    alphanum_key = lambda key: [convert(c) for c in re.split('([0-9]+)', key)]
+    return sorted(l, key=alphanum_key)
+
+
+def natural_cmp(a, b):
+    convert = lambda text: int(text) if text.isdigit() else text.lower()
+    x = [convert(c) for c in re.split('([0-9]+)', a)]
+    y = [convert(c) for c in re.split('([0-9]+)', b)]
+    if x == y:
+        return 0
+    elif x > y:
+        return 1
+    else:
+        return -1
 
 
 class Singleton(object):
