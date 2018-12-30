@@ -19,9 +19,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from .gui import EmcGui
-from .dialog import EmcDialog
+from .dialog import EmcDialog, EmcDialogListItem
 from .video_player import EmcVideoPlayer
 
+from .more import EmcFolderSelector
+from .more import EmcSourcesManager
 
 from nepymc import ini
 from nepymc.model import EmcModelViewInterface

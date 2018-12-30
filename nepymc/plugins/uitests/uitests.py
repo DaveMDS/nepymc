@@ -652,6 +652,8 @@ class Test_Browser(GenericItemClass):
             return 'icon/views'
 
     def icon_end_get(self, url, user_data):
+        if url == 'uitest://browser':
+            return 'icon/forward'
         if url.endswith(('/two_icons', '/two_labels_two_icon')):
             return 'icon/star'
 
@@ -687,6 +689,10 @@ class Test_Dialog(GenericItemClass):
         browser.item_add(self, url + '/panel2', 'Dialog - Panel no buttons ')
         browser.item_add(self, url + '/panel3', 'Dialog - Panel no title')
         browser.item_add(self, url + '/buffering', 'Dialog - Buffering  **TODO**')
+
+    def icon_end_get(self, url, user_data):
+        if url == 'uitest://dialog':
+            return 'icon/forward'
 
     def item_selected(self, url, user_data):
         # main item selected, create the subpage
@@ -834,21 +840,23 @@ class Test_Dialog(GenericItemClass):
 
 class Test_FolderSelector(GenericItemClass):
     def item_selected(self, url, user_data):
-        print("Folder Selector", url, user_data)
-        fs = EmcFolderSelector(title='Choose a path or a file',
-                               done_cb=self.selector_cb)
+        EmcFolderSelector(title='Choose a path or a file',
+                          done_cb=self.selector_cb, pippo="pippo", due="due")
 
-    def selector_cb(self):
-        print("sel cb")
+    @staticmethod
+    def selector_cb(path, pippo, due):
+        assert pippo == "pippo"
+        assert due == "due"
+        print("FolderSelector:", path)
 
 
 class Test_SourceManager(GenericItemClass):
     def item_selected(self, url, user_data):
-        print("Source Manager", url, user_data)
-        sm = EmcSourcesManager('movies', done_cb=self.manager_cb)
+        EmcSourcesManager('movies', done_cb=self.manager_cb)
 
-    def manager_cb(self):
-        print("man cb")
+    @staticmethod
+    def manager_cb(new_folders_list):
+        print("Source Manager:", new_folders_list)
 
 
 class Test_Storage(GenericItemClass):
@@ -913,11 +921,13 @@ class UiTestsModule(EmcModule):
 
     def populate_root(self, browser, url):
         browser.item_add(Test_Dialog(), 'uitest://dialog', 'EmcDialog')
-        browser.item_add(Test_Storage(), 'uitest://storage', 'Storage devices')
-        browser.item_add(Test_FolderSelector(), 'uitest://sselector',
-                         'EmcFolderSelector')
+
+        browser.item_add(Test_Storage(), 'uitest://storage',
+                                         'Storage Devices')
+        browser.item_add(Test_FolderSelector(), 'uitest://fselector',
+                                                'Folder Selector')
         browser.item_add(Test_SourceManager(), 'uitest://srcmngr',
-                         'EmcSourceManager')
+                                               'Source Manager')
 
         browser.item_add(Test_Timer(), 'uitest://timer', 'EmcTimer')
         browser.item_add(Test_Browser(), 'uitest://browser', 'EmcBrowser')

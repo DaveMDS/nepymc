@@ -27,7 +27,7 @@ from PySide2.QtCore import Qt, Slot, QAbstractListModel
 
 # from nepymc import utils
 from nepymc import gui
-from nepymc.gui import EmcDialog
+from nepymc.gui import EmcDialog, EmcDialogListItem
 
 
 def LOG(*args):
@@ -51,7 +51,7 @@ class DialogListModel(QAbstractListModel):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.items = []  # list of tuple: (label, icon, end, args, kargs)
+        self.items = []  # list of EmcDiaogListItem
         self.current_index = 0
 
     # Qt model implementation
@@ -67,17 +67,17 @@ class DialogListModel(QAbstractListModel):
         return len(self.items)
 
     def data(self, index, role):
-        label, icon, end, args, kargs = self.items[index.row()]
+        it = self.items[index.row()]
         if role == self.label_role:
-            return label
+            return it.label
         if role == self.label_end_role:
-            if end and end.startswith('text/'):
-                return end[5:]
+            if it.end and it.end.startswith('text/'):
+                return it.end[5:]
         elif role == self.icon_role:
-            return icon
+            return it.icon
         elif role == self.icon_end_role:
-            if end and end.startswith('icon/'):
-                return end
+            if it.end and it.end.startswith('icon/'):
+                return it.end
 
     # below methods are to be called from QML
     @Slot(int)
@@ -171,8 +171,9 @@ class EmcDialog_Qt(EmcDialog):
 
     def list_item_append(self, label: str, icon: str=None, end: str=None,
                          *args, **kargs):
-        item_data = (label, icon, end, args, kargs)
-        self._list_model.items.append(item_data)
+        it = EmcDialogListItem(label, icon, end, args, kargs)
+        self._list_model.items.append(it)
+        return it
 
     def list_clear(self):
         self._list_model.beginResetModel()
@@ -180,7 +181,8 @@ class EmcDialog_Qt(EmcDialog):
         self._list_model.endResetModel()
 
     def list_item_selected_get(self):
-        return self._list_model.current_index
+        idx = self._list_model.current_index
+        return self._list_model.items[idx]
 
     def list_item_icon_set(self, it, icon, end=False):
         raise NotImplementedError

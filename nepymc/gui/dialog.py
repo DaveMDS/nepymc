@@ -26,6 +26,16 @@ from nepymc.model import EmcModelViewInterface
 # from nepymc.mainloop import EmcMainLoop
 
 
+class EmcDialogListItem(object):
+    def __init__(self, label, icon, end, *args, **kargs):
+        self.label = label
+        self.icon = icon
+        self.end = end
+        self.args = args
+        self.kargs = kargs
+        self.data = {}  # dict free for user
+
+
 class EmcDialog(EmcBackendableABC):
     """
       style can be 'panel' or 'minimal'
@@ -88,7 +98,7 @@ class EmcDialog(EmcBackendableABC):
 
     @abstractmethod
     def list_item_append(self, label: str, icon: str=None, end: str=None,
-                         *args, **kwargs):
+                         *args, **kargs) -> EmcDialogListItem:
         """ TODOC """
 
     @abstractmethod
@@ -100,8 +110,8 @@ class EmcDialog(EmcBackendableABC):
         """ TODOC """
 
     @abstractmethod
-    def list_item_selected_get(self):  # TODO return type ?
-        """ TODOC """
+    def list_item_selected_get(self) -> EmcDialogListItem:
+        """ return the current selected item """
 
     @abstractmethod
     def list_item_icon_set(self, it, icon, end=False):  # TODO item type ?
