@@ -90,6 +90,68 @@ def get_resource(*resource: str) -> str:
     return ''
 
 
+def utf8_to_markup(string):
+    # TODO what to do here ?? should be backend specific?
+    return string
+
+
+def url2path(url):
+    # TODO ... convert the url to a local path !!
+    return url[7:]
+
+
+def hum_size(bytes):
+    bytes = float(bytes)
+    if bytes >= 1099511627776:
+        terabytes = bytes / 1099511627776
+        size = '%.3fT' % terabytes
+    elif bytes >= 1073741824:
+        gigabytes = bytes / 1073741824
+        size = '%.2fG' % gigabytes
+    elif bytes >= 1048576:
+        megabytes = bytes / 1048576
+        size = '%.1fM' % megabytes
+    elif bytes >= 1024:
+        kilobytes = bytes / 1024
+        size = '%.0fK' % kilobytes
+    else:
+        size = '%.0fb' % bytes
+    return size
+
+
+def seconds_to_duration(seconds, hours=False):
+    """Convert the number of seconds in a readable duration
+       hours: If True then hours will be visible also when < 1
+    """
+    seconds = int(seconds)
+    h = seconds // 3600
+    m = (seconds // 60) % 60
+    s = seconds % 60
+    if h > 0 or hours:
+        return '%d:%02d:%02d' % (h, m, s)
+    else:
+        return '%d:%02d' % (m, s)
+
+
+def splitpath(path):
+    """ Convert a string path in a list of all the components """
+    return [p for p in path.split(os.path.sep) if p != '']
+
+
+def ensure_file_not_exists(fullpath):
+    """ Add a number at the end of the file name to ensure it do not exists """
+    if not os.path.exists(fullpath):
+        return fullpath
+
+    num = 1
+    name, ext = os.path.splitext(fullpath)
+    while True:
+        new = name + '_%03d' % num + ext
+        if not os.path.exists(new):
+            return new
+        num += 1
+
+
 def md5(txt):
     """ calc the md5 of the given str """
     txt = bytes(txt, 'utf-8')
