@@ -160,14 +160,17 @@ class EmcDialog_Qt(EmcDialog):
     def buttons_clear(self):
         raise NotImplementedError
 
-    def title_set(self, text: str):
-        raise NotImplementedError
+    def title_set(self, title: str):
+        super().title_set(title)
+        self._qml_obj.setProperty('title', title)
 
     def text_set(self, text: str):
+        super().text_set(text)
         self._qml_obj.setProperty('main_text', text)
 
     def text_append(self, text: str) -> None:
-        raise NotImplementedError
+        super().text_append(text)
+        self._qml_obj.setProperty('main_text', self._text)
 
     def list_item_append(self, label: str, icon: str=None, end: str=None,
                          *args, **kargs):

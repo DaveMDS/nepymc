@@ -85,16 +85,19 @@ class EmcDialog(EmcBackendableABC):
         """ TODOC """
 
     @abstractmethod
-    def title_set(self, text: str):
+    def title_set(self, title: str):
         """ TODOC """
+        self._title = title
 
     @abstractmethod
     def text_set(self, text: str):
         """ TODOC """
+        self._text = text
 
     @abstractmethod
     def text_append(self, text: str) -> None:
         """ TODOC """
+        self._text += text
 
     @abstractmethod
     def list_item_append(self, label: str, icon: str=None, end: str=None,
