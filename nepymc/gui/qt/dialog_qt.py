@@ -19,7 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from typing import Any
+from typing import Any, Optional
 
 # from PySide2.QtCore import Qt, QObject, Slot, QAbstractListModel
 
@@ -138,9 +138,6 @@ class EmcDialog_Qt(EmcDialog):
         self._auto_reference = None
         self._qml_obj.emcDestroy()
 
-    def main_content_set(self, content) -> None:
-        raise NotImplementedError
-
     def button_add(self, label: str, selected_cb: callable = None,
                    cb_data: Any = None, icon: str = None,
                    default: bool = False) -> None:
@@ -158,7 +155,12 @@ class EmcDialog_Qt(EmcDialog):
         self._buttons.append({'btn': btn, 'cb': selected_cb, 'data': cb_data})
 
     def buttons_clear(self):
-        raise NotImplementedError
+        self._qml_obj.actions_clear()
+        self._buttons = []
+
+    def content_set(self, content: Optional[str]) -> None:
+        super().content_set(content)
+        self._qml_obj.setProperty('content', content)
 
     def title_set(self, title: str):
         super().title_set(title)

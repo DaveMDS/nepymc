@@ -37,6 +37,13 @@ EmcFocusManager {
         return btn
     }
 
+    function actions_clear() { /* TODO THEME API */
+        for(var i = emcFooter.children.length; i > 0 ; i--) {
+            emcFooter.children[i-1].destroy()
+        }
+        emcFooter.children = []
+    }
+
     function emcDestroy() {  /* TODO THEME API */
         opacity = 0.0  // fade out
         focusAllow = false

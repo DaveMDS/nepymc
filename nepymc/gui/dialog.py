@@ -18,12 +18,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Any
-from abc import ABC, abstractmethod
+from typing import Any, Optional
+from abc import abstractmethod
 
 from nepymc.utils import EmcBackendableABC
-from nepymc.model import EmcModelViewInterface
-# from nepymc.mainloop import EmcMainLoop
 
 
 class EmcDialogListItem(object):
@@ -71,10 +69,6 @@ class EmcDialog(EmcBackendableABC):
         """ TODOC """
 
     @abstractmethod
-    def main_content_set(self, content) -> None:  # TODO content type ??
-        """ TODOC """
-
-    @abstractmethod
     def button_add(self, label: str,
                    selected_cb: callable = None, cb_data: Any = None,
                    icon: str = None, default: bool = False) -> None:
@@ -83,6 +77,11 @@ class EmcDialog(EmcBackendableABC):
     @abstractmethod
     def buttons_clear(self):
         """ TODOC """
+
+    @abstractmethod
+    def content_set(self, content: Optional[str]) -> None:
+        """ set the big image, content must be a valid image file """
+        self._content = content
 
     @abstractmethod
     def title_set(self, title: str):
@@ -140,7 +139,8 @@ class EmcDialog(EmcBackendableABC):
         return self._title
 
     def content_get(self):
-        return self._content
+        # return self._content
+        raise RuntimeError("EmcDialog: content_get() is no more")
 
     def data_get(self):
         return self._user_data
