@@ -31,7 +31,7 @@ EmcFocusManager {
             btn.forceActiveFocus()
         } else {
             // Build up the focus chain between buttons
-            btn.KeyNavigation.left = last
+            btn.KeyNavigation.right = last
         }
 
         return btn
@@ -165,7 +165,7 @@ EmcFocusManager {
         Row {  // row of buttons in the footer
             id: emcFooter
 
-//          layoutDirection: Qt.RightToLeft  // THIS WAS EPYMC BEHAVIOUR !!
+            layoutDirection: Qt.RightToLeft  // THIS WAS EPYMC BEHAVIOUR !!
             padding: 9
             spacing: 2
 

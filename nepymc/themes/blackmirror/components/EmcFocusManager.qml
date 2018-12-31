@@ -16,14 +16,14 @@ FocusScope {
                 break
         }
         if (toFocus && toFocus.focusAllow) {
-            console.log("FOCUS POPPING", toFocus)
+//            print("FOCUS POPPING", toFocus)
             toFocus.forceActiveFocus()
         }
         return toFocus
     }
 
     function focus_stack_push(obj) {
-        print("FOCUS PUSH", obj)
+//        print("FOCUS PUSH", obj)
         if (obj && obj !== emcApplicationWindow.emcFocusStack.last) {
             emcApplicationWindow.emcFocusStack.push(obj)
         }
@@ -45,14 +45,14 @@ FocusScope {
         }
 
         // print all child for debug
-        print("#### FocusManager", activeFocus ? "FOCUS" : "UNFOCUS")
-        var obj = root
-        while (obj) {
-            print("#   ->", obj.objectName ? obj.objectName : obj,
-                  "(AF:", obj.activeFocus, "F:", obj.focus, ")")
-            obj = obj.parent
-        }
-        print("####", emcApplicationWindow.emcFocusStack)
+//        print("#### FocusManager", activeFocus ? "FOCUS" : "UNFOCUS")
+//        var obj = root
+//        while (obj) {
+//            print("#   ->", obj.objectName ? obj.objectName : obj,
+//                  "(AF:", obj.activeFocus, "F:", obj.focus, ")")
+//            obj = obj.parent
+//        }
+//        print("####", emcApplicationWindow.emcFocusStack)
 
         // detect lost focus on QML root object
         if (activeFocusItem.parent == null) {
@@ -66,8 +66,8 @@ FocusScope {
             focus_stack_push(root)
         }
 
-        print("####", emcApplicationWindow.emcFocusStack)
-        print("")
+//        print("####", emcApplicationWindow.emcFocusStack)
+//        print("")
 
     }
 
