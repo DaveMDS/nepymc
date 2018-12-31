@@ -25,14 +25,14 @@ from nepymc.modules import EmcModule
 from nepymc import mainmenu
 from nepymc import mediaplayer
 from nepymc import storage
-from nepymc.mainloop import EmcTimer
+from nepymc import utils
+from nepymc.mainloop import EmcTimer, EmcUrl
 from nepymc.browser import EmcBrowser, \
     EmcItemClass, BackItemClass, FolderItemClass
 from nepymc.gui import EmcDialog, EmcSourcesManager, EmcFolderSelector
 # from epymc.gui import EmcDialog, EmcVKeyboard, EmcFolderSelector, \
 #    EmcButton, EmcNotify, EmcMenu, DownloadManager, EmcSlider
 
-# import epymc.utils as utils
 # import epymc.events as events
 # import epymc.ini as ini
 # from epymc.musicbrainz import MusicBrainz
@@ -887,6 +887,50 @@ class Test_Storage(GenericItemClass):
         # events.listener_add('uit_storage', storage_events_cb)
 
 
+class Test_Url(GenericItemClass):
+
+    url1 = 'http://ipv4.download.thinkbroadband.com/5MB.zip'
+    url2 = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/' \
+           'resources/pdf/dummy.pdf'
+
+    def __init__(self):
+        super().__init__()
+        self.dia = None
+        self.dload = None
+
+    def item_selected(self, url, user_data):
+        self.dia = EmcDialog(style='progress', title=user_data,
+                             text='Press start to test a 5MB download')
+        self.dia.button_add('To mem (13K)', self.start_cb, self.url2)
+        self.dia.button_add('To file (5M)', self.start_cb, self.url1)
+        self.dia.button_add('delete()', lambda b: self.dload.delete())
+        self.dia.button_add('Close', lambda b: self.dia.delete())
+
+    def start_cb(self, btn, url):
+        self.dia.text_set('Download started...')
+        dest = '::tmp::' if url == self.url1 else '::mem::'
+        self.dload = EmcUrl(url, dest=dest, done_cb=self.done_cb,
+                            prog_cb=self.prog_cb, decode=None)
+
+    def done_cb(self, url, success, dest):
+        print("DONE", success)
+        if success and url.dest == '::mem::':
+            size = len(dest)
+            self.dia.text_set('Download successfully completed to Memory<br>'
+                              'First bytes: {}<br>Download size: {} bytes'
+                              .format(dest[:10], size))
+        elif success and os.path.exists(dest):
+            size = utils.hum_size(os.path.getsize(dest))
+            self.dia.text_set('Download successfully completed to<br>{}<br>'
+                              'File size: {} '.format(dest, size))
+        else:
+            self.dia.text_set("Error !!")
+
+    def prog_cb(self, url, total, received):
+        print("PROGRESS", url, total, received)
+        self.dia.progress_set(received / total if total else 0)
+
+
 class UiTestsModule(EmcModule):
     name = 'uitests'
     label = 'UI tests'
@@ -920,6 +964,8 @@ class UiTestsModule(EmcModule):
         self._browser.show()
 
     def populate_root(self, browser, url):
+        browser.item_add(Test_Url(), 'uitest://download', 'EmcUrl')
+
         browser.item_add(Test_Dialog(), 'uitest://dialog', 'EmcDialog')
 
         browser.item_add(Test_Storage(), 'uitest://storage',
