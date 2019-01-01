@@ -69,15 +69,16 @@ class DialogListModel(QAbstractListModel):
     def data(self, index, role):
         it = self.items[index.row()]
         if role == self.label_role:
-            return it.label
+            return it.label  or ''
         if role == self.label_end_role:
             if it.end and it.end.startswith('text/'):
                 return it.end[5:]
         elif role == self.icon_role:
-            return it.icon
+            return it.icon or ''
         elif role == self.icon_end_role:
             if it.end and it.end.startswith('icon/'):
                 return it.end
+        return ''
 
     # below methods are to be called from QML
     @Slot(int)

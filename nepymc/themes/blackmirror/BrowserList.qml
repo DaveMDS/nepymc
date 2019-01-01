@@ -163,18 +163,18 @@ Item {
                 visible: parent.ListView.isCurrentItem
             }
 
-            Image {  // left icon
+            EmcImage {  // left icon
                 id: emcIcon
-                source: model.icon ? "pics/" + model.icon + ".png" : ""
-                width: source != "" ? parent.height : 0
+                emcUrl: model.icon
+                width: emcUrl ? parent.height : 0
                 height: parent.height
                 x: 3
             }
 
-            Image {  // right icon
+            EmcImage {  // right icon
                 id: emcIconEnd
-                source: model.icon_end ? "pics/" + model.icon_end + ".png" : ""
-                width: source != "" ? parent.height : 0
+                emcUrl: model.icon_end
+                width: emcUrl ? parent.height : 0
                 height: parent.height
                 anchors.right: parent.right
             }

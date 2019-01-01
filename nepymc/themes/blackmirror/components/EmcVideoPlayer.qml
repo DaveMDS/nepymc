@@ -75,11 +75,10 @@ EmcFocusManager {
             border.bottom: 15
         }
 
-        Image {  // poster image
+        EmcImage {  // poster image
             id: emcControlsCover
 
-            source: root.poster != "" ? "../pics/" + root.poster : ""
-            fillMode: Image.PreserveAspectFit
+            emcUrl: root.poster
 
             x: 6
             y: -(height / 2)  // start hidden in the top

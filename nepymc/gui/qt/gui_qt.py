@@ -66,11 +66,11 @@ class MainMenuModel(QtCore.QAbstractListModel):
     def data(self, index, role):
         # print("***** data(%s, %s)" % (index.row(), role))
         if role == self.label_role:
-            return mainmenu.model.item_data_get(index.row(), 'label')
+            return mainmenu.model.item_data_get(index.row(), 'label') or ''
         elif role == self.icon_role:
-            return mainmenu.model.item_data_get(index.row(), 'icon')
+            return mainmenu.model.item_data_get(index.row(), 'icon') or ''
         elif role == self.subitems_role:
-            return mainmenu.model.item_data_get(index.row(), 'subitems')
+            return mainmenu.model.item_data_get(index.row(), 'subitems') or ''
 
     # below methods are to be called from QML
     @QtCore.Slot(int)

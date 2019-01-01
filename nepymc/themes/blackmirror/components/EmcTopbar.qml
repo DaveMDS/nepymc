@@ -18,9 +18,9 @@ Item {
         height: parent.height + 33
     }
 
-    Image {  // left icon
+    EmcImage {  // left icon
         id: emcIcon
-        source: "../pics/" + icon + ".png"
+        emcUrl: icon
         width: parent.height + 4
         height: parent.height + 4
         x: 20

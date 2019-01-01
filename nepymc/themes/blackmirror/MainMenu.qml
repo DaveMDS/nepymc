@@ -171,12 +171,11 @@ EmcFocusManager {
                 visible: false
             }
 
-            Image {
+            EmcImage {
                 id: item_icon
 
-                source: "pics/" + model.icon + ".png"
-                fillMode: Image.PreserveAspectFit
-                mipmap: true
+                emcUrl: model.icon
+
                 anchors.fill: positioner
                 anchors.margins: 16
             }

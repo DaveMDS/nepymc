@@ -61,11 +61,10 @@ Item {
             height: emcLabel.height
         }
 
-        Image {  // right (end) icon
+        EmcImage {  // right (end) icon
             id: emcIconEnd
-            source: model.icon_end ? "../pics/" + model.icon_end + ".png" : ""
-            fillMode: Image.PreserveAspectFit
-            visible: source != ""
+            emcUrl: model.icon_end
+            visible: emcUrl
             height: emcLabel.height
             width: height
         }
@@ -79,11 +78,10 @@ Item {
         anchors.right: emcRightRow.left
         spacing: 3
 
-        Image {  // main (left) icon
+        EmcImage {  // main (left) icon
             id: emcIcon
-            source: model.icon ? "../pics/" + model.icon + ".png" : ""
-            fillMode: Image.PreserveAspectFit
-            visible: source != ""
+            emcUrl: model.icon
+            visible: emcUrl
             height: emcLabel.height
             width: height
         }

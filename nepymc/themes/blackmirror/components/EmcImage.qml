@@ -47,7 +47,7 @@ Item {
         fillMode: Image.PreserveAspectFit
 //        sourceSize.width: 1024   // TODO this is an intresting optimization
 //        sourceSize.height: 1024
-//        mipmap: true  // This gives better result but it's heavy :/
+        mipmap: true  // This gives better result but it's heavy :/
 
         onStatusChanged: {
             if (status == Image.Error) {

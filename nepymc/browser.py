@@ -215,19 +215,19 @@ class BrowserModel(EmcModelViewInterface):
             return None
         # DBG('data_get()', field_name)
         if field_name == 'label':
-            return item_class.label_get(url, user_data)
+            return item_class.label_get(url, user_data) or ''
         if field_name == 'label_end':
-            return item_class.label_end_get(url, user_data)
+            return item_class.label_end_get(url, user_data) or ''
         if field_name == 'icon':
-            return item_class.icon_get(url, user_data)
+            return item_class.icon_get(url, user_data) or ''
         if field_name == 'icon_end':
-            return item_class.icon_end_get(url, user_data)
+            return item_class.icon_end_get(url, user_data) or ''
         if field_name == 'info':
-            return item_class.info_get(url, user_data)
+            return item_class.info_get(url, user_data) or ''
         if field_name == 'poster':
-            return item_class.poster_get(url, user_data)
+            return item_class.poster_get(url, user_data) or ''
         if field_name == 'cover':
-            return item_class.cover_get(url, user_data)
+            return item_class.cover_get(url, user_data) or ''
 
     def item_count_get(self):
         return len(self._browser.items)
