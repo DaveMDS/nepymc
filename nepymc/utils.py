@@ -50,16 +50,16 @@ LOG('Running from:', emc_base_dir)
 
 # user config folder (xdg or default)
 if XDG_CONFIG_HOME:
-    user_conf_dir = os.path.join(XDG_CONFIG_HOME, 'emc')
+    user_conf_dir = os.path.join(XDG_CONFIG_HOME, 'nepymc')
 else:
-    user_conf_dir = os.path.expanduser('~/.config/emc')
+    user_conf_dir = os.path.expanduser('~/.config/nepymc')
 LOG('Config folder:', user_conf_dir)
 
 # user cache folder (xdg or default)
 if XDG_CACHE_HOME:
-    user_cache_dir = os.path.join(XDG_CACHE_HOME, 'emc')
+    user_cache_dir = os.path.join(XDG_CACHE_HOME, 'nepymc')
 else:
-    user_cache_dir = os.path.expanduser('~/.cache/emc')
+    user_cache_dir = os.path.expanduser('~/.cache/nepymc')
 LOG('Cache folder:', user_cache_dir)
 
 
@@ -88,6 +88,11 @@ def get_resource(*resource: str) -> str:
 
     # not found :(
     return ''
+
+
+def cache_path_for_url(url: str):
+    fname = md5(url)
+    return os.path.join(user_cache_dir, 'remotes', fname[:2], fname)
 
 
 def utf8_to_markup(string):
