@@ -521,17 +521,17 @@ class Test_Timer(GenericItemClass):
         self.dialog = dia = EmcDialog('EmcTimer test', 'Press "create"')
         dia.button_add('Create oneshot', self.timer_create_oneshot)
         dia.button_add('Create onstart', self.timer_create_onstart)
-        dia.button_add('reset()', lambda: self.timer.reset())
-        dia.button_add('start()', lambda: self.timer.start())
-        dia.button_add('stop()', lambda: self.timer.stop())
-        dia.button_add('destroy()', lambda: self.timer.delete())
+        dia.button_add('reset()', lambda b: self.timer.reset())
+        dia.button_add('start()', lambda b: self.timer.start())
+        dia.button_add('stop()', lambda b: self.timer.stop())
+        dia.button_add('destroy()', lambda b: self.timer.delete())
         dia.button_add('Close test', self.close_test)
 
-    def timer_create_oneshot(self):
+    def timer_create_oneshot(self, btn):
         self.iter_count = 0
         self.timer = EmcTimer(1000, self.timer_cb, oneshot=True, key1="V1", key2="V2")
 
-    def timer_create_onstart(self):
+    def timer_create_onstart(self, btn):
         self.iter_count = 0
         self.timer = EmcTimer(1000, self.timer_cb, onstart=True)
 
@@ -540,7 +540,7 @@ class Test_Timer(GenericItemClass):
         self.dialog.text_set("Triggered: %d<br>key1=%s key2=%s" % (
                              self.iter_count, key1, key2))
 
-    def close_test(self):
+    def close_test(self, btn):
         self.timer.delete()
         self.dialog.delete()
 
