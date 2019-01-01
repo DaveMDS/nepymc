@@ -18,10 +18,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 import sys
 
-from PySide2.QtQml import QQmlApplicationEngine
-from PySide2.QtCore import Qt, QObject, Slot, QAbstractListModel
+from PySide2 import QtCore
+from PySide2 import QtQml
+from PySide2 import QtNetwork
 
 from nepymc import utils
 from nepymc import mainmenu
@@ -42,10 +44,10 @@ def DBG(*args):
     pass
 
 
-class MainMenuModel(QAbstractListModel):
-    label_role = Qt.UserRole + 1
-    icon_role = Qt.UserRole + 2
-    subitems_role = Qt.UserRole + 3
+class MainMenuModel(QtCore.QAbstractListModel):
+    label_role = QtCore.Qt.UserRole + 1
+    icon_role = QtCore.Qt.UserRole + 2
+    subitems_role = QtCore.Qt.UserRole + 3
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -71,21 +73,21 @@ class MainMenuModel(QAbstractListModel):
             return mainmenu.model.item_data_get(index.row(), 'subitems')
 
     # below methods are to be called from QML
-    @Slot(int)
+    @QtCore.Slot(int)
     def item_selected(self, index):
         """ An in item has been selected in QML """
         print("mainmenu_item_selected(%s)" % index)
         mainmenu.model.item_selected(index)
 
 
-class BrowserModel(QAbstractListModel):
-    label_role = Qt.UserRole + 1
-    label_end_role = Qt.UserRole + 2
-    icon_role = Qt.UserRole + 3
-    icon_end_role = Qt.UserRole + 4
-    info_role = Qt.UserRole + 5
-    poster_role = Qt.UserRole + 6
-    cover_role = Qt.UserRole + 7
+class BrowserModel(QtCore.QAbstractListModel):
+    label_role = QtCore.Qt.UserRole + 1
+    label_end_role = QtCore.Qt.UserRole + 2
+    icon_role = QtCore.Qt.UserRole + 3
+    icon_end_role = QtCore.Qt.UserRole + 4
+    info_role = QtCore.Qt.UserRole + 5
+    poster_role = QtCore.Qt.UserRole + 6
+    cover_role = QtCore.Qt.UserRole + 7
     role_names_qt = {
         label_role: b'label',
         label_end_role: b'label_end',
@@ -142,20 +144,20 @@ class BrowserModel(QAbstractListModel):
             return self._emc_model.item_data_get(index.row(), self.role_names[role])
 
     # below methods are to be called from QML
-    @Slot(int, str, result=str)
+    @QtCore.Slot(int, str, result=str)
     def get(self, idx, role_name):
         """ Same as data, but to be used from QML """
         if self._emc_model:
             return self._emc_model.item_data_get(idx, role_name)
 
-    @Slot(int)
+    @QtCore.Slot(int)
     def item_selected(self, index):
         """ An in item has been selected in QML """
         print("item_selected(%s)" % index)
         self._emc_model.item_selected(index)
 
 
-class GuiCommunicator(QObject):
+class GuiCommunicator(QtCore.QObject):
     """ This is the EmcBackend object visible from QML """
 
     def __init__(self, gui):
@@ -168,14 +170,75 @@ class GuiCommunicator(QObject):
     #     print("mainmenu_item_selected(%s)" % index)
     #     mainmenu.model.item_selected(index)
 
-    @Slot(str, result=str)
+    @QtCore.Slot(str, result=str)
     def i18n(self, string):
         return string + 'pippo'
 
-    @Slot(None, result=str)
+    @QtCore.Slot(None, result=str)
     def application_name(self):
         # TODO questo dovrebbe essere una @property
         return "Not Emotion Media Center"
+
+
+class QMLNetworkDiskCache(QtNetwork.QAbstractNetworkCache):
+    """ Provide on-file cache for all QML net requests """
+
+    def metaData(self, qurl):
+        """ Qt request a previously stored metadata for url """
+        DBG('DiskCache: metaData() for "{}"'.format(qurl.url()))
+        cache_path = utils.cache_path_for_url(qurl.url())
+        meta = QtNetwork.QNetworkCacheMetaData()
+        if os.path.exists(cache_path):
+            meta.setUrl(qurl)
+            # TODO !!!!
+            meta.setExpirationDate(QtCore.QDateTime(2050, 1, 1, 0, 0, 0))
+        return meta
+
+    def prepare(self, metadata):
+        """ Qt is going to download the resource, we need to provide a
+            QIODevice opened for writing """
+        DBG('DiskCache: prepare() for "{}"'.format(metadata.url().url()))
+        if not metadata.isValid() or not metadata.url().isValid():
+            return None
+
+        cache_path = utils.cache_path_for_url(metadata.url().url())
+        dirname = os.path.dirname(cache_path)
+        if not os.path.exists(dirname):
+            os.makedirs(dirname)
+
+        f = QtCore.QFile(cache_path, self)  # parent=self to keep alive
+        if f.open(QtCore.QIODevice.WriteOnly) is False:
+            ERR('Cannot open "{}" for writing'.format(cache_path))
+            return None
+        else:
+            return f
+
+    def insert(self, device):
+        """ Qt finish the download, we can close and delete the QIODevice we
+            opened in the prepare method """
+        device.close()
+        device.deleteLater()
+        del device
+
+    def data(self, qurl):
+        """ Qt request an opened file for reading the cached data from """
+        DBG('DiskCache: data() for "{}"'.format(qurl.url()))
+        path = utils.cache_path_for_url(qurl.url())
+        f = QtCore.QFile(path, self)  # parent=self to keep alive
+        if f.open(QtCore.QIODevice.ReadOnly) is False:
+            ERR('Cannot open "{}" for reading'.format(path))
+            return None
+        else:
+            return f
+
+
+class QMLNetworkAccessManagerFactory(QtQml.QQmlNetworkAccessManagerFactory):
+    """ Factory to build a NetworkAccessManager for QML net requests """
+    def create(self, parent: QtCore.QObject):
+        nam = QtNetwork.QNetworkAccessManager()
+        disk_cache = QMLNetworkDiskCache(nam)
+        nam.setCache(disk_cache)
+        return nam
 
 
 class EmcGui_Qt(EmcGui):
@@ -188,6 +251,7 @@ class EmcGui_Qt(EmcGui):
         self._model1 = None
         self._browser_model_qt = None
         self._backend_instance = None
+        self._nam_factory = None
 
     def create(self) -> bool:
         # search the main QML file
@@ -198,7 +262,7 @@ class EmcGui_Qt(EmcGui):
         LOG('Loading theme: "{}"'.format(path))
 
         # create the QML engine
-        self._qml_engine = QQmlApplicationEngine()
+        self._qml_engine = QtQml.QQmlApplicationEngine()
 
         # inject MainMenu and Browser model
         ctxt = self._qml_engine.rootContext()
@@ -208,8 +272,12 @@ class EmcGui_Qt(EmcGui):
         ctxt.setContextProperty('BrowserModel', self._browser_model_qt)
 
         # inject the Communicator class
-        self._backend_instance = b = GuiCommunicator(self)
-        ctxt.setContextProperty("EmcBackend", b)
+        self._backend_instance = GuiCommunicator(self)
+        ctxt.setContextProperty('EmcBackend', self._backend_instance)
+
+        # inject the network cache manager
+        self._nam_factory = QMLNetworkAccessManagerFactory()
+        self._qml_engine.setNetworkAccessManagerFactory(self._nam_factory)
 
         # load and show the QML theme
         self._qml_engine.load(path)
@@ -218,7 +286,7 @@ class EmcGui_Qt(EmcGui):
             ERR('Cannot create the QML view')
             return False
 
-        # keep a reference of the main QML object
+        # keep a reference of the main QML object for fast access
         self._qml_root = roots[0]
 
         return True

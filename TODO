@@ -4,6 +4,39 @@ TODO
  * mediaplayer.py should die, everyone should just directly use
     EmcVideoPlayer or EmcAudioPlayer
 
+ * EmcDialog API is bad, especially the buttons stuff...
+
+
+DOCUMENT IMAGE SPECIAL URLS SOMEWHERE
+=====================================
+ class EmcImage(EmcBackendableABC):
+    """ An image object with support for remote url, with optional
+        saving of the downloaded image to a local destination and a simple
+        cache-to-file mechanism to avoid re-downloading the image again.
+
+    Params:
+        url: The url to load the image from, can be one of:
+            * a local file fullpath
+            * a real remote url (with autocache)
+            * a tuple containing (url, dest) (deprecated method ??)  TODO
+            * 'icon/*' to load an icon (aspect 1:1) from the theme
+            * 'image/*' to load an image from the theme
+            * 'special/style/text' to create a "special" image, supported
+              styles are: 'folder', 'bd', 'cd', 'icon'
+              The text will be inserted in the image.
+            * 'special/vthumb/video_url' to create a thumb of a video file  TODO
+            * None to "unset" the image  TODO
+        dest: Local path to save the image to. If the dest path already exists
+            the image will not be downloaded, but directly loaded from dest. TODO
+            If dest is None the downloaded file will be saved in cache.
+        icon: For the special style 'icon', you can here specify the icon
+            to insert inside the special image.  TODO
+        label2: For the special style 'icon', you can here specify the
+            secondary label text.  TODO
+   """
+
+
+
 
 
 Just a scratchpad for the moment

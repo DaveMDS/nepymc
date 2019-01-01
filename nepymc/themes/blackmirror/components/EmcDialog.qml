@@ -16,7 +16,7 @@ EmcFocusManager {
     property double progress: -1.0  // 0->1  -1=do not show
     property var list_model: undefined
 
-    function action_add(idx, label, icon) { /* TODO THEME API */
+    function action_add(idx, label, icon, def) { /* TODO THEME API */
         console.log("QML button add " + idx + " " + label)
 
         // keep a reference to the last button (for the focus chain)
@@ -27,11 +27,14 @@ EmcFocusManager {
                                      {idx: idx, label: label, icon: icon})
 
         if (!last) {
-            // first button, focus by default
+            // first button focus by default
             btn.forceActiveFocus()
         } else {
             // Build up the focus chain between buttons
             btn.KeyNavigation.right = last
+        }
+        if (def) {
+            btn.forceActiveFocus()
         }
 
         return btn
@@ -96,11 +99,12 @@ EmcFocusManager {
             horizontalAlignment: Text.AlignHCenter
         }
 
-        Image {  // content image
+        EmcImage {  // content image
             id: emcContentImage
-            source: content != "" ? "../pics/" + content : ""
-            fillMode: Image.PreserveAspectFit
-            width: source != "" ? parent.width / 2.5 : 0
+
+            emcUrl: root.content
+
+            width: root.content != "" ? parent.width / 2.5 : 0
             x: 10
             anchors.top: emcMainText.top
             anchors.bottom: emcMainText.bottom

@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import "."
 import "utils/"
+import "components/"
 
 
 Item {
@@ -27,7 +28,7 @@ Item {
             data = BrowserModel.get(currentIndex, "poster") ||
                    BrowserModel.get(currentIndex, "cover")
             if (data) {
-                emcBrowserPoster.source = data
+                emcBrowserPoster.emcUrl = data
                 posterVisible = true
             } else {
                 // hide animation will run, not clearing the image
@@ -111,9 +112,8 @@ Item {
     }
 
     /**  Big poster/cover  ****************************************************/
-    Image {
+    EmcImage {
         id: emcBrowserPoster
-        source: ""
 
         width: parent.width / 2
         anchors.right: parent.right  // align right
@@ -121,8 +121,6 @@ Item {
         anchors.bottomMargin: 7
         anchors.top: parent.top
         anchors.rightMargin: -(width + 25) // hidden outside the window
-
-        fillMode: Image.PreserveAspectFit
 
         states: State {
             name: "visible"

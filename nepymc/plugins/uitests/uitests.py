@@ -167,11 +167,6 @@ class MyItemClass(EmcItemClass):
          _mod._browser.page_add('uitest://encoding', 'Encoding tests', None,
                                 _mod.populate_encoding_page)
 
-      elif url == 'uitest://images':
-         _mod._browser.page_add('uitest://images', 'Image tests',
-                                ('List', 'PosterGrid'),
-                                _mod.populate_image_page)
-
       elif url == 'uitest://views':
          _mod._browser.page_add('uitest://views', 'Browser Views',
                                 ('List', 'PosterGrid', 'CoverGrid'),
@@ -254,11 +249,6 @@ class MyItemClass(EmcItemClass):
          EmcVKeyboard(title='Virtual Keyboard', text='This is the keyboard test!',
                       accept_cb=lambda vk, t: print('ACCEPT "%s"' % t),
                       dismiss_cb=lambda vk: print('DISMISS'))
-
-      # Source Selector
-      elif url == 'uitest://sselector':
-         EmcFolderSelector(title='Folder Selector Test',
-                           done_cb=lambda p: DBG('Selected: ' + p))
 
       # Browser Dump
       elif url == 'uitest://brdump':
@@ -455,11 +445,6 @@ class MyItemClass(EmcItemClass):
       # Text style in dialog
       elif url == 'uitest://styles':
          EmcDialog(title='Text styles', text=TEST_STYLE)
-
-      # Storage devices
-      elif url == 'uitest://storage':
-
-
 
       # Music Brainz AudioCD 
       elif url == 'uitest://mbrainz':
@@ -669,6 +654,120 @@ class Test_Browser(GenericItemClass):
     def cover_get(self, url, user_data):
         if url.endswith(('/cover', '/poster_cover')):
             return os.path.join(self.path, 'cover.jpg')
+
+
+class Test_ImageDialog(GenericItemClass):
+
+    path = os.path.dirname(__file__)
+    remote_img = 'https://edmullen.net/test/rc.jpg'  # 5MB png image
+
+    def __init__(self):
+        super().__init__()
+        self.dia = None
+
+    def item_selected(self, url, user_data):
+        self.dia = d = EmcDialog(title="Test EmcImage")
+        d.button_add('Close', selected_cb=lambda b: self.dia.delete())
+        d.button_add('set(error)', selected_cb=self.from_not_exists)
+        d.button_add('set(\'\')', selected_cb=self.unset, cb_data="e")
+        d.button_add('set(None)', selected_cb=self.unset, cb_data="n")
+        d.button_add('URL dest', selected_cb=self.from_url_with_dest)
+        d.button_add('URL auto', selected_cb=self.from_url)
+        d.button_add('Image', selected_cb=self.from_image)
+        d.button_add('Icon', selected_cb=self.from_icon)
+        d.button_add('Fullpath', selected_cb=self.from_fullpath, default=True)
+
+    def from_fullpath(self, btn):
+        full = os.path.join(self.path, 'poster.jpg')
+        self.dia.content_set(full)
+
+    def from_icon(self, btn):
+        self.dia.content_set('icon/home')
+
+    def from_image(self, btn):
+        self.dia.content_set('image/dvd_cover_blank.png')
+
+    def from_url(self, btn):
+        self.dia.content_set(self.remote_img)
+
+    def from_url_with_dest(self, btn):
+        self.dia.content_set((self.remote_img, '/tmp/asdasdasd'))
+
+    def unset(self, btn, value):
+        self.dia.content_set('' if value == 'e' else None)
+
+    def from_not_exists(self, btn):
+        self.dia.content_set('not_existing_image.png')
+
+
+class Test_ImageBrowser(GenericItemClass):
+
+    path = os.path.dirname(__file__)
+    remote_img = 'https://edmullen.net/test/rc.jpg'  # 5MB png image
+
+    def populate_subpage(self, browser, url):
+        # Local images
+        browser.item_add(self, os.path.join(self.path, 'poster.jpg'),
+                         'From a local full path')
+        browser.item_add(self, 'icon/star',
+                         'From an icon in the theme')
+        browser.item_add(self, 'image/dvd_cover_blank.png',
+                         'From an image in the theme')
+
+        # Remote with auto cache
+        browser.item_add(self, self.remote_img,
+                         'From a remote url (with auto cache) 5MB image')
+
+        # Remote with explicit dest TODO TODO TODO TODO TODO TODO TODO TODO TODO
+        browser.item_add(self, ('https://image.tmdb.org/t/p/original/3bKHPDte16BeNLo57W2FwO0jRJZ.jpg', '/tmp/asdasdas'),
+                         'From a remote url (with explicit dest) **TODO**')
+
+        # Special styles
+        browser.item_add(self, 'special/bd/My cool movie without a poster',
+                         'Special Blu-ray')
+        browser.item_add(self, 'special/cd/My album without a cover',
+                         'Special Compact-disk')
+        text = 'This is my special/folder/name <br>' \
+               '(can also include "/" and other special chars)<br>' \
+               'àèìòù<br>నాన్నకు ప్రేమతో<br>もののけ姫<br><br>...and tags:<br>' \
+               + TEST_STYLE
+        browser.item_add(self, 'special/folder/' + text,
+                         'Special Folder')
+
+        # Unset
+        browser.item_add(self, None, 'Unset (None)')
+        browser.item_add(self, '', 'Unset (\'\')')
+
+        # TODO test for error cases
+
+        # browser.item_add(self, url + '/special_icon',  # TODO
+        #                  'Special Icon (in PosterGrid view)')
+        # browser.item_add(self, url + '/special_null',  # TODO  ???
+        #                  'Special Null (transparent)')
+
+    def item_selected(self, url, user_data):
+        # main item
+        if url == 'uitest://imgb':
+            _browser.page_add(url, user_data, None, self.populate_subpage)
+
+    def icon_end_get(self, url, user_data):
+        if url == 'uitest://imgb':
+            return 'icon/forward'
+
+    def icon_get(self, url, user_data):
+        if isinstance(url, str) and url.endswith('/special_icon'):
+            return 'icon/home'
+
+    def info_get(self, url, user_data):
+        if url == 'uitest://imgb':
+            return 'Test EmcImage in browser'
+        elif url and url.startswith('special/'):
+            return None
+        else:
+            return 'Image url:<br>{}'.format(url)
+
+    def poster_get(self, url, user_data):
+        return url if url != 'uitest://imgb' else None
 
 
 class Test_Dialog(GenericItemClass):
@@ -976,7 +1075,12 @@ class UiTestsModule(EmcModule):
                                                'Source Manager')
 
         browser.item_add(Test_Timer(), 'uitest://timer', 'EmcTimer')
+
         browser.item_add(Test_Browser(), 'uitest://browser', 'EmcBrowser')
+        browser.item_add(Test_ImageDialog(), 'uitest://imgd',
+                         'EmcImage in Dialog')
+        browser.item_add(Test_ImageBrowser(), 'uitest://imgb',
+                         'EmcImage in Browser')
 
         browser.item_add(Test_MediaPlayer(), 'uitest://mpv',
                          'MediaPlayer - Local video')
@@ -992,8 +1096,6 @@ class UiTestsModule(EmcModule):
         # browser.item_add(MainPageItemClass(), 'uitest://focus_2', 'Focus corner case 2')
         # browser.item_add(MainPageItemClass(), 'uitest://focus_3', 'Focus corner case 3')
 
-
-
         # browser.item_add(MainPageItemClass(), 'uitest://mbrainz', 'Music Brainz AudioCD (/dev/cdrom)')
         # browser.item_add(MainPageItemClass(), 'uitest://menu', 'Menu small (dismiss on select)')
         # browser.item_add(MainPageItemClass(), 'uitest://menu_long', 'Menu long (no dismiss on select)')
@@ -1001,7 +1103,6 @@ class UiTestsModule(EmcModule):
         # browser.item_add(MainPageItemClass(), 'uitest://vkbd', 'Virtual Keyboard')
         # browser.item_add(MainPageItemClass(), 'uitest://encoding', 'Various string encoding tests')
 
-        # browser.item_add(MainPageItemClass(), 'uitest://images', 'Browser + EmcImage')
         # browser.item_add(MainPageItemClass(), 'uitest://movies_name', 'Movies name test')
         # browser.item_add(MainPageItemClass(), 'uitest://sniffer', 'Event Sniffer')
         # browser.item_add(MainPageItemClass(), 'uitest://ev_emit', 'Event Emit')
@@ -1013,9 +1114,6 @@ class UiTestsModule(EmcModule):
         # browser.item_add(MainPageItemClass(), 'uitest://dm2', 'Download Manager - show')
         # browser.item_add(MainPageItemClass(), 'uitest://tmdb', 'Themoviedb.org query with gui')
 
-
-
-
         # browser.item_add(MainPageItemClass(), 'uitest://brdump', 'Dump Browser pages')
 
     # def populate_encoding_page(self, browser, url):
@@ -1023,13 +1121,4 @@ class UiTestsModule(EmcModule):
     #     _mod._browser.item_add(EncodingItemClass(), 'test2', 'Test 2: tmdb.org url encode')
     #     _mod._browser.item_add(EncodingItemClass(), 'test3', 'Test 3: tmdb.org virtual keyboard')
 
-    # def populate_image_page(self, browser, url):
-    #     _mod._browser.item_add(ImagesItemClass(), 'local_path', 'From a local path')
-    #     _mod._browser.item_add(ImagesItemClass(), 'remote_url', 'From a remote url (with local dest)')
-    #     _mod._browser.item_add(ImagesItemClass(), 'remote_url_cache', 'From a remote url (with auto cache)')
-    #     _mod._browser.item_add(ImagesItemClass(), 'special_folder', 'Special Folder')
-    #     _mod._browser.item_add(ImagesItemClass(), 'special_bd', 'Special Blu-ray')
-    #     _mod._browser.item_add(ImagesItemClass(), 'special_cd', 'Special Compact-disk')
-    #     _mod._browser.item_add(ImagesItemClass(), 'special_icon', 'Special Icon (in PosterGrid view)')
-    #     _mod._browser.item_add(ImagesItemClass(), 'special_null', 'Special Null (transparent)')
 
