@@ -24,7 +24,7 @@ from operator import attrgetter
 import nepymc.ini as ini
 import nepymc.utils as utils
 import nepymc.events as events
-from nepymc.mainloop import EmcTimer
+from nepymc.mainloop import EmcTimer, EmcExec
 
 
 def DBG(*args):
@@ -201,8 +201,9 @@ def check_mount(device_node):
 
 def try_mount(device, mount_cb):
     # cmd = 'udevil mount ' + device.device
-    cmd = 'udisksctl mount --no-user-interaction -b %s' % device.device
-    utils.EmcExec(cmd, done_cb=lambda out,d: mount_cb(d), d=device)
+    EmcExec('udisksctl',
+            ('mount', '--no-user-interaction', '-b', device.device),
+            done_cb=lambda ret, out, d: mount_cb(d), d=device)
 
 
 # ####### UDEV MODULE ##########################################################
@@ -223,7 +224,7 @@ class EmcDeviceManagerUdev():
         self.udev = pyudev.Context()
 
         # queue + timer to syncronize the udev thread
-        self.queue = queue.Queue() # items: (action, device)
+        self.queue = queue.Queue()  # items: (action, device)
         self.qtimer = EmcTimer(3.0, self.queue_timer_cb)
 
         # start monitoring udev for events

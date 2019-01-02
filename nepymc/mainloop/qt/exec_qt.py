@@ -44,11 +44,12 @@ class EmcExec_Qt(EmcExec):
         else:
             self._proc.start(self._cmd)
 
+        self._autoref = self  # keep an auto reference so user don't have to
+
     def delete(self) -> None:
         self._deleted = True
-        if self._proc.state() == QProcess.Running:
+        if self._proc and self._proc.state() == QProcess.Running:
             self._proc.kill()
-        del self._proc
         self._proc = None
         super().delete()
 
@@ -56,9 +57,9 @@ class EmcExec_Qt(EmcExec):
         self._call_user_callback(exit_code)
 
     def _error_cb(self, error):
-        if not self._deleted:
+        if self._proc and not self._deleted:
             self._call_user_callback(-1)
 
     def _stdout_cb(self):
-        if not self._deleted:
+        if self._proc and not self._deleted:
             self._out_buffer.append(self._proc.readAllStandardOutput().data())

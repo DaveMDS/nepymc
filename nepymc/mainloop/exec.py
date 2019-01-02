@@ -79,3 +79,4 @@ class EmcExec(EmcBackendableABC):
                     raise RuntimeError('EmcExec: invalid decode method: {}'
                                        .format(repr(self._decode)))
             self._done_cb(exit_code, out, **self._cb_kargs)
+        self.delete()
