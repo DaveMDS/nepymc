@@ -93,7 +93,7 @@ class EmcDialog_Qt(EmcDialog):
       style can be 'panel' or 'minimal'
       or you can also apply special style that perform specific task:
          'info', 'error', 'warning', 'yesno', 'cancel', 'progress',
-         'list', 'image_list_horiz', 'image_list_vert',
+         'list', 'image_list_landscape', 'image_list_portrait',
          'buffering'
     """
 
@@ -103,7 +103,10 @@ class EmcDialog_Qt(EmcDialog):
                          done_cb, canc_cb, user_data)
 
         print("INIT DIALOG QT")
-        self._list_model = DialogListModel() if style == 'list' else None
+        if style in self.list_styles:
+            self._list_model = DialogListModel()
+        else:
+            self._list_model = None
         self._buttons = []
         self._gui = gui.gui_instance_get()
         self._qml_obj = self._gui._qml_root.build_dialog(title, style, text,

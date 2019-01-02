@@ -113,39 +113,6 @@ class EncodingItemClass(EmcItemClass):
                       accept_cb=_done_cb)
 """
 
-"""
-class ImagesItemClass(EmcItemClass):
-   path = os.path.dirname(__file__)
-
-   def label_get(self, url, user_data):
-      return(user_data)
-
-   def icon_get(self, url, user_data):
-      if url == 'special_icon':
-         return 'icon/home'
-
-   def poster_get(self, url, user_data):
-      if url == 'local_path':
-         return os.path.join(self.path, 'menu_bg.png')
-      elif url == 'remote_url':
-         return 'https://image.tmdb.org/t/p/original/3bKHPDte16BeNLo57W2FwO0jRJZ.jpg', '/tmp/asdasdas'
-      elif url == 'remote_url_cache':
-         return 'https://image.tmdb.org/t/p/original/cUKn61e7bUUglIGNGBEtzyuCDR4.jpg'
-      elif url == 'special_bd':
-         return 'special/bd/My super cool movie without a poster'
-      elif url == 'special_cd':
-         return 'special/cd/My album without a cover'
-      elif url == 'special_folder':
-         return 'special/folder/This is my special/folder/name <br>' \
-                '(can also include "/" and other special chars)<br>' \
-                'àèìòù<br>నాన్నకు ప్రేమతో<br>もののけ姫<br><br>...and tags:<br>' \
-                + TEST_STYLE
-      elif url == 'special_null':
-         return None
-      #TODO failure for local and remote
-
-"""
-
 """ 
 class MyItemClass(EmcItemClass):
 
@@ -772,6 +739,11 @@ class Test_ImageBrowser(GenericItemClass):
 
 class Test_Dialog(GenericItemClass):
 
+    path = os.path.dirname(__file__)
+    cover = os.path.join(path, 'cover.jpg')
+    poster = os.path.join(path, 'poster.jpg')
+    backdrop = os.path.join(path, 'backdrop.jpg')
+
     def populate_subpage(self, browser, url):
         browser.item_add(self, url + '/info', 'Dialog - Info')
         browser.item_add(self, url + '/warning', 'Dialog - Warning')
@@ -783,6 +755,10 @@ class Test_Dialog(GenericItemClass):
         browser.item_add(self, url + '/progress-btn', 'Dialog - Progress + btns')
         browser.item_add(self, url + '/list', 'Dialog - List')
         browser.item_add(self, url + '/list-btn', 'Dialog - List with buttons')
+        browser.item_add(self, url + '/list-img-landscape',
+                                     'Dialog - List with images (landscape)')
+        browser.item_add(self, url + '/list-img-portrait',
+                                     'Dialog - List with images (portrait)')
         browser.item_add(self, url + '/panel1', 'Dialog - Panel full')
         browser.item_add(self, url + '/panel4', 'Dialog - Panel full more')
         browser.item_add(self, url + '/panel2', 'Dialog - Panel no buttons ')
@@ -891,6 +867,22 @@ class Test_Dialog(GenericItemClass):
             d.button_add('One', selected_cb=_btn_cb)
             d.button_add('Two', selected_cb=_btn_cb)
             d.button_add('Tree', selected_cb=_btn_cb)
+            d.list_go()
+
+        # Dialog - Image list (landscape)
+        elif url.endswith('/list-img-landscape'):
+            d = EmcDialog(title=user_data, style='image_list_landscape',
+                          done_cb=lambda x, t: print(t))
+            for i in range(20):
+                d.list_item_append('item #%d' % i, self.backdrop)
+            d.list_go()
+
+        # Dialog - Image list (portrait)
+        elif url.endswith('/list-img-portrait'):
+            d = EmcDialog(title=user_data, style='image_list_portrait',
+                          done_cb=lambda x, t: print(t))
+            for i in range(20):
+                d.list_item_append('item #%d' % i, self.poster)
             d.list_go()
 
         # Dialog - Panel full

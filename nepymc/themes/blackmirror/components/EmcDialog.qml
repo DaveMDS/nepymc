@@ -1,4 +1,5 @@
 import QtQuick 2.12
+import "../components/"
 import "../utils/"
 import "../utils/utils.js" as Utils
 
@@ -15,6 +16,7 @@ EmcFocusManager {
     property bool spinner: false
     property double progress: -1.0  // 0->1  -1=do not show
     property var list_model: undefined
+    property string style: ""
 
     function action_add(idx, label, icon, def) { /* TODO THEME API */
         console.log("QML button add " + idx + " " + label)
@@ -66,6 +68,16 @@ EmcFocusManager {
             emcList.incrementCurrentIndex()
         } else {
             emcMainText.scrollDown()
+        }
+    }
+    Keys.onLeftPressed: {
+        if (root.style === "image_list_portrait") {
+            emcList.decrementCurrentIndex()
+        }
+    }
+    Keys.onRightPressed: {
+        if (root.style === "image_list_portrait") {
+            emcList.incrementCurrentIndex()
         }
     }
 
@@ -131,6 +143,12 @@ EmcFocusManager {
             id: emcList
 
             model: root.list_model
+            delegate_name: style.startsWith('image_list') ?
+                               "EmcImageListItemDelegate.qml" :
+                               "EmcListItemDelegate.qml"
+            orientation: style === 'image_list_portrait' ?
+                             ListView.Horizontal :
+                             ListView.Vertical
 
             anchors {
                 top: emcTitle.bottom

@@ -3,13 +3,19 @@ import QtQuick.Controls 2.12
 import "../utils/"
 
 
-
 ListView {
+    id: root
 
-    spacing: 1
+    property string delegate_name: "EmcListItemDelegate.qml"
+
     clip: true
 
-    delegate: EmcListItemDelegate { }
+    delegate: Component {
+        Loader {
+            property var view: root  // expose the view to the delegate
+            source: delegate_name
+        }
+    }
 
     ScrollBar.vertical: ScrollBar { }
 

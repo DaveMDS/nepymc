@@ -45,10 +45,12 @@ ApplicationWindow {
     }
 
     function build_dialog(title, style, text, content, spinner, list_model) {
+        var bigger = (style === "panel" || style === "list" || style.startsWith("image_list"))
         var dia = Utils.load_qml_obj("components/EmcDialog.qml",
                                      emcApplicationWindow, {
+                                         style: style,
                                          title: title,
-                                         bigger: style === "panel" || style === "list",
+                                         bigger: bigger,
                                          main_text: text,
                                          content: content,
                                          spinner: spinner,

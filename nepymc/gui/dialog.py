@@ -40,14 +40,14 @@ class EmcDialog(EmcBackendableABC):
 
       you can also apply special style that perform specific task:
          'info', 'error', 'warning', 'yesno', 'cancel', 'progress',
-         'list', 'image_list_horiz', 'image_list_vert',
+         'list', 'image_list_landscape', 'image_list_portrait',
          'buffering'
     """
     backendable_pkg = 'gui'
     backendable_cls = 'EmcDialog'
 
     # minimal_styles = ['info', 'error', 'warning', 'yesno', 'cancel', 'progress']
-    # list_styles = ['list', 'image_list_horiz', 'image_list_vert']
+    list_styles = ['list', 'image_list_landscape', 'image_list_portrait']
 
     @abstractmethod
     def __init__(self, title: str=None, text: str=None,
@@ -63,6 +63,9 @@ class EmcDialog(EmcBackendableABC):
         self._done_cb = done_cb
         self._canc_cb = canc_cb
         self._user_data = user_data
+
+        if style in ('image_list', 'image_list_horiz', 'image_list_vert'):
+            raise RuntimeError('EmcDialog: DEPRECATED style')
 
     @abstractmethod
     def delete(self) -> None:

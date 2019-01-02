@@ -7,14 +7,14 @@ import "../utils/"
  *   -label_end
  *   -icon
  *   -icon_end
+ *
+ *  Can only be used in vertical views
  */
 
 Item {
     id: root
 
-    property var view: ListView.view  // ... hmmm :/
-
-    width: parent.width
+    width: view.width
     height: emcLabel.height
 
 
