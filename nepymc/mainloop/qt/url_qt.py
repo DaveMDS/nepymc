@@ -65,6 +65,8 @@ class EmcUrl_Qt(EmcUrl):
         if self.dest != '::mem::':
             self._reply.readyRead.connect(self._data_ready_cb)
 
+        self._autoref = self  # keep an auto reference so user don't have to
+
     def delete(self) -> None:
         self._reply.abort()
         del self._reply
