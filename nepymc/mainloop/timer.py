@@ -47,6 +47,9 @@ class EmcTimer(EmcBackendableABC):
         self._cb_kargs = kargs
         if onstart:
             self._call_user_callback()
+        # try to catch old (deprecated) call in seconds
+        if interval < 200 or isinstance(interval, float):
+            raise RuntimeError('EmcTimer: milliseconds !!!!')
 
     @abstractmethod
     def delete(self) -> None:
