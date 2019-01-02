@@ -29,9 +29,10 @@ class EmcTimer(EmcBackendableABC):
     backendable_pkg = 'mainloop'
     backendable_cls = 'EmcTimer'
 
+    @abstractmethod
     def __init__(self, interval: int, callback: callable=None,
                  oneshot: bool=False, onstart: bool=False, **kargs):
-        """  TODOC
+        """
         Params:
             interval: milliseconds between each call
             callback: user function to call when timer expire

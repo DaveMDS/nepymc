@@ -19,14 +19,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import pprint
+import sys
 
 from nepymc.modules import EmcModule
 from nepymc import mainmenu
 from nepymc import mediaplayer
 from nepymc import storage
 from nepymc import utils
-from nepymc.mainloop import EmcTimer, EmcUrl
+from nepymc.mainloop import EmcTimer, EmcUrl, EmcExec
 from nepymc.browser import EmcBrowser, \
     EmcItemClass, BackItemClass, FolderItemClass
 from nepymc.gui import EmcDialog, EmcSourcesManager, EmcFolderSelector
@@ -1030,6 +1030,45 @@ class Test_Url(GenericItemClass):
         self.dia.progress_set(received / total if total else 0)
 
 
+class Test_Exec(GenericItemClass):
+
+    path = os.path.dirname(__file__)
+    infinite_path = os.path.join(path, 'infinite.py')
+
+    def __init__(self):
+        super().__init__()
+        self.dia = None
+        self.exe = None
+
+    def item_selected(self, url, user_data):
+        self.dia = EmcDialog(title='EmcExec test',
+                             text='Press a button to run a command')
+        self.dia.button_add('Close', lambda b: self.dia.delete())
+        self.dia.button_add('delete()', lambda b: self.exe.delete())
+        self.dia.button_add('"wrong"', self.run_btn_cb, ('wrong',))
+        self.dia.button_add('"infinite.py"', self.run_btn_cb,
+                            (sys.executable, self.infinite_path))
+        self.dia.button_add('"ls -l"', self.run_btn_cb, ('ls', '-l'))
+        self.dia.button_add('"ls"', self.run_btn_cb, ('ls',))
+
+    def run_btn_cb(self, btn, pars):
+        cmd = pars[0]
+        params = pars[1:]
+        self.exe = EmcExec(cmd, params, grab_output=True,
+                           done_cb=self.exe_done_cb,
+                           asd1='asd_1', asd2='asd_2')
+        self.dia.text_set('Running: "{} {}"<br><br>'
+                          .format(cmd, ' '.join(params)))
+
+    def exe_done_cb(self, exit_code, output, asd1, asd2):
+        assert asd1 == 'asd_1'
+        assert asd2 == 'asd_2'
+        print("OUT", exit_code, output)
+        self.dia.text_append('Process completed<br>'
+                             'exit_code: {}<br>'
+                             'output: {}'.format(exit_code, repr(output)))
+
+
 class UiTestsModule(EmcModule):
     name = 'uitests'
     label = 'UI tests'
@@ -1064,6 +1103,7 @@ class UiTestsModule(EmcModule):
 
     def populate_root(self, browser, url):
         browser.item_add(Test_Url(), 'uitest://download', 'EmcUrl')
+        browser.item_add(Test_Exec(), 'uitest://exe', 'EmcExec')
 
         browser.item_add(Test_Dialog(), 'uitest://dialog', 'EmcDialog')
 
