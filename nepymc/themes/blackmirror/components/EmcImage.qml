@@ -74,7 +74,7 @@ Item {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         wrapMode: Text.Wrap
-        textFormat: Text.StyledText  // TODO or RichText ??
+        textFormat: Text.StyledText  // TODO StyledText or RichText ??
         color: "black"
         text: ''
         visible: text
