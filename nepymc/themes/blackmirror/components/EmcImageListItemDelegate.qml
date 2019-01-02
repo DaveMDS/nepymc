@@ -42,8 +42,9 @@ Item {
         onClicked: {
             view.currentIndex = index
         }
-//        DebugRect {color:"green"}
-//        onDoubleClicked: BrowserModel.item_selected(index)
+        onDoubleClicked: {
+            view.model.item_activated(index)
+        }
     }
 
 }

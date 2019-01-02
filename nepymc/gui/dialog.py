@@ -25,7 +25,7 @@ from nepymc.utils import EmcBackendableABC
 
 
 class EmcDialogListItem(object):
-    def __init__(self, label, icon, end, *args, **kargs):
+    def __init__(self, label, icon, end, args, kargs):
         self.label = label
         self.icon = icon
         self.end = end
@@ -150,3 +150,15 @@ class EmcDialog(EmcBackendableABC):
 
     def text_get(self):
         return self._text
+
+    def _call_user_done_callback(self, selected_item: EmcDialogListItem=None):
+        """  Utility for backends """
+        # This code was only for the list dialogs....
+        if self._done_cb:
+            if selected_item:
+                self._done_cb(self, *selected_item.args, **selected_item.kargs)
+            # args, kwargs = it.data['_user_item_data_']
+            # self._done_cb(self, *args, **kwargs)
+        else:
+            self.delete()
+

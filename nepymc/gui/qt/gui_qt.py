@@ -40,7 +40,7 @@ def ERR(*args):
 
 
 def DBG(*args):
-    print('GUI_QT:', *args)
+    # print('GUI_QT:', *args)
     pass
 
 

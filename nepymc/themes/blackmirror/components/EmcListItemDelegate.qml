@@ -107,12 +107,11 @@ Item {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            print("click", view.currentIndex)
             view.currentIndex = index
-//            emcBrowserListItem.forceActiveFocus()
         }
-//        DebugRect {color:"green"}
-//        onDoubleClicked: BrowserModel.item_selected(index)
+        onDoubleClicked: {
+            view.model.item_activated(index)
+        }
     }
 
 }

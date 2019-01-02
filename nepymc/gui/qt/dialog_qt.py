@@ -49,8 +49,9 @@ class DialogListModel(QAbstractListModel):
     icon_role = Qt.UserRole + 3
     icon_end_role = Qt.UserRole + 4
 
-    def __init__(self, parent=None):
-        super().__init__(parent)
+    def __init__(self, dialog):
+        super().__init__(None)
+        self.dialog = dialog
         self.items = []  # list of EmcDiaogListItem
         self.current_index = 0
 
@@ -83,8 +84,14 @@ class DialogListModel(QAbstractListModel):
     # below methods are to be called from QML
     @Slot(int)
     def selection_changed(self, index):
-        """ An in item has been selected in QML """
+        """ An item has been selected in QML """
         self.current_index = index
+
+    @Slot(int)
+    def item_activated(self, index):
+        """ An item has been activated in QML """
+        it = self.items[index]
+        self.dialog._call_user_done_callback(it)
 
 
 class EmcDialog_Qt(EmcDialog):
@@ -104,7 +111,7 @@ class EmcDialog_Qt(EmcDialog):
 
         print("INIT DIALOG QT")
         if style in self.list_styles:
-            self._list_model = DialogListModel()
+            self._list_model = DialogListModel(self)
         else:
             self._list_model = None
         self._buttons = []
