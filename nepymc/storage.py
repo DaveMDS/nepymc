@@ -19,6 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import platform
 from operator import attrgetter
 
 import nepymc.ini as ini
@@ -109,12 +110,15 @@ def init():
     device_added(EmcDevice(uniq_id='user_home', type=EmcDevType.SYSTEM,
                            sort_key=10, mount_point=os.getenv('HOME'),
                            label=_('User home'), icon='icon/home'))
-    _udev_module = EmcDeviceManagerUdev()
+
+    if platform.system() == 'Linux':
+        _udev_module = EmcDeviceManagerUdev()
 
 
 def shutdown():
     DBG('shutdown')
-    _udev_module.__shutdown__()
+    if _udev_module:
+        _udev_module.__shutdown__()
 
 
 def list_devices(filter_type=None):
@@ -206,16 +210,16 @@ def try_mount(device, mount_cb):
 
 
 # ####### UDEV MODULE ##########################################################
-
-import pyudev
-import queue
-
-
 class EmcDeviceManagerUdev():
 
     managed_subsystems = 'block'
 
     def __init__(self):
+
+        # lazy/conditional loading of needed modules
+        import pyudev
+        import queue
+
         DBG('Using pyudev {} and udev {}'.format(
              pyudev.__version__, pyudev.udev_version()))
 
