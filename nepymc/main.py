@@ -195,8 +195,8 @@ def start_emc(standalone=False):
     loop.run()
 
     # shutdown
-    # modules.save_enabled()
-    # modules.shutdown_all()
+    modules.save_enabled()
+    modules.shutdown_all()
     storage.shutdown()
     config_gui.shutdown()
     ini.write_to_file(os.path.join(utils.user_conf_dir, 'nepymc.conf'))
