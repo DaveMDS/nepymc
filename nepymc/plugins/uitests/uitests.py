@@ -26,6 +26,7 @@ from nepymc import mainmenu
 from nepymc import mediaplayer
 from nepymc import storage
 from nepymc import utils
+from nepymc.themoviedb import CastPanel
 from nepymc.mainloop import EmcTimer, EmcUrl, EmcExec
 from nepymc.browser import EmcBrowser, \
     EmcItemClass, BackItemClass, FolderItemClass
@@ -1061,6 +1062,11 @@ class Test_Exec(GenericItemClass):
                              'output: {}'.format(exit_code, repr(output)))
 
 
+class Test_CastPanel(GenericItemClass):
+    def item_selected(self, url, user_data):
+        CastPanel(name='Bruce Willis', lang='en')
+
+
 class UiTestsModule(EmcModule):
     name = 'uitests'
     label = 'UI tests'
@@ -1094,6 +1100,8 @@ class UiTestsModule(EmcModule):
         self._browser.show()
 
     def populate_root(self, browser, url):
+
+        browser.item_add(Test_Timer(), 'uitest://timer', 'EmcTimer')
         browser.item_add(Test_Url(), 'uitest://download', 'EmcUrl')
         browser.item_add(Test_Exec(), 'uitest://exe', 'EmcExec')
 
@@ -1105,8 +1113,8 @@ class UiTestsModule(EmcModule):
                                                 'Folder Selector')
         browser.item_add(Test_SourceManager(), 'uitest://srcmngr',
                                                'Source Manager')
-
-        browser.item_add(Test_Timer(), 'uitest://timer', 'EmcTimer')
+        browser.item_add(Test_CastPanel(), 'uitest://tmdb',
+                                           'TMDB CastPanel')
 
         browser.item_add(Test_Browser(), 'uitest://browser', 'EmcBrowser')
         browser.item_add(Test_ImageDialog(), 'uitest://imgd',
