@@ -19,7 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import pwd
+import getpass
 import re
 import importlib
 import hashlib
@@ -164,7 +164,7 @@ def md5(txt):
 
 
 def user_name():
-    return pwd.getpwuid(os.getuid())[0]
+    return getpass.getuser()
 
 
 def natural_sort(l):
