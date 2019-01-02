@@ -1,5 +1,7 @@
 __pycache__
+*.pyc
 *.qmlc
 build/
 develop/
 .idea/
+nepymc/locale/*/*

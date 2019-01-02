@@ -1,0 +1,637 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-02 21:48+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: nepymc/sdb.py:66
+#, python-format
+msgid ""
+"<b>The database %s is outdated!</b><br><br>The old file has been renamed "
+"with a .backup extension and a new (empty) one has been created."
+"<br><br>Sorry for the incovenience."
+msgstr ""
+
+#: nepymc/sdb.py:70
+msgid "EpyMC Database"
+msgstr ""
+
+#: nepymc/themoviedb.py:562
+msgid "Fetching info"
+msgstr ""
+
+#: nepymc/themoviedb.py:580
+msgid "Birthday"
+msgstr ""
+
+#: nepymc/themoviedb.py:583
+msgid "Deathday"
+msgstr ""
+
+#: nepymc/themoviedb.py:586
+msgid "Place of birth"
+msgstr ""
+
+#: nepymc/themoviedb.py:608
+#, python-format
+msgid "Movies (%s)"
+msgstr ""
+
+#: nepymc/themoviedb.py:611
+#, python-format
+msgid "Photos (%s)"
+msgstr ""
+
+#: nepymc/themoviedb.py:625 nepymc/plugins/movies/movies.py:674
+msgid "as"
+msgstr ""
+
+#: nepymc/mediaplayer.py:133
+msgid "File not found"
+msgstr ""
+
+#: nepymc/mediaplayer.py:179
+msgid "Resume playback"
+msgstr ""
+
+#: nepymc/mediaplayer.py:180
+#, python-format
+msgid "Continue from %s ?"
+msgstr ""
+
+#: nepymc/browser.py:182 nepymc/gui/more.py:78
+msgid "Back"
+msgstr ""
+
+#: nepymc/browser.py:392
+msgid "View restriction"
+msgstr ""
+
+#: nepymc/browser.py:394
+msgid ""
+"<br><br>The requested view is not enabled for the current page."
+"<br><br><small><info>NOTE: You can ovveride this restriction in the "
+"<i>Configuration → Views</i> section.</info></small>"
+msgstr ""
+
+#: nepymc/browser.py:672 nepymc/browser.py:916
+#, python-format
+msgid "%d item"
+msgid_plural "%d items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: nepymc/mainmenu.py:104
+msgid "Exit"
+msgstr ""
+
+#: nepymc/config_gui.py:300 nepymc/gui/qt/dialog_qt.py:129
+msgid "Ok"
+msgstr ""
+
+#: nepymc/config_gui.py:303 nepymc/gui/qt/dialog_qt.py:144
+#: nepymc/gui/qt/dialog_qt.py:146
+msgid "Cancel"
+msgstr ""
+
+#: nepymc/config_gui.py:335 nepymc/config_gui.py:341 nepymc/config_gui.py:438
+msgid "Configuration"
+msgstr ""
+
+#: nepymc/config_gui.py:343 nepymc/config_gui.py:450
+msgid "General"
+msgstr ""
+
+#: nepymc/config_gui.py:347 nepymc/config_gui.py:694
+msgid "Modules"
+msgstr ""
+
+#: nepymc/config_gui.py:351 nepymc/config_gui.py:621
+msgid "Views"
+msgstr ""
+
+#: nepymc/config_gui.py:353 nepymc/config_gui.py:732
+msgid "Storage devices"
+msgstr ""
+
+#: nepymc/config_gui.py:357 nepymc/config_gui.py:791
+msgid "System info"
+msgstr ""
+
+#: nepymc/config_gui.py:455
+msgid "Start in fullscreen"
+msgstr ""
+
+#: nepymc/config_gui.py:457
+msgid "Hide mouse cursor when not needed"
+msgstr ""
+
+#: nepymc/config_gui.py:465
+msgid "Interface scale"
+msgstr ""
+
+#: nepymc/config_gui.py:473
+msgid "Max concurrent download"
+msgstr ""
+
+#: nepymc/config_gui.py:475
+msgid "Time format"
+msgstr ""
+
+#: nepymc/config_gui.py:476
+msgid "Date format"
+msgstr ""
+
+#: nepymc/config_gui.py:487
+msgid "Frames per second"
+msgstr ""
+
+#: nepymc/config_gui.py:491
+msgid "Max concurrent thumbnails"
+msgstr ""
+
+#: nepymc/config_gui.py:494
+msgid "Max thumbnails generation time"
+msgstr ""
+
+#: nepymc/config_gui.py:495
+msgid "seconds"
+msgstr ""
+
+#: nepymc/config_gui.py:497 nepymc/config_gui.py:527 nepymc/config_gui.py:533
+msgid "Clear thumbnails cache"
+msgstr ""
+
+#: nepymc/config_gui.py:499 nepymc/config_gui.py:548 nepymc/config_gui.py:554
+msgid "Clear online images cache"
+msgstr ""
+
+#: nepymc/config_gui.py:504
+msgid "Restart needed"
+msgstr ""
+
+#: nepymc/config_gui.py:505
+msgid "You need to restart the program to apply the new configuration."
+msgstr ""
+
+#: nepymc/config_gui.py:535 nepymc/config_gui.py:556
+msgid "Operation in progress, please wait..."
+msgstr ""
+
+#: nepymc/config_gui.py:563
+msgid "Virtual keyboard layouts"
+msgstr ""
+
+#: nepymc/config_gui.py:565
+msgid "Close"
+msgstr ""
+
+#: nepymc/config_gui.py:567 nepymc/gui/more.py:48
+msgid "Select"
+msgstr ""
+
+#: nepymc/config_gui.py:601
+msgid "Audio"
+msgstr ""
+
+#: nepymc/config_gui.py:606
+msgid "Volume adjustment step"
+msgstr ""
+
+#: nepymc/config_gui.py:609
+msgid "Volume maximum value"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "None"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "Too low"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "A bit"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "Normal"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "Too much"
+msgstr ""
+
+#: nepymc/config_gui.py:614
+msgid "Volume logarithmic adjustment"
+msgstr ""
+
+#: nepymc/config_gui.py:626
+msgid "Show Back item in lists"
+msgstr ""
+
+#: nepymc/config_gui.py:634
+msgid "Ignore views restrictions for pages"
+msgstr ""
+
+#: nepymc/config_gui.py:655
+msgid "Author"
+msgstr ""
+
+#: nepymc/config_gui.py:656
+msgid "Version"
+msgstr ""
+
+#: nepymc/config_gui.py:712
+msgid "Subtitles"
+msgstr ""
+
+#: nepymc/config_gui.py:718
+msgid "Subtitles preferred languages"
+msgstr ""
+
+#: nepymc/config_gui.py:720
+msgid "Subtitles encoding"
+msgstr ""
+
+#: nepymc/config_gui.py:722
+msgid "Always try UTF-8 first"
+msgstr ""
+
+#: nepymc/config_gui.py:724
+msgid "Opensubtitles.org Username"
+msgstr ""
+
+#: nepymc/config_gui.py:726
+msgid "Opensubtitles.org Password"
+msgstr ""
+
+#: nepymc/config_gui.py:738
+msgid "Show home folder"
+msgstr ""
+
+#: nepymc/config_gui.py:740
+msgid "Show root folder"
+msgstr ""
+
+#: nepymc/config_gui.py:752 nepymc/config_gui.py:757
+msgid "Not found"
+msgstr ""
+
+#: nepymc/config_gui.py:775
+msgid "Core"
+msgstr ""
+
+#: nepymc/config_gui.py:776
+msgid "Theme"
+msgstr ""
+
+#: nepymc/config_gui.py:780
+msgid "Paths"
+msgstr ""
+
+#: nepymc/config_gui.py:781
+msgid "Base folder"
+msgstr ""
+
+#: nepymc/config_gui.py:782
+msgid "Config folder"
+msgstr ""
+
+#: nepymc/config_gui.py:783
+msgid "Cache folder"
+msgstr ""
+
+#: nepymc/config_gui.py:784
+msgid "Versions"
+msgstr ""
+
+#: nepymc/config_gui.py:785
+msgid "NepyMC"
+msgstr ""
+
+#: nepymc/config_gui.py:786
+msgid "Python"
+msgstr ""
+
+#: nepymc/config_gui.py:787
+msgid "Udev"
+msgstr ""
+
+#: nepymc/config_gui.py:787
+msgid "pyudev"
+msgstr ""
+
+#: nepymc/config_gui.py:788
+msgid "Python-EFL"
+msgstr ""
+
+#: nepymc/config_gui.py:789
+msgid "PySide"
+msgstr ""
+
+#: nepymc/storage.py:112
+msgid "User home"
+msgstr ""
+
+#: nepymc/storage.py:340
+msgid "Audio CD"
+msgstr ""
+
+#: nepymc/storage.py:342
+msgid "DVD Disk"
+msgstr ""
+
+#: nepymc/storage.py:344
+msgid "Root filesystem"
+msgstr ""
+
+#: nepymc/storage.py:360
+msgid "{} Hard disk"
+msgstr ""
+
+#: nepymc/storage.py:362
+msgid "{} Thumb drive"
+msgstr ""
+
+#: nepymc/storage.py:364
+msgid "{} Volume"
+msgstr ""
+
+#: nepymc/storage.py:370
+msgid "Volume"
+msgstr ""
+
+#: nepymc/gui/more.py:47
+msgid "Source Selector"
+msgstr ""
+
+#: nepymc/gui/more.py:49
+msgid "Browse"
+msgstr ""
+
+#: nepymc/gui/more.py:71
+msgid "Permission denied"
+msgstr ""
+
+#: nepymc/gui/more.py:124
+msgid "Sources Manager"
+msgstr ""
+
+#: nepymc/gui/more.py:126
+msgid "Done"
+msgstr ""
+
+#: nepymc/gui/more.py:128
+msgid "Add"
+msgstr ""
+
+#: nepymc/gui/more.py:130
+msgid "Remove"
+msgstr ""
+
+#: nepymc/gui/more.py:144
+msgid "Choose a new source"
+msgstr ""
+
+#: nepymc/gui/qt/dialog_qt.py:133 nepymc/gui/qt/dialog_qt.py:135
+msgid "No"
+msgstr ""
+
+#: nepymc/gui/qt/dialog_qt.py:138 nepymc/gui/qt/dialog_qt.py:140
+msgid "Yes"
+msgstr ""
+
+#: nepymc/plugins/uitests/uitests.py:928
+msgid "Buffering"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:88
+msgid "Manage sources"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:101
+msgid "Rescan library"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:110 nepymc/plugins/movies/movies.py:127
+msgid "Actors"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:113 nepymc/plugins/movies/movies.py:129
+msgid "Directors"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:131
+msgid "Actor info"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:133
+msgid "Director info"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:135 nepymc/plugins/movies/movies.py:847
+msgid "Tags manager"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:144
+msgid "{} favorite"
+msgid_plural "{} favorites"
+msgstr[0] ""
+msgstr[1] ""
+
+#: nepymc/plugins/movies/movies.py:248 nepymc/plugins/movies/movies.py:632
+msgid "Rating"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:249 nepymc/plugins/movies/movies.py:628
+msgid "Director"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:250 nepymc/plugins/movies/movies.py:611
+#: nepymc/plugins/movies/movies.py:629 nepymc/plugins/movies/movies.py:669
+msgid "Cast"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:256
+msgid "File size"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:258
+msgid "Title"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:259
+msgid "Year"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:259
+msgid "Unknown"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:281
+msgid "{} movie"
+msgid_plural "{} movies"
+msgstr[0] ""
+msgstr[1] ""
+
+#: nepymc/plugins/movies/movies.py:297 nepymc/plugins/movies/movies.py:318
+msgid "Remove from favorites"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:299 nepymc/plugins/movies/movies.py:320
+msgid "Add to favorites"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:331 nepymc/plugins/movies/movies.py:371
+#: nepymc/plugins/movies/movies.py:379 nepymc/plugins/movies/movies.py:455
+msgid "Movies"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:333
+msgid ""
+"The movies module is used to browse your films collection, it is fully "
+"integrated with themoviedb.org online database."
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:375
+msgid "Movie Collection"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:609
+msgid "Play"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:612
+msgid "Posters"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:613
+msgid "Backdrops"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:614
+msgid "Tags"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:615
+msgid "Search Info"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:630
+msgid "Released"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:631
+msgid "Country"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:633
+msgid "Overview"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:653
+#, python-format
+msgid ""
+"Media:<br>%s<br><br>No info stored for this media<br>Try the Search info "
+"button..."
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:692
+#, python-format
+msgid "%d posters available"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:708 nepymc/plugins/movies/movies.py:753
+msgid "Downloading image"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:734
+#, python-format
+msgid "%d backdrops available"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:765
+msgid "Searching for"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:774
+msgid "Change name"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:785
+msgid "nothing found, please try with a better name"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:790 nepymc/plugins/movies/movies.py:819
+msgid "Downloading movie info..."
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:793
+#, python-format
+msgid "<b>Found %d results</b><br>"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:794
+#, python-format
+msgid "Found %d results, which one?"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:846
+msgid "No tags present"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:1060
+msgid "Movies Collection"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:1066
+msgid "Preferred language for contents"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:1069
+msgid "Prefer movie titles in lists"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:1072
+msgid "Enable background scanner"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:1074
+msgid "Ask"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:1074
+msgid "Always"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:1074
+msgid "Never"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:1077
+msgid "Background scan also clean dead files"
+msgstr ""
+
+#: nepymc/plugins/calibrator/calibrator.py:51
+#: nepymc/plugins/calibrator/calibrator.py:58
+msgid "Screen calibrator"
+msgstr ""
+
+#: nepymc/plugins/calibrator/calibrator.py:53
+msgid "Use this module to calibrate your screen parameters."
+msgstr ""

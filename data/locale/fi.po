@@ -1,0 +1,1631 @@
+# Finnish translations for EpyMC.
+# Copyright (C) 2016 Davide Andreoli <dave@gurumeditation.it>
+# This file is distributed under the same license as the EpyMC package.
+# Kai Huuhko <kai.huuhko@gmail.com>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: nepymc 2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-02 21:48+0100\n"
+"PO-Revision-Date: 2016-08-22 06:02+0300\n"
+"Last-Translator: Kai Huuhko <kai.huuhko@gmail.com>\n"
+"Language-Team: Finnish <fi@li.org>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: nepymc/sdb.py:66
+#, python-format
+msgid ""
+"<b>The database %s is outdated!</b><br><br>The old file has been renamed "
+"with a .backup extension and a new (empty) one has been created."
+"<br><br>Sorry for the incovenience."
+msgstr ""
+"<b>Tietokanta %s on vanhentunut!</b><br><br>Vanha tiedosto on nimetty "
+"uudelleen .backup-päätteellä ja uusi (tyhjä) tietokanta on luotu tilalle."
+"<br><br>Pahoittelemme aiheutunutta vaivaa."
+
+#: nepymc/sdb.py:70
+msgid "EpyMC Database"
+msgstr "EpyMC tietokanta"
+
+#: nepymc/themoviedb.py:562
+msgid "Fetching info"
+msgstr "Haetaan tietoja"
+
+#: nepymc/themoviedb.py:580
+msgid "Birthday"
+msgstr "Syntymäpäivä"
+
+#: nepymc/themoviedb.py:583
+msgid "Deathday"
+msgstr "Kuolinpäivä"
+
+#: nepymc/themoviedb.py:586
+msgid "Place of birth"
+msgstr "Syntymäpaikka"
+
+#: nepymc/themoviedb.py:608
+#, python-format
+msgid "Movies (%s)"
+msgstr "Elokuvat (%s)"
+
+#: nepymc/themoviedb.py:611
+#, python-format
+msgid "Photos (%s)"
+msgstr "Valokuvat (%s)"
+
+#: nepymc/themoviedb.py:625 nepymc/plugins/movies/movies.py:674
+msgid "as"
+msgstr "roolissa"
+
+#: nepymc/mediaplayer.py:133
+msgid "File not found"
+msgstr "Tiedostoa ei löytynyt"
+
+#: nepymc/mediaplayer.py:179
+msgid "Resume playback"
+msgstr "Palauta toisto"
+
+#: nepymc/mediaplayer.py:180
+#, python-format
+msgid "Continue from %s ?"
+msgstr "Jatka ajasta %s ?"
+
+#: nepymc/browser.py:182 nepymc/gui/more.py:78
+msgid "Back"
+msgstr "Takaisin"
+
+#: nepymc/browser.py:392
+msgid "View restriction"
+msgstr "Näkymä rajoitettu"
+
+#: nepymc/browser.py:394
+msgid ""
+"<br><br>The requested view is not enabled for the current page."
+"<br><br><small><info>NOTE: You can ovveride this restriction in the "
+"<i>Configuration → Views</i> section.</info></small>"
+msgstr ""
+"<br><br>Pyydetty näkymä ei ole käytössä nykyiselle sivulle."
+"<br><br><small><info>Huomaa: Voit ohittaa tämän rajoituksen<i>Asetukset → "
+"Näkymät</i> -osiossa.</info></small>"
+
+#: nepymc/browser.py:672 nepymc/browser.py:916
+#, python-format
+msgid "%d item"
+msgid_plural "%d items"
+msgstr[0] "%d kohde"
+msgstr[1] "%d kohdetta"
+
+#: nepymc/mainmenu.py:104
+msgid "Exit"
+msgstr "Poistu"
+
+#: nepymc/config_gui.py:300 nepymc/gui/qt/dialog_qt.py:129
+msgid "Ok"
+msgstr "Ok"
+
+#: nepymc/config_gui.py:303 nepymc/gui/qt/dialog_qt.py:144
+#: nepymc/gui/qt/dialog_qt.py:146
+msgid "Cancel"
+msgstr "Peruuta"
+
+#: nepymc/config_gui.py:335 nepymc/config_gui.py:341 nepymc/config_gui.py:438
+msgid "Configuration"
+msgstr "Asetukset"
+
+#: nepymc/config_gui.py:343 nepymc/config_gui.py:450
+msgid "General"
+msgstr "Yleiset"
+
+#: nepymc/config_gui.py:347 nepymc/config_gui.py:694
+msgid "Modules"
+msgstr "Moduulit"
+
+#: nepymc/config_gui.py:351 nepymc/config_gui.py:621
+msgid "Views"
+msgstr "Näkymät"
+
+#: nepymc/config_gui.py:353 nepymc/config_gui.py:732
+msgid "Storage devices"
+msgstr ""
+
+#: nepymc/config_gui.py:357 nepymc/config_gui.py:791
+msgid "System info"
+msgstr "Järjestelmätiedot"
+
+#: nepymc/config_gui.py:455
+msgid "Start in fullscreen"
+msgstr "Käynnistä täysruututilassa"
+
+#: nepymc/config_gui.py:457
+msgid "Hide mouse cursor when not needed"
+msgstr "Piilota hiirikursori käyttämättömänä"
+
+#: nepymc/config_gui.py:465
+msgid "Interface scale"
+msgstr "Käyttöliittymän skaalaus"
+
+#: nepymc/config_gui.py:473
+msgid "Max concurrent download"
+msgstr "Maks. yhtäaikaiset lataukset"
+
+#: nepymc/config_gui.py:475
+msgid "Time format"
+msgstr "Aikaformaatti"
+
+#: nepymc/config_gui.py:476
+msgid "Date format"
+msgstr "Päiväysformaatti"
+
+#: nepymc/config_gui.py:487
+msgid "Frames per second"
+msgstr "Kuvapäivitysten taajuus"
+
+#: nepymc/config_gui.py:491
+msgid "Max concurrent thumbnails"
+msgstr ""
+
+#: nepymc/config_gui.py:494
+msgid "Max thumbnails generation time"
+msgstr ""
+
+#: nepymc/config_gui.py:495
+msgid "seconds"
+msgstr "sekuntia"
+
+#: nepymc/config_gui.py:497 nepymc/config_gui.py:527 nepymc/config_gui.py:533
+msgid "Clear thumbnails cache"
+msgstr "Tyhjennä esikatselukuvien välimuisti"
+
+#: nepymc/config_gui.py:499 nepymc/config_gui.py:548 nepymc/config_gui.py:554
+msgid "Clear online images cache"
+msgstr "Tyhjennä verkkokuvien välimuisti"
+
+#: nepymc/config_gui.py:504
+msgid "Restart needed"
+msgstr "Tarvitaan uudelleenkäynnistys"
+
+#: nepymc/config_gui.py:505
+msgid "You need to restart the program to apply the new configuration."
+msgstr "Käynnistä ohjelma uudelleen jotta asetukset tulevat voimaan"
+
+#: nepymc/config_gui.py:535 nepymc/config_gui.py:556
+msgid "Operation in progress, please wait..."
+msgstr "Toiminto käynnissä, odota hetki..."
+
+#: nepymc/config_gui.py:563
+msgid "Virtual keyboard layouts"
+msgstr "Virtuaalisen näppäimistön asettelut"
+
+#: nepymc/config_gui.py:565
+msgid "Close"
+msgstr "Sulje"
+
+#: nepymc/config_gui.py:567 nepymc/gui/more.py:48
+msgid "Select"
+msgstr "Valitse"
+
+#: nepymc/config_gui.py:601
+msgid "Audio"
+msgstr "Ääni"
+
+#: nepymc/config_gui.py:606
+msgid "Volume adjustment step"
+msgstr ""
+
+#: nepymc/config_gui.py:609
+msgid "Volume maximum value"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "None"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "Too low"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "A bit"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "Normal"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "Too much"
+msgstr ""
+
+#: nepymc/config_gui.py:614
+msgid "Volume logarithmic adjustment"
+msgstr ""
+
+#: nepymc/config_gui.py:626
+msgid "Show Back item in lists"
+msgstr "Näytä listoissa \"Takaisin\"-kohde"
+
+#: nepymc/config_gui.py:634
+msgid "Ignore views restrictions for pages"
+msgstr "Jätä huomiotta näkymärajoitukset sivuille"
+
+#: nepymc/config_gui.py:655
+msgid "Author"
+msgstr "Tekijä"
+
+#: nepymc/config_gui.py:656
+msgid "Version"
+msgstr "Versio"
+
+#: nepymc/config_gui.py:712
+msgid "Subtitles"
+msgstr "Tekstitykset"
+
+#: nepymc/config_gui.py:718
+msgid "Subtitles preferred languages"
+msgstr "Ensisijaiset tekstityskielet"
+
+#: nepymc/config_gui.py:720
+msgid "Subtitles encoding"
+msgstr "Tekstitysten koodaus"
+
+#: nepymc/config_gui.py:722
+msgid "Always try UTF-8 first"
+msgstr "Koita aina ensin UTF-8:aa"
+
+#: nepymc/config_gui.py:724
+msgid "Opensubtitles.org Username"
+msgstr "Opensubtitles.org käyttäjänimi"
+
+#: nepymc/config_gui.py:726
+msgid "Opensubtitles.org Password"
+msgstr "Opensubtitles.org salasana"
+
+#: nepymc/config_gui.py:738
+msgid "Show home folder"
+msgstr ""
+
+#: nepymc/config_gui.py:740
+msgid "Show root folder"
+msgstr ""
+
+#: nepymc/config_gui.py:752 nepymc/config_gui.py:757
+msgid "Not found"
+msgstr ""
+
+#: nepymc/config_gui.py:775
+msgid "Core"
+msgstr "Ydin"
+
+#: nepymc/config_gui.py:776
+msgid "Theme"
+msgstr "Teema"
+
+#: nepymc/config_gui.py:780
+msgid "Paths"
+msgstr "Polut"
+
+#: nepymc/config_gui.py:781
+msgid "Base folder"
+msgstr "Peruskansio"
+
+#: nepymc/config_gui.py:782
+msgid "Config folder"
+msgstr "Asetuskansio"
+
+#: nepymc/config_gui.py:783
+msgid "Cache folder"
+msgstr ""
+
+#: nepymc/config_gui.py:784
+msgid "Versions"
+msgstr "Versiot"
+
+#: nepymc/config_gui.py:785
+msgid "NepyMC"
+msgstr ""
+
+#: nepymc/config_gui.py:786
+msgid "Python"
+msgstr "Python"
+
+#: nepymc/config_gui.py:787
+msgid "Udev"
+msgstr ""
+
+#: nepymc/config_gui.py:787
+msgid "pyudev"
+msgstr ""
+
+#: nepymc/config_gui.py:788
+msgid "Python-EFL"
+msgstr "Python-EFL"
+
+#: nepymc/config_gui.py:789
+msgid "PySide"
+msgstr ""
+
+#: nepymc/storage.py:112
+msgid "User home"
+msgstr ""
+
+#: nepymc/storage.py:340
+msgid "Audio CD"
+msgstr ""
+
+#: nepymc/storage.py:342
+msgid "DVD Disk"
+msgstr ""
+
+#: nepymc/storage.py:344
+msgid "Root filesystem"
+msgstr ""
+
+#: nepymc/storage.py:360
+msgid "{} Hard disk"
+msgstr ""
+
+#: nepymc/storage.py:362
+msgid "{} Thumb drive"
+msgstr ""
+
+#: nepymc/storage.py:364
+msgid "{} Volume"
+msgstr ""
+
+#: nepymc/storage.py:370
+msgid "Volume"
+msgstr ""
+
+#: nepymc/gui/more.py:47
+msgid "Source Selector"
+msgstr "Lähteen valitsin"
+
+#: nepymc/gui/more.py:49
+msgid "Browse"
+msgstr "Selaa"
+
+#: nepymc/gui/more.py:71
+msgid "Permission denied"
+msgstr ""
+
+#: nepymc/gui/more.py:124
+msgid "Sources Manager"
+msgstr "Lähteiden hallinta"
+
+#: nepymc/gui/more.py:126
+msgid "Done"
+msgstr "Valmis"
+
+#: nepymc/gui/more.py:128
+msgid "Add"
+msgstr "Lisää"
+
+#: nepymc/gui/more.py:130
+msgid "Remove"
+msgstr "Poista"
+
+#: nepymc/gui/more.py:144
+msgid "Choose a new source"
+msgstr "Valitse uusi lähde"
+
+#: nepymc/gui/qt/dialog_qt.py:133 nepymc/gui/qt/dialog_qt.py:135
+msgid "No"
+msgstr "Ei"
+
+#: nepymc/gui/qt/dialog_qt.py:138 nepymc/gui/qt/dialog_qt.py:140
+msgid "Yes"
+msgstr "Kyllä"
+
+#: nepymc/plugins/uitests/uitests.py:928
+msgid "Buffering"
+msgstr "Bufferoidaan"
+
+#: nepymc/plugins/movies/movies.py:88
+msgid "Manage sources"
+msgstr "Hallinnoi lähteitä"
+
+#: nepymc/plugins/movies/movies.py:101
+msgid "Rescan library"
+msgstr "Skannaa kirjasto uudelleen"
+
+#: nepymc/plugins/movies/movies.py:110 nepymc/plugins/movies/movies.py:127
+msgid "Actors"
+msgstr "Näyttelijät"
+
+#: nepymc/plugins/movies/movies.py:113 nepymc/plugins/movies/movies.py:129
+msgid "Directors"
+msgstr "Ohjaajat"
+
+#: nepymc/plugins/movies/movies.py:131
+msgid "Actor info"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:133
+msgid "Director info"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:135 nepymc/plugins/movies/movies.py:847
+msgid "Tags manager"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:144
+msgid "{} favorite"
+msgid_plural "{} favorites"
+msgstr[0] ""
+msgstr[1] ""
+
+#: nepymc/plugins/movies/movies.py:248 nepymc/plugins/movies/movies.py:632
+msgid "Rating"
+msgstr "Arvostelu"
+
+#: nepymc/plugins/movies/movies.py:249 nepymc/plugins/movies/movies.py:628
+msgid "Director"
+msgstr "Ohjaaja"
+
+#: nepymc/plugins/movies/movies.py:250 nepymc/plugins/movies/movies.py:611
+#: nepymc/plugins/movies/movies.py:629 nepymc/plugins/movies/movies.py:669
+msgid "Cast"
+msgstr "Näyttelijät"
+
+#: nepymc/plugins/movies/movies.py:256
+msgid "File size"
+msgstr "Tiedostokoko"
+
+#: nepymc/plugins/movies/movies.py:258
+msgid "Title"
+msgstr "Nimi"
+
+#: nepymc/plugins/movies/movies.py:259
+msgid "Year"
+msgstr "Vuosi"
+
+#: nepymc/plugins/movies/movies.py:259
+msgid "Unknown"
+msgstr "Tuntematon"
+
+#: nepymc/plugins/movies/movies.py:281
+msgid "{} movie"
+msgid_plural "{} movies"
+msgstr[0] ""
+msgstr[1] ""
+
+#: nepymc/plugins/movies/movies.py:297 nepymc/plugins/movies/movies.py:318
+msgid "Remove from favorites"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:299 nepymc/plugins/movies/movies.py:320
+msgid "Add to favorites"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:331 nepymc/plugins/movies/movies.py:371
+#: nepymc/plugins/movies/movies.py:379 nepymc/plugins/movies/movies.py:455
+msgid "Movies"
+msgstr "Elokuvat"
+
+#: nepymc/plugins/movies/movies.py:333
+msgid ""
+"The movies module is used to browse your films collection, it is fully "
+"integrated with themoviedb.org online database."
+msgstr ""
+"Elokuvat-moduulin avulla voit selata elokuvakokoelmaasi, se on täysin "
+"integroitu themoviedb.org-verkkotietokannan kanssa."
+
+#: nepymc/plugins/movies/movies.py:375
+msgid "Movie Collection"
+msgstr "Elokuvakokoelma"
+
+#: nepymc/plugins/movies/movies.py:609
+msgid "Play"
+msgstr "Toista"
+
+#: nepymc/plugins/movies/movies.py:612
+msgid "Posters"
+msgstr "Julisteet"
+
+#: nepymc/plugins/movies/movies.py:613
+msgid "Backdrops"
+msgstr "Taustakuva"
+
+#: nepymc/plugins/movies/movies.py:614
+msgid "Tags"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:615
+msgid "Search Info"
+msgstr "Etsi tietoja"
+
+#: nepymc/plugins/movies/movies.py:630
+msgid "Released"
+msgstr "Julkaistu"
+
+#: nepymc/plugins/movies/movies.py:631
+msgid "Country"
+msgstr "Maa"
+
+#: nepymc/plugins/movies/movies.py:633
+msgid "Overview"
+msgstr "Yhteenveto"
+
+#: nepymc/plugins/movies/movies.py:653
+#, python-format
+msgid ""
+"Media:<br>%s<br><br>No info stored for this media<br>Try the Search info "
+"button..."
+msgstr ""
+"Media:<br>%s<br><br>Tälle medialle ei ole tallennettu tietoja<br>Koita Hae "
+"tietoja-nappia..."
+
+#: nepymc/plugins/movies/movies.py:692
+#, python-format
+msgid "%d posters available"
+msgstr "%d julistetta saatavilla"
+
+#: nepymc/plugins/movies/movies.py:708 nepymc/plugins/movies/movies.py:753
+msgid "Downloading image"
+msgstr "Ladataan kuva"
+
+#: nepymc/plugins/movies/movies.py:734
+#, python-format
+msgid "%d backdrops available"
+msgstr "%d taustakuvaa saatavilla"
+
+#: nepymc/plugins/movies/movies.py:765
+msgid "Searching for"
+msgstr "Etsitään kohdetta"
+
+#: nepymc/plugins/movies/movies.py:774
+msgid "Change name"
+msgstr "Muuta nimi"
+
+#: nepymc/plugins/movies/movies.py:785
+msgid "nothing found, please try with a better name"
+msgstr "mitään ei löytynyt, koita toista hakulauseketta"
+
+#: nepymc/plugins/movies/movies.py:790 nepymc/plugins/movies/movies.py:819
+msgid "Downloading movie info..."
+msgstr "Ladataan elokuvan tietoja..."
+
+#: nepymc/plugins/movies/movies.py:793
+#, python-format
+msgid "<b>Found %d results</b><br>"
+msgstr "<b>Löytyi %d hakutulosta</b><br>"
+
+#: nepymc/plugins/movies/movies.py:794
+#, python-format
+msgid "Found %d results, which one?"
+msgstr "Löytyi %d hakutulosta, mitä käytetään?"
+
+#: nepymc/plugins/movies/movies.py:846
+msgid "No tags present"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:1060
+msgid "Movies Collection"
+msgstr "Elokuvakokoelma"
+
+#: nepymc/plugins/movies/movies.py:1066
+msgid "Preferred language for contents"
+msgstr "Ensisijainen sisältökieli"
+
+#: nepymc/plugins/movies/movies.py:1069
+msgid "Prefer movie titles in lists"
+msgstr "Näytä mieluummin elokuvan nimet listoissa"
+
+#: nepymc/plugins/movies/movies.py:1072
+msgid "Enable background scanner"
+msgstr "Ota käyttöön taustaskanneri"
+
+#: nepymc/plugins/movies/movies.py:1074
+msgid "Ask"
+msgstr "Kysy"
+
+#: nepymc/plugins/movies/movies.py:1074
+msgid "Always"
+msgstr "Aina"
+
+#: nepymc/plugins/movies/movies.py:1074
+msgid "Never"
+msgstr "Ei koskaan"
+
+#: nepymc/plugins/movies/movies.py:1077
+msgid "Background scan also clean dead files"
+msgstr ""
+
+#: nepymc/plugins/calibrator/calibrator.py:51
+#: nepymc/plugins/calibrator/calibrator.py:58
+msgid "Screen calibrator"
+msgstr "Näytön kalibroija"
+
+#: nepymc/plugins/calibrator/calibrator.py:53
+msgid "Use this module to calibrate your screen parameters."
+msgstr "Tämän moduulin avulla voit kalibroida näytön parametrit."
+
+#~ msgid "Themes"
+#~ msgstr "Teemat"
+
+#~ msgid "Download folder"
+#~ msgstr "Latauskansio"
+
+#~ msgid "Use hardware acceleration"
+#~ msgstr "Käytä laitteistokiihdytystä"
+
+#~ msgid "Multimedia engine"
+#~ msgstr "Multimedia-moottori"
+
+#~ msgid "Poster grid items size"
+#~ msgstr "Julisteruudukon kohdekoko"
+
+#~ msgid "Cover grid items size"
+#~ msgstr "Kansiruudukon kohdekoko"
+
+#~ msgid "Download available"
+#~ msgstr "Lataus saatavilla"
+
+#~ msgid "yes"
+#~ msgstr "kyllä"
+
+#~ msgid "no"
+#~ msgstr "ei"
+
+#~ msgid "Window size"
+#~ msgstr "Ikkunakoko"
+
+#~ msgid "screen"
+#~ msgstr "näyttö"
+
+#~ msgid "dpi"
+#~ msgstr "dpi"
+
+#~ msgid "EpyMC"
+#~ msgstr "EpyMC"
+
+#~ msgid "EpyMC themes API"
+#~ msgstr "EpyMC teema-API"
+
+#~ msgid "%(title)s as %(character)s"
+#~ msgstr "%(title)s roolissa %(character)s"
+
+#~ msgid "Cannot init emotion engine:<br>%s"
+#~ msgstr "Emotion-moottoria ei voitu alustaa:<br>%s"
+
+#~ msgid "by"
+#~ msgstr "-"
+
+#~ msgid "Video"
+#~ msgstr "Kuva"
+
+#~ msgid "Delay: %d ms"
+#~ msgstr "Viive: %d ms"
+
+#~ msgid "Audio track: %s"
+#~ msgstr "Ääniraita: %s"
+
+#~ msgid "Audio track #%d"
+#~ msgstr "Ääniraita nro. %d"
+
+#~ msgid "Mute"
+#~ msgstr "Mykistä"
+
+#~ msgid "Video track: %s"
+#~ msgstr "Kuvaraita: %s"
+
+#~ msgid "Video track #%d"
+#~ msgstr "Kuvaraita nro %d"
+
+#~ msgid "Download video"
+#~ msgstr "Lataa video"
+
+#~ msgid "No subtitles"
+#~ msgstr "Ei tekstityksiä"
+
+#~ msgid "Subtitle #%d"
+#~ msgstr "Tekstitykset nro. %d"
+
+#~ msgid "Download subtitles"
+#~ msgstr "Lataa tekstitykset"
+
+#~ msgid "Subtitles delay"
+#~ msgstr "Tekstitysten viive"
+
+#~ msgid "+100 ms"
+#~ msgstr "+100 ms"
+
+#~ msgid "Reset"
+#~ msgstr "Palauta"
+
+#~ msgid "-100 ms"
+#~ msgstr "-100 ms"
+
+#~ msgid "Searching subtitles"
+#~ msgstr "Haetaan tekstityksiä"
+
+#~ msgid "Login failed"
+#~ msgstr "Kirjautuminen epäonnistui"
+
+#~ msgid "Search failed"
+#~ msgstr "Haku epäonnistui"
+
+#~ msgid "No results found for languages: %s"
+#~ msgstr "Kielille %s ei löytynyt tuloksia"
+
+#~ msgid "Download"
+#~ msgstr "Lataa"
+
+#~ msgid "Downloading subtitles"
+#~ msgstr "Ladataan tekstityksiä"
+
+#~ msgid "Download failed"
+#~ msgstr "Lataus epäonnistui"
+
+#~ msgid "Decode failed"
+#~ msgstr "Purku epäonnistui"
+
+#~ msgid "English QWERTY"
+#~ msgstr "Englanninkielinen QWERTY"
+
+#~ msgid "English ABC"
+#~ msgstr "Englanninkielinen ABC"
+
+#~ msgid "Italian QWERTY"
+#~ msgstr "Italiankielinen QWERTY"
+
+#~ msgid "Italian ABC"
+#~ msgstr "Italiankielinen ABC"
+
+#~ msgid "Russian QWERTY"
+#~ msgstr "Venäjänkielinen QWERTY"
+
+#~ msgid "Russian ABC"
+#~ msgstr "Venäjänkielinen ABC"
+
+#~ msgid "Symbols"
+#~ msgstr "Symbolit"
+
+#~ msgid "Emotion Media Center"
+#~ msgstr "Emotion-mediakeskus"
+
+#~ msgid "credits"
+#~ msgstr "lopputekstit"
+
+#~ msgid "Image {0} of {1}"
+#~ msgstr "Kuva {0}/{1}"
+
+#~ msgid "Rename"
+#~ msgstr "Nimeä uudelleen"
+
+#~ msgid "Insert text"
+#~ msgstr "Syötä tekstiä"
+
+#~ msgid "ERASE"
+#~ msgstr "PYYHI"
+
+#~ msgid "SPACE"
+#~ msgstr "VÄLILYÖNTI"
+
+#~ msgid "UPPERCASE"
+#~ msgstr "ISOT KIRJAIMET"
+
+#~ msgid "Dismiss"
+#~ msgstr "Poistu"
+
+#~ msgid "Accept"
+#~ msgstr "Hyväksy"
+
+#~ msgid "LOWERCASE"
+#~ msgstr "PIENET KIRJAIMET"
+
+#~ msgid "Download started"
+#~ msgstr "Lataus käynnistyi"
+
+#~ msgid "Cannot download file"
+#~ msgstr "Ei voida ladata tiedostoa"
+
+#~ msgid "Failure code"
+#~ msgstr "Virhekoodi"
+
+#~ msgid "Download completed"
+#~ msgstr "Lataus valmistui"
+
+#~ msgid "Download Manager"
+#~ msgstr "Latausten hallinnointi"
+
+#~ msgid "Start download"
+#~ msgstr "Käynnistä lataus"
+
+#~ msgid "Change folder"
+#~ msgstr "Vaihda kansiota"
+
+#~ msgid ""
+#~ "File will be downloaded in the folder:<br> <b>{}</b><br><br>File will be "
+#~ "named as:<br> <b>{}</b><br><br>You can rename the file using the "
+#~ "<i>Rename</i> button or change the destination folder from the main "
+#~ "configuration."
+#~ msgstr ""
+#~ "Tiedosto ladataan kansioon:<br> <b>{}</b><br><br>Tiedostolle annetaan "
+#~ "nimi:<br> <b>{}</b><br><br>Voit nimetä tiedoston uudelleen käyttäen "
+#~ "<i>Nimeä uudelleen</i> nappia tai vaihtaa kohdekansion asetuksista."
+
+#~ msgid "Rename download"
+#~ msgstr "Uudelleennimeä lataus"
+
+#~ msgid "Change destination folder"
+#~ msgstr "Vaihda kohdekansio"
+
+#~ msgid "The file %s is in the download queue yet"
+#~ msgstr "Tiedosto %s ei vielä ole latausjonossa"
+
+#~ msgid "Download manager"
+#~ msgstr "Latausten hallinnointi"
+
+#~ msgid "Start"
+#~ msgstr "Käynnistä"
+
+#~ msgid "Clear completed"
+#~ msgstr "Tyhjennys valmistui"
+
+#, fuzzy
+#~ msgid "{0}% of {1}"
+#~ msgstr "{0}% koosta {1}"
+
+#~ msgid "Unknown size"
+#~ msgstr "Koko tuntematon"
+
+#~ msgid "queued"
+#~ msgstr "jonossa"
+
+#~ msgid "running"
+#~ msgstr "käynnissä"
+
+#~ msgid "completed"
+#~ msgstr "valmistunut"
+
+#~ msgid "paused"
+#~ msgstr "keskeytetty"
+
+#~ msgid "Are you sure you want to abort the download of the file?"
+#~ msgstr "Haluatko varmasti peruuttaa tiedoston latauksen?"
+
+#~ msgid "Delete download"
+#~ msgstr "Poista lataus"
+
+#~ msgid "Input - Joystick"
+#~ msgstr "Syöte - Joystick"
+
+#~ msgid ""
+#~ "The joystick module lets you control the application using any standard "
+#~ "digital joystick or joypad."
+#~ msgstr ""
+#~ "Joystick-moduulin avulla voit ohjata ohjelmaa käyttäen mitä tahansa "
+#~ "yleistä digitaalista joystick- tai joypad-ohjainta."
+
+#~ msgid "Joystick"
+#~ msgstr "Joystick"
+
+#~ msgid "Device"
+#~ msgstr "Laite"
+
+#~ msgid "Configure buttons"
+#~ msgstr "Aseta näppäimet"
+
+#~ msgid "No joystick found"
+#~ msgstr "Joystick-ohjainta ei löytynyt"
+
+#~ msgid "Try to adjust your joystick device"
+#~ msgstr "Yritä asettaa joystick-laitteesi uudelleen"
+
+#~ msgid "Configure joystick"
+#~ msgstr "Joystick-asetukset"
+
+#~ msgid "Move the stick Up"
+#~ msgstr "Liikuta joystick ylös"
+
+#~ msgid "Move the stick Right"
+#~ msgstr "Liikuta joystick oikealle"
+
+#~ msgid "Press OK"
+#~ msgstr "Paina OK"
+
+#~ msgid "Press BACK"
+#~ msgstr "Paina TAKAISIN"
+
+#~ msgid "Config done."
+#~ msgstr "Asetus valmis."
+
+#~ msgid "OnAir"
+#~ msgstr "Toistossa"
+
+#~ msgid "Artists"
+#~ msgstr "Artistit"
+
+#~ msgid "Albums"
+#~ msgstr "Albumit"
+
+#~ msgid "Songs"
+#~ msgstr "Kappaleet"
+
+#~ msgid "Play all the songs"
+#~ msgstr "Toista kaikki kappaleet"
+
+#~ msgid "Queue all the songs"
+#~ msgstr "Aseta kaikki kappaleet jonoon"
+
+#~ msgid "from"
+#~ msgstr "albumilta"
+
+#~ msgid "<em>by</em> %s<br>"
+#~ msgstr "<em>esittäjä</em> %s<br>"
+
+#~ msgid "%d song"
+#~ msgid_plural "%d songs"
+#~ msgstr[0] "%d kappale"
+#~ msgstr[1] "%d kappaletta"
+
+#~ msgid "%d minute"
+#~ msgid_plural "%d minutes"
+#~ msgstr[0] "%d minuutti"
+#~ msgstr[1] "%d minuuttia"
+
+#~ msgid "%d album"
+#~ msgid_plural "%d albums"
+#~ msgstr[0] "%d albumi"
+#~ msgstr[1] "%d albumia"
+
+#~ msgid "Music"
+#~ msgstr "Musiikki"
+
+#~ msgid ""
+#~ "The music module build a database of all your albums, songs and artist."
+#~ msgstr ""
+#~ "Musiikki-moduuli rakentaa tietokannan albumeista, kappaleista ja "
+#~ "artisteista."
+
+#~ msgid "Rebuilding database"
+#~ msgstr "Rakennetaan tietokantaa uudelleen"
+
+#~ msgid "please wait..."
+#~ msgstr "odota..."
+
+#~ msgid "operation completed"
+#~ msgstr "toiminto valmis"
+
+#~ msgid "Online Channels"
+#~ msgstr "Internet-kanavat"
+
+#~ msgid "Browse, watch and download videos from your favorite online sources."
+#~ msgstr "Selaa, katso ja lataa videoita suosituista Internet-palveluista."
+
+#~ msgid "Video Channels"
+#~ msgstr "Video-kanavat"
+
+#~ msgid "Channels"
+#~ msgstr "Kanavat"
+
+#~ msgid "Checking for updates"
+#~ msgstr "Tarkistetaan päivityksiä"
+
+#~ msgid "Local version"
+#~ msgstr "Paikallinen versio"
+
+#~ msgid "Upstream version"
+#~ msgstr "Ohjelmatuottajan versio"
+
+#~ msgid "Already updated"
+#~ msgstr "Päivitykset ajantasalla"
+
+#~ msgid "Failed to fetch upstream version"
+#~ msgstr "Ohjelmatuottajan versiota ei voitu hakea"
+
+#~ msgid ""
+#~ "Updating <b>youtube-dl</b> at version <b>{0}</b><br><br>For info and "
+#~ "credits please visit:<br>rg3.github.io/youtube-dl/"
+#~ msgstr ""
+#~ "Päivitetään <b>youtube-dl</b> versiossa <b>{0}</b><br><br>Lisätiedot "
+#~ "löytyvät osoitteesta:<br>rg3.github.io/youtube-dl/"
+
+#~ msgid "please wait"
+#~ msgstr "odota"
+
+#~ msgid "Update completed"
+#~ msgstr "Päivitys valmis"
+
+#~ msgid "Search query"
+#~ msgstr "Hakulauseke"
+
+#~ msgid "Getting info..."
+#~ msgstr "Haetaan tietoja..."
+
+#~ msgid "Reported error"
+#~ msgstr "Ilmoitti virheen"
+
+#~ msgid "Error reading channel"
+#~ msgstr "Virhe luettaessa kanavaa"
+
+#~ msgid "No items returned"
+#~ msgstr "Yhtään kohdetta ei annettu"
+
+#~ msgid "Suggestions"
+#~ msgstr "Ehdotukset"
+
+#~ msgid "Automatically keep youtube-dl updated"
+#~ msgstr "Pidä youtube-dl automaattisesti ajantasalla"
+
+#~ msgid "Check for youtube-dl update now"
+#~ msgstr "Tarkista youtube-dl päivitykset nyt"
+
+#~ msgid "user"
+#~ msgstr "käyttäjä"
+
+#~ msgid "uploaded"
+#~ msgstr "lähetetty"
+
+#~ msgid "view"
+#~ msgid_plural "views"
+#~ msgstr[0] "näyttö"
+#~ msgstr[1] "näyttöä"
+
+#~ msgid "like"
+#~ msgid_plural "likes"
+#~ msgstr[0] "tykkäys"
+#~ msgstr[1] "tykkäystä"
+
+#~ msgid "comment"
+#~ msgid_plural "comments"
+#~ msgstr[0] "kommentti"
+#~ msgstr[1] "kommenttia"
+
+#~ msgid "created"
+#~ msgstr "luotu"
+
+#~ msgid "updated"
+#~ msgstr "päivitetty"
+
+#~ msgid "video"
+#~ msgid_plural "videos"
+#~ msgstr[0] "video"
+#~ msgstr[1] "videot"
+
+#~ msgid "follower"
+#~ msgid_plural "followers"
+#~ msgstr[0] "seuraaja"
+#~ msgstr[1] "seuraajaa"
+
+#~ msgid "joined"
+#~ msgstr "liittynyt"
+
+#~ msgid "location"
+#~ msgstr "sijainti"
+
+#~ msgid "Search videos"
+#~ msgstr "Etsi videoita"
+
+#~ msgid "Search channels"
+#~ msgstr "Etsi kanavia"
+
+#~ msgid "Search groups"
+#~ msgstr "Etsi ryhmiä"
+
+#~ msgid "Search people"
+#~ msgstr "Etsi henkilöitä"
+
+#~ msgid "More followed channels"
+#~ msgstr "Lisää seurattuja kanavia"
+
+#~ msgid "More followed groups"
+#~ msgstr "Lisää seurattuja ryhmiä"
+
+#~ msgid "Browse videos"
+#~ msgstr "Selaa videoita"
+
+#~ msgid "Browse channels"
+#~ msgstr "Selaa kanavia"
+
+#~ msgid "Browse groups"
+#~ msgstr "Selaa ryhmiä"
+
+#~ msgid "Browse users"
+#~ msgstr "Selaa käyttäjiä"
+
+#~ msgid "Load more results (%d in total)"
+#~ msgstr "Lataa lisää tuloksia (%d yhteensä)"
+
+#~ msgid "channel"
+#~ msgid_plural "channels"
+#~ msgstr[0] "kanava"
+#~ msgstr[1] "kanavaa"
+
+#~ msgid "group"
+#~ msgid_plural "groups"
+#~ msgstr[0] "ryhmä"
+#~ msgstr[1] "ryhmää"
+
+#~ msgid "Season {0}"
+#~ msgstr "Kausi {0}"
+
+#~ msgid "Episode {0}"
+#~ msgstr "Jakso {0}"
+
+#~ msgid "First aired"
+#~ msgstr "Ensilähetys"
+
+#~ msgid "Load more results (page {0} of {1})"
+#~ msgstr "Lataa lisää tuloksia (sivu {0}/{1})"
+
+#~ msgid "Search movies"
+#~ msgstr "Etsi elokuvia"
+
+#~ msgid "Popular movies"
+#~ msgstr "Suositut elokuvat"
+
+#~ msgid "Top rated movies"
+#~ msgstr "Parhaiten arvostellut elokuvat"
+
+#~ msgid "Upcoming movies"
+#~ msgstr "Tulevat elokuvat"
+
+#~ msgid "Now playing movies"
+#~ msgstr "Tällä hetkellä esitettävät elokuvat"
+
+#~ msgid "Original title"
+#~ msgstr "Alkuperäinen nimi"
+
+#~ msgid "Genres"
+#~ msgstr "Lajityypit"
+
+#~ msgid "votes"
+#~ msgstr "ääniä"
+
+#~ msgid "Language"
+#~ msgstr "Kieli"
+
+#~ msgid "Source"
+#~ msgstr "Lähde"
+
+#~ msgid "Quality"
+#~ msgstr "Laatu"
+
+#~ msgid "No trailers available"
+#~ msgstr "Trailereita ei ole saatavilla"
+
+#~ msgid "More items..."
+#~ msgstr "Lisää kohteita..."
+
+#~ msgid "Screen saver"
+#~ msgstr "Näytönsäästäjä"
+
+#~ msgid ""
+#~ "This module manage the X screensaver. It will prevent the screensaver to "
+#~ "activate while watching videos and can be configured to activate the "
+#~ "screensaver and/or shutdown your monitor after a given amount of time."
+#~ msgstr ""
+#~ "Tämä moduuli hallinnoi X-näytönsäästäjää, estäen sitä aktivoitumasta "
+#~ "katsottaessa video-kuvaa ja voidaan asettaa aktivoimaan näytönsäästäjä ja/"
+#~ "tai sammuttamaan näyttösi annetun ajan kuluttua."
+
+#~ msgid "never"
+#~ msgstr "ei koskaan"
+
+#~ msgid "never;1 minute;5 minutes;10 minutes;30 minutes;60 minutes"
+#~ msgstr ""
+#~ "ei koskaan;yksi minuutti;viisi minuuttia;10 minuuttia;30 minuuttia;60 "
+#~ "minuuttia"
+
+#~ msgid "Turn on screensaver after"
+#~ msgstr "Aseta näytönsäästäjä päälle viiveellä"
+
+#~ msgid "Turn off monitor after"
+#~ msgstr "Sammuta näyttö viiveellä"
+
+#~ msgid "Manage screensaver only in fullscreen"
+#~ msgstr "Hallinnoi näytönsäästäjää vain kokoruututilassa"
+
+#~ msgid "Manage favorites"
+#~ msgstr "Hallinnoi suosikkeja"
+
+#~ msgid "Favorites"
+#~ msgstr "Suosikit"
+
+#~ msgid "Parent folder"
+#~ msgstr "Yläkansio"
+
+#~ msgid "File Manager"
+#~ msgstr "Tiedostohallinnointi"
+
+#~ msgid "A two panes filemanager."
+#~ msgstr "Kaksiruutuinen tiedostohallinnoija."
+
+#~ msgid "New folder"
+#~ msgstr "Uusi kansio"
+
+#~ msgid "Copy"
+#~ msgstr "Kopioi"
+
+#~ msgid "Move"
+#~ msgstr "Siirrä"
+
+#~ msgid "Delete"
+#~ msgstr "Poista"
+
+#~ msgid "Are you sure you want to delete the folder?"
+#~ msgstr "Haluatko varmasti poistaa kansion?"
+
+#~ msgid "Are you sure you want to delete the file?"
+#~ msgstr "Haluatko varmasti poistaa tiedoston?"
+
+#~ msgid "Operation is starting..."
+#~ msgstr "Toiminto käynnistyy..."
+
+#~ msgid "Source is not readable"
+#~ msgstr "Lähdettä ei voida lukea"
+
+#~ msgid "Destination folder is not writable"
+#~ msgstr "Kohdekansioon ei voida kirjoittaa"
+
+#~ msgid "Invalid destination folder"
+#~ msgstr "Virheellinen kohdekansio"
+
+#~ msgid "Destination already exists"
+#~ msgstr "Kohde on jo olemassa"
+
+#~ msgid "Copying file {0} of {1}:"
+#~ msgstr "Kopioidaan tiedosto {0}/{1}:"
+
+#~ msgid "Deleting file {0} of {1}:"
+#~ msgstr "Poistetaan tiedosto {0}/{1}:"
+
+#~ msgid "Movies scanner started"
+#~ msgstr "Elokuvaskanneri käynnistyi"
+
+#~ msgid "Found movie"
+#~ msgstr "Elokuva löytyi"
+
+#~ msgid "Movies scanner done"
+#~ msgstr "Elokuvaskanneri valmis"
+
+#~ msgid "Input - Remote Control"
+#~ msgstr "Syöte - kaukosäädin"
+
+#~ msgid ""
+#~ "This module lets you control the application using any LIRC compatible "
+#~ "remote controller."
+#~ msgstr ""
+#~ "Tämän moduulin avulla voit ohjata ohjelmaa käyttäen mitä tahansa LIRC "
+#~ "yhteensopivaa kaukosäädintä."
+
+#~ msgid "Remote"
+#~ msgstr "Kaukosäädin"
+
+#~ msgid "Button: %s"
+#~ msgstr "Näppäin: %s"
+
+#~ msgid "Add a new key"
+#~ msgstr "Lisää uusi näppäin"
+
+#~ msgid "Lirc socket"
+#~ msgstr "Lirc pistoke"
+
+#~ msgid "Cannot connect to lirc using socket:<br>%s"
+#~ msgstr "Lirc-laitteeseen ei voitu yhdistää käyttäen pistoketta:<br>%s"
+
+#~ msgid "Configure remote"
+#~ msgstr "Aseta kaukosäädin"
+
+#~ msgid "Press a key on your remote"
+#~ msgstr "Paina kaukosäätimen näppäintä"
+
+#~ msgid "Choose an event to bind"
+#~ msgstr "Valitse yhdistettävä toiminto"
+
+#~ msgid "Input - Keyboard"
+#~ msgstr "Syöte - näppäimistö"
+
+#~ msgid ""
+#~ "The keyboard module lets you control the application using your keyboard, "
+#~ "or any other device that act as a keyboard."
+#~ msgstr ""
+#~ "Näppäimistö-moduulin avulla voit ohjata ohjelmaa käyttäen näppäimistöä, "
+#~ "tai laitetta joka toimii näppäimistön tavoin."
+
+#~ msgid "Keyboard"
+#~ msgstr "Näppäimistö"
+
+#~ msgid "Are you sure you want to remove the mapping?"
+#~ msgstr "Haluatko varmasti poistaa sidoksen?"
+
+#~ msgid "Remove key"
+#~ msgstr "Poista näppäin"
+
+#~ msgid "Press a key on your keyboard"
+#~ msgstr "Paina näppäimistön näppäintä"
+
+#~ msgid "Watchdog"
+#~ msgstr "Vahtikoira"
+
+#~ msgid ""
+#~ "This module, if enabled, will respawn epymc in the rare cases of "
+#~ "application crash/hang. So you dont have to leave your couch in case of "
+#~ "problems...just wait 30 seconds and the module will restart epymc for you."
+#~ msgstr ""
+#~ "Tämä moduuli käynnistää EpyMC:n uudelleen mikäli se kaatuu tai jähmettyy. "
+#~ "Näinollen sinun ei tarvitse nousta sohvaltasi ongelmien sattuessa... "
+#~ "odota vain 30 sekuntia ja kaikki tapahtuu automaattisesti."
+
+#~ msgid "Dimensions"
+#~ msgstr "Koko"
+
+#~ msgid "Format"
+#~ msgstr "Formaatti"
+
+#~ msgid "Please install PIL to read image metadata."
+#~ msgstr "Asenna PIL metatietojen lukemiseksi."
+
+#~ msgid "Photos"
+#~ msgstr "Valokuvat"
+
+#~ msgid "A module to watch your photos."
+#~ msgstr "Moduuli jonka avulla voit katsella valokuviasi."
+
+#~ msgid "Show slideshow controls on start"
+#~ msgstr "Näytä diaesityksen ohjaimet käynnistettäessä"
+
+#~ msgid "Slideshow delay"
+#~ msgstr "Diaesityksen viive"
+
+#~ msgid ""
+#~ "This module provide a way to control the application from your web "
+#~ "browser.<br>The server (by default) listen on port 8080, to connect just "
+#~ "point to: <br>http://your_ip:8080<br>You can change listening port and "
+#~ "the theme from the configurtion file."
+#~ msgstr ""
+#~ "Tämän moduulin avulla voit ohjata ohjelmaa verkkoselaimestasi."
+#~ "<br>Palvelin kuuntelee oletuksena porttia 8080, yhdistääksesi kirjoita "
+#~ "selaimeesi: <br>http://laitteen_ip:8080<br>Voit vaihtaa kuunteluportin ja "
+#~ "käytettävän teeman asetustiedostosta."
+
+#~ msgid "My Games"
+#~ msgstr "Minun pelini"
+
+#~ msgid "All Games"
+#~ msgstr "Kaikki pelit"
+
+#~ msgid "Favorite Games"
+#~ msgstr "Suosikkipelit"
+
+#~ msgid "Categories"
+#~ msgstr "Kategoriat"
+
+#~ msgid "M.A.M.E"
+#~ msgstr "M.A.M.E"
+
+#~ msgid ""
+#~ "This module add the ability to browse, download and play games using the "
+#~ "M.A.M.E. emulator."
+#~ msgstr ""
+#~ "Tämän moduulin avulla voit selata, ladata ja pelata pelejä käyttäen M.A.M."
+#~ "E.-emulaattoria."
+
+#~ msgid "Searching games, please wait..."
+#~ msgstr "Etsitään pelejä, odota..."
+
+#~ msgid "M.A.M.E not found"
+#~ msgstr "M.A.M.E.:a ei löytynyt"
+
+#~ msgid "Is mame installed?"
+#~ msgstr "Onko M.A.M.E. asennettu?"
+
+#~ msgid "Can not get rom path from M.A.M.E."
+#~ msgstr "M.A.M.E.:n ROM-polku ei ole saatavilla"
+
+#~ msgid "Is your mame well configured?"
+#~ msgstr "Onko M.A.M.E. asetettu oikein?"
+
+#~ msgid "No category file found"
+#~ msgstr "Kategoriatiedostoa ei löytynyt"
+
+#~ msgid ""
+#~ "The category file is not included in mame, you need to download a copy "
+#~ "from the net. <br>The file must be placed in %s"
+#~ msgstr ""
+#~ "Kategoriatiedostoa ei ole sisällytetty M.A.M.E.:n, sinun tulee ladata "
+#~ "kopio Internetistä. <br>Tiedosto tulee asettaa sijaintiin %s"
+
+#~ msgid "Manufacturer"
+#~ msgstr "Valmistaja"
+
+#~ msgid "Players"
+#~ msgstr "Pelaajat"
+
+#~ msgid "Buttons"
+#~ msgstr "Näppäimet"
+
+#~ msgid "Save state"
+#~ msgstr "Tallenna tila"
+
+#~ msgid "Driver status"
+#~ msgstr "Ajurin tila"
+
+#~ msgid "Emulation"
+#~ msgstr "Emulaatio"
+
+#~ msgid "Color"
+#~ msgstr "Väri"
+
+#~ msgid "Sound"
+#~ msgstr "Ääni"
+
+#~ msgid "Graphic"
+#~ msgstr "Grafiikka"
+
+#~ msgid "History"
+#~ msgstr "Historia"
+
+#~ msgid "No History file found"
+#~ msgstr "Historiatiedostoa ei löytynyt"
+
+#~ msgid ""
+#~ "The History file is not included in mame, you should download a copy from "
+#~ "arcade-history.com<br>The file must be unzipped and placed in %s"
+#~ msgstr ""
+#~ "Historiatiedostoa ei ole sisällytetty M.A.M.E.:n, sinun tulee ladata "
+#~ "kopio osoitteesta arcade-history.com. <br>Tiedosto tulee purkaa "
+#~ "sijaintiin %s"
+
+#~ msgid "Game not found in history file"
+#~ msgstr "Peliä ei löytynyt historiatiedostosta"
+
+#~ msgid "Really delete this game?"
+#~ msgstr "Haluatko varmasti poistaa tämän pelin?"
+
+#~ msgid "Game deleted"
+#~ msgstr "Peli poistettu"
+
+#~ msgid "Can not delete game"
+#~ msgstr "Peliä ei voida poistaa"
+
+#~ msgid "Error, can not find a writable rom directory"
+#~ msgstr "Virhe, kirjoituskelpoista ROM-hakemistoa ei löytynyt"
+
+#~ msgid "You sould check your mame configuration"
+#~ msgstr "Tarkista M.A.M.E.:n asetukset"
+
+#~ msgid "Game download"
+#~ msgstr "Pelin lataus"
+
+#~ msgid "Trying at freeroms.com...<br>"
+#~ msgstr "Yritetään käyttää palvelua freeroms.com..."
+
+#~ msgid "Can not find the game online."
+#~ msgstr "Peliä ei löytynyt verkosta."
+
+#~ msgid "Serie info"
+#~ msgstr "Sarjan tiedot"
+
+#~ msgid "Episode"
+#~ msgstr "Jakso"
+
+#~ msgid "TV Shows"
+#~ msgstr "TV-sarjat"
+
+#~ msgid ""
+#~ "The Tv Shows module is used to browse your series collection, it is fully "
+#~ "integrated with themoviedb.org online database."
+#~ msgstr ""
+#~ "TV-sarjat-moduulin avulla voit selata sarjakokoelmaasi, se on täysin "
+#~ "integroitu themoviedb.org verkkotietokannan kanssa."
+
+#~ msgid "Tv Shows Collection"
+#~ msgstr "TV-sarjojen kokoelma"
+
+#~ msgid "Refresh info"
+#~ msgstr "Päivitä tiedot"
+
+#~ msgid "Created by"
+#~ msgstr "Luonut"
+
+#~ msgid "Network"
+#~ msgstr "Verkko"
+
+#~ msgid "Last aired"
+#~ msgstr "Viimeisin lähetys"
+
+#~ msgid "Seasons"
+#~ msgstr "Kaudet"
+
+#~ msgid "Episodes"
+#~ msgstr "Jaksot"
+
+#~ msgid "Runtime"
+#~ msgstr "Kesto"
+
+#~ msgid "Status"
+#~ msgstr "Tila"
+
+#~ msgid ""
+#~ "No info stored for this serie.<br>Please try the <i>refresh info</i> "
+#~ "button."
+#~ msgstr ""
+#~ "Tälle sarjalle ei ole tallennettu tietoja.<br>Kokeile <i>Päivitä tiedot</"
+#~ "i>-nappia."
+
+#~ msgid ""
+#~ "The search for \"%s\" did not make any results.<br>If your show is listed "
+#~ "on themoviedb.org please rename your folder to match the title on the "
+#~ "site.<br>If otherwise it is not in the online database please contribute "
+#~ "and add it yourself."
+#~ msgstr ""
+#~ "Hakulauseke \"%s\" ei vastannut mitään tuloksia.<br>Mikäli sarja on "
+#~ "listattu themoviedb.org-palvelussa sinun tulee nimetä kansio vastaamaan "
+#~ "palvelussa olevaa nimeä.<br>Muussa tapauksessa on suotavaa osallistua "
+#~ "yhteisöön lisäämällä palveluun uusi merkintä kyseiselle sarjalle."
+
+#~ msgid "Nothing found"
+#~ msgstr "Mitään ei löytynyt"
+
+#~ msgid "Fetching updated info"
+#~ msgstr "Haetaan päivitetyt tiedot"
+
+#~ msgid "TvShows scanner started"
+#~ msgstr "TV-sarjojen skanneri käynnistettiin"
+
+#~ msgid "TvShows scanner done"
+#~ msgstr "TV-sarjojen skanneri valmis"
+
+#~ msgid "%d season"
+#~ msgid_plural "%d seasons"
+#~ msgstr[0] "%d kausi"
+#~ msgstr[1] "%d kautta"
+
+#~ msgid "%d episode"
+#~ msgid_plural "%d episodes"
+#~ msgstr[0] "%d jakso"
+#~ msgstr[1] "%d jaksoa"
+
+#~ msgid "Found serie:"
+#~ msgstr "Löydettiin sarja:"
+
+#~ msgid "Input - MPRIS2"
+#~ msgstr "Syöte - MPRIS2"
+
+#~ msgid ""
+#~ "Add the ability to control the application from any MPRIS2 compatible "
+#~ "client."
+#~ msgstr ""
+#~ "Tämän moduulin avulla voit ohjata EpyMC:tä mistä tahansa MPRIS2-"
+#~ "yhteensopivasta ohjelmasta."
+
+#~ msgid "%d year ago"
+#~ msgid_plural "%d years ago"
+#~ msgstr[0] "%d vuosi sitten"
+#~ msgstr[1] "%d vuotta sitten"
+
+#~ msgid "%d month ago"
+#~ msgid_plural "%d months ago"
+#~ msgstr[0] "%d kuukausi sitten"
+#~ msgstr[1] "%d kuukautta sitten"
+
+#~ msgid "%d week ago"
+#~ msgid_plural "%d weeks ago"
+#~ msgstr[0] "%d viikko sitten"
+#~ msgstr[1] "%d viikkoa sitten"
+
+#~ msgid "%d day ago"
+#~ msgid_plural "%d days ago"
+#~ msgstr[0] "%d päivä sitten"
+#~ msgstr[1] "%d päivää sitten"
+
+#~ msgid "%d hour ago"
+#~ msgid_plural "%d hours ago"
+#~ msgstr[0] "%d tunti sitten"
+#~ msgstr[1] "%d tuntia sitten"
+
+#~ msgid "%d minute ago"
+#~ msgid_plural "%d minutes ago"
+#~ msgstr[0] "%d minuutti sitten"
+#~ msgstr[1] "%d minuuttia sitten"
+
+#~ msgid "Unmute"
+#~ msgstr "Poista mykistys"

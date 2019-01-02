@@ -1,0 +1,1643 @@
+# Russian translations for EpyMC package
+# Английские переводы для пакета EpyMC.
+# Copyright (C) 2015 THE EpyMC'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the EpyMC package.
+# Niko2040 <niko2040@bynets.ru>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: nepymc 2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-02 21:48+0100\n"
+"PO-Revision-Date: 2016-09-09 04:12+0300\n"
+"Last-Translator: Niko2040 <niko2040@bynets.ru>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: nepymc/sdb.py:66
+#, python-format
+msgid ""
+"<b>The database %s is outdated!</b><br><br>The old file has been renamed "
+"with a .backup extension and a new (empty) one has been created."
+"<br><br>Sorry for the incovenience."
+msgstr ""
+"<b>База данных %s устарела!</b><br><br>Старый файл был переименован с "
+"расширением .backup и создан новый файл.<br><br>Приносим извинения за "
+"неудобства."
+
+#: nepymc/sdb.py:70
+msgid "EpyMC Database"
+msgstr "База данных EpyMC"
+
+#: nepymc/themoviedb.py:562
+msgid "Fetching info"
+msgstr "Получение информации"
+
+#: nepymc/themoviedb.py:580
+msgid "Birthday"
+msgstr "Дата рождения"
+
+#: nepymc/themoviedb.py:583
+msgid "Deathday"
+msgstr "Дата смерти"
+
+#: nepymc/themoviedb.py:586
+msgid "Place of birth"
+msgstr "Место рождения"
+
+#: nepymc/themoviedb.py:608
+#, python-format
+msgid "Movies (%s)"
+msgstr "Фильмы (%s)"
+
+#: nepymc/themoviedb.py:611
+#, python-format
+msgid "Photos (%s)"
+msgstr "Фотографии (%s)"
+
+#: nepymc/themoviedb.py:625 nepymc/plugins/movies/movies.py:674
+msgid "as"
+msgstr "в роли"
+
+#: nepymc/mediaplayer.py:133
+msgid "File not found"
+msgstr "Файл не найден"
+
+#: nepymc/mediaplayer.py:179
+msgid "Resume playback"
+msgstr "Возобновлять воспроизведение"
+
+#: nepymc/mediaplayer.py:180
+#, python-format
+msgid "Continue from %s ?"
+msgstr "Продолжить с %s ?"
+
+#: nepymc/browser.py:182 nepymc/gui/more.py:78
+msgid "Back"
+msgstr "Назад"
+
+#: nepymc/browser.py:392
+msgid "View restriction"
+msgstr "Ограничение режима отображения"
+
+#: nepymc/browser.py:394
+msgid ""
+"<br><br>The requested view is not enabled for the current page."
+"<br><br><small><info>NOTE: You can ovveride this restriction in the "
+"<i>Configuration → Views</i> section.</info></small>"
+msgstr ""
+"<br><br>Запрошенный режим отображения отключён для данной страницы."
+"<br><br><small><info>ПРИМЕЧАНИЕ: Вы можете отменить это ограничение в "
+"разделе <i>Настройка → Режимы отображения</i>.</info></small>"
+
+#: nepymc/browser.py:672 nepymc/browser.py:916
+#, python-format
+msgid "%d item"
+msgid_plural "%d items"
+msgstr[0] "%d элемент"
+msgstr[1] "%d элемента"
+msgstr[2] "%d элементов"
+
+#: nepymc/mainmenu.py:104
+msgid "Exit"
+msgstr "Выход"
+
+#: nepymc/config_gui.py:300 nepymc/gui/qt/dialog_qt.py:129
+msgid "Ok"
+msgstr "ОК"
+
+#: nepymc/config_gui.py:303 nepymc/gui/qt/dialog_qt.py:144
+#: nepymc/gui/qt/dialog_qt.py:146
+msgid "Cancel"
+msgstr "Отмена"
+
+#: nepymc/config_gui.py:335 nepymc/config_gui.py:341 nepymc/config_gui.py:438
+msgid "Configuration"
+msgstr "Настройки"
+
+#: nepymc/config_gui.py:343 nepymc/config_gui.py:450
+msgid "General"
+msgstr "Общие"
+
+#: nepymc/config_gui.py:347 nepymc/config_gui.py:694
+msgid "Modules"
+msgstr "Модули"
+
+#: nepymc/config_gui.py:351 nepymc/config_gui.py:621
+msgid "Views"
+msgstr "Режимы отображения"
+
+#: nepymc/config_gui.py:353 nepymc/config_gui.py:732
+msgid "Storage devices"
+msgstr ""
+
+#: nepymc/config_gui.py:357 nepymc/config_gui.py:791
+msgid "System info"
+msgstr "Системная информация"
+
+#: nepymc/config_gui.py:455
+msgid "Start in fullscreen"
+msgstr "Запускать в полноэкранном режиме"
+
+#: nepymc/config_gui.py:457
+msgid "Hide mouse cursor when not needed"
+msgstr "Прятать курсор, если он не нужен"
+
+#: nepymc/config_gui.py:465
+msgid "Interface scale"
+msgstr "Маштабирование интерфейса"
+
+#: nepymc/config_gui.py:473
+msgid "Max concurrent download"
+msgstr "Макс. одновременных загрузок"
+
+#: nepymc/config_gui.py:475
+msgid "Time format"
+msgstr "Формат времени"
+
+#: nepymc/config_gui.py:476
+msgid "Date format"
+msgstr "Формат даты"
+
+#: nepymc/config_gui.py:487
+msgid "Frames per second"
+msgstr "FPS"
+
+#: nepymc/config_gui.py:491
+msgid "Max concurrent thumbnails"
+msgstr ""
+
+#: nepymc/config_gui.py:494
+msgid "Max thumbnails generation time"
+msgstr ""
+
+#: nepymc/config_gui.py:495
+msgid "seconds"
+msgstr "секунды"
+
+#: nepymc/config_gui.py:497 nepymc/config_gui.py:527 nepymc/config_gui.py:533
+msgid "Clear thumbnails cache"
+msgstr "Очистить кэш миниатюр изображений"
+
+#: nepymc/config_gui.py:499 nepymc/config_gui.py:548 nepymc/config_gui.py:554
+msgid "Clear online images cache"
+msgstr "Очистить кэш онлайн изображений"
+
+#: nepymc/config_gui.py:504
+msgid "Restart needed"
+msgstr "Требуется перезапуск"
+
+#: nepymc/config_gui.py:505
+msgid "You need to restart the program to apply the new configuration."
+msgstr ""
+"Необходимо перезапустить программу, чтобы применить новую конфигурацию."
+
+#: nepymc/config_gui.py:535 nepymc/config_gui.py:556
+msgid "Operation in progress, please wait..."
+msgstr "Производится операция, пожалуйста подождите..."
+
+#: nepymc/config_gui.py:563
+msgid "Virtual keyboard layouts"
+msgstr "Раскладки виртуальной клавиатуры"
+
+#: nepymc/config_gui.py:565
+msgid "Close"
+msgstr "Закрыть"
+
+#: nepymc/config_gui.py:567 nepymc/gui/more.py:48
+msgid "Select"
+msgstr "Выбрать"
+
+#: nepymc/config_gui.py:601
+msgid "Audio"
+msgstr "Аудио"
+
+#: nepymc/config_gui.py:606
+msgid "Volume adjustment step"
+msgstr ""
+
+#: nepymc/config_gui.py:609
+msgid "Volume maximum value"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "None"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "Too low"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "A bit"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "Normal"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "Too much"
+msgstr ""
+
+#: nepymc/config_gui.py:614
+msgid "Volume logarithmic adjustment"
+msgstr ""
+
+#: nepymc/config_gui.py:626
+msgid "Show Back item in lists"
+msgstr "Отображать пункт 'Назад' в списках"
+
+#: nepymc/config_gui.py:634
+msgid "Ignore views restrictions for pages"
+msgstr "Игнорировать ограничения режимов отображения для страниц"
+
+#: nepymc/config_gui.py:655
+msgid "Author"
+msgstr "Автор"
+
+#: nepymc/config_gui.py:656
+msgid "Version"
+msgstr "Версия"
+
+#: nepymc/config_gui.py:712
+msgid "Subtitles"
+msgstr "Субтитры"
+
+#: nepymc/config_gui.py:718
+msgid "Subtitles preferred languages"
+msgstr "Предпочитаемый язык субтитров"
+
+#: nepymc/config_gui.py:720
+msgid "Subtitles encoding"
+msgstr "Кодировка субтитров"
+
+#: nepymc/config_gui.py:722
+msgid "Always try UTF-8 first"
+msgstr "Всегда сначала пробовать UTF-8"
+
+#: nepymc/config_gui.py:724
+msgid "Opensubtitles.org Username"
+msgstr "Opensubtitles.org Имя пользователя"
+
+#: nepymc/config_gui.py:726
+msgid "Opensubtitles.org Password"
+msgstr "Opensubtitles.org Пароль"
+
+#: nepymc/config_gui.py:738
+msgid "Show home folder"
+msgstr ""
+
+#: nepymc/config_gui.py:740
+msgid "Show root folder"
+msgstr ""
+
+#: nepymc/config_gui.py:752 nepymc/config_gui.py:757
+msgid "Not found"
+msgstr ""
+
+#: nepymc/config_gui.py:775
+msgid "Core"
+msgstr "Ядро"
+
+#: nepymc/config_gui.py:776
+msgid "Theme"
+msgstr "Тема"
+
+#: nepymc/config_gui.py:780
+msgid "Paths"
+msgstr "Пути"
+
+#: nepymc/config_gui.py:781
+msgid "Base folder"
+msgstr "Базовый каталог"
+
+#: nepymc/config_gui.py:782
+msgid "Config folder"
+msgstr "Каталог конфигурации"
+
+#: nepymc/config_gui.py:783
+msgid "Cache folder"
+msgstr ""
+
+#: nepymc/config_gui.py:784
+msgid "Versions"
+msgstr "Версии"
+
+#: nepymc/config_gui.py:785
+msgid "NepyMC"
+msgstr ""
+
+#: nepymc/config_gui.py:786
+msgid "Python"
+msgstr "Python"
+
+#: nepymc/config_gui.py:787
+msgid "Udev"
+msgstr ""
+
+#: nepymc/config_gui.py:787
+msgid "pyudev"
+msgstr ""
+
+#: nepymc/config_gui.py:788
+msgid "Python-EFL"
+msgstr "Python-EFL"
+
+#: nepymc/config_gui.py:789
+msgid "PySide"
+msgstr ""
+
+#: nepymc/storage.py:112
+msgid "User home"
+msgstr ""
+
+#: nepymc/storage.py:340
+msgid "Audio CD"
+msgstr ""
+
+#: nepymc/storage.py:342
+msgid "DVD Disk"
+msgstr ""
+
+#: nepymc/storage.py:344
+msgid "Root filesystem"
+msgstr ""
+
+#: nepymc/storage.py:360
+msgid "{} Hard disk"
+msgstr ""
+
+#: nepymc/storage.py:362
+msgid "{} Thumb drive"
+msgstr ""
+
+#: nepymc/storage.py:364
+msgid "{} Volume"
+msgstr ""
+
+#: nepymc/storage.py:370
+msgid "Volume"
+msgstr ""
+
+#: nepymc/gui/more.py:47
+msgid "Source Selector"
+msgstr "Выбор источника"
+
+#: nepymc/gui/more.py:49
+msgid "Browse"
+msgstr "Обзор"
+
+#: nepymc/gui/more.py:71
+msgid "Permission denied"
+msgstr ""
+
+#: nepymc/gui/more.py:124
+msgid "Sources Manager"
+msgstr "Управление источниками"
+
+#: nepymc/gui/more.py:126
+msgid "Done"
+msgstr "Готово"
+
+#: nepymc/gui/more.py:128
+msgid "Add"
+msgstr "Добавить"
+
+#: nepymc/gui/more.py:130
+msgid "Remove"
+msgstr "Удалить"
+
+#: nepymc/gui/more.py:144
+msgid "Choose a new source"
+msgstr "Выбрать новый источник"
+
+#: nepymc/gui/qt/dialog_qt.py:133 nepymc/gui/qt/dialog_qt.py:135
+msgid "No"
+msgstr "Нет"
+
+#: nepymc/gui/qt/dialog_qt.py:138 nepymc/gui/qt/dialog_qt.py:140
+msgid "Yes"
+msgstr "Да"
+
+#: nepymc/plugins/uitests/uitests.py:928
+msgid "Buffering"
+msgstr "Буферизация"
+
+#: nepymc/plugins/movies/movies.py:88
+msgid "Manage sources"
+msgstr "Управление источниками"
+
+#: nepymc/plugins/movies/movies.py:101
+msgid "Rescan library"
+msgstr "Обновить библиотеку"
+
+#: nepymc/plugins/movies/movies.py:110 nepymc/plugins/movies/movies.py:127
+msgid "Actors"
+msgstr "Актёры"
+
+#: nepymc/plugins/movies/movies.py:113 nepymc/plugins/movies/movies.py:129
+msgid "Directors"
+msgstr "Режиссёры"
+
+#: nepymc/plugins/movies/movies.py:131
+msgid "Actor info"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:133
+msgid "Director info"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:135 nepymc/plugins/movies/movies.py:847
+msgid "Tags manager"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:144
+msgid "{} favorite"
+msgid_plural "{} favorites"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: nepymc/plugins/movies/movies.py:248 nepymc/plugins/movies/movies.py:632
+msgid "Rating"
+msgstr "Рейтинг"
+
+#: nepymc/plugins/movies/movies.py:249 nepymc/plugins/movies/movies.py:628
+msgid "Director"
+msgstr "Режиссёр"
+
+#: nepymc/plugins/movies/movies.py:250 nepymc/plugins/movies/movies.py:611
+#: nepymc/plugins/movies/movies.py:629 nepymc/plugins/movies/movies.py:669
+msgid "Cast"
+msgstr "Актёрский состав"
+
+#: nepymc/plugins/movies/movies.py:256
+msgid "File size"
+msgstr "Размер файла"
+
+#: nepymc/plugins/movies/movies.py:258
+msgid "Title"
+msgstr "Название"
+
+#: nepymc/plugins/movies/movies.py:259
+msgid "Year"
+msgstr "Год"
+
+#: nepymc/plugins/movies/movies.py:259
+msgid "Unknown"
+msgstr "Неизвестно"
+
+#: nepymc/plugins/movies/movies.py:281
+msgid "{} movie"
+msgid_plural "{} movies"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: nepymc/plugins/movies/movies.py:297 nepymc/plugins/movies/movies.py:318
+msgid "Remove from favorites"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:299 nepymc/plugins/movies/movies.py:320
+msgid "Add to favorites"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:331 nepymc/plugins/movies/movies.py:371
+#: nepymc/plugins/movies/movies.py:379 nepymc/plugins/movies/movies.py:455
+msgid "Movies"
+msgstr "Фильмы"
+
+#: nepymc/plugins/movies/movies.py:333
+msgid ""
+"The movies module is used to browse your films collection, it is fully "
+"integrated with themoviedb.org online database."
+msgstr ""
+"Этот модуль позволяет Вам просматривать Вашу коллекцию фильмов. Он полностью "
+"интегрирован с онлайн-базой themoviedb.org."
+
+#: nepymc/plugins/movies/movies.py:375
+msgid "Movie Collection"
+msgstr "Коллекция фильмов"
+
+#: nepymc/plugins/movies/movies.py:609
+msgid "Play"
+msgstr "Играть"
+
+#: nepymc/plugins/movies/movies.py:612
+msgid "Posters"
+msgstr "Постеры"
+
+#: nepymc/plugins/movies/movies.py:613
+msgid "Backdrops"
+msgstr "Обои"
+
+#: nepymc/plugins/movies/movies.py:614
+msgid "Tags"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:615
+msgid "Search Info"
+msgstr "Поиск информации"
+
+#: nepymc/plugins/movies/movies.py:630
+msgid "Released"
+msgstr "Вышел на экраны"
+
+#: nepymc/plugins/movies/movies.py:631
+msgid "Country"
+msgstr "Страна"
+
+#: nepymc/plugins/movies/movies.py:633
+msgid "Overview"
+msgstr "Описание"
+
+#: nepymc/plugins/movies/movies.py:653
+#, python-format
+msgid ""
+"Media:<br>%s<br><br>No info stored for this media<br>Try the Search info "
+"button..."
+msgstr ""
+"Фильм:<br>%s<br><br>Нет информации об этом фильме.<br>Попробуйте нажать "
+"кнопку <em>Поиск информации</em>..."
+
+#: nepymc/plugins/movies/movies.py:692
+#, python-format
+msgid "%d posters available"
+msgstr "Доступно %d постеров"
+
+#: nepymc/plugins/movies/movies.py:708 nepymc/plugins/movies/movies.py:753
+msgid "Downloading image"
+msgstr "Загрузка изображения"
+
+#: nepymc/plugins/movies/movies.py:734
+#, python-format
+msgid "%d backdrops available"
+msgstr "Доступно %d обоев"
+
+#: nepymc/plugins/movies/movies.py:765
+msgid "Searching for"
+msgstr "Поиск для"
+
+#: nepymc/plugins/movies/movies.py:774
+msgid "Change name"
+msgstr "Изменить название"
+
+#: nepymc/plugins/movies/movies.py:785
+msgid "nothing found, please try with a better name"
+msgstr "Нет результатов. Попробуйте с другим названием"
+
+#: nepymc/plugins/movies/movies.py:790 nepymc/plugins/movies/movies.py:819
+msgid "Downloading movie info..."
+msgstr "Загрузка информации о видео..."
+
+#: nepymc/plugins/movies/movies.py:793
+#, python-format
+msgid "<b>Found %d results</b><br>"
+msgstr "<b>Найдено %d результатов</b><br>"
+
+#: nepymc/plugins/movies/movies.py:794
+#, python-format
+msgid "Found %d results, which one?"
+msgstr "Найдено %d результатов, который из них?"
+
+#: nepymc/plugins/movies/movies.py:846
+msgid "No tags present"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:1060
+msgid "Movies Collection"
+msgstr "Коллекция фильмов"
+
+#: nepymc/plugins/movies/movies.py:1066
+msgid "Preferred language for contents"
+msgstr "Предпочитаемый язык загружаемой информации"
+
+#: nepymc/plugins/movies/movies.py:1069
+msgid "Prefer movie titles in lists"
+msgstr "Отображать название фильма в списках вместо имени файла"
+
+#: nepymc/plugins/movies/movies.py:1072
+msgid "Enable background scanner"
+msgstr "Включить поиск фильмов в фоне"
+
+#: nepymc/plugins/movies/movies.py:1074
+msgid "Ask"
+msgstr "Спрашивать"
+
+#: nepymc/plugins/movies/movies.py:1074
+msgid "Always"
+msgstr "Всегда"
+
+#: nepymc/plugins/movies/movies.py:1074
+msgid "Never"
+msgstr "Никогда"
+
+#: nepymc/plugins/movies/movies.py:1077
+msgid "Background scan also clean dead files"
+msgstr ""
+
+#: nepymc/plugins/calibrator/calibrator.py:51
+#: nepymc/plugins/calibrator/calibrator.py:58
+msgid "Screen calibrator"
+msgstr "Калибровка экрана"
+
+#: nepymc/plugins/calibrator/calibrator.py:53
+msgid "Use this module to calibrate your screen parameters."
+msgstr ""
+"Этот модуль позволяет откалибровать экран, и так же произвести его настройку."
+
+#~ msgid "Themes"
+#~ msgstr "Тема"
+
+#~ msgid "Download folder"
+#~ msgstr "Каталог загрузок"
+
+#~ msgid "Use hardware acceleration"
+#~ msgstr "Использовать аппаратное ускорение"
+
+#~ msgid "Multimedia engine"
+#~ msgstr "Движок мультимедиа"
+
+#~ msgid "Poster grid items size"
+#~ msgstr "Размер элемента сетки постеров"
+
+#~ msgid "Cover grid items size"
+#~ msgstr "Размер элемента сетки обложек"
+
+#~ msgid "Download available"
+#~ msgstr "Доступно скачивание"
+
+#~ msgid "yes"
+#~ msgstr "да"
+
+#~ msgid "no"
+#~ msgstr "нет"
+
+#~ msgid "Window size"
+#~ msgstr "Размер окна"
+
+#~ msgid "screen"
+#~ msgstr "экран"
+
+#~ msgid "dpi"
+#~ msgstr "точек на дюйм"
+
+#~ msgid "EpyMC"
+#~ msgstr "EpyMC"
+
+#~ msgid "EpyMC themes API"
+#~ msgstr "API тем для EpyMC"
+
+#~ msgid "%(title)s as %(character)s"
+#~ msgstr "%(title)s в роли %(character)s"
+
+#~ msgid "Cannot init emotion engine:<br>%s"
+#~ msgstr "Невозможно инициализировать движок Emotion:<br>%s"
+
+#~ msgid "by"
+#~ msgstr "в исполнении"
+
+#~ msgid "Video"
+#~ msgstr "Видео"
+
+#~ msgid "Delay: %d ms"
+#~ msgstr "Задержка: %d мс"
+
+#~ msgid "Audio track: %s"
+#~ msgstr "Звуковая дорожка: %s"
+
+#~ msgid "Audio track #%d"
+#~ msgstr "Звуковая дорожка #%d"
+
+#~ msgid "Mute"
+#~ msgstr "Выключить звук"
+
+#~ msgid "Video track: %s"
+#~ msgstr "Видео дорожка: %s"
+
+#~ msgid "Video track #%d"
+#~ msgstr "Видео дорожка #%d"
+
+#~ msgid "Download video"
+#~ msgstr "Скачать видео"
+
+#~ msgid "No subtitles"
+#~ msgstr "Нет субтитров"
+
+#~ msgid "Subtitle #%d"
+#~ msgstr "Субтитры #%d"
+
+#~ msgid "Download subtitles"
+#~ msgstr "Загрузить субтитры"
+
+#~ msgid "Subtitles delay"
+#~ msgstr "Задержка появления субтитров"
+
+#~ msgid "+100 ms"
+#~ msgstr "+100 мс"
+
+#~ msgid "Reset"
+#~ msgstr "Сброс"
+
+#~ msgid "-100 ms"
+#~ msgstr "-100 мс"
+
+#~ msgid "Searching subtitles"
+#~ msgstr "Поиск субтитров"
+
+#~ msgid "Login failed"
+#~ msgstr "Ошибка авторизации"
+
+#~ msgid "Search failed"
+#~ msgstr "Ошибка поиска"
+
+#~ msgid "No results found for languages: %s"
+#~ msgstr "Нет результатов для языка: %s"
+
+#~ msgid "Download"
+#~ msgstr "Скачать"
+
+#~ msgid "Downloading subtitles"
+#~ msgstr "Загрузка субтитров"
+
+#~ msgid "Download failed"
+#~ msgstr "Ошибка загрузки"
+
+#~ msgid "Decode failed"
+#~ msgstr "Ошибка декодирования"
+
+#~ msgid "Russian QWERTY"
+#~ msgstr "Русский ЙЦУКЕН"
+
+#~ msgid "Russian ABC"
+#~ msgstr "Русский АБВ"
+
+#~ msgid "Symbols"
+#~ msgstr "Символы"
+
+#~ msgid "Emotion Media Center"
+#~ msgstr "Emotion Media Center"
+
+#~ msgid "credits"
+#~ msgstr "О программе"
+
+#~ msgid "Image {0} of {1}"
+#~ msgstr "Изображение {0} из {1}"
+
+#~ msgid "Rename"
+#~ msgstr "Переименовать"
+
+#~ msgid "Insert text"
+#~ msgstr "Вставить текст"
+
+#~ msgid "ERASE"
+#~ msgstr "СТЕРЕТЬ"
+
+#~ msgid "SPACE"
+#~ msgstr "ПРОБЕЛ"
+
+#~ msgid "UPPERCASE"
+#~ msgstr "ЗАГЛАВНЫЕ"
+
+#~ msgid "Dismiss"
+#~ msgstr "Отклонить"
+
+#~ msgid "Accept"
+#~ msgstr "Принять"
+
+#~ msgid "LOWERCASE"
+#~ msgstr "СТРОЧНЫЕ"
+
+#~ msgid "Download started"
+#~ msgstr "Загрузка началась"
+
+#~ msgid "Cannot download file"
+#~ msgstr "Невозможно скачать файл"
+
+#~ msgid "Failure code"
+#~ msgstr "Код ошибки"
+
+#~ msgid "Download completed"
+#~ msgstr "Загрузка завершена"
+
+#~ msgid "Download Manager"
+#~ msgstr "Управление загрузками"
+
+#~ msgid "Start download"
+#~ msgstr "Начать загрузку"
+
+#~ msgid "Change folder"
+#~ msgstr "Изменить каталог"
+
+#~ msgid ""
+#~ "File will be downloaded in the folder:<br> <b>{}</b><br><br>File will be "
+#~ "named as:<br> <b>{}</b><br><br>You can rename the file using the "
+#~ "<i>Rename</i> button or change the destination folder from the main "
+#~ "configuration."
+#~ msgstr ""
+#~ "Файл будет загружен в каталог:<br> <b>{}</b><br><br>Файл будет сохранён "
+#~ "как:<br> <b>{}</b><br><br>Вы можете переименовать файл используя кнопку "
+#~ "<i>Переименовать</i> или изменить каталог назначения в главных настройках."
+
+#~ msgid "Rename download"
+#~ msgstr "Переименовать загрузку"
+
+#~ msgid "Change destination folder"
+#~ msgstr "Изменить каталог назначения"
+
+#~ msgid "The file %s is in the download queue yet"
+#~ msgstr "Файл %s всё ещё в очереди загрузки"
+
+#~ msgid "Download manager"
+#~ msgstr "Управление загрузками"
+
+#~ msgid "Start"
+#~ msgstr "Начать"
+
+#~ msgid "Clear completed"
+#~ msgstr "Очистить завершённые"
+
+#~ msgid "{0}% of {1}"
+#~ msgstr "{0}% из {1}"
+
+#~ msgid "Unknown size"
+#~ msgstr "Неизвестный размер"
+
+#~ msgid "queued"
+#~ msgstr "в очереди"
+
+#~ msgid "running"
+#~ msgstr "загружается"
+
+#~ msgid "completed"
+#~ msgstr "завершён"
+
+#~ msgid "paused"
+#~ msgstr "приостановлен"
+
+#~ msgid "Are you sure you want to abort the download of the file?"
+#~ msgstr "Вы уверены, что хотите прервать загрузку файла?"
+
+#~ msgid "Delete download"
+#~ msgstr "Отмена загрузки"
+
+#~ msgid "Input - Joystick"
+#~ msgstr "Управление - Джойстик"
+
+#~ msgid ""
+#~ "The joystick module lets you control the application using any standard "
+#~ "digital joystick or joypad."
+#~ msgstr ""
+#~ "Этот модуль позволяет управлять приложением, используя любой стандартный "
+#~ "цифровой джойстик или геймпад."
+
+#~ msgid "Joystick"
+#~ msgstr "Джойстик"
+
+#~ msgid "Device"
+#~ msgstr "Устройство"
+
+#~ msgid "Configure buttons"
+#~ msgstr "Настроить кнопки"
+
+#~ msgid "No joystick found"
+#~ msgstr "Джойстик не обнаружен"
+
+#~ msgid "Try to adjust your joystick device"
+#~ msgstr "Попробуйте настроить Ваш джойстик"
+
+#~ msgid "Configure joystick"
+#~ msgstr "Настроить джойстик"
+
+#~ msgid "Move the stick Up"
+#~ msgstr "Нажмите 'Вверх'."
+
+#~ msgid "Move the stick Right"
+#~ msgstr "Нажмите 'Вправо'"
+
+#~ msgid "Press OK"
+#~ msgstr "Нажмите ОК"
+
+#~ msgid "Press BACK"
+#~ msgstr "Нажмите 'Назад'"
+
+#~ msgid "Config done."
+#~ msgstr "Настройка завершена"
+
+#~ msgid "OnAir"
+#~ msgstr "Очередь воспроизведения"
+
+#~ msgid "Artists"
+#~ msgstr "Исполнители"
+
+#~ msgid "Albums"
+#~ msgstr "Альбомы"
+
+#~ msgid "Songs"
+#~ msgstr "Композиции"
+
+#~ msgid "Play all the songs"
+#~ msgstr "Воспроизвести все композиции"
+
+#~ msgid "Queue all the songs"
+#~ msgstr "Добавить все композиции в очередь"
+
+#~ msgid "from"
+#~ msgstr "из"
+
+#~ msgid "<em>by</em> %s<br>"
+#~ msgstr "<em>Испольнитель</em> %s<br>"
+
+#~ msgid "%d song"
+#~ msgid_plural "%d songs"
+#~ msgstr[0] "%d песня"
+#~ msgstr[1] "%d песни"
+#~ msgstr[2] "%d песен"
+
+#~ msgid "%d minute"
+#~ msgid_plural "%d minutes"
+#~ msgstr[0] "%d минута"
+#~ msgstr[1] "%d минуты"
+#~ msgstr[2] "%d минут"
+
+#~ msgid "%d album"
+#~ msgid_plural "%d albums"
+#~ msgstr[0] "%d альбом"
+#~ msgstr[1] "%d альбома"
+#~ msgstr[2] "%d альбомов"
+
+#~ msgid "Music"
+#~ msgstr "Музыка"
+
+#~ msgid ""
+#~ "The music module build a database of all your albums, songs and artist."
+#~ msgstr ""
+#~ "Этот модуль создаёт базу музыки всех ваших альбомов, песен и "
+#~ "испольнителей."
+
+#~ msgid "Rebuilding database"
+#~ msgstr "Обновление базы"
+
+#~ msgid "please wait..."
+#~ msgstr "пожалуйста, подождите..."
+
+#~ msgid "operation completed"
+#~ msgstr "операция завершена"
+
+#~ msgid "Online Channels"
+#~ msgstr "Online Видео"
+
+#~ msgid "Browse, watch and download videos from your favorite online sources."
+#~ msgstr ""
+#~ "Ищите, смотрите и загружайте видео с ваших любимых интернет-сервисов."
+
+#~ msgid "Video Channels"
+#~ msgstr "Видео каналы"
+
+#~ msgid "Channels"
+#~ msgstr "Каналы"
+
+#~ msgid "Checking for updates"
+#~ msgstr "Проверка на наличие обновлений"
+
+#~ msgid "Local version"
+#~ msgstr "Локальная версия"
+
+#~ msgid "Upstream version"
+#~ msgstr "Последняя версия"
+
+#~ msgid "Already updated"
+#~ msgstr "Обновление не требуется"
+
+#~ msgid "Failed to fetch upstream version"
+#~ msgstr "Ошибка получения последней версии"
+
+#~ msgid ""
+#~ "Updating <b>youtube-dl</b> at version <b>{0}</b><br><br>For info and "
+#~ "credits please visit:<br>rg3.github.io/youtube-dl/"
+#~ msgstr ""
+#~ "Обновление <b>youtube-dl</b> до версии <b>{0}</b><br><br>Для "
+#~ "дополнительной  информации посетите:<br>rg3.github.io/youtube-dl/"
+
+#~ msgid "please wait"
+#~ msgstr "пожалуйста, подождите"
+
+#~ msgid "Update completed"
+#~ msgstr "Обновление завершено"
+
+#~ msgid "Search query"
+#~ msgstr "Поисковой запрос"
+
+#~ msgid "Getting info..."
+#~ msgstr "Получение иформации..."
+
+#~ msgid "Reported error"
+#~ msgstr "Сообщение об ошибке"
+
+#~ msgid "Error reading channel"
+#~ msgstr "Ошибка чтения канала"
+
+#~ msgid "No items returned"
+#~ msgstr "Нет результатов"
+
+#~ msgid "Suggestions"
+#~ msgstr "Рекомендуемое"
+
+#~ msgid "Automatically keep youtube-dl updated"
+#~ msgstr "Автоматически обновлять youtube-dl"
+
+#~ msgid "Check for youtube-dl update now"
+#~ msgstr "Проверить youtube-dl на наличие обновлений"
+
+#~ msgid "user"
+#~ msgstr "пользователь"
+
+#~ msgid "uploaded"
+#~ msgstr "загружено"
+
+#~ msgid "view"
+#~ msgid_plural "views"
+#~ msgstr[0] "просмотр"
+#~ msgstr[1] "просмотра"
+#~ msgstr[2] "просмотров"
+
+#~ msgid "like"
+#~ msgid_plural "likes"
+#~ msgstr[0] "лайк"
+#~ msgstr[1] "лайка"
+#~ msgstr[2] "лайков"
+
+#~ msgid "comment"
+#~ msgid_plural "comments"
+#~ msgstr[0] "комментарий"
+#~ msgstr[1] "комментария"
+#~ msgstr[2] "комментариев"
+
+#~ msgid "created"
+#~ msgstr "создан"
+
+#~ msgid "updated"
+#~ msgstr "обновлён"
+
+#~ msgid "video"
+#~ msgid_plural "videos"
+#~ msgstr[0] "видео"
+#~ msgstr[1] "видео"
+#~ msgstr[2] "видео"
+
+#~ msgid "follower"
+#~ msgid_plural "followers"
+#~ msgstr[0] "подписчик"
+#~ msgstr[1] "подписчика"
+#~ msgstr[2] "подписчиков"
+
+#~ msgid "joined"
+#~ msgstr "зарегистрирован"
+
+#~ msgid "location"
+#~ msgstr "местоположение"
+
+#~ msgid "Search videos"
+#~ msgstr "Поиск видео"
+
+#~ msgid "Search channels"
+#~ msgstr "Поиск каналов"
+
+#~ msgid "Search groups"
+#~ msgstr "Поиск групп"
+
+#~ msgid "Search people"
+#~ msgstr "Поиск людей"
+
+#~ msgid "More followed channels"
+#~ msgstr "Больше каналов, на которые я подписан"
+
+#~ msgid "More followed groups"
+#~ msgstr "Больше групп, на которые я подписан"
+
+#~ msgid "Browse videos"
+#~ msgstr "Просмотр видео"
+
+#~ msgid "Browse channels"
+#~ msgstr "Просмотр каналов"
+
+#~ msgid "Browse groups"
+#~ msgstr "Просмотр групп"
+
+#~ msgid "Browse users"
+#~ msgstr "Просмотр пользователей"
+
+#~ msgid "Load more results (%d in total)"
+#~ msgstr "Загрузить больше результатов (%d всего)"
+
+#~ msgid "channel"
+#~ msgid_plural "channels"
+#~ msgstr[0] "канал"
+#~ msgstr[1] "канала"
+#~ msgstr[2] "каналов"
+
+#~ msgid "group"
+#~ msgid_plural "groups"
+#~ msgstr[0] "группа"
+#~ msgstr[1] "группы"
+#~ msgstr[2] "групп"
+
+#~ msgid "Season {0}"
+#~ msgstr "{0} Сезон"
+
+#~ msgid "Episode {0}"
+#~ msgstr "Эпизод {0}"
+
+#~ msgid "First aired"
+#~ msgstr "Вышло в эфир"
+
+#~ msgid "Load more results (page {0} of {1})"
+#~ msgstr "Загрузить больше результатов (страница {0} из {1})"
+
+#~ msgid "Search movies"
+#~ msgstr "Поиск фильмов"
+
+#~ msgid "Popular movies"
+#~ msgstr "Популярные фильмы"
+
+#~ msgid "Top rated movies"
+#~ msgstr "Лучшие фильмы"
+
+#~ msgid "Upcoming movies"
+#~ msgstr "Ожидаемые фильмы"
+
+#~ msgid "Now playing movies"
+#~ msgstr "Фильмы в прокате"
+
+#~ msgid "Original title"
+#~ msgstr "Оригинальное название"
+
+#~ msgid "Genres"
+#~ msgstr "Жанры"
+
+#~ msgid "votes"
+#~ msgstr "голосов"
+
+#~ msgid "Language"
+#~ msgstr "Язык"
+
+#~ msgid "Source"
+#~ msgstr "Источник"
+
+#~ msgid "Quality"
+#~ msgstr "Качество"
+
+#~ msgid "No trailers available"
+#~ msgstr "Нет трейлеров"
+
+#~ msgid "More items..."
+#~ msgstr "Показать больше..."
+
+#~ msgid "Screen saver"
+#~ msgstr "Хранитель экрана"
+
+#~ msgid ""
+#~ "This module manage the X screensaver. It will prevent the screensaver to "
+#~ "activate while watching videos and can be configured to activate the "
+#~ "screensaver and/or shutdown your monitor after a given amount of time."
+#~ msgstr ""
+#~ "Этот модуль управляет хранителем экрана Х-сервера. Он предотвращает "
+#~ "запуск хранителя экрана во время просмотра видео и может быть настроен на "
+#~ "включение заставки и/или выключение Вашего монитора спустя указанное Вами "
+#~ "время."
+
+#~ msgid "never"
+#~ msgstr "Никогда"
+
+#~ msgid "never;1 minute;5 minutes;10 minutes;30 minutes;60 minutes"
+#~ msgstr "Никогда;1 минута;5 минут;10 минут;30 минут;60 минут"
+
+#~ msgid "Turn on screensaver after"
+#~ msgstr "Включить заставку после"
+
+#~ msgid "Turn off monitor after"
+#~ msgstr "Выключить монитор после"
+
+#~ msgid "Manage screensaver only in fullscreen"
+#~ msgstr "Управлять хранителем экрана только в полноэкранном режиме"
+
+#~ msgid "Manage favorites"
+#~ msgstr "Управление избранным"
+
+#~ msgid "Favorites"
+#~ msgstr "Избранные"
+
+#~ msgid "Parent folder"
+#~ msgstr "Родительский каталог"
+
+#~ msgid "File Manager"
+#~ msgstr "Файловый менеджер"
+
+#~ msgid "A two panes filemanager."
+#~ msgstr "Двухпанельный файловый менеджер."
+
+#~ msgid "New folder"
+#~ msgstr "Новый каталог"
+
+#~ msgid "Copy"
+#~ msgstr "Копировать"
+
+#~ msgid "Move"
+#~ msgstr "Переместить"
+
+#~ msgid "Delete"
+#~ msgstr "Удалить"
+
+#~ msgid "Are you sure you want to delete the folder?"
+#~ msgstr "Вы уверены, что хотите удалить этот каталог?"
+
+#~ msgid "Are you sure you want to delete the file?"
+#~ msgstr "Вы уверены, что хотите удалить этот файл?"
+
+#~ msgid "Operation is starting..."
+#~ msgstr "Запуск операции..."
+
+#~ msgid "Source is not readable"
+#~ msgstr "Источник не имеет прав на чтение"
+
+#~ msgid "Destination folder is not writable"
+#~ msgstr "Каталог назначения не имеет прав на запись"
+
+#~ msgid "Invalid destination folder"
+#~ msgstr "Неверный каталог назначения"
+
+#~ msgid "Destination already exists"
+#~ msgstr "Каталог уже существует"
+
+#~ msgid "Copying file {0} of {1}:"
+#~ msgstr "Копирование файла {0} из {1}:"
+
+#~ msgid "Deleting file {0} of {1}:"
+#~ msgstr "Удаление файла {0} из {1}:"
+
+#~ msgid "Movies scanner started"
+#~ msgstr "Поиск фильмов"
+
+#~ msgid "Found movie"
+#~ msgstr "Найден фильм"
+
+#~ msgid "Movies scanner done"
+#~ msgstr "Поиск фильмов завершён"
+
+#~ msgid "Input - Remote Control"
+#~ msgstr "Управление - Управление пультом"
+
+#~ msgid ""
+#~ "This module lets you control the application using any LIRC compatible "
+#~ "remote controller."
+#~ msgstr ""
+#~ "Этот модуль позволяет Вам управлять приложением используя любой LIRC-"
+#~ "совместимый пульт."
+
+#~ msgid "Remote"
+#~ msgstr "Пульт"
+
+#~ msgid "Button: %s"
+#~ msgstr "Кнопка: %s"
+
+#~ msgid "Add a new key"
+#~ msgstr "Добавить новую кнопку"
+
+#~ msgid "Lirc socket"
+#~ msgstr "LIRC сокет"
+
+#~ msgid "Cannot connect to lirc using socket:<br>%s"
+#~ msgstr "Невозможно подключиться к LIRC через сокет:<br>%s"
+
+#~ msgid "Configure remote"
+#~ msgstr "Настройка пульта"
+
+#~ msgid "Press a key on your remote"
+#~ msgstr "Нажмите кнопку на Вашем пульте"
+
+#~ msgid "Choose an event to bind"
+#~ msgstr "Выберите событие, чтобы назначить его на кнопку"
+
+#~ msgid "Input - Keyboard"
+#~ msgstr "Управление - Клавиатура"
+
+#~ msgid ""
+#~ "The keyboard module lets you control the application using your keyboard, "
+#~ "or any other device that act as a keyboard."
+#~ msgstr ""
+#~ "Этот модуль позволяет Вам указать горячие клавиши для управление с "
+#~ "клавиатуры."
+
+#~ msgid "Keyboard"
+#~ msgstr "Клавиатура"
+
+#~ msgid "Are you sure you want to remove the mapping?"
+#~ msgstr "Вы уверены, что хотите удалить привязки клавиш?"
+
+#~ msgid "Remove key"
+#~ msgstr "Удалить горячюю клавишу"
+
+#~ msgid "Press a key on your keyboard"
+#~ msgstr "Нажмите клавишу на клавиатуре"
+
+#~ msgid "Watchdog"
+#~ msgstr "Наблюдатель"
+
+#~ msgid ""
+#~ "This module, if enabled, will respawn epymc in the rare cases of "
+#~ "application crash/hang. So you dont have to leave your couch in case of "
+#~ "problems...just wait 30 seconds and the module will restart epymc for you."
+#~ msgstr ""
+#~ "Если этот модуль включён, то в тех редких случаях, когда EpyMC зависает "
+#~ "или падает, он будет перезапускаться. Вам не нужно делать лишних "
+#~ "телодвижений в случае проблем - просто подождите 30 секунд и модуль "
+#~ "перезапустит EpyMC."
+
+#~ msgid "Dimensions"
+#~ msgstr "Разрешение"
+
+#~ msgid "Format"
+#~ msgstr "Формат"
+
+#~ msgid "Please install PIL to read image metadata."
+#~ msgstr "Пожалуйста, установите PIL, чтобы прочитать метаданные."
+
+#~ msgid "Photos"
+#~ msgstr "Галерея"
+
+#~ msgid "A module to watch your photos."
+#~ msgstr "Модуль для просмотра фотографий и изображений."
+
+#~ msgid "Show slideshow controls on start"
+#~ msgstr "Показывать кнопки управления слайд-шоу при запуске"
+
+#~ msgid "Slideshow delay"
+#~ msgstr "Задержка между показом слайдов"
+
+#~ msgid ""
+#~ "This module provide a way to control the application from your web "
+#~ "browser.<br>The server (by default) listen on port 8080, to connect just "
+#~ "point to: <br>http://your_ip:8080<br>You can change listening port and "
+#~ "the theme from the configurtion file."
+#~ msgstr ""
+#~ "Этот модуль предоставляет Вам способ управления приложением из вашего веб "
+#~ "браузера.<br>Сервер (по умолчанию) слушает порт 8080. Чтобы подключиться, "
+#~ "просто наберите: <br>http://ваш_ip:8080<br>Вы можете сменить порт и тему "
+#~ "в файле настроек."
+
+#~ msgid "My Games"
+#~ msgstr "Мои игры"
+
+#~ msgid "All Games"
+#~ msgstr "Все игры"
+
+#~ msgid "Favorite Games"
+#~ msgstr "Избранные игры"
+
+#~ msgid "Categories"
+#~ msgstr "Категории"
+
+#~ msgid "M.A.M.E"
+#~ msgstr "M.A.M.E"
+
+#~ msgid ""
+#~ "This module add the ability to browse, download and play games using the "
+#~ "M.A.M.E. emulator."
+#~ msgstr ""
+#~ "Этот модуль добавляет возможность просмотривать, скачивать и играть в "
+#~ "игры, используя M.A.M.E. эмулятор."
+
+#~ msgid "Searching games, please wait..."
+#~ msgstr "Поиск игр, пожалуйста, подождите..."
+
+#~ msgid "M.A.M.E not found"
+#~ msgstr "M.A.M.E не найден"
+
+#~ msgid "Is mame installed?"
+#~ msgstr "M.A.M.E установлен?"
+
+#~ msgid "Can not get rom path from M.A.M.E."
+#~ msgstr "Невозможно получить путь ROM от M.A.M.E"
+
+#~ msgid "Is your mame well configured?"
+#~ msgstr "M.A.M.E. эмулятор настроен?"
+
+#~ msgid "No category file found"
+#~ msgstr "Не найден файл категорий"
+
+#~ msgid ""
+#~ "The category file is not included in mame, you need to download a copy "
+#~ "from the net. <br>The file must be placed in %s"
+#~ msgstr ""
+#~ "Файл категорий не включён в поставку с M.A.M.E., вам необходимо скачать "
+#~ "копию из интернета. <br>Файл необходимо поместить в %s"
+
+#~ msgid "Manufacturer"
+#~ msgstr "Производитель"
+
+#~ msgid "Players"
+#~ msgstr "Игроков"
+
+#~ msgid "Buttons"
+#~ msgstr "Кнопки"
+
+#~ msgid "Save state"
+#~ msgstr "Сохранить состояние"
+
+#~ msgid "Driver status"
+#~ msgstr "Состояние драйвера"
+
+#~ msgid "Emulation"
+#~ msgstr "Эмуляция"
+
+#~ msgid "Color"
+#~ msgstr "Цвет"
+
+#~ msgid "Sound"
+#~ msgstr "Звук"
+
+#~ msgid "Graphic"
+#~ msgstr "Графика"
+
+#~ msgid "History"
+#~ msgstr "История"
+
+#~ msgid "No History file found"
+#~ msgstr "Файл историй не найден"
+
+#~ msgid ""
+#~ "The History file is not included in mame, you should download a copy from "
+#~ "arcade-history.com<br>The file must be unzipped and placed in %s"
+#~ msgstr ""
+#~ "Файл историй не включён в поставку с M.A.M.E., вам необходимо скачать "
+#~ "копию с arcade-history.com<br>Файл необходимо распаковать и поместить в %s"
+
+#~ msgid "Game not found in history file"
+#~ msgstr "Игра не найдена в файле историй"
+
+#~ msgid "Really delete this game?"
+#~ msgstr "Действительно удалить эту игру?"
+
+#~ msgid "Game deleted"
+#~ msgstr "Игра удалена"
+
+#~ msgid "Can not delete game"
+#~ msgstr "Невозможно удалить игру"
+
+#~ msgid "Error, can not find a writable rom directory"
+#~ msgstr "Ошибка, невозможно найти ROM каталог с правами на запись"
+
+#~ msgid "You sould check your mame configuration"
+#~ msgstr "Вам необходимо проверить настройку M.A.M.E."
+
+#~ msgid "Game download"
+#~ msgstr "Загрузка игры"
+
+#~ msgid "Trying at freeroms.com...<br>"
+#~ msgstr "Попытка загрузки на freeroms.com...<br>"
+
+#~ msgid "Can not find the game online."
+#~ msgstr "Невозможно найти игру в сети."
+
+#~ msgid "Serie info"
+#~ msgstr "Информация о сериале"
+
+#~ msgid "Episode"
+#~ msgstr "Серия"
+
+#~ msgid "TV Shows"
+#~ msgstr "Телесериалы"
+
+#~ msgid ""
+#~ "The Tv Shows module is used to browse your series collection, it is fully "
+#~ "integrated with themoviedb.org online database."
+#~ msgstr ""
+#~ "Этот модуль используется для просмотра Вашей коллекции сериалов. Он "
+#~ "полностью интегрирован с онлайн-базой themoviedb.org."
+
+#~ msgid "Tv Shows Collection"
+#~ msgstr "Коллекция телесериалов"
+
+#~ msgid "Refresh info"
+#~ msgstr "Обновить информацию"
+
+#~ msgid "Created by"
+#~ msgstr "Режиссёр"
+
+#~ msgid "Network"
+#~ msgstr "Канал"
+
+#~ msgid "Last aired"
+#~ msgstr "Последний выход в эфир"
+
+#~ msgid "Seasons"
+#~ msgstr "Сезонов"
+
+#~ msgid "Episodes"
+#~ msgstr "Серий"
+
+#~ msgid "Runtime"
+#~ msgstr "Длительность"
+
+#~ msgid "Status"
+#~ msgstr "Статус"
+
+#~ msgid ""
+#~ "No info stored for this serie.<br>Please try the <i>refresh info</i> "
+#~ "button."
+#~ msgstr ""
+#~ "Нет сохранённой информации об этом сериале.<br>Попробуйте нажать кнопку "
+#~ "<i>обновить информацию</i>."
+
+#~ msgid ""
+#~ "The search for \"%s\" did not make any results.<br>If your show is listed "
+#~ "on themoviedb.org please rename your folder to match the title on the "
+#~ "site.<br>If otherwise it is not in the online database please contribute "
+#~ "and add it yourself."
+#~ msgstr ""
+#~ "Нет результатов для \"%s\".<br>Если Ваш сериал есть на themoviedb.org,"
+#~ "пожалуйства, переименуйте каталог, чтобы он соответствовал названию на "
+#~ "сайте.<br>Если сериала нет в онлайн-базе, добавьте его туда "
+#~ "самостоятельно."
+
+#~ msgid "Nothing found"
+#~ msgstr "Ничего не найдено"
+
+#~ msgid "Fetching updated info"
+#~ msgstr "Получение обновлённой информации"
+
+#~ msgid "TvShows scanner started"
+#~ msgstr "Поиск телесериалов"
+
+#~ msgid "TvShows scanner done"
+#~ msgstr "Поиск телесериалов завершён"
+
+#~ msgid "%d season"
+#~ msgid_plural "%d seasons"
+#~ msgstr[0] "%d сезон"
+#~ msgstr[1] "%d сезона"
+#~ msgstr[2] "%d сезонов"
+
+#~ msgid "%d episode"
+#~ msgid_plural "%d episodes"
+#~ msgstr[0] "%d серия"
+#~ msgstr[1] "%d серии"
+#~ msgstr[2] "%d серий"
+
+#~ msgid "Found serie:"
+#~ msgstr "Найден сериал:"
+
+#~ msgid "Input - MPRIS2"
+#~ msgstr "Управление - MPRIS2"
+
+#~ msgid ""
+#~ "Add the ability to control the application from any MPRIS2 compatible "
+#~ "client."
+#~ msgstr ""
+#~ "Этот модуль позволяет управлять программой с любого MPRIS2-совместимого "
+#~ "клиента."
+
+#~ msgid "%d year ago"
+#~ msgid_plural "%d years ago"
+#~ msgstr[0] "%d год назад"
+#~ msgstr[1] "%d года назад"
+#~ msgstr[2] "%d лет назад"
+
+#~ msgid "%d month ago"
+#~ msgid_plural "%d months ago"
+#~ msgstr[0] "%d месяц назад"
+#~ msgstr[1] "%d месяца назад"
+#~ msgstr[2] "%d месяцев назад"
+
+#~ msgid "%d week ago"
+#~ msgid_plural "%d weeks ago"
+#~ msgstr[0] "%d неделю назад"
+#~ msgstr[1] "%d недели назад"
+#~ msgstr[2] "%d недель назад"
+
+#~ msgid "%d day ago"
+#~ msgid_plural "%d days ago"
+#~ msgstr[0] "%d день назад"
+#~ msgstr[1] "%d дня назад"
+#~ msgstr[2] "%d дней назад"
+
+#~ msgid "%d hour ago"
+#~ msgid_plural "%d hours ago"
+#~ msgstr[0] "%d час назад"
+#~ msgstr[1] "%d часа назад"
+#~ msgstr[2] "%d часов назад"
+
+#~ msgid "%d minute ago"
+#~ msgid_plural "%d minutes ago"
+#~ msgstr[0] "%d минуту назад"
+#~ msgstr[1] "%d минуты назад"
+#~ msgstr[2] "%d минут назад"
+
+#~ msgid "Unmute"
+#~ msgstr "Включить звук"

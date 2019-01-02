@@ -1,0 +1,1676 @@
+# Traduzione italiana per EpyMC.
+# Copyright (C) 2014 Davide Andreoli <dave@gurumeditation.it>
+# This file is distributed under the same license as the EpyMC package.
+# Davide Andreoli <dave@gurumeditation.it>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: nepymc 2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-02 21:48+0100\n"
+"PO-Revision-Date: 2016-10-16 10:20+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: nepymc/sdb.py:66
+#, python-format
+msgid ""
+"<b>The database %s is outdated!</b><br><br>The old file has been renamed "
+"with a .backup extension and a new (empty) one has been created."
+"<br><br>Sorry for the incovenience."
+msgstr ""
+"<b>Il database %s è obsoleto!</b><br><br>Il vecchio file è stato rinominato "
+"con l'estensione .backup e un nuovo file (vuoto) è stato creato."
+"<br><br>Scusate per il disagio."
+
+#: nepymc/sdb.py:70
+msgid "EpyMC Database"
+msgstr "EpyMC Database"
+
+#: nepymc/themoviedb.py:562
+msgid "Fetching info"
+msgstr "Scaricamento informazioni"
+
+#: nepymc/themoviedb.py:580
+msgid "Birthday"
+msgstr "Data di nascita"
+
+#: nepymc/themoviedb.py:583
+msgid "Deathday"
+msgstr "Data decesso"
+
+#: nepymc/themoviedb.py:586
+msgid "Place of birth"
+msgstr "Luogo di nascita"
+
+#: nepymc/themoviedb.py:608
+#, python-format
+msgid "Movies (%s)"
+msgstr "Film (%s)"
+
+#: nepymc/themoviedb.py:611
+#, python-format
+msgid "Photos (%s)"
+msgstr "Foto (%s)"
+
+#: nepymc/themoviedb.py:625 nepymc/plugins/movies/movies.py:674
+msgid "as"
+msgstr "nel ruolo di"
+
+#: nepymc/mediaplayer.py:133
+msgid "File not found"
+msgstr "File non trovato"
+
+#: nepymc/mediaplayer.py:179
+msgid "Resume playback"
+msgstr "Riprendi riproduzione"
+
+#: nepymc/mediaplayer.py:180
+#, python-format
+msgid "Continue from %s ?"
+msgstr "Continuo la riproduzione da %s ?"
+
+#: nepymc/browser.py:182 nepymc/gui/more.py:78
+msgid "Back"
+msgstr "Indietro"
+
+#: nepymc/browser.py:392
+msgid "View restriction"
+msgstr "Vista sconsigliata"
+
+#: nepymc/browser.py:394
+msgid ""
+"<br><br>The requested view is not enabled for the current page."
+"<br><br><small><info>NOTE: You can ovveride this restriction in the "
+"<i>Configuration → Views</i> section.</info></small>"
+msgstr ""
+"<br><br>La vista richiesta è disabilitata per questa pagina."
+"<br><br><small><info>NOTA: Potete scavalcare questa restrizione nella "
+"sezione <i>Configurazione → Viste</i>.</info></small>"
+
+#: nepymc/browser.py:672 nepymc/browser.py:916
+#, python-format
+msgid "%d item"
+msgid_plural "%d items"
+msgstr[0] "%d elemento"
+msgstr[1] "%d elementi"
+
+#: nepymc/mainmenu.py:104
+msgid "Exit"
+msgstr "Esci"
+
+#: nepymc/config_gui.py:300 nepymc/gui/qt/dialog_qt.py:129
+msgid "Ok"
+msgstr "Ok"
+
+#: nepymc/config_gui.py:303 nepymc/gui/qt/dialog_qt.py:144
+#: nepymc/gui/qt/dialog_qt.py:146
+msgid "Cancel"
+msgstr "Annulla"
+
+#: nepymc/config_gui.py:335 nepymc/config_gui.py:341 nepymc/config_gui.py:438
+msgid "Configuration"
+msgstr "Configurazione"
+
+#: nepymc/config_gui.py:343 nepymc/config_gui.py:450
+msgid "General"
+msgstr "Generale"
+
+#: nepymc/config_gui.py:347 nepymc/config_gui.py:694
+msgid "Modules"
+msgstr "Moduli"
+
+#: nepymc/config_gui.py:351 nepymc/config_gui.py:621
+msgid "Views"
+msgstr "Viste"
+
+#: nepymc/config_gui.py:353 nepymc/config_gui.py:732
+msgid "Storage devices"
+msgstr ""
+
+#: nepymc/config_gui.py:357 nepymc/config_gui.py:791
+msgid "System info"
+msgstr "Informazioni di sistema"
+
+#: nepymc/config_gui.py:455
+msgid "Start in fullscreen"
+msgstr "Avvia a schermo intero"
+
+#: nepymc/config_gui.py:457
+msgid "Hide mouse cursor when not needed"
+msgstr "Nascondi il puntatore del mouse"
+
+#: nepymc/config_gui.py:465
+msgid "Interface scale"
+msgstr "Fattore di scala"
+
+#: nepymc/config_gui.py:473
+msgid "Max concurrent download"
+msgstr "Download simultanei"
+
+#: nepymc/config_gui.py:475
+msgid "Time format"
+msgstr "Formato ora"
+
+#: nepymc/config_gui.py:476
+msgid "Date format"
+msgstr "Formato data"
+
+#: nepymc/config_gui.py:487
+msgid "Frames per second"
+msgstr "Frame al secondo"
+
+#: nepymc/config_gui.py:491
+msgid "Max concurrent thumbnails"
+msgstr ""
+
+#: nepymc/config_gui.py:494
+msgid "Max thumbnails generation time"
+msgstr ""
+
+#: nepymc/config_gui.py:495
+msgid "seconds"
+msgstr "secondi"
+
+#: nepymc/config_gui.py:497 nepymc/config_gui.py:527 nepymc/config_gui.py:533
+msgid "Clear thumbnails cache"
+msgstr "Svuota la cache delle miniature"
+
+#: nepymc/config_gui.py:499 nepymc/config_gui.py:548 nepymc/config_gui.py:554
+msgid "Clear online images cache"
+msgstr "Svuota la cache delle immagini remote"
+
+#: nepymc/config_gui.py:504
+msgid "Restart needed"
+msgstr "Necessario riavvio"
+
+#: nepymc/config_gui.py:505
+msgid "You need to restart the program to apply the new configuration."
+msgstr ""
+"Per applicare la nuova configurazione è necessario riavviare il programma."
+
+#: nepymc/config_gui.py:535 nepymc/config_gui.py:556
+msgid "Operation in progress, please wait..."
+msgstr "Operazione in corso, attendere prego..."
+
+#: nepymc/config_gui.py:563
+msgid "Virtual keyboard layouts"
+msgstr "Layout tastiera virtuale"
+
+#: nepymc/config_gui.py:565
+msgid "Close"
+msgstr "Chiudi"
+
+#: nepymc/config_gui.py:567 nepymc/gui/more.py:48
+msgid "Select"
+msgstr "Seleziona"
+
+#: nepymc/config_gui.py:601
+msgid "Audio"
+msgstr "Audio"
+
+#: nepymc/config_gui.py:606
+msgid "Volume adjustment step"
+msgstr ""
+
+#: nepymc/config_gui.py:609
+msgid "Volume maximum value"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "None"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "Too low"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "A bit"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "Normal"
+msgstr ""
+
+#: nepymc/config_gui.py:612
+msgid "Too much"
+msgstr ""
+
+#: nepymc/config_gui.py:614
+msgid "Volume logarithmic adjustment"
+msgstr ""
+
+#: nepymc/config_gui.py:626
+msgid "Show Back item in lists"
+msgstr "Mostra indietro nelle liste"
+
+#: nepymc/config_gui.py:634
+msgid "Ignore views restrictions for pages"
+msgstr "Ignora restrizioni sulle viste delle pagine"
+
+#: nepymc/config_gui.py:655
+msgid "Author"
+msgstr "Autore"
+
+#: nepymc/config_gui.py:656
+msgid "Version"
+msgstr "Versione"
+
+#: nepymc/config_gui.py:712
+msgid "Subtitles"
+msgstr "Sottotitoli"
+
+#: nepymc/config_gui.py:718
+msgid "Subtitles preferred languages"
+msgstr "Lingue preferite per i sottotitoli"
+
+#: nepymc/config_gui.py:720
+msgid "Subtitles encoding"
+msgstr "Encoding dei sottotitoli"
+
+#: nepymc/config_gui.py:722
+msgid "Always try UTF-8 first"
+msgstr "Prova sempre UTF-8 prima"
+
+#: nepymc/config_gui.py:724
+msgid "Opensubtitles.org Username"
+msgstr "Utente Opensubtitles.org"
+
+#: nepymc/config_gui.py:726
+msgid "Opensubtitles.org Password"
+msgstr "Password Opensubtitles.org"
+
+#: nepymc/config_gui.py:738
+msgid "Show home folder"
+msgstr ""
+
+#: nepymc/config_gui.py:740
+msgid "Show root folder"
+msgstr ""
+
+#: nepymc/config_gui.py:752 nepymc/config_gui.py:757
+msgid "Not found"
+msgstr ""
+
+#: nepymc/config_gui.py:775
+msgid "Core"
+msgstr "Nucleo"
+
+#: nepymc/config_gui.py:776
+msgid "Theme"
+msgstr "Tema"
+
+#: nepymc/config_gui.py:780
+msgid "Paths"
+msgstr "Percorsi"
+
+#: nepymc/config_gui.py:781
+msgid "Base folder"
+msgstr "Cartella base"
+
+#: nepymc/config_gui.py:782
+msgid "Config folder"
+msgstr "Cartella configurazioni"
+
+#: nepymc/config_gui.py:783
+msgid "Cache folder"
+msgstr ""
+
+#: nepymc/config_gui.py:784
+msgid "Versions"
+msgstr "Versioni"
+
+#: nepymc/config_gui.py:785
+msgid "NepyMC"
+msgstr ""
+
+#: nepymc/config_gui.py:786
+msgid "Python"
+msgstr "Python"
+
+#: nepymc/config_gui.py:787
+msgid "Udev"
+msgstr ""
+
+#: nepymc/config_gui.py:787
+msgid "pyudev"
+msgstr ""
+
+#: nepymc/config_gui.py:788
+msgid "Python-EFL"
+msgstr "Python-EFL"
+
+#: nepymc/config_gui.py:789
+msgid "PySide"
+msgstr ""
+
+#: nepymc/storage.py:112
+msgid "User home"
+msgstr ""
+
+#: nepymc/storage.py:340
+msgid "Audio CD"
+msgstr ""
+
+#: nepymc/storage.py:342
+msgid "DVD Disk"
+msgstr ""
+
+#: nepymc/storage.py:344
+msgid "Root filesystem"
+msgstr ""
+
+#: nepymc/storage.py:360
+msgid "{} Hard disk"
+msgstr "Disco fisso da {}"
+
+#: nepymc/storage.py:362
+msgid "{} Thumb drive"
+msgstr "Chiavetta da {}"
+
+#: nepymc/storage.py:364
+msgid "{} Volume"
+msgstr "Volume da {}"
+
+#: nepymc/storage.py:370
+msgid "Volume"
+msgstr ""
+
+#: nepymc/gui/more.py:47
+msgid "Source Selector"
+msgstr "Selettore fonti"
+
+#: nepymc/gui/more.py:49
+msgid "Browse"
+msgstr "Naviga"
+
+#: nepymc/gui/more.py:71
+msgid "Permission denied"
+msgstr ""
+
+#: nepymc/gui/more.py:124
+msgid "Sources Manager"
+msgstr "Gestore fonti"
+
+#: nepymc/gui/more.py:126
+msgid "Done"
+msgstr "Fatto"
+
+#: nepymc/gui/more.py:128
+msgid "Add"
+msgstr "Aggiungi"
+
+#: nepymc/gui/more.py:130
+msgid "Remove"
+msgstr "Rimuovi"
+
+#: nepymc/gui/more.py:144
+msgid "Choose a new source"
+msgstr "Seleziona una nuova fonte"
+
+#: nepymc/gui/qt/dialog_qt.py:133 nepymc/gui/qt/dialog_qt.py:135
+msgid "No"
+msgstr "No"
+
+#: nepymc/gui/qt/dialog_qt.py:138 nepymc/gui/qt/dialog_qt.py:140
+msgid "Yes"
+msgstr "Sì"
+
+#: nepymc/plugins/uitests/uitests.py:928
+msgid "Buffering"
+msgstr "Buffering"
+
+#: nepymc/plugins/movies/movies.py:88
+msgid "Manage sources"
+msgstr "Gestisci fonti"
+
+#: nepymc/plugins/movies/movies.py:101
+msgid "Rescan library"
+msgstr "Aggiorna libreria"
+
+#: nepymc/plugins/movies/movies.py:110 nepymc/plugins/movies/movies.py:127
+msgid "Actors"
+msgstr "Attori"
+
+#: nepymc/plugins/movies/movies.py:113 nepymc/plugins/movies/movies.py:129
+msgid "Directors"
+msgstr "Registi"
+
+#: nepymc/plugins/movies/movies.py:131
+msgid "Actor info"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:133
+msgid "Director info"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:135 nepymc/plugins/movies/movies.py:847
+msgid "Tags manager"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:144
+msgid "{} favorite"
+msgid_plural "{} favorites"
+msgstr[0] ""
+msgstr[1] ""
+
+#: nepymc/plugins/movies/movies.py:248 nepymc/plugins/movies/movies.py:632
+msgid "Rating"
+msgstr "Valutazione"
+
+#: nepymc/plugins/movies/movies.py:249 nepymc/plugins/movies/movies.py:628
+msgid "Director"
+msgstr "Regia"
+
+#: nepymc/plugins/movies/movies.py:250 nepymc/plugins/movies/movies.py:611
+#: nepymc/plugins/movies/movies.py:629 nepymc/plugins/movies/movies.py:669
+msgid "Cast"
+msgstr "Attori"
+
+#: nepymc/plugins/movies/movies.py:256
+msgid "File size"
+msgstr "Dimensione file"
+
+#: nepymc/plugins/movies/movies.py:258
+msgid "Title"
+msgstr "Titolo"
+
+#: nepymc/plugins/movies/movies.py:259
+msgid "Year"
+msgstr "Anno"
+
+#: nepymc/plugins/movies/movies.py:259
+msgid "Unknown"
+msgstr "Sconosciuto"
+
+#: nepymc/plugins/movies/movies.py:281
+msgid "{} movie"
+msgid_plural "{} movies"
+msgstr[0] ""
+msgstr[1] ""
+
+#: nepymc/plugins/movies/movies.py:297 nepymc/plugins/movies/movies.py:318
+msgid "Remove from favorites"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:299 nepymc/plugins/movies/movies.py:320
+msgid "Add to favorites"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:331 nepymc/plugins/movies/movies.py:371
+#: nepymc/plugins/movies/movies.py:379 nepymc/plugins/movies/movies.py:455
+msgid "Movies"
+msgstr "Film"
+
+#: nepymc/plugins/movies/movies.py:333
+msgid ""
+"The movies module is used to browse your films collection, it is fully "
+"integrated with themoviedb.org online database."
+msgstr ""
+"Questo modulo permette di navigare la vostra collezione di film, è "
+"completamente integrato con il database online themoviedb.org."
+
+#: nepymc/plugins/movies/movies.py:375
+msgid "Movie Collection"
+msgstr "Collezione dei film"
+
+#: nepymc/plugins/movies/movies.py:609
+msgid "Play"
+msgstr "Play"
+
+#: nepymc/plugins/movies/movies.py:612
+msgid "Posters"
+msgstr "Locandine"
+
+#: nepymc/plugins/movies/movies.py:613
+msgid "Backdrops"
+msgstr "Sfondi"
+
+#: nepymc/plugins/movies/movies.py:614
+msgid "Tags"
+msgstr "Etichette"
+
+#: nepymc/plugins/movies/movies.py:615
+msgid "Search Info"
+msgstr "Cerca informazioni"
+
+#: nepymc/plugins/movies/movies.py:630
+msgid "Released"
+msgstr "Pubblicato"
+
+#: nepymc/plugins/movies/movies.py:631
+msgid "Country"
+msgstr "Nazione"
+
+#: nepymc/plugins/movies/movies.py:633
+msgid "Overview"
+msgstr "Trama"
+
+#: nepymc/plugins/movies/movies.py:653
+#, python-format
+msgid ""
+"Media:<br>%s<br><br>No info stored for this media<br>Try the Search info "
+"button..."
+msgstr ""
+"Media:<br>%s<br><br>Nessuna informazione disponibile<br>Prova a premere il "
+"bottone <i>Cerca Informazioni</i>..."
+
+#: nepymc/plugins/movies/movies.py:692
+#, python-format
+msgid "%d posters available"
+msgstr "%d locandine disponibili"
+
+#: nepymc/plugins/movies/movies.py:708 nepymc/plugins/movies/movies.py:753
+msgid "Downloading image"
+msgstr "Scaricamento immagine"
+
+#: nepymc/plugins/movies/movies.py:734
+#, python-format
+msgid "%d backdrops available"
+msgstr "%d sfondi disponibili"
+
+#: nepymc/plugins/movies/movies.py:765
+msgid "Searching for"
+msgstr "Ricerca di"
+
+#: nepymc/plugins/movies/movies.py:774
+msgid "Change name"
+msgstr "Cambia nome"
+
+#: nepymc/plugins/movies/movies.py:785
+msgid "nothing found, please try with a better name"
+msgstr "nessun film trovato, prova con un nome migliore"
+
+#: nepymc/plugins/movies/movies.py:790 nepymc/plugins/movies/movies.py:819
+msgid "Downloading movie info..."
+msgstr "Scaricamento informazioni film..."
+
+#: nepymc/plugins/movies/movies.py:793
+#, python-format
+msgid "<b>Found %d results</b><br>"
+msgstr "<b>Trovati %d risultati</b><br>"
+
+#: nepymc/plugins/movies/movies.py:794
+#, python-format
+msgid "Found %d results, which one?"
+msgstr "Trovati %d risultati, quale scelgo?"
+
+#: nepymc/plugins/movies/movies.py:846
+msgid "No tags present"
+msgstr ""
+
+#: nepymc/plugins/movies/movies.py:1060
+msgid "Movies Collection"
+msgstr "Collezione dei film"
+
+#: nepymc/plugins/movies/movies.py:1066
+msgid "Preferred language for contents"
+msgstr "Lingua preferita per i contenuti"
+
+#: nepymc/plugins/movies/movies.py:1069
+msgid "Prefer movie titles in lists"
+msgstr "Usa titoli dei film nelle liste"
+
+#: nepymc/plugins/movies/movies.py:1072
+msgid "Enable background scanner"
+msgstr "Abilita scansione in sottofondo"
+
+#: nepymc/plugins/movies/movies.py:1074
+msgid "Ask"
+msgstr "Chiedi"
+
+#: nepymc/plugins/movies/movies.py:1074
+msgid "Always"
+msgstr "Sempre"
+
+#: nepymc/plugins/movies/movies.py:1074
+msgid "Never"
+msgstr "Mai"
+
+#: nepymc/plugins/movies/movies.py:1077
+msgid "Background scan also clean dead files"
+msgstr ""
+
+#: nepymc/plugins/calibrator/calibrator.py:51
+#: nepymc/plugins/calibrator/calibrator.py:58
+msgid "Screen calibrator"
+msgstr "Calibrazione dello schermo"
+
+#: nepymc/plugins/calibrator/calibrator.py:53
+msgid "Use this module to calibrate your screen parameters."
+msgstr "Usa questo modulo per aggiustare i settaggi del tuo schermo."
+
+#~ msgid "Themes"
+#~ msgstr "Temi"
+
+#~ msgid "Download folder"
+#~ msgstr "Cartella download"
+
+#~ msgid "Use hardware acceleration"
+#~ msgstr "Usa accelerazione hardware"
+
+#~ msgid "Multimedia engine"
+#~ msgstr "Motore multimediale"
+
+#~ msgid "Poster grid items size"
+#~ msgstr "Dimensione elementi della vista Poster"
+
+#~ msgid "Cover grid items size"
+#~ msgstr "Dimensione elementi della vista Cover"
+
+#~ msgid "Download available"
+#~ msgstr "Download disponibili"
+
+#~ msgid "yes"
+#~ msgstr "sì"
+
+#~ msgid "no"
+#~ msgstr "no"
+
+#~ msgid "Window size"
+#~ msgstr "Dimesione finestra"
+
+#~ msgid "screen"
+#~ msgstr "schermo"
+
+#~ msgid "dpi"
+#~ msgstr "dpi"
+
+#~ msgid "EpyMC"
+#~ msgstr "EpyMC"
+
+#~ msgid "EpyMC themes API"
+#~ msgstr "Versione dei temi"
+
+#~ msgid "%(title)s as %(character)s"
+#~ msgstr "%(title)s nel ruolo di %(character)s"
+
+#~ msgid "Cannot init emotion engine:<br>%s"
+#~ msgstr "Non posso avviare il motore di emotion:<br>%s"
+
+#~ msgid "by"
+#~ msgstr "di"
+
+#~ msgid "Video"
+#~ msgstr "Video"
+
+#~ msgid "Delay: %d ms"
+#~ msgstr "Ritardo: %d ms"
+
+#~ msgid "Audio track: %s"
+#~ msgstr "Traccia audio: %s"
+
+#~ msgid "Audio track #%d"
+#~ msgstr "Traccia audio #%d"
+
+#~ msgid "Mute"
+#~ msgstr "Silenzioso"
+
+#~ msgid "Video track: %s"
+#~ msgstr "Traccia video: %s"
+
+#~ msgid "Video track #%d"
+#~ msgstr "Traccia video #%d"
+
+#~ msgid "Download video"
+#~ msgstr "Scarica filmato"
+
+#~ msgid "No subtitles"
+#~ msgstr "Nessun sottotitolo"
+
+#~ msgid "Subtitle #%d"
+#~ msgstr "Sottotitolo #%d"
+
+#~ msgid "Download subtitles"
+#~ msgstr "Scarica sottotitoli"
+
+#~ msgid "Subtitles delay"
+#~ msgstr "Ritardo sottotitoli"
+
+#~ msgid "+100 ms"
+#~ msgstr "+100 ms"
+
+#~ msgid "Reset"
+#~ msgstr "Reset"
+
+#~ msgid "-100 ms"
+#~ msgstr "-100 ms"
+
+#~ msgid "Searching subtitles"
+#~ msgstr "Ricerca sottotitoli"
+
+#~ msgid "Login failed"
+#~ msgstr "Login fallito"
+
+#~ msgid "Search failed"
+#~ msgstr "Ricerca fallita"
+
+#~ msgid "No results found for languages: %s"
+#~ msgstr "Nessun risultato per le lingue: %s"
+
+#~ msgid "Download"
+#~ msgstr "Scarica"
+
+#~ msgid "Downloading subtitles"
+#~ msgstr "Scaricamento sottotitoli"
+
+#~ msgid "Download failed"
+#~ msgstr "Scaricamento fallito"
+
+#~ msgid "Decode failed"
+#~ msgstr "Decodifica fallita"
+
+#~ msgid "English QWERTY"
+#~ msgstr "Inglese QWERTY"
+
+#~ msgid "English ABC"
+#~ msgstr "Inglese ABC"
+
+#~ msgid "Italian QWERTY"
+#~ msgstr "Italiano QWERTY"
+
+#~ msgid "Italian ABC"
+#~ msgstr "Italiano ABC"
+
+#~ msgid "Russian QWERTY"
+#~ msgstr "Russo QWERTY"
+
+#~ msgid "Russian ABC"
+#~ msgstr "Russo ABC"
+
+#~ msgid "Symbols"
+#~ msgstr "Simboli"
+
+#~ msgid "Emotion Media Center"
+#~ msgstr "Emotion Media Center"
+
+#~ msgid "credits"
+#~ msgstr "Ringraziamenti"
+
+#~ msgid "Image {0} of {1}"
+#~ msgstr "Immagine {0} di {1}"
+
+#~ msgid "Rename"
+#~ msgstr "Rinomina"
+
+#~ msgid "Insert text"
+#~ msgstr "Inserire il testo"
+
+#~ msgid "ERASE"
+#~ msgstr "CANCELLA"
+
+#~ msgid "SPACE"
+#~ msgstr "SPAZIO"
+
+#~ msgid "UPPERCASE"
+#~ msgstr "MAIUSCOLE"
+
+#~ msgid "Dismiss"
+#~ msgstr "Annulla"
+
+#~ msgid "Accept"
+#~ msgstr "Accetta"
+
+#~ msgid "LOWERCASE"
+#~ msgstr "MINUSCOLE"
+
+#~ msgid "Download started"
+#~ msgstr "Download avviato"
+
+#~ msgid "Cannot download file"
+#~ msgstr "Impossibile scaricare il file"
+
+#~ msgid "Failure code"
+#~ msgstr "Codice errore"
+
+#~ msgid "Download completed"
+#~ msgstr "Download completato"
+
+#~ msgid "Download Manager"
+#~ msgstr "Gestore Download"
+
+#~ msgid "Start download"
+#~ msgstr "Avvia download"
+
+#~ msgid "Change folder"
+#~ msgstr "Cambia cartella"
+
+#~ msgid ""
+#~ "File will be downloaded in the folder:<br> <b>{}</b><br><br>File will be "
+#~ "named as:<br> <b>{}</b><br><br>You can rename the file using the "
+#~ "<i>Rename</i> button or change the destination folder from the main "
+#~ "configuration."
+#~ msgstr ""
+#~ "Il file verrà scaricato nella cartella:<br> <b>{}</b><br><br>Il file sarà "
+#~ "nominato:<br> <b>{}</b><br><br>Puoi rinominare il file con il bottone "
+#~ "<i>Rinomina</i> o modificare la cartella di destinazione dalla "
+#~ "configurazione generale."
+
+#~ msgid "Rename download"
+#~ msgstr "Rinomina file"
+
+#~ msgid "Change destination folder"
+#~ msgstr "Modifica cartella"
+
+#~ msgid "The file %s is in the download queue yet"
+#~ msgstr "Il file %s è già in coda"
+
+#~ msgid "Download manager"
+#~ msgstr "Gestore download"
+
+#~ msgid "Start"
+#~ msgstr "Avvia"
+
+#~ msgid "Clear completed"
+#~ msgstr "Pulisci completati"
+
+#~ msgid "{0}% of {1}"
+#~ msgstr "{0}% di {1}"
+
+#~ msgid "Unknown size"
+#~ msgstr "Dimensione sconosciuta"
+
+#~ msgid "queued"
+#~ msgstr "accodato"
+
+#~ msgid "running"
+#~ msgstr "in corso"
+
+#~ msgid "completed"
+#~ msgstr "completato"
+
+#~ msgid "paused"
+#~ msgstr "in pausa"
+
+#~ msgid "Are you sure you want to abort the download of the file?"
+#~ msgstr "Siete sicuri di voler annullare lo scaricamento del file?"
+
+#~ msgid "Delete download"
+#~ msgstr "Annulla scaricamento"
+
+#~ msgid "Input - Joystick"
+#~ msgstr "Input - Joystick"
+
+#~ msgid ""
+#~ "The joystick module lets you control the application using any standard "
+#~ "digital joystick or joypad."
+#~ msgstr ""
+#~ "Questo modulo permette il controllo dell'applicazione con un joystick o "
+#~ "joypad digitale."
+
+#~ msgid "Joystick"
+#~ msgstr "Joystick"
+
+#~ msgid "Device"
+#~ msgstr "Device"
+
+#~ msgid "Configure buttons"
+#~ msgstr "Configura i pulsanti"
+
+#~ msgid "No joystick found"
+#~ msgstr "Nessun joystick trovato"
+
+#~ msgid "Try to adjust your joystick device"
+#~ msgstr "Prova a correggere il device del joystick"
+
+#~ msgid "Configure joystick"
+#~ msgstr "Configura joystick"
+
+#~ msgid "Move the stick Up"
+#~ msgstr "Muovi il joystick in Su"
+
+#~ msgid "Move the stick Right"
+#~ msgstr "Muovi il joystick a Destra"
+
+#~ msgid "Press OK"
+#~ msgstr "Premi OK"
+
+#~ msgid "Press BACK"
+#~ msgstr "Premi INDIETRO"
+
+#~ msgid "Config done."
+#~ msgstr "Configurazione completa."
+
+#~ msgid "OnAir"
+#~ msgstr "In riproduzione"
+
+#~ msgid "Artists"
+#~ msgstr "Artisti"
+
+#~ msgid "Albums"
+#~ msgstr "Album"
+
+#~ msgid "Songs"
+#~ msgstr "Canzoni"
+
+#~ msgid "Play all the songs"
+#~ msgstr "Suona tutte le canzoni"
+
+#~ msgid "Queue all the songs"
+#~ msgstr "Accoda tutte le canzoni"
+
+#~ msgid "from"
+#~ msgstr "di"
+
+#~ msgid "<em>by</em> %s<br>"
+#~ msgstr "<em>di</em> %s<br>"
+
+#~ msgid "%d song"
+#~ msgid_plural "%d songs"
+#~ msgstr[0] "%d canzone"
+#~ msgstr[1] "%d canzoni"
+
+#~ msgid "%d minute"
+#~ msgid_plural "%d minutes"
+#~ msgstr[0] "%d minuto"
+#~ msgstr[1] "%d minuti"
+
+#~ msgid "%d album"
+#~ msgid_plural "%d albums"
+#~ msgstr[0] "%d album"
+#~ msgstr[1] "%d album"
+
+#~ msgid "Music"
+#~ msgstr "Musica"
+
+#~ msgid ""
+#~ "The music module build a database of all your albums, songs and artist."
+#~ msgstr ""
+#~ "Il modulo musica construisce un database dei vostri album, canzoni e "
+#~ "artisti."
+
+#~ msgid "Rebuilding database"
+#~ msgstr "Aggiornamento libreria"
+
+#~ msgid "please wait..."
+#~ msgstr "Attendere..."
+
+#~ msgid "operation completed"
+#~ msgstr "operazione completata"
+
+#~ msgid "Online Channels"
+#~ msgstr "Canali Online"
+
+#~ msgid "Browse, watch and download videos from your favorite online sources."
+#~ msgstr "Naviga, guarda e scarica filmati dai vostri siti online preferiti."
+
+#~ msgid "Video Channels"
+#~ msgstr "Canali Video"
+
+#~ msgid "Channels"
+#~ msgstr "Canali"
+
+#~ msgid "Checking for updates"
+#~ msgstr "Controllo aggiornamenti"
+
+#~ msgid "Local version"
+#~ msgstr "Versione locale"
+
+#~ msgid "Upstream version"
+#~ msgstr "Versione disponibile"
+
+#~ msgid "Already updated"
+#~ msgstr "Già aggiornato"
+
+#~ msgid "Failed to fetch upstream version"
+#~ msgstr "Fallito controllo versione disponibile"
+
+#~ msgid ""
+#~ "Updating <b>youtube-dl</b> at version <b>{0}</b><br><br>For info and "
+#~ "credits please visit:<br>rg3.github.io/youtube-dl/"
+#~ msgstr ""
+#~ "Aggiornamento di <b>youtube-dl</b> alla versione <b>{0}</b><br><br>Per "
+#~ "info e crediti visitate:<br>rg3.github.io/youtube-dl/"
+
+#~ msgid "please wait"
+#~ msgstr "Attendere"
+
+#~ msgid "Update completed"
+#~ msgstr "Aggiornamento completato"
+
+#~ msgid "Search query"
+#~ msgstr "Ricerca"
+
+#~ msgid "Getting info..."
+#~ msgstr "Ottengo informazioni..."
+
+#~ msgid "Reported error"
+#~ msgstr "Errore riportato"
+
+#~ msgid "Error reading channel"
+#~ msgstr "Errore lettura canale"
+
+#~ msgid "No items returned"
+#~ msgstr "Nessun elemento trovato"
+
+#~ msgid "Suggestions"
+#~ msgstr "Consigliati"
+
+#~ msgid "Automatically keep youtube-dl updated"
+#~ msgstr "Mantieni youtube-dl sempre aggiornato"
+
+#~ msgid "Check for youtube-dl update now"
+#~ msgstr "Controlla aggiornamenti per youtube-dl"
+
+#~ msgid "user"
+#~ msgstr "utente"
+
+#~ msgid "uploaded"
+#~ msgstr "caricato"
+
+#~ msgid "view"
+#~ msgid_plural "views"
+#~ msgstr[0] "vista"
+#~ msgstr[1] "viste"
+
+#~ msgid "like"
+#~ msgid_plural "likes"
+#~ msgstr[0] "mi piace"
+#~ msgstr[1] "mi piace"
+
+#~ msgid "comment"
+#~ msgid_plural "comments"
+#~ msgstr[0] "commento"
+#~ msgstr[1] "commenti"
+
+#~ msgid "created"
+#~ msgstr "creato"
+
+#~ msgid "updated"
+#~ msgstr "aggiornato"
+
+#~ msgid "video"
+#~ msgid_plural "videos"
+#~ msgstr[0] "filmato"
+#~ msgstr[1] "filmati"
+
+#~ msgid "follower"
+#~ msgid_plural "followers"
+#~ msgstr[0] "iscritto"
+#~ msgstr[1] "iscritti"
+
+#~ msgid "joined"
+#~ msgstr "iscritto"
+
+#~ msgid "location"
+#~ msgstr "luogo"
+
+#~ msgid "Search videos"
+#~ msgstr "Cerca nei filmati"
+
+#~ msgid "Search channels"
+#~ msgstr "Cerca nei canali"
+
+#~ msgid "Search groups"
+#~ msgstr "Cerca nei gruppi"
+
+#~ msgid "Search people"
+#~ msgstr "Cerca negli utenti"
+
+#~ msgid "More followed channels"
+#~ msgstr "Canali più seguiti"
+
+#~ msgid "More followed groups"
+#~ msgstr "Gruppi più seguiti"
+
+#~ msgid "Browse videos"
+#~ msgstr "Sfoglia filmati"
+
+#~ msgid "Browse channels"
+#~ msgstr "Sfoglia canali"
+
+#~ msgid "Browse groups"
+#~ msgstr "Sfoglia gruppi"
+
+#~ msgid "Browse users"
+#~ msgstr "Sfoglia utenti"
+
+#~ msgid "Load more results (%d in total)"
+#~ msgstr "Carica altri risultati (%d in totale)"
+
+#~ msgid "channel"
+#~ msgid_plural "channels"
+#~ msgstr[0] "canale"
+#~ msgstr[1] "canali"
+
+#~ msgid "group"
+#~ msgid_plural "groups"
+#~ msgstr[0] "gruppo"
+#~ msgstr[1] "gruppi"
+
+#~ msgid "Season {0}"
+#~ msgstr "Stagione {0}"
+
+#~ msgid "Episode {0}"
+#~ msgstr "Episodio {0}"
+
+#~ msgid "First aired"
+#~ msgstr "Prima messa in onda"
+
+#~ msgid "Load more results (page {0} of {1})"
+#~ msgstr "Carica altri risultati (pagina {0} di {1})"
+
+#~ msgid "Search movies"
+#~ msgstr "Cerca film"
+
+#~ msgid "Popular movies"
+#~ msgstr "Film popolari"
+
+#~ msgid "Top rated movies"
+#~ msgstr "Film più votati"
+
+#~ msgid "Upcoming movies"
+#~ msgstr "Film in arrivo"
+
+#~ msgid "Now playing movies"
+#~ msgstr "Film in sala"
+
+#~ msgid "Original title"
+#~ msgstr "Titolo originale"
+
+#~ msgid "Genres"
+#~ msgstr "Generi"
+
+#~ msgid "votes"
+#~ msgstr "voti"
+
+#~ msgid "Language"
+#~ msgstr "Lingua"
+
+#~ msgid "Source"
+#~ msgstr "Sorgente"
+
+#~ msgid "Quality"
+#~ msgstr "Qualità"
+
+#~ msgid "No trailers available"
+#~ msgstr "Nessun trailer disponibile"
+
+#~ msgid "More items..."
+#~ msgstr "Altri elementi..."
+
+#~ msgid "Screen saver"
+#~ msgstr "Salva schermo"
+
+#~ msgid ""
+#~ "This module manage the X screensaver. It will prevent the screensaver to "
+#~ "activate while watching videos and can be configured to activate the "
+#~ "screensaver and/or shutdown your monitor after a given amount of time."
+#~ msgstr ""
+#~ "Questo modulo gestisce il salvaschermo di X. Impedisce al salvaschermo di "
+#~ "attivarsi mentre state guardando un filmato e può essere configurato per "
+#~ "attivare il salvaschermo e spegnere il monitor dopo un certo intervallo "
+#~ "di tempo."
+
+#~ msgid "never"
+#~ msgstr "mai"
+
+#~ msgid "never;1 minute;5 minutes;10 minutes;30 minutes;60 minutes"
+#~ msgstr "mai;1 minuto;5 minuti;10 minuti;30 minuti;60 minuti"
+
+#~ msgid "Turn on screensaver after"
+#~ msgstr "Abilita salva schermo dopo"
+
+#~ msgid "Turn off monitor after"
+#~ msgstr "Spegni il monitor dopo"
+
+#~ msgid "Manage screensaver only in fullscreen"
+#~ msgstr "Gestisci solo a schermo intero"
+
+#~ msgid "Manage favorites"
+#~ msgstr "Gestisci preferiti"
+
+#~ msgid "Favorites"
+#~ msgstr "Preferiti"
+
+#~ msgid "Parent folder"
+#~ msgstr "Cartella precedente"
+
+#~ msgid "File Manager"
+#~ msgstr "Gestore File"
+
+#~ msgid "A two panes filemanager."
+#~ msgstr "Un classico gestore di file a 2 finestre."
+
+#~ msgid "New folder"
+#~ msgstr "Crea cartella"
+
+#~ msgid "Copy"
+#~ msgstr "Copia"
+
+#~ msgid "Move"
+#~ msgstr "Sposta"
+
+#~ msgid "Delete"
+#~ msgstr "Elimina"
+
+#~ msgid "Are you sure you want to delete the folder?"
+#~ msgstr "Sei sicuro di voler cancellare la cartella?"
+
+#~ msgid "Are you sure you want to delete the file?"
+#~ msgstr "Sei sicuro di voler cancellare il file?"
+
+#~ msgid "Operation is starting..."
+#~ msgstr "Preparazione in corso..."
+
+#~ msgid "Source is not readable"
+#~ msgstr "La sorgente non è accessibile"
+
+#~ msgid "Destination folder is not writable"
+#~ msgstr "La destinazione non è scrivibile"
+
+#~ msgid "Invalid destination folder"
+#~ msgstr "Destinazione non valida"
+
+#~ msgid "Destination already exists"
+#~ msgstr "La destinazione esiste già"
+
+#~ msgid "Copying file {0} of {1}:"
+#~ msgstr "Copia del file {0} di {1}"
+
+#~ msgid "Deleting file {0} of {1}:"
+#~ msgstr "Eliminazione del file {0} di {1}"
+
+#~ msgid "Movies scanner started"
+#~ msgstr "Scansione dei film avviata"
+
+#~ msgid "Found movie"
+#~ msgstr "Trovato film"
+
+#~ msgid "Movies scanner done"
+#~ msgstr "Scansione dei film completata"
+
+#~ msgid "Input - Remote Control"
+#~ msgstr "Input - Telecomando"
+
+#~ msgid ""
+#~ "This module lets you control the application using any LIRC compatible "
+#~ "remote controller."
+#~ msgstr ""
+#~ "Questo modulo permette il controllo dell'applicazione con qualunque "
+#~ "telecomando compatibile con LIRC."
+
+#~ msgid "Remote"
+#~ msgstr "Telecomando"
+
+#~ msgid "Button: %s"
+#~ msgstr "Tasto: %s"
+
+#~ msgid "Add a new key"
+#~ msgstr "Aggiungi un nuovo tasto"
+
+#~ msgid "Lirc socket"
+#~ msgstr "Lirc socket"
+
+#~ msgid "Cannot connect to lirc using socket:<br>%s"
+#~ msgstr "Impossibile collegarsi a lirc usando il socket:<br>%s"
+
+#~ msgid "Configure remote"
+#~ msgstr "Configura telecomando"
+
+#~ msgid "Press a key on your remote"
+#~ msgstr "Premi un tasto sul telecomando"
+
+#~ msgid "Choose an event to bind"
+#~ msgstr "Seleziona un evento per il tasto"
+
+#~ msgid "Input - Keyboard"
+#~ msgstr "Input - Tastiera"
+
+#~ msgid ""
+#~ "The keyboard module lets you control the application using your keyboard, "
+#~ "or any other device that act as a keyboard."
+#~ msgstr ""
+#~ "Questo modulo permette il controllo dell'applicazione utilizzando la "
+#~ "vostra tastiera o qualunque altro dispositivo che funziona come una "
+#~ "tastiera."
+
+#~ msgid "Keyboard"
+#~ msgstr "Tastiera"
+
+#~ msgid "Are you sure you want to remove the mapping?"
+#~ msgstr "Sei sicuro di voler elimare la mappatura?"
+
+#~ msgid "Remove key"
+#~ msgstr "Elimina tasto"
+
+#~ msgid "Press a key on your keyboard"
+#~ msgstr "Premi un tasto sulla tastiera"
+
+#~ msgid "Watchdog"
+#~ msgstr "Watchdog"
+
+#~ msgid ""
+#~ "This module, if enabled, will respawn epymc in the rare cases of "
+#~ "application crash/hang. So you dont have to leave your couch in case of "
+#~ "problems...just wait 30 seconds and the module will restart epymc for you."
+#~ msgstr ""
+#~ "Questo modulo, se abilitato, farà ripartire epymc nei rari casi di crash. "
+#~ "Così non dovrete alzarvi dal divano in caso di problemi...aspettate al "
+#~ "massimo 30 secondi e questo modulo rilancierà epymc per voi."
+
+#~ msgid "Dimensions"
+#~ msgstr "Dimensioni"
+
+#~ msgid "Format"
+#~ msgstr "Formato"
+
+#~ msgid "Please install PIL to read image metadata."
+#~ msgstr "Dovete installare PIL per leggere i metadati."
+
+#~ msgid "Photos"
+#~ msgstr "Foto"
+
+#~ msgid "A module to watch your photos."
+#~ msgstr "Un modulo per guardare le foto."
+
+#~ msgid "Show slideshow controls on start"
+#~ msgstr "Mostra controlli all'avvio"
+
+#~ msgid "Slideshow delay"
+#~ msgstr "Tempo tra le foto"
+
+#~ msgid ""
+#~ "This module provide a way to control the application from your web "
+#~ "browser.<br>The server (by default) listen on port 8080, to connect just "
+#~ "point to: <br>http://your_ip:8080<br>You can change listening port and "
+#~ "the theme from the configurtion file."
+#~ msgstr ""
+#~ "Questo modulo permette il controllo dell'applicazione utilizzando un "
+#~ "qualunque browser web.<br>Il server (di default) ascolta sulla porta "
+#~ "8080, per collegarsi basta puntare all'indirizzo:<br>http://"
+#~ "il_vostro_ip:8080<br>Potete cambiare la porta di ascolto dal file di "
+#~ "configurazione."
+
+#~ msgid "My Games"
+#~ msgstr "I miei giochi"
+
+#~ msgid "All Games"
+#~ msgstr "Tutti i giochi"
+
+#~ msgid "Favorite Games"
+#~ msgstr "Giochi preferiti"
+
+#~ msgid "Categories"
+#~ msgstr "Categorie"
+
+#~ msgid "M.A.M.E"
+#~ msgstr "M.A.M.E."
+
+#~ msgid ""
+#~ "This module add the ability to browse, download and play games using the "
+#~ "M.A.M.E. emulator."
+#~ msgstr ""
+#~ "Questo modulo permette di navigare, scaricare e giocare utilizzando "
+#~ "l'emulatore M.A.M.E."
+
+#~ msgid "Searching games, please wait..."
+#~ msgstr "Ricerca giochi, attendere..."
+
+#~ msgid "M.A.M.E not found"
+#~ msgstr "M.A.M.E. non trovato"
+
+#~ msgid "Is mame installed?"
+#~ msgstr "Avete installato mame?"
+
+#~ msgid "Can not get rom path from M.A.M.E."
+#~ msgstr "Non trovo il rom path di M.A.M.E."
+
+#~ msgid "Is your mame well configured?"
+#~ msgstr "Avete configurato bene mame?"
+
+#~ msgid "No category file found"
+#~ msgstr "Non trovo il file categorie"
+
+#~ msgid ""
+#~ "The category file is not included in mame, you need to download a copy "
+#~ "from the net. <br>The file must be placed in %s"
+#~ msgstr ""
+#~ "Il file delle categorie non è incluso con mame, dovete scaricarne una "
+#~ "copia dalla rete.<br> Il file deve trovarsi in %s"
+
+#~ msgid "Manufacturer"
+#~ msgstr "Produttore"
+
+#~ msgid "Players"
+#~ msgstr "Giocatori"
+
+#~ msgid "Buttons"
+#~ msgstr "Pulsanti"
+
+#~ msgid "Save state"
+#~ msgstr "Salvataggio stato"
+
+#~ msgid "Driver status"
+#~ msgstr "Stato del driver"
+
+#~ msgid "Emulation"
+#~ msgstr "Emulazione"
+
+#~ msgid "Color"
+#~ msgstr "Colore"
+
+#~ msgid "Sound"
+#~ msgstr "Suono"
+
+#~ msgid "Graphic"
+#~ msgstr "Grafica"
+
+#~ msgid "History"
+#~ msgstr "Storia"
+
+#~ msgid "No History file found"
+#~ msgstr "File history non trovato"
+
+#~ msgid ""
+#~ "The History file is not included in mame, you should download a copy from "
+#~ "arcade-history.com<br>The file must be unzipped and placed in %s"
+#~ msgstr ""
+#~ "Il file history non è incluso con mame, dovete scaricarne una copia dal "
+#~ "sito arcade-history.com<br>Il file deve essere scompresso e messo in %s"
+
+#~ msgid "Game not found in history file"
+#~ msgstr "Gioco non trovato nel file history"
+
+#~ msgid "Really delete this game?"
+#~ msgstr "Cancello il gioco?"
+
+#~ msgid "Game deleted"
+#~ msgstr "Gioco eliminato"
+
+#~ msgid "Can not delete game"
+#~ msgstr "Non posso eliminare il gioco"
+
+#~ msgid "Error, can not find a writable rom directory"
+#~ msgstr "Errore, non trovo una cartella scrivibile per le rom"
+
+#~ msgid "You sould check your mame configuration"
+#~ msgstr "Dovresti controllare la tua configurazione del mame"
+
+#~ msgid "Game download"
+#~ msgstr "Scarica gioco"
+
+#~ msgid "Trying at freeroms.com...<br>"
+#~ msgstr "Provo da freeroms.com...<br>"
+
+#~ msgid "Can not find the game online."
+#~ msgstr "Non ho trovato il gioco in rete."
+
+#~ msgid "Serie info"
+#~ msgstr "Informazioni serie"
+
+#~ msgid "Episode"
+#~ msgstr "Episodio"
+
+#~ msgid "TV Shows"
+#~ msgstr "Serie TV"
+
+#~ msgid ""
+#~ "The Tv Shows module is used to browse your series collection, it is fully "
+#~ "integrated with themoviedb.org online database."
+#~ msgstr ""
+#~ "Questo modulo permette di navigare la vostra collezione di serie tv, è "
+#~ "completamente integrato con il database online themoviedb.org."
+
+#~ msgid "Tv Shows Collection"
+#~ msgstr "Collezione delle serie TV"
+
+#~ msgid "Refresh info"
+#~ msgstr "Aggiorna informazioni"
+
+#~ msgid "Created by"
+#~ msgstr "Ideatore"
+
+#~ msgid "Network"
+#~ msgstr "Rete"
+
+#~ msgid "Last aired"
+#~ msgstr "Ultima messa in onda"
+
+#~ msgid "Seasons"
+#~ msgstr "Stagioni"
+
+#~ msgid "Episodes"
+#~ msgstr "Episodi"
+
+#~ msgid "Runtime"
+#~ msgstr "Durata episodi"
+
+#~ msgid "Status"
+#~ msgstr "Stato"
+
+#~ msgid ""
+#~ "No info stored for this serie.<br>Please try the <i>refresh info</i> "
+#~ "button."
+#~ msgstr ""
+#~ "Nessuna informazione per questa serie.<br>Prova a premere il bottone "
+#~ "<i>Aggiorna informazioni</i>."
+
+#~ msgid ""
+#~ "The search for \"%s\" did not make any results.<br>If your show is listed "
+#~ "on themoviedb.org please rename your folder to match the title on the "
+#~ "site.<br>If otherwise it is not in the online database please contribute "
+#~ "and add it yourself."
+#~ msgstr ""
+#~ "La ricerca di \"%s\" non ha dato nessun risultato.<br>Se la vostra serie "
+#~ "è presente su themoviedb.org dovete rinominare la cartella come il nome "
+#~ "trovato sul sito.<br>Invece, se la serie non è presente online, siete "
+#~ "pregati di contribuire e aggiungerla da voi."
+
+#~ msgid "Nothing found"
+#~ msgstr "Nessun risultato trovato"
+
+#~ msgid "Fetching updated info"
+#~ msgstr "Scarico informazioni aggiornate"
+
+#~ msgid "TvShows scanner started"
+#~ msgstr "Scansione delle serie avviata"
+
+#~ msgid "TvShows scanner done"
+#~ msgstr "Scansione delle serie completata"
+
+#~ msgid "%d season"
+#~ msgid_plural "%d seasons"
+#~ msgstr[0] "%d stagione"
+#~ msgstr[1] "%d stagioni"
+
+#~ msgid "%d episode"
+#~ msgid_plural "%d episodes"
+#~ msgstr[0] "%d episodio"
+#~ msgstr[1] "%d episodi"
+
+#~ msgid "Found serie:"
+#~ msgstr "Trovata serie:"
+
+#~ msgid "Input - MPRIS2"
+#~ msgstr "Input - MPRIS2"
+
+#~ msgid ""
+#~ "Add the ability to control the application from any MPRIS2 compatible "
+#~ "client."
+#~ msgstr ""
+#~ "Aggiunge la funzionalità di controllare l'applicazione utilizzando un "
+#~ "qualsiasi client MPRIS2."
+
+#~ msgid "%d year ago"
+#~ msgid_plural "%d years ago"
+#~ msgstr[0] "%d anno fa"
+#~ msgstr[1] "%d anni fa"
+
+#~ msgid "%d month ago"
+#~ msgid_plural "%d months ago"
+#~ msgstr[0] "%d mese fa"
+#~ msgstr[1] "%d mesi fa"
+
+#~ msgid "%d week ago"
+#~ msgid_plural "%d weeks ago"
+#~ msgstr[0] "%d settimana fa"
+#~ msgstr[1] "%d settimane fa"
+
+#~ msgid "%d day ago"
+#~ msgid_plural "%d days ago"
+#~ msgstr[0] "%d giorno fa"
+#~ msgstr[1] "%d giorni fa"
+
+#~ msgid "%d hour ago"
+#~ msgid_plural "%d hours ago"
+#~ msgstr[0] "%d ora fa"
+#~ msgstr[1] "%d ore fa"
+
+#~ msgid "%d minute ago"
+#~ msgid_plural "%d minutes ago"
+#~ msgstr[0] "%d minuto fa"
+#~ msgstr[1] "%d minuti fa"
+
+#~ msgid "Unmute"
+#~ msgstr "Suona"
+
+#~ msgid "Rendering engine"
+#~ msgstr "Motore di rendering"
+
+#~ msgid ""
+#~ "Updating the helper program <b>youtube-dl</b> to the latest version."
+#~ "<br><br>For info please visit:<br>rg3.github.io/youtube-dl/"
+#~ msgstr ""
+#~ "Aggiornamento di <b>youtube-dl</b> all'ultima versione "
+#~ "disponibile<br><br>Per informazioni visitare:<br>rg3.github.io/youtube-dl/"
+
+#~ msgid "Play the whole album"
+#~ msgstr "Suona tutto l'album"
+
+#~ msgid "<em>from</em> %s<br>"
+#~ msgstr "<em>da</em> %s<br>"
+
+#~ msgid "duration: %s<br>"
+#~ msgstr "durata: %s<br>"
+
+#~ msgid "%(name)s by %(artist)s"
+#~ msgstr "%(name)s di %(artist)s"
+
+#~ msgid "More relevant videos"
+#~ msgstr "Video più rilevanti"
+
+#~ msgid "Info"
+#~ msgstr "Informazioni"
+
+#~ msgid "%(name)s as %(character)s"
+#~ msgstr "%(name)s nel ruolo di %(character)s"
+
+#~ msgid "Top rated"
+#~ msgstr "Più votati"
+
+#~ msgid "buffering"
+#~ msgstr "buffering"
+
+#~ msgid "Press RIGHT"
+#~ msgstr "Premi SU"
+
+#~ msgid "<hilight>%s</><br>queued"
+#~ msgstr "<hilight>%s</><br>accodato"

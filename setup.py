@@ -3,16 +3,16 @@
 # usage:
 #
 # OK:
-# python setup.py develop  (run from the build dir, without any install need)
-# python setup.py clean    (always run clean --all)
+# python setup.py develop     (run from the build dir, without any install need)
+# python setup.py clean       (always run clean --all)
+# python setup.py build_i18n
+# python setup.py update_po
+# python setup.py check_po    (need polib)
 #
 # TODO:
 # python setup.py install [--prefix=]
 # python setup.py uninstall [--prefix=]
 # python setup.py build_themes
-# python setup.py build_i18n
-# python setup.py update_po
-# python setup.py check_po
 # python setup.py sdist|bdist
 # python setup.py --help
 # python setup.py --help-commands
@@ -21,18 +21,118 @@
 # distutils reference:
 #  http://docs.python.org/distutils/
 #
-# setuptools reference:
-#  https://packaging.python.org/
-#  https://setuptools.readthedocs.io/en/latest/
-#  https://jichu4n.com/posts/how-to-add-custom-build-steps-and-commands-to-setuppy/
-#
 
-import sys
 import os
+import sys
+import fnmatch
+
 from distutils.core import setup, Command
 from distutils.command.clean import clean
+from distutils.command.build import build
+from distutils.log import warn, info, error
+from distutils.file_util import copy_file
+from distutils.dir_util import mkpath
+from distutils.dep_util import newer
 
 from nepymc import __version__ as emc_version
+
+
+class build_i18n(Command):
+    description = 'Compile all the po files'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        linguas_file = os.path.join('data', 'locale', 'LINGUAS')
+        for lang in open(linguas_file).read().split():
+            po_file = os.path.join('data', 'locale', lang + '.po')
+            mo_file = os.path.join('nepymc', 'locale', lang, 'LC_MESSAGES',
+                                   'nepymc.mo')
+            mkpath(os.path.dirname(mo_file), verbose=False)
+            if newer(po_file, mo_file):
+                info('compiling po file: %s -> %s' % (po_file, mo_file))
+                cmd = 'msgfmt -o %s -c %s' % (mo_file, po_file)
+                os.system(cmd)
+
+
+class update_po(Command):
+    description = 'Prepare all i18n files and update them as needed'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        # build the string of all the source files to be translated
+        sources = ''
+        for dirpath, dirs, files in os.walk('nepymc'):
+            for name in fnmatch.filter(files, '*.py'):
+                sources += ' ' + os.path.join(dirpath, name)
+
+        # create or update the reference pot file
+        pot_file = os.path.join('data', 'locale', 'nepymc.pot')
+        info('updating pot file: %s' % pot_file)
+        cmd = 'xgettext --from-code=UTF-8 --force-po ' \
+              '--output=%s %s' % (pot_file, sources)
+        os.system(cmd)
+
+        # create or update all the .po files
+        linguas_file = os.path.join('data', 'locale', 'LINGUAS')
+        for lang in open(linguas_file).read().split():
+            po_file = os.path.join('data', 'locale', lang + '.po')
+            if os.path.exists(po_file):
+                # update an existing po file
+                info('updating po file: %s' % po_file)
+                cmd = 'msgmerge -N -U -q %s %s' % (po_file, pot_file)
+                os.system(cmd)
+            else:
+                # create a new po file
+                info('creating po file: %s' % po_file)
+                mkpath(os.path.dirname(po_file), verbose=False)
+                copy_file(pot_file, po_file, verbose=False)
+
+
+class check_po(Command):
+    description = 'Give statistics about translations status'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        try:
+            import polib
+        except ImportError:
+            error('You need python polib installed')
+            return
+
+        # print totals
+        po = polib.pofile(os.path.join('data', 'locale', 'nepymc.pot'))
+        info('Total strings in nepymc.pot: %d' % len(po.untranslated_entries()))
+
+        # print per-lang statistics
+        linguas_file = os.path.join('data', 'locale', 'LINGUAS')
+        for lang in sorted(open(linguas_file).read().split()):
+            po = polib.pofile(os.path.join('data', 'locale', lang + '.po'))
+            bar = '=' * (int(po.percent_translated() / 100 * 30))
+            info('%s [%-30s] %3d%% (%d translated, %d fuzzy, '
+                 '%d untranslated, %d obsolete)' % (
+                    lang, bar, po.percent_translated(),
+                    len(po.translated_entries()),
+                    len(po.fuzzy_entries()),
+                    len(po.untranslated_entries()),
+                    len(po.obsolete_entries())))
 
 
 # noinspection PyAttributeOutsideInit
@@ -42,6 +142,13 @@ class CustomCleanCommand(clean):
     def finalize_options(self):
         super().finalize_options()
         self.all = True
+
+
+class CustomBuildCommand(build):
+    def run(self):
+        # self.run_command("build_themes")
+        self.run_command("build_i18n")
+        build.run(self)
 
 
 # noinspection PyAttributeOutsideInit
@@ -184,7 +291,11 @@ setup(
     ],
 
     cmdclass={
+        'build': CustomBuildCommand,
         'clean': CustomCleanCommand,
         'develop': DevelopCommand,
+        'build_i18n': build_i18n,
+        'update_po': update_po,
+        'check_po': check_po,
     },
 )
