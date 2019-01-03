@@ -487,13 +487,13 @@ class Test_Timer(GenericItemClass):
 
     def item_selected(self, url, user_data):
         self.dialog = dia = EmcDialog('EmcTimer test', 'Press "create"')
-        dia.button_add('Create oneshot', self.timer_create_oneshot)
-        dia.button_add('Create onstart', self.timer_create_onstart)
-        dia.button_add('reset()', lambda b: self.timer.reset())
-        dia.button_add('start()', lambda b: self.timer.start())
-        dia.button_add('stop()', lambda b: self.timer.stop())
-        dia.button_add('destroy()', lambda b: self.timer.delete())
         dia.button_add('Close test', self.close_test)
+        dia.button_add('destroy()', lambda b: self.timer.delete())
+        dia.button_add('stop()', lambda b: self.timer.stop())
+        dia.button_add('start()', lambda b: self.timer.start())
+        dia.button_add('reset()', lambda b: self.timer.reset())
+        dia.button_add('Create onstart', self.timer_create_onstart)
+        dia.button_add('Create oneshot', self.timer_create_oneshot)
 
     def timer_create_oneshot(self, btn):
         self.iter_count = 0
@@ -509,7 +509,8 @@ class Test_Timer(GenericItemClass):
                              self.iter_count, key1, key2))
 
     def close_test(self, btn):
-        self.timer.delete()
+        if self.timer:
+            self.timer.delete()
         self.dialog.delete()
 
 
@@ -993,10 +994,10 @@ class Test_Url(GenericItemClass):
     def item_selected(self, url, user_data):
         self.dia = EmcDialog(style='progress', title=user_data,
                              text='Press start to test a 5MB download')
-        self.dia.button_add('To mem (13K)', self.start_cb, self.url2)
-        self.dia.button_add('To file (5M)', self.start_cb, self.url1)
-        self.dia.button_add('delete()', lambda b: self.dload.delete())
         self.dia.button_add('Close', lambda b: self.dia.delete())
+        self.dia.button_add('delete()', lambda b: self.dload.delete())
+        self.dia.button_add('To file (5M)', self.start_cb, self.url1)
+        self.dia.button_add('To mem (13K)', self.start_cb, self.url2)
 
     def start_cb(self, btn, url):
         self.dia.text_set('Download started...')
