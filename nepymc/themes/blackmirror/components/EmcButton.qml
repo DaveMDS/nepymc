@@ -16,8 +16,7 @@ Item {
     width: emcBG.width
     height: emcBG.height
 
-
-    Keys.onSpacePressed: emcButtonClicked(idx)  // TODO why Enter do not work ??
+    Keys.onReturnPressed: emcButtonClicked(idx)
 
     Row {
         id: emcRow
