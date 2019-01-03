@@ -751,7 +751,8 @@ class Test_Dialog(GenericItemClass):
         browser.item_add(self, url + '/warning', 'Dialog - Warning')
         browser.item_add(self, url + '/warning2', 'Dialog - Warning (no title)')
         browser.item_add(self, url + '/error', 'Dialog - Error')
-        browser.item_add(self, url + '/yesno', 'Dialog - YesNo')
+        browser.item_add(self, url + '/yesno1', 'Dialog - YesNo (callbacks)')
+        browser.item_add(self, url + '/yesno2', 'Dialog - YesNo (no callbacks)')
         browser.item_add(self, url + '/cancel', 'Dialog - Cancel')
         browser.item_add(self, url + '/progress', 'Dialog - Progress')
         browser.item_add(self, url + '/progress-btn', 'Dialog - Progress + btns')
@@ -798,11 +799,17 @@ class Test_Dialog(GenericItemClass):
             text = 'This is an <br><br><b>Error</><br>dialog<br>'
             EmcDialog(title='Dialog - Error', text=text, style='error')
 
-        # Dialog - YesNo
-        elif url.endswith('/yesno'):
+        # Dialog - YesNo (with callbacks)
+        elif url.endswith('/yesno1'):
             text = 'This is an <br><br><b>Yes/No</><br>dialog<br>'
             EmcDialog(title='Dialog - YesNo', text=text, style='yesno',
-                      done_cb=lambda btn: DBG('done'))
+                      done_cb=lambda dia: print('done', dia),
+                      canc_cb=lambda dia: print('canc', dia))
+
+        # Dialog - YesNo (without callbacks)
+        elif url.endswith('/yesno2'):
+            text = 'This is an <br><br><b>Yes/No</><br>dialog<br>'
+            EmcDialog(title='Dialog - YesNo', text=text, style='yesno')
 
         # Dialog - Cancel
         elif url.endswith('/cancel'):

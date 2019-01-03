@@ -18,6 +18,8 @@ EmcFocusManager {
     property var list_model: undefined
     property string style: ""
 
+    signal emcQuitRequested()
+
     function action_add(idx, label, icon, def) { /* TODO THEME API */
         console.log("QML button add " + idx + " " + label)
 
@@ -56,28 +58,39 @@ EmcFocusManager {
         destroy(500)  // destroy after the fadeout
     }
 
-    Keys.onUpPressed: {
-        if (root.list_model) {
-            emcList.decrementCurrentIndex()
-        } else {
-            emcMainText.scrollUp()
-        }
-    }
-    Keys.onDownPressed: {
-        if (root.list_model) {
-            emcList.incrementCurrentIndex()
-        } else {
-            emcMainText.scrollDown()
-        }
-    }
-    Keys.onLeftPressed: {
-        if (root.style === "image_list_portrait") {
-            emcList.decrementCurrentIndex()
-        }
-    }
-    Keys.onRightPressed: {
-        if (root.style === "image_list_portrait") {
-            emcList.incrementCurrentIndex()
+    Keys.onPressed: {
+        switch(event.key) {
+        case Qt.Key_Backspace:
+        case Qt.Key_Escape:
+            root.emcQuitRequested()
+            event.accepted = true
+            break
+        case Qt.Key_Up:
+            if (root.list_model)
+                emcList.decrementCurrentIndex()
+            else
+                emcMainText.scrollUp()
+            event.accepted = true
+            break
+        case Qt.Key_Down:
+            if (root.list_model)
+                emcList.incrementCurrentIndex()
+            else
+                emcMainText.scrollDown()
+            event.accepted = true
+            break
+        case Qt.Key_Right:
+            if (root.style === "image_list_portrait") {
+                emcList.incrementCurrentIndex()
+                event.accepted = true
+            }
+            break
+        case Qt.Key_Left:
+            if (root.style === "image_list_portrait") {
+                emcList.decrementCurrentIndex()
+                event.accepted = true
+            }
+            break
         }
     }
 

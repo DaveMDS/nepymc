@@ -35,13 +35,21 @@ class EmcDialogListItem(object):
 
 
 class EmcDialog(EmcBackendableABC):
-    """
+    """  TODO BETTER DOCS
       style can be 'panel' or 'minimal'
 
       you can also apply special style that perform specific task:
          'info', 'error', 'warning', 'yesno', 'cancel', 'progress',
          'list', 'image_list_landscape', 'image_list_portrait',
          'buffering'
+
+    Callback signatures:
+        done_cb(dialog, ...)  ????
+
+        canc_cb(dialog)
+
+    TODO: Callback signatures are all messed up, they are different in case
+          of normal, buttons or list dialogs... need to find a better way
     """
     backendable_pkg = 'gui'
     backendable_cls = 'EmcDialog'
@@ -152,13 +160,50 @@ class EmcDialog(EmcBackendableABC):
         return self._text
 
     def _call_user_done_callback(self, selected_item: EmcDialogListItem=None):
-        """  Utility for backends """
-        # This code was only for the list dialogs....
+        """  Backends MUST use this to ensure consistent behaviour """
+        # This code was only for the list dialogs....not sure for other styles
         if self._done_cb:
             if selected_item:
+                # for list dialogs
                 self._done_cb(self, *selected_item.args, **selected_item.kargs)
+            else:
+                # for all others
+                self._done_cb(self)
             # args, kwargs = it.data['_user_item_data_']
             # self._done_cb(self, *args, **kwargs)
         else:
             self.delete()
 
+    def _call_user_canc_callback(self):
+        """  Backends MUST use this to ensure consistent behaviour """
+        if self._canc_cb:
+            self._canc_cb(self)
+        else:
+            self.delete()
+
+    def _create_auto_buttons(self):
+        """  Backends MUST call this on __init__ """
+        if self._style in ('info', 'error', 'warning'):
+            self.button_add(_('Ok'), lambda btn: self.delete())
+
+        elif self._style == 'yesno':
+            self.button_add(_('No'), lambda b: self._call_user_canc_callback())
+            self.button_add(_('Yes'), lambda b: self._call_user_done_callback())
+            # WAS:
+            # if self._canc_cb:
+            #     self.button_add(_('No'), lambda btn: self._canc_cb(self))
+            # else:
+            #     self.button_add(_('No'), lambda btn: self.delete())
+            #
+            # if self._done_cb:
+            #     self.button_add(_('Yes'), lambda btn: self._done_cb(self))
+            # else:
+            #     self.button_add(_('Yes'), lambda btn: self.delete())
+
+        elif self._style == 'cancel':
+            self.button_add(_('Cancel'), lambda b: self._call_user_canc_callback())
+            # WAS:
+            # if self._canc_cb:
+            #     self.button_add(_('Cancel'), lambda btn: self._canc_cb(self))
+            # else:
+            #     self.button_add(_('Cancel'), lambda btn: self.delete())

@@ -119,35 +119,22 @@ class EmcDialog_Qt(EmcDialog):
         self._qml_obj = self._gui._qml_root.build_dialog(title, style, text,
                                                          content, spinner,
                                                          self._list_model)
+        self._qml_obj.emcQuitRequested.connect(self._quit_requested_cb)
 
         # This is needed to keep the object alive (the qt model in particular)
         # maybe the user don't keep a ref because dialog can auto-delete
         self._auto_reference = self
 
         # automatic buttons
-        if style in ('info', 'error', 'warning'):
-            self.button_add(_('Ok'), lambda btn: self.delete())
-
-        if style == 'yesno':
-            if self._canc_cb:
-                self.button_add(_('No'), lambda btn: self._canc_cb(self))
-            else:
-                self.button_add(_('No'), lambda btn: self.delete())
-
-            if self._done_cb:
-                self.button_add(_('Yes'), lambda btn: self._done_cb(self))
-            else:
-                self.button_add(_('Yes'), lambda btn: self.delete())
-
-        if style == 'cancel':
-            if canc_cb:
-                self.button_add(_('Cancel'), lambda btn: self._canc_cb(self))
-            else:
-                self.button_add(_('Cancel'), lambda btn: self.delete())
+        self._create_auto_buttons()
 
     def delete(self) -> None:
         self._auto_reference = None
         self._qml_obj.emcDestroy()
+        super().delete()
+
+    def _quit_requested_cb(self):
+        self._call_user_canc_callback()
 
     def button_add(self, label: str, selected_cb: callable = None,
                    cb_data: Any = None, icon: str = None,
