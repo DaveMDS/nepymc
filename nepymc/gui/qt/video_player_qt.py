@@ -45,7 +45,7 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
         super().__init__(url)
         print("INIT VIDEO PLAYER QT")
 
-        self._gui = gui.gui_instance_get()
+        self._gui = gui.instance()
         self._qml_obj = self._gui._qml_root.build_video_player(url)
 
     def delete(self) -> None:
