@@ -21,8 +21,8 @@
 from nepymc import events
 
 
-def DBG(msg):
-    # print('INPUT_EVENTS: %s' % msg)
+def DBG(*args):
+    print('INPUT_EVENTS:', *args)
     pass
 
 

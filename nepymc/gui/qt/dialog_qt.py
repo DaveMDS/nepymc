@@ -115,7 +115,7 @@ class EmcDialog_Qt(EmcDialog):
         else:
             self._list_model = None
         self._buttons = []
-        self._gui = gui.gui_instance_get()
+        self._gui = gui.instance()
         self._qml_obj = self._gui._qml_root.build_dialog(title, style, text,
                                                          content, spinner,
                                                          self._list_model)

@@ -111,13 +111,17 @@ def start_emc(standalone=False):
     # init internal components
     sdb.init()
     # thumbnailer.init()
-    # if not gui.init():
-    #     return 1
+    gui.init(loop)
     browser.init()
     mainmenu.init()
     config_gui.init()
     mediaplayer.init()
     storage.init()
+
+    # create and show the main gui
+    # if not gui.init('qt', loop):  # TODO: backend by config
+    #     ERR('Cannot create the GUI')
+    #     return 1
 
     # load & init modules
     modules.load_all()
@@ -187,7 +191,7 @@ def start_emc(standalone=False):
     """
 
     # create and show the main gui
-    if not gui.init('qt', loop):  # TODO: backend by config
+    if not gui.instance().create():
         ERR('Cannot create the GUI')
         return 1
 

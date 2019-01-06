@@ -22,11 +22,14 @@ import os
 import sys
 
 from PySide2 import QtCore
+from PySide2 import QtGui
 from PySide2 import QtQml
 from PySide2 import QtNetwork
+from PySide2.QtCore import Qt
 
 from nepymc import utils
 from nepymc import mainmenu
+from nepymc import input_events
 from nepymc.gui import EmcGui
 from nepymc.model import EmcModelViewInterface
 
@@ -42,6 +45,59 @@ def ERR(*args):
 def DBG(*args):
     # print('GUI_QT:', *args)
     pass
+
+
+DEFAULT_KEYS = {
+    # Qt enum name => EMC event name
+    'Key_Up': 'UP',
+    'Key_Down': 'DOWN',
+    'Key_Left': 'LEFT',
+    'Key_Right': 'RIGHT',
+    'Key_Enter': 'OK',
+    'Key_Return': 'OK',
+    'Key_Backspace': 'BACK',
+    'Key_Escape': 'EXIT',
+
+    'Key_Space': 'TOGGLE_PAUSE',
+    'Key_MediaTogglePlayPause': 'TOGGLE_PAUSE',
+    'Key_MediaPause': 'PAUSE',
+    'Key_MediaPlay': 'PLAY',
+    'Key_MediaStop': 'STOP',
+    'Key_Plus': 'VOLUME_UP',
+    'Key_Minus': 'VOLUME_DOWN',
+    'Key_M': 'VOLUME_MUTE',
+    'Key_P': 'TOGGLE_PAUSE',
+    'Key_F': 'TOGGLE_FULLSCREEN',
+    'Key_F1': 'VIEW_LIST',
+    'Key_F2': 'VIEW_POSTERGRID',
+    'Key_F3': 'VIEW_COVERGRID',
+    'Key_F5': 'SCALE_SMALLER',
+    'Key_F6': 'SCALE_BIGGER',
+    'Key_F7': 'SCALE_RESET',
+    'Key_S': 'STOP',
+    'Key_Z': 'FAST_BACKWARD',
+    'Key_X': 'BACKWARD',
+    'Key_C': 'FORWARD',
+    'Key_V': 'FAST_FORWARD',
+    'Key_B': 'PLAYLIST_PREV',
+    'Key_N': 'PLAYLIST_NEXT',
+    'Key_Q': 'SUBS_DELAY_LESS',
+    'Key_W': 'SUBS_DELAY_MORE',
+    'Key_E': 'SUBS_DELAY_ZERO',
+    'Key_D': 'TOGGLE_DVD_MENU',
+}
+
+
+INPUT_KEYS_MAP = {
+    # EMC input event => Qt key
+    'UP': Qt.Key_Up,
+    'DOWN': Qt.Key_Down,
+    'LEFT': Qt.Key_Left,
+    'RIGHT': Qt.Key_Right,
+    'OK': Qt.Key_Return,
+    'BACK': Qt.Key_Back,
+    'EXIT': Qt.Key_Exit,
+}
 
 
 class MainMenuModel(QtCore.QAbstractListModel):
@@ -64,7 +120,6 @@ class MainMenuModel(QtCore.QAbstractListModel):
         return mainmenu.model.item_count_get()
 
     def data(self, index, role):
-        # print("***** data(%s, %s)" % (index.row(), role))
         if role == self.label_role:
             return mainmenu.model.item_data_get(index.row(), 'label') or ''
         elif role == self.icon_role:
@@ -241,6 +296,53 @@ class QMLNetworkAccessManagerFactory(QtQml.QQmlNetworkAccessManagerFactory):
         return nam
 
 
+class EventManager(QtCore.QObject):
+    """
+    This object receive ALL Qt events, filter out non keys events and forward
+    pressed events to EMC.
+
+    EMC will manage the event (keyb_module) and will fire the correct EMC
+    input event based on user bindings.
+
+    This object will then receive the EMC input event and forward it to QML as
+    a standard qt key event.
+    """
+    def __init__(self, gui):
+        super().__init__()
+        self._gui = gui
+
+        # listen to EMC input events
+        input_events.listener_add('qt-gui', self.emc_input_event)
+
+    def eventFilter(self, obj, qt_event):
+        """ Qt keys events => EMC events """
+
+        if qt_event.type() != QtCore.QEvent.KeyPress:
+            return False  # not a key event, let Qt manage it
+
+        if not qt_event.spontaneous():
+            return False  # we generate this event, let it goes to QML
+
+        # this keyb event comes from the window, forward it to EMC by name
+        key = Qt.Key(qt_event.key())
+        self._gui.key_down_send(key.name.decode())
+        return True  # stop propagation
+
+    def emc_input_event(self, emc_event):
+        """ EMC input events => Qt key event """
+        qt_key = INPUT_KEYS_MAP.get(emc_event)
+        if qt_key:
+            ev = QtGui.QKeyEvent(QtCore.QEvent.KeyPress, qt_key, Qt.NoModifier)
+            QtGui.QGuiApplication.sendEvent(self._gui._qml_root, ev)
+            if ev.isAccepted():
+                return input_events.EVENT_BLOCK
+            else:
+                return input_events.EVENT_CONTINUE
+        else:
+            DBG("Unknow EMC event:", emc_event)
+            return input_events.EVENT_CONTINUE
+
+
 class EmcGui_Qt(EmcGui):
     """ PySide2 implementation of the EmcWindow """
 
@@ -252,6 +354,7 @@ class EmcGui_Qt(EmcGui):
         self._browser_model_qt = None
         self._backend_instance = None
         self._nam_factory = None
+        self._events_manager = None
 
     def create(self) -> bool:
         # search the main QML file
@@ -289,6 +392,10 @@ class EmcGui_Qt(EmcGui):
         # keep a reference of the main QML object for fast access
         self._qml_root = roots[0]
 
+        # all the keyboard input must be forwarded to EMC and ignored
+        self._events_manager = EventManager(self)
+        QtGui.QGuiApplication.instance().installEventFilter(self._events_manager)
+
         return True
 
     def destroy(self) -> None:
@@ -316,3 +423,6 @@ class EmcGui_Qt(EmcGui):
 
     def page_item_select(self, index: int):
         self._qml_root.page_item_select(index)
+
+    def default_keymap_get(self):
+        return DEFAULT_KEYS

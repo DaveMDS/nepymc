@@ -31,7 +31,7 @@ from nepymc.model import EmcModelViewInterface
 _gui_instance = None
 
 
-def init(backend: str, loop) -> bool:   # TODO remove loop !!!!!!
+def init(loop) -> bool:   # TODO remove loop !!!!!!
     """ return: False=failed True=ok """
     global _gui_instance
 
@@ -46,7 +46,6 @@ def init(backend: str, loop) -> bool:   # TODO remove loop !!!!!!
     ini.get('general', 'keyb_layouts', 'en_abc symbols')
 
     _gui_instance = EmcGui(loop, theme)
-    return _gui_instance.create()
 
 
 def shutdown():
@@ -57,7 +56,8 @@ def shutdown():
     _gui_instance = None
 
 
-def gui_instance_get() -> EmcGui:
+def instance() -> EmcGui:
+    """ Get the single instance of the EmcGui class """
     return _gui_instance
 
 

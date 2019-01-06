@@ -19,6 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from abc import abstractmethod
+from typing import Callable, Optional
 
 from nepymc.utils import EmcBackendableABC
 from nepymc.model import EmcModelViewInterface
@@ -43,6 +44,7 @@ class EmcGui(EmcBackendableABC):
         DBG('Window.__init__()')
         self._mainloop = mainloop
         self._theme_name = theme_name
+        self._key_down_func = None
 
     @abstractmethod
     def create(self) -> bool:
@@ -61,17 +63,33 @@ class EmcGui(EmcBackendableABC):
         """ sections: mainmenu,browser """
 
     @abstractmethod
-    def model_set(self, section: str, model: EmcModelViewInterface):
-        """
-        :param section:
-        :param model:
-        :return:
-        """
+    def model_set(self, section: str, model: EmcModelViewInterface) -> None:
+        """ Set the EMC model for the given section """
 
     @abstractmethod
-    def page_title_set(self, title: str):
+    def page_title_set(self, title: str) -> None:
         """ Set the page title """
 
     @abstractmethod
-    def page_icon_set(self, icon: str):
+    def page_icon_set(self, icon: str) -> None:
         """ Set the page icon """
+
+    @abstractmethod
+    def default_keymap_get(self) -> None:
+        """ Get the default keyboard mapping,
+            key: 'backend_key_name' => 'EMC_EVENT'
+        """
+
+    def key_down_connect(self, func: Optional[Callable[[str], None]]) -> None:
+        """ Set a callback to be fired on each key stroke received
+            This will be called by the keyb module, so it will receive
+            backend key events. None to unset the callback.
+        """
+        self._key_down_func = func
+
+    def key_down_send(self, key: str) -> None:
+        """ Send the received keyboard events to EMC
+            Backends must call this on each key press received from the win
+        """
+        if callable(self._key_down_func):
+            self._key_down_func(key)

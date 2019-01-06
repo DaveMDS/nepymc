@@ -827,7 +827,7 @@ class Test_Dialog(GenericItemClass):
                 d.progress_set(self._progress)
                 self._progress += 0.01
                 if self._progress > 1:
-                    self._progress = 0;
+                    self._progress = 0
 
             text = 'This is a <br><br><b>Progress operation</><br>dialog<br>'
             d = EmcDialog(title='Dialog - Progress', text=text,

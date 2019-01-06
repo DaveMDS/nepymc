@@ -239,7 +239,7 @@ setup(
     packages=[
         'nepymc',
         # 'nepymc.extapi',
-        # 'nepymc.plugins.input_keyb',
+        'nepymc.plugins.input_keyb',
         # 'nepymc.plugins.input_lirc',
         # 'nepymc.plugins.input_joy',
         # 'nepymc.plugins.input_webserver',
