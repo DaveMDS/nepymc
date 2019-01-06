@@ -26,13 +26,17 @@ EmcFocusManager {
     Behavior on opacity { NumberAnimation { duration: 350 } }
     Component.onCompleted: opacity = 1.0
 
-    Keys.onSpacePressed: {
-        print("TODO ENTER !!!!")
-        if (emcControls.state == "visible") {
+    Keys.onSelectPressed: {  // show controls
+        emcControls.state = "visible"
+        emcBtnPlay.forceActiveFocus()
+    }
+    Keys.onBackPressed: {
+        if (emcControls.state == "visible") {  // hide conrtols
             emcControls.state = ""
-        } else {
-            emcControls.state = "visible"
-//            emcBtnPlay.forceActiveFocus()
+            emcVideo.forceActiveFocus()
+        } else {  // quit videoplayer
+            emcVideo.pause()
+            root.emcDestroy()
         }
     }
 

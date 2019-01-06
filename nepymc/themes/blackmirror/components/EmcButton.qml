@@ -16,7 +16,7 @@ Item {
     width: emcBG.width
     height: emcBG.height
 
-    Keys.onReturnPressed: emcButtonClicked(idx)
+    Keys.onSelectPressed: emcButtonClicked(idx)
 
     Row {
         id: emcRow

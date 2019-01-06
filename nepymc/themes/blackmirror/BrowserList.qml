@@ -151,7 +151,7 @@ Item {
 //           height: childrenRect.height  // TODO should fit the font
             height: 42
 
-            Keys.onReturnPressed: {
+            Keys.onSelectPressed: {
                 BrowserModel.item_selected(index)
             }
 

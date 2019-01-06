@@ -1,0 +1,9 @@
+
+The only keys sent to QML are:
+    Qt.Key_Up
+    Qt.Key_Down
+    Qt.Key_Left
+    Qt.Key_Right
+    Qt.Key_Select  (OK emc event)
+    Qt.Key_Back    (BACK emc event)
+    Qt.Key_Exit    (EXIT emc event)

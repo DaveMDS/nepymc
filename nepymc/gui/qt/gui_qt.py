@@ -89,12 +89,12 @@ DEFAULT_KEYS = {
 
 
 INPUT_KEYS_MAP = {
-    # EMC input event => Qt key
+    # EMC input event => Qt key (These are the only keys received in QML)
     'UP': Qt.Key_Up,
     'DOWN': Qt.Key_Down,
     'LEFT': Qt.Key_Left,
     'RIGHT': Qt.Key_Right,
-    'OK': Qt.Key_Return,
+    'OK': Qt.Key_Select,
     'BACK': Qt.Key_Back,
     'EXIT': Qt.Key_Exit,
 }

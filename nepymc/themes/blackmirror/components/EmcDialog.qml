@@ -60,8 +60,8 @@ EmcFocusManager {
 
     Keys.onPressed: {
         switch(event.key) {
-        case Qt.Key_Backspace:
-        case Qt.Key_Escape:
+        case Qt.Key_Back:
+        case Qt.Key_Exit:
             root.emcQuitRequested()
             event.accepted = true
             break

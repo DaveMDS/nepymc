@@ -154,7 +154,7 @@ EmcFocusManager {
             width: 128  //width: childrenRect.width
             height: 128   //height: childrenRect.height
 
-            Keys.onReturnPressed: {
+            Keys.onSelectPressed: {
                 MainMenuModel.item_selected(index)
             }
 
