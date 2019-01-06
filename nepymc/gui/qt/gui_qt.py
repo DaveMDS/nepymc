@@ -128,11 +128,10 @@ class MainMenuModel(QtCore.QAbstractListModel):
             return mainmenu.model.item_data_get(index.row(), 'subitems') or ''
 
     # below methods are to be called from QML
-    @QtCore.Slot(int)
-    def item_selected(self, index):
+    @QtCore.Slot(int, int)
+    def item_selected(self, index, subindex):
         """ An in item has been selected in QML """
-        print("mainmenu_item_selected(%s)" % index)
-        mainmenu.model.item_selected(index)
+        mainmenu.model.item_selected(index, subindex)
 
 
 class BrowserModel(QtCore.QAbstractListModel):

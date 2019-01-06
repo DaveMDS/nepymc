@@ -51,9 +51,9 @@ class MenuItem(object):
     def __repr__(self):
         return '<MenuItem name:{0.name} w:{0.weight}>'.format(self)
 
-    def activate(self, subitem=''):
-        if subitem:
-            self.callback(subitem)
+    def activate(self, subitem=-1):
+        if subitem >= 0:
+            self.callback(self.subitems[subitem]['url'])
         else:
             self.callback()
 
@@ -69,9 +69,9 @@ class MainMenuModel(EmcModelViewInterface):
         item = _ITEMS[index]
         return getattr(item, field_name, None)
 
-    def item_selected(self, index):
+    def item_selected(self, index, subindex):
         item = _ITEMS[index]
-        item.activate()  # TODO subitems ??
+        item.activate(subindex)
 
 
 _ITEMS = []
@@ -103,13 +103,13 @@ def init():
     DBG("init")
     item_add('exit', 200, _('Exit'), 'icon/exit',
              # lambda: gui.ask_to_exit()
-             lambda: print("pippo")
+             lambda: print("TODO ASK TO EXIT")
              )
 
 
 def item_add(name: str, weight: int, label: str, icon: str,
              callback: Callable[[str], None],
-             subitems: Iterable[Iterable[str]] = None):  # TODO wrong typing?
+             subitems: Iterable[dict] = None):
     """
     Params:
         name: unique name for the item
@@ -117,9 +117,8 @@ def item_add(name: str, weight: int, label: str, icon: str,
         label: text to show in the gui
         icon: name of the icon
         callback: callable to call when the item is selected
-        subitems: iterable(label, icon, url)
+        subitems: dict('label', 'icon', 'url')
     """
-
     item = MenuItem(name, weight, label, icon, callback, subitems)
     DBG('ADD', item)
 

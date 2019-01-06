@@ -48,3 +48,4 @@ class EmcModelViewInterface(ABC):
 
     def select_item(self, index):
         """ The model request the view to show the given index """
+        raise NotImplementedError('The view are not hooking into select_item()')

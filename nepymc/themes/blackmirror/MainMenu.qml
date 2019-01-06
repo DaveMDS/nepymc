@@ -155,12 +155,18 @@ EmcFocusManager {
             height: 128   //height: childrenRect.height
 
             Keys.onSelectPressed: {
-                MainMenuModel.item_selected(index)
+                MainMenuModel.item_selected(index, -1)
             }
 
             // give focus to the sublist on DOWN pressed
             Keys.onDownPressed: {
                 sub_list.forceActiveFocus()
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: main_list.currentIndex = index
+                onDoubleClicked: MainMenuModel.item_selected(index, -1)
             }
 
             Rectangle {
@@ -223,11 +229,7 @@ EmcFocusManager {
                 }
             }
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: main_list.currentIndex = index
-                onDoubleClicked: MainMenuModel.item_selected(index)
-            }
+
 
             states: [
                 State {
@@ -264,7 +266,6 @@ EmcFocusManager {
         id: sub_list_delegate
 
         EmcTextBig {
-            property bool active: false
 
             // modelData when using python model, label otherwise (in testing)
             text: modelData.label ? modelData.label : label
@@ -286,6 +287,11 @@ EmcFocusManager {
                     source: "pics/shine_large.png"
                 }
             }
+
+            Keys.onSelectPressed: {
+                MainMenuModel.item_selected(main_list.currentIndex, index)
+            }
+            // TODO mouse handling !!!
         }
     }
 
