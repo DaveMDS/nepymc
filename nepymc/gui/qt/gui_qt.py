@@ -210,6 +210,85 @@ class BrowserModel(QtCore.QAbstractListModel):
         print("item_selected(%s)" % index)
         self._emc_model.item_selected(index)
 
+"""
+class NavigatorProxyModel(QtCore.QAbstractListModel):
+    label_role = QtCore.Qt.UserRole + 1
+    label_end_role = QtCore.Qt.UserRole + 2
+    icon_role = QtCore.Qt.UserRole + 3
+    icon_end_role = QtCore.Qt.UserRole + 4
+    info_role = QtCore.Qt.UserRole + 5
+    poster_role = QtCore.Qt.UserRole + 6
+    cover_role = QtCore.Qt.UserRole + 7
+    role_names_qt = {
+        label_role: b'title',  #  TODO rename roles based on EmcMediaItem ???
+        label_end_role: b'label_end',
+        icon_role: b'icon',
+        icon_end_role: b'icon_end',
+        info_role: b'info',
+        poster_role: b'poster',
+        cover_role: b'cover',
+    }
+    role_names = {
+        label_role: 'title',
+        label_end_role: 'label_end',
+        icon_role: 'icon',
+        icon_end_role: 'icon_end',
+        info_role: 'info',
+        poster_role: 'poster',
+        cover_role: 'cover',
+    }
+
+    def __init__(self, gui, parent=None):
+        super().__init__(parent)
+        self._emc_model = None  # EmcModel to extract data from
+        self._gui = gui
+        # self.direction = 0
+
+    @property
+    def emc_model(self):
+        return self._emc_model
+
+    @emc_model.setter
+    def emc_model(self, model):
+        self.beginResetModel()
+        self._emc_model = model
+        # model.view_reset = self.model_hook_reset
+        # model.select_item = self.model_hook_select_item
+        self.endResetModel()
+
+    # Qt model implementation (just a proxy to the emc model)
+    def roleNames(self):
+        return self.role_names_qt
+
+    def rowCount(self, index):
+        return self._emc_model.count_get() if self._emc_model else 0
+
+    def data(self, index, role):
+        if self._emc_model:
+            item_data = self._emc_model.item_get(index.row())
+            return item_data.get(self.role_names[role], '')
+        return ''
+
+    # below methods are to be called from QML
+    @QtCore.Slot(int, str, result=str)
+    def get(self, idx, role_name):
+        "" Same as data, but to be used from QML scripts ""
+        if self._emc_model:
+            item = self._emc_model.item_get(idx)
+            return item.get(role_name)
+
+    @QtCore.Slot(int)
+    def item_activated(self, idx):
+        "" An in item has been activated in QML ""
+        self._emc_model.item_activated(idx)
+
+    @QtCore.Slot(result=int)
+    def get_direction(self):
+        "" TODO ""
+        print("------------", self._emc_model.direction)
+        return self._emc_model.direction
+"""
+
 
 class GuiCommunicator(QtCore.QObject):
     """ This is the EmcBackend object visible from QML """
@@ -351,6 +430,7 @@ class EmcGui_Qt(EmcGui):
         self._qml_root = None
         self._model1 = None
         self._browser_model_qt = None
+        # self._navigator_proxymodel = NavigatorProxyModel(self)
         self._backend_instance = None
         self._nam_factory = None
         self._events_manager = None
@@ -370,8 +450,11 @@ class EmcGui_Qt(EmcGui):
         ctxt = self._qml_engine.rootContext()
         self._model1 = MainMenuModel()
         ctxt.setContextProperty('MainMenuModel', self._model1)
+
         self._browser_model_qt = BrowserModel(self)
         ctxt.setContextProperty('BrowserModel', self._browser_model_qt)
+
+        # ctxt.setContextProperty('NavigatorModel', self._navigator_proxymodel)
 
         # inject the Communicator class
         self._backend_instance = GuiCommunicator(self)
@@ -413,6 +496,8 @@ class EmcGui_Qt(EmcGui):
             # self._browser_model_qt.beginResetModel()
             self._browser_model_qt.emc_model = model
             # self._browser_model_qt.endResetModel()
+        # elif section == 'navigator':
+        #     self._navigator_proxymodel.emc_model = model
 
     def page_title_set(self, title: str):
         self._qml_root.page_title_set(title)

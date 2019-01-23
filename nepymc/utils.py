@@ -198,7 +198,7 @@ class EmcBackendableABC(ABC):
     """ TODO DOC """
 
     backendable_pkg = 'Subclass MUST override'  # fe: 'mainloop', 'gui'
-    backendable_cls = 'Subclass MUST override'  # fe: 'EmcMainLoop', 'EmcDialog'
+    backendable_cls = 'Subclass MUST override'  # fe: 'EmcTimer', 'EmcDialog'
 
     def __new__(cls, *args, **kargs):
 

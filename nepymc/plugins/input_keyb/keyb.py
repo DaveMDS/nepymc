@@ -28,7 +28,7 @@ from nepymc import ini
 
 
 def DBG(*args):
-    print('KEYB:', *args)
+    # print('KEYB:', *args)
     pass
 
 

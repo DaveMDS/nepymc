@@ -31,7 +31,7 @@ def LOG(*args):
 
 
 def DBG(*args):
-    print('MAINMENU:', *args)
+    # print('MAINMENU:', *args)
     pass
 
 
