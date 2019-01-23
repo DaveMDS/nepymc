@@ -202,7 +202,8 @@ EmcFocusManager {
 
             anchors.left: emcControlsPosition.right
             anchors.right: emcControlsLength.left
-            y: 40
+            anchors.top: emcControlsPosition.top
+            anchors.bottom: emcControlsPosition.bottom
 
             onMoved: emcVideo.seek(value)
         }
