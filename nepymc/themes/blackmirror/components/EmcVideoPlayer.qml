@@ -1,6 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtMultimedia 5.8
+import QtMultimedia 5.12
 import "../utils/"
 import "../utils/utils.js" as Utils
 
@@ -27,14 +27,14 @@ EmcFocusManager {
     Component.onCompleted: opacity = 1.0
 
     Keys.onSelectPressed: {  // show controls
-        emcControls.state = "visible"
+        emcControls.emcVisible = true
         emcBtnPlay.forceActiveFocus()
     }
     Keys.onBackPressed: {
-        if (emcControls.state == "visible") {  // hide conrtols
-            emcControls.state = ""
+        if (emcControls.emcVisible) {  // hide controls if visible...
+            emcControls.emcVisible = false
             emcVideo.forceActiveFocus()
-        } else {  // quit videoplayer
+        } else {  // ... or quit videoplayer
             emcVideo.pause()
             root.emcDestroy()
         }
@@ -50,25 +50,22 @@ EmcFocusManager {
 
         source: url
         autoPlay: true
+        volume: emcVolume.emcVolumeValue
 
         anchors.fill: parent
 
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                if (emcControls.state == "visible")
-                    emcControls.state = ""
-                else
-                    emcControls.state = "visible"
-            }
+            onClicked: emcControls.emcVisible = !emcControls.emcVisible
         }
     }
 
     Item {
         id: emcControls
 
+        property bool emcVisible: false
+
         anchors.fill: parent
-        anchors.topMargin: -150  // start hidden in the top
 
         BorderImage {  // controls background
             id: emcControlsBG
@@ -85,7 +82,6 @@ EmcFocusManager {
             emcUrl: root.poster
 
             x: 6
-            y: -(height / 2)  // start hidden in the top
             width: root.poster ? parent.width / 4 : 0
             height: width * 1.1
         }
@@ -227,37 +223,89 @@ EmcFocusManager {
             text: root.title
             font.family: EmcGlobals.font2.name
             style: Text.Raised
-            opacity: 0.0  // start hidden
+
         }
 
-        states: State {
-            name: "visible"
-            PropertyChanges {
-                target: emcControls
-                anchors.topMargin: 0
+        states: [
+            State {
+                name: "visible"
+                when: emcControls.emcVisible
+                PropertyChanges {
+                    target: emcControls
+                    anchors.topMargin: 0
+                }
+                PropertyChanges {
+                    target: emcControlsCover
+                    y: 6
+                }
+                PropertyChanges {
+                    target: emcControlsTitle
+                    opacity: 1.0
+                }
+                PropertyChanges {
+                    target: emcVolume
+                    emcVisible: true
+                }
+            },
+            State {
+                name: "hidden"
+                when: !emcControls.emcVisible
+                PropertyChanges {
+                    target: emcControls
+                    anchors.topMargin: -150
+                    visible: false
+                }
+                PropertyChanges {
+                    target: emcControlsCover
+                    y: -(height / 2)
+                }
+                PropertyChanges {
+                    target: emcControlsTitle
+                    opacity: 0.0
+                }
+                PropertyChanges {
+                    target: emcVolume
+                    emcVisible: false
+                }
             }
-            PropertyChanges {
-                target: emcControlsCover
-                y: 6
-            }
-            PropertyChanges {
-                target: emcControlsTitle
-                opacity: 1.0
-            }
-        }
+        ]
 
-        transitions: Transition {
-            from: ""; to: "visible"; reversible: true
-            NumberAnimation {
-                easing.type: Easing.OutQuad
-                duration: 300
-                properties: "anchors.topMargin, opacity, y"
+        transitions: [
+            Transition {
+                from: "hidden"; to: "visible"
+                SequentialAnimation {
+                    PropertyAnimation {
+                        duration: 0
+                        property: "visible"
+                    }
+                    NumberAnimation {
+                        easing.type: Easing.OutQuad
+                        duration: 300
+                        properties: "anchors.topMargin, opacity, y"
+                    }
+                }
+            },
+            Transition {
+                from: "visible"; to: "hidden"
+                SequentialAnimation {
+                    NumberAnimation {
+                        easing.type: Easing.InQuad
+                        duration: 300
+                        properties: "anchors.topMargin, opacity, y"
+                    }
+                    PropertyAnimation {
+                        duration: 0
+                        property: "visible"
+                    }
+                }
             }
-        }
+        ]
+
     }
 
-
-
+    EmcVolumeIndicator {
+        id: emcVolume
+    }
 
 }
 
