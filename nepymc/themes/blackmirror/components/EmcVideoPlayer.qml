@@ -11,6 +11,7 @@ EmcFocusManager {
     /* TODO THEME API */
     property alias url: emcVideo.source
     property alias position: emcVideo.position  // readonly
+    property alias duration: emcVideo.duration  // readonly
     property alias volume: emcVideo.volume // log adjusted, 0.0-1.0
     property string title: ""
     property string poster: ""
@@ -21,13 +22,16 @@ EmcFocusManager {
     function pause() {
         emcVideo.pause()
     }
+    function stop() {
+        emcVideo.stop()
+        close()
+    }
     function seek(position) {
         emcVideo.seek(position)
     }
 
 
     function close() {
-
         root.focusAllow = false
         root.focus = false
         root.focus_stack_pop()
@@ -168,54 +172,42 @@ EmcFocusManager {
             EmcButton {  // button: Fast Backward
                 id: emcBtnFBwd
                 icon: "icon/fbwd"
-                onEmcButtonClicked: {
-                    emcVideo.seek(emcVideo.position - 60 * 1000)
-                }
+                onEmcButtonClicked: EmcBackend.player_action_request("fbwd")
                 KeyNavigation.right: emcBtnBwd
             }
             EmcButton {  // button: Backward
                 id: emcBtnBwd
                 icon: "icon/bwd"
-                onEmcButtonClicked: {
-                    emcVideo.seek(emcVideo.position - 10 * 1000)
-                }
+                onEmcButtonClicked: EmcBackend.player_action_request("bwd")
                 KeyNavigation.right: emcBtnStop
             }
             EmcButton {  // button: Stop
                 id: emcBtnStop
                 icon: "icon/stop"
-                onEmcButtonClicked: {
-                    emcVideo.pause()
-                    root.close()
-                }
+                onEmcButtonClicked: EmcBackend.player_action_request("stop")
                 KeyNavigation.right: emcBtnPlay
             }
             EmcButton {  // button: Play / Pause
                 id: emcBtnPlay
                 icon: emcVideo.playbackState == MediaPlayer.PlayingState ? "icon/pause" : "icon/play"
                 onEmcButtonClicked: {
-                    if (emcVideo.playbackState == MediaPlayer.PlayingState) {
-                        emcVideo.pause()
-                    } else {
-                        emcVideo.play()
-                    }
+                    if (emcVideo.playbackState == MediaPlayer.PlayingState)
+                        EmcBackend.player_action_request("pause")
+                    else
+                        EmcBackend.player_action_request("play")
                 }
                 KeyNavigation.right: emcBtnFwd
             }
             EmcButton {  // button: Forward
                 id: emcBtnFwd
                 icon: "icon/fwd"
-                onEmcButtonClicked: {
-                    emcVideo.seek(emcVideo.position + 10 * 1000)
-                }
+                onEmcButtonClicked: EmcBackend.player_action_request("fwd")
                 KeyNavigation.right: emcBtnFFwd
             }
             EmcButton {  // button: Fast Forward
                 id: emcBtnFFwd
                 icon: "icon/ffwd"
-                onEmcButtonClicked: {
-                    emcVideo.seek(emcVideo.position + 60 * 1000)
-                }
+                onEmcButtonClicked: EmcBackend.player_action_request("ffwd")
             }
         }
 

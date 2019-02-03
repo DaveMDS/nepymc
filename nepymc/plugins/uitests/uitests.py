@@ -516,7 +516,6 @@ class Test_Timer(GenericItemClass):
 
 class Test_MediaPlayer(GenericItemClass):
     def item_selected(self, url, user_data):
-        print("M P ", url, user_data)
 
         # Mediaplayer Local Video
         if url == 'uitest://mpv':

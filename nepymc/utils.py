@@ -124,11 +124,11 @@ def hum_size(bytes):
     return size
 
 
-def seconds_to_duration(seconds, hours=False):
-    """Convert the number of seconds in a readable duration
+def millis_to_duration(millis, hours=False):
+    """Convert the number of milliseconds in a readable duration
        hours: If True then hours will be visible also when < 1
     """
-    seconds = int(seconds)
+    seconds = millis / 1000.0
     h = seconds // 3600
     m = (seconds // 60) % 60
     s = seconds % 60

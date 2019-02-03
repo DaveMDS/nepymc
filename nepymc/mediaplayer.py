@@ -61,7 +61,10 @@ _onair_poster = None
 _play_db = None  # key: url  data: {'started': 14, 'finished': 0, 'stop_at': 0 }
 
 
+#
 # ---- module API ----
+#
+
 def init():
     global _volume
     global _play_db
@@ -91,7 +94,6 @@ def init():
 
     # restore volume from previous session
     _volume = ini.get_float('mediaplayer', 'volume')
-    # gui.volume_set(volume_get() / 100.0)
 
     # simple db to store the count of played files
     _play_db = EmcDatabase('playcount')
@@ -101,8 +103,6 @@ def init():
 
 
 def shutdown():
-    global _play_db
-
     input_events.listener_del("mediaplayer")
     if _player:
         _player.delete()
@@ -111,15 +111,10 @@ def shutdown():
     del _play_db
 
 
-"""
-# ---- gui API ----
-def audio_player_show():
-    if isinstance(_player, EmcAudioPlayer):
-        _player.focus = True
-"""
-
-
+#
 # ---- mediaplyer API ----
+#
+
 def play_url(url, only_audio=False, start_from=None):
     global _onair_url, _onair_title, _onair_poster
     global _player, _saved_player
@@ -160,28 +155,31 @@ def play_url(url, only_audio=False, start_from=None):
         _play_real(0)
         return
 
-    # resume_opt: 0=ask, 1=always, 2=never
+    # resume playback from last position ?
+    #   0=ask, 1=always, 2=never
     resume_opt = ini.get_int('mediaplayer', 'resume_from_last_pos')
 
     if resume_opt == 2:  # never resume
         _play_real(0)
         return
 
-    # resume playback from last position ?
     counts = play_counts_get(url)
-    if counts['stop_at'] > 10.0:  # don't ask if less then 10 seconds
-        pos = counts['stop_at']
-        if resume_opt == 1:  # always resume
-            _play_real(pos)
-            return
-        # ask if resume or not
-        time = utils.seconds_to_duration(pos, True)
-        gui.dialog_factory(style='yesno', title=_('Resume playback'),
-                           text=_('Continue from %s ?') % time,
-                           done_cb=_resume_yes_cb, canc_cb=_resume_no_cb,
-                           user_data=pos)
-    else:
+    pos = counts['stop_at'] or 0
+
+    if resume_opt == 1:  # always resume
+        _play_real(pos)
+        return
+
+    if pos < 10000:  # don't ask if less then 10 seconds
         _play_real(0)
+        return
+
+    # ask the user if resume or not
+    time = utils.millis_to_duration(pos, True)
+    gui.EmcDialog(style='yesno', title=_('Resume playback'),
+                  text=_('Continue from %s ?') % time,
+                  done_cb=_resume_yes_cb, canc_cb=_resume_no_cb,
+                  user_data=pos)
 
 
 def _resume_yes_cb(dia):
@@ -254,7 +252,7 @@ def stop(emit_playback_finished=False):
     # update play counts (only for videos)
     if isinstance(_player, gui.EmcVideoPlayer):
         counts = play_counts_get(_onair_url)
-        if _player.position >= _player.play_length - 5 or _player.position == 0.0:  # vlc set the pos at zero when finished :/
+        if position_percent_get() >= 0.99:  # 1% from the end
             counts['finished'] += 1
             counts['stop_at'] = 0
         else:
@@ -265,32 +263,32 @@ def stop(emit_playback_finished=False):
     # if emit_playback_finished:
     #     events.event_emit('PLAYBACK_FINISHED')
 
-    # delete the player
+    # stop the player
     if _player:
-        _player.delete()
+        _player.stop()
         _player = None
 
     # restore a saved AudioPlayer
-    # if _saved_player is not None:
-    #     _player = _saved_player
-    #     _player.show()
-    #     _saved_player = None
-    # else:
-    #     playlist.clear()
-    #     _onair_url = None
-    #     _onair_title = None
+    if _saved_player is not None:
+        _player = _saved_player
+        _player.show()
+        _saved_player = None
+    else:
+        # playlist.clear()
+        _onair_url = None
+        _onair_title = None
 
 
-# def pause():
-#     if _player:
-#         _player.pause()
-#
-#
-# def unpause():
-#     if _player:
-#         _player.unpause()
-#
-#
+def pause():
+    if _player:
+        _player.pause()
+
+
+def play():
+    if _player:
+        _player.play()
+
+
 # def pause_toggle():
 #     if _player:
 #         _player.pause_toggle()
@@ -303,43 +301,71 @@ def stop(emit_playback_finished=False):
 #     if _player.paused:
 #         return 'Paused'
 #     return 'Playing'
-#
-#
-# def seek(offset):
-#     """ offset in seconds (float) """
-#     if _player: _player.seek(offset)
-#
-#
-# def forward():
-#     if _player: _player.forward()
-#
-#
-# def backward():
-#     if _player: _player.backward()
-#
-#
-# def fforward():
-#     if _player: _player.fforward()
-#
-#
-# def fbackward():
-#     if _player: _player.fbackward()
+
+
+def seek(offset: int):
+    """ change player position relative, offset in millis """
+    if _player:
+        position_set(_player.position + offset)
+
+
+def forward():
+    if _player:
+        position_set(position_get() + 10 * 1000)
+
+
+def backward():
+    if _player:
+        position_set(position_get() - 10 * 1000)
+
+
+def fforward():
+    if _player:
+        position_set(position_get() + 60 * 1000)
+
+
+def fbackward():
+    if _player:
+        position_set(position_get() - 60 * 1000)
+
 #
 #
 # def seekable_get():
 #     return _player.seekable if _player else False
 #
-#
-# def position_set(pos):
-#     """ pos in seconds (float) """
-#     if _player: _player.position = pos
-#
-#
-# def position_get():
-#     """ get position in seconds (float) from the start """
-#     if _player: return _player.position
-#
-#
+
+
+def position_set(pos: int):
+    """ set player position in milliseconds from the start """
+    if _player:
+        _player.position = utils.clamp(pos, 0, _player.duration)
+
+
+def position_percent_set(val):
+    """ set the playback position in the range 0.0 -> 1.0 """
+    if _player:
+        position_set(_player.duration * val)
+
+
+def position_get() -> int:
+    """ get player position in milliseconds from the start """
+    return _player.position if _player else 0
+
+
+def position_percent_get() -> float:
+    """ return the playback position in the range 0.0 -> 1.0 """
+    if _player:
+        pos, dur = _player.position, _player.duration
+        return (pos / dur) if dur > 0 else 0.0
+    else:
+        return 0.0
+
+
+def duration_get() -> int:
+    """ return the currently playing media duration in millis """
+    if _player:
+        return _player.duration
+
 
 def volume_set(vol: float) -> None:
     """ Set linear volume. Float, always between 0 and 100 """

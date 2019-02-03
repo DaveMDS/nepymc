@@ -54,7 +54,7 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
 
     @property
     def url(self) -> str:
-        return self._qml_obj.getProperty('url')
+        return self._qml_obj.property('url')
 
     @url.setter
     def url(self, url: str) -> None:
@@ -63,21 +63,30 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
     @property
     def position(self) -> int:
         """ millis """
-        return self._qml_obj.getProperty('position')
+        return self._qml_obj.property('position')
 
     @position.setter
     def position(self, val: int):
         self._qml_obj.seek(val)
 
+    @property
+    def duration(self) -> int:
+        """ millis """
+        return self._qml_obj.property('duration')
+
     def volume_set(self, val: float) -> None:
         self._qml_obj.setProperty('volume', val / 100.0)
 
     def play(self) -> None:
+        # make sure the videplayer is visible and focused
         self._gui._qml_root.activate_section('videoplayer')
         self._qml_obj.play()
 
     def pause(self) -> None:
         self._qml_obj.pause()
+
+    def stop(self) -> None:
+        self._qml_obj.stop()
 
     def title_set(self, title: str) -> None:
         self._qml_obj.setProperty('title', title)

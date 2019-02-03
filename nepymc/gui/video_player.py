@@ -56,6 +56,11 @@ class EmcVideoPlayer(EmcBackendableABC):
     def position(self, val: int):
         """ millis """
 
+    @property
+    @abstractmethod
+    def duration(self) -> int:
+        """ millis """
+
     @abstractmethod
     def volume_set(self, val: float) -> None:
         """ 0 - 100  (logaritmic adjusted) """
@@ -67,6 +72,10 @@ class EmcVideoPlayer(EmcBackendableABC):
     @abstractmethod
     def pause(self) -> None:
         """ pause playback """
+
+    @abstractmethod
+    def stop(self) -> None:
+        """ stop playback """
 
     @abstractmethod
     def title_set(self, title: str) -> None:

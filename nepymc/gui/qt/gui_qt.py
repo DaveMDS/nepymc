@@ -318,6 +318,24 @@ class GuiCommunicator(QtCore.QObject):
         """ 0.0-1.0 Linear """
         self._gui.volume_change_request(val * 100.0)
 
+    @QtCore.Slot(str, result=None)
+    def player_action_request(self, action: str) -> None:
+        if action == 'fbwd':
+            mediaplayer.fbackward()
+        elif action == 'bwd':
+            mediaplayer.backward()
+        elif action == 'fwd':
+            mediaplayer.forward()
+        elif action == 'ffwd':
+            mediaplayer.fforward()
+        elif action == 'play':
+            mediaplayer.play()
+        elif action == 'pause':
+            mediaplayer.pause()
+        elif action == 'stop':
+            mediaplayer.stop()
+
+
 
 class QMLNetworkDiskCache(QtNetwork.QAbstractNetworkCache):
     """ Provide on-file cache for all QML net requests """
