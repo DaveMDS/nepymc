@@ -30,6 +30,7 @@ from PySide2.QtCore import Qt
 from nepymc import utils
 from nepymc import mainmenu
 from nepymc import input_events
+from nepymc import mediaplayer
 from nepymc.gui import EmcGui
 from nepymc.model import EmcModelViewInterface
 
@@ -482,6 +483,9 @@ class EmcGui_Qt(EmcGui):
         # all the keyboard input must be forwarded to EMC and ignored
         self._events_manager = EventManager(self)
         QtGui.QGuiApplication.instance().installEventFilter(self._events_manager)
+
+        # startup with correct volume value
+        self.volume_set(mediaplayer.volume_get())
 
         return True
 
