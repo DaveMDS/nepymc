@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import "components/"
 import "utils/utils.js" as Utils
 
 
@@ -15,18 +16,30 @@ ApplicationWindow {
     property var emcFocusStack: []  // TODO find a better place for this
 
     /* theme API TODOC */
+
+    // Linear volume 0.0-1.0, to be used in linear gui elements (sliders)
+    property real emcLinearVolume  // value comes from python
+
     function activate_section(section) {
         console.log("activate_section: " + section)
         var obj
         switch (section) {
-        case "browser":   obj = emc_browser; break
-//        case "navigator": obj = emc_navigator; break
-        case "mainmenu":  obj = emc_mainmenu; break
+        case "browser":
+            obj = emc_browser
+            break
+        case "mainmenu":
+            obj = emc_mainmenu
+            break
+        case "videoplayer":
+            emcVideoPlayerLoader.active = true
+            obj = emcVideoPlayerLoader.item
+            break;
         default:
             print("ERROR: unknown section: " + section)
             return
         }
         obj.forceActiveFocus()
+        return obj
     }
 
     function hide_section(section) {
@@ -63,15 +76,6 @@ ApplicationWindow {
         return dia
     }
 
-    function build_video_player(url) {
-        var player = Utils.load_qml_obj("components/EmcVideoPlayer.qml",
-                                        emcApplicationWindow, {
-                                            url: url
-                                       })
-        player.forceActiveFocus()
-        return player
-    }
-
     Component.onCompleted: {
         emc_mainmenu.forceActiveFocus()
     }
@@ -83,8 +87,8 @@ ApplicationWindow {
 
     Image {
         anchors.fill: parent
-//        source: "pics/background.jpg"
-        source: "pics/TESTBG.jpg"
+        source: "pics/background.jpg"
+//        source: "pics/TESTBG.jpg"
         fillMode: Image.PreserveAspectCrop
     }
 
@@ -98,6 +102,18 @@ ApplicationWindow {
 
     MainMenu {
         id: emc_mainmenu
+    }
+
+    Loader {
+        id: emcVideoPlayerLoader
+        active: false
+        anchors.fill: parent
+        source: "components/EmcVideoPlayer.qml"
+    }
+
+    EmcVolumeIndicator {
+        id: emcVolumeIndicator
+        emcVisible: false
     }
 
 }

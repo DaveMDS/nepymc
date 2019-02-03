@@ -342,8 +342,8 @@ def init():
 
     root_item_add('config://general/', 1, _('General'),
                   'icon/emc', _general_list)
-    # root_item_add('config://audio/', 2, _('Audio'),
-    #               'icon/music', _audio_list)
+    root_item_add('config://audio/', 2, _('Audio'),
+                  'icon/music', _audio_list)
     root_item_add('config://modules/', 3, _('Modules'),
                   'icon/module', _modules_list)
     # root_item_add('config://themes/', 4, _('Themes'),
@@ -607,12 +607,12 @@ def _audio_populate(browser, url):
                              fmt='%.0f', udm='%', min=1, max=15, step=1)
     standard_item_number_add('mediaplayer', 'volume_maximum',
                              _('Volume maximum value'), 'icon/volume',
-                             fmt='%.0f', udm='%', min=50, max=200, step=10)
+                             fmt='%.0f', udm='%', min=50, max=150, step=10)
 
     vals = (_('None'), _('Too low'), _('A bit'), _('Normal'), _('Too much'))
     standard_item_int_meaning_add('mediaplayer', 'volume_exponent',
-                                 _('Volume logarithmic adjustment'),
-                                 icon='icon/volume', values=vals)
+                                  _('Volume logarithmic adjustment'),
+                                  icon='icon/volume', values=vals)
 
 
 # #############  VIEWS  ########################################################

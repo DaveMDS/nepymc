@@ -185,6 +185,10 @@ def natural_cmp(a, b):
         return -1
 
 
+def clamp(val, lower, upper):
+    return lower if val < lower else upper if val > upper else val
+
+
 class Singleton(object):
     __single = None
 

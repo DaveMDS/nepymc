@@ -312,6 +312,11 @@ class GuiCommunicator(QtCore.QObject):
         # TODO questo dovrebbe essere una @property
         return "Not Emotion Media Center"
 
+    @QtCore.Slot(float, result=None)
+    def volume_change_request(self, val):
+        """ 0.0-1.0 Linear """
+        self._gui.volume_change_request(val * 100.0)
+
 
 class QMLNetworkDiskCache(QtNetwork.QAbstractNetworkCache):
     """ Provide on-file cache for all QML net requests """
@@ -510,3 +515,6 @@ class EmcGui_Qt(EmcGui):
 
     def default_keymap_get(self):
         return DEFAULT_KEYS
+
+    def volume_set(self, volume: float) -> None:
+        self._qml_root.setProperty('emcLinearVolume', volume / 100.0)

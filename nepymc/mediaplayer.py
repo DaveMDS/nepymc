@@ -28,7 +28,7 @@ from nepymc import utils
 from nepymc import ini
 from nepymc import gui
 from nepymc.sdb import EmcDatabase
-# from nepymc import input_events
+from nepymc import input_events
 # from nepymc import events
 # from nepymc.gui import EmcDialog, EmcButton, EmcMenu, DownloadManager, \
 #    EmcNotify, EmcImage, EmcSlider
@@ -51,8 +51,8 @@ video_extensions = [
 ]
 audio_extensions = ['.mp3', '.ogg', '.oga', '.flac', '.m4a', '.wav', '.opus']
 
-# _volume = 0.0  # Linear volume between 0 and MAX (100 by default)
-# _volume_muted = False
+_volume = 0.0  # Linear volume between 0 and MAX (100 by default)
+_volume_muted = False
 _player = None  # EmcVideoPlayer or EmcAudioPlayer instance, or None
 _saved_player = None  # EmcAudioPlayer while EmcVideoPlayer is active
 _onair_url = None
@@ -97,13 +97,13 @@ def init():
     _play_db = EmcDatabase('playcount')
 
     # input events
-    # input_events.listener_add("mediaplayer", input_event_cb)
+    input_events.listener_add("mediaplayer", _input_event_cb)
 
 
 def shutdown():
     global _play_db
 
-    # input_events.listener_del("mediaplayer")
+    input_events.listener_del("mediaplayer")
     if _player:
         _player.delete()
     if _saved_player:
@@ -201,12 +201,15 @@ def _play_real(start_from=None, only_audio=False):
 
     if only_audio:
         if _player is None:
-            _player = EmcAudioPlayer(url)
-        else:
-            _player.url = url
+            _player = EmcAudioPlayer()
+        _player.url = url
     else:
-        _player = gui.EmcVideoPlayer(url)
+        if _player is None:
+            _player = gui.EmcVideoPlayer()
+        _player.url = url
         _player.position = start_from or 0
+        _player.volume_set(volume_adjusted_get())
+        _player.play()
 
         # keep the counts of played/finished urls
         if _play_db.id_exists(url):
@@ -278,7 +281,6 @@ def stop(emit_playback_finished=False):
     #     _onair_title = None
 
 
-
 # def pause():
 #     if _player:
 #         _player.pause()
@@ -287,8 +289,8 @@ def stop(emit_playback_finished=False):
 # def unpause():
 #     if _player:
 #         _player.unpause()
-
-
+#
+#
 # def pause_toggle():
 #     if _player:
 #         _player.pause_toggle()
@@ -326,8 +328,8 @@ def stop(emit_playback_finished=False):
 #
 # def seekable_get():
 #     return _player.seekable if _player else False
-
-
+#
+#
 # def position_set(pos):
 #     """ pos in seconds (float) """
 #     if _player: _player.position = pos
@@ -338,50 +340,58 @@ def stop(emit_playback_finished=False):
 #     if _player: return _player.position
 #
 #
-# def volume_set(vol):
-#     """ set linear volume. Float, always between 0 and 100 """
-#     global _volume
-#
-#     vol = max(0, min(vol, 100))
-#     vol = vol / 100.0 * ini.get_int('mediaplayer', 'volume_maximum')
-#     if vol != _volume:
-#         _volume = vol
-#         ini.set('mediaplayer', 'volume', _volume)
-#         events.event_emit('VOLUME_CHANGED')
-#
-#
-# def volume_get():
-#     """ get linear volume. Float, always between 0 and 100 """
-#     maximum = ini.get_int('mediaplayer', 'volume_maximum')
-#     return _volume / maximum * 100.0
+
+def volume_set(vol: float) -> None:
+    """ Set linear volume. Float, always between 0 and 100 """
+    global _volume
+
+    vol = utils.clamp(vol, 0, 100)
+    vol = vol / 100.0 * ini.get_int('mediaplayer', 'volume_maximum')
+
+    if vol == _volume:
+        return
+
+    _volume = vol
+    gui.volume_set(vol)
+    ini.set('mediaplayer', 'volume', _volume)
+    # events.event_emit('VOLUME_CHANGED')
+
+    if _player:
+        _player.volume_set(volume_adjusted_get())
 
 
-# def volume_adjusted_get():
-#     """ logarithmic adjusted volume. Float, between 0.0 and MAX (100 by default)
-#     https://www.dr-lex.be/info-stuff/volumecontrols.html
-#     """
-#     exp = ini.get_int('mediaplayer', 'volume_exponent')
-#     if 1 < exp < 5:
-#         adjusted = ((float(_volume) / 100) ** exp) * 100
-#     else:
-#         adjusted = float(_volume)
-#
-#     return adjusted
-#
-#
-# def volume_step_get():
-#     """ volume adjustament step. Int, between 1 and 100 """
-#     return ini.get_int('mediaplayer', 'volume_adjust_step')
-#
-#
-# def volume_inc():
-#     volume_set(volume_get() + volume_step_get())
-#
-#
-# def volume_dec():
-#     volume_set(volume_get() - volume_step_get())
-#
-#
+def volume_get():
+    """ get linear volume. Float, always between 0 and 100 """
+    maximum = ini.get_int('mediaplayer', 'volume_maximum')
+    return _volume / maximum * 100.0
+
+
+def volume_adjusted_get():
+    """ logarithmic adjusted volume. Float, between 0.0 and MAX (100 by default)
+          https://www.dr-lex.be/info-stuff/volumecontrols.html
+    """
+    exp = ini.get_int('mediaplayer', 'volume_exponent')
+    if 1 < exp < 5:
+        adjusted = ((_volume / 100.0) ** exp) * 100
+    else:
+        adjusted = _volume
+
+    return adjusted
+
+
+def volume_step_get():
+    """ volume adjustament step. Int, between 1 and 100 """
+    return ini.get_int('mediaplayer', 'volume_adjust_step')
+
+
+def volume_inc():
+    volume_set(volume_get() + volume_step_get())
+
+
+def volume_dec():
+    volume_set(volume_get() - volume_step_get())
+
+
 # def volume_mute_set(mute):
 #     global _volume_muted
 #
@@ -397,19 +407,19 @@ def stop(emit_playback_finished=False):
 #     volume_mute_set(not _volume_muted)
 
 
-"""
 # ---- input events ----
-def input_event_cb(event):
+def _input_event_cb(event):
     if event == 'VOLUME_UP':
         volume_inc()
     elif event == 'VOLUME_DOWN':
         volume_dec()
     elif event == 'VOLUME_MUTE':
-        volume_mute_toggle()
+        # volume_mute_toggle()
+        print('mute toggle')
     else:
         return input_events.EVENT_CONTINUE
     return input_events.EVENT_BLOCK
-"""
+
 
 ###############################################################################
 """

@@ -41,15 +41,43 @@ def DBG(*args):
 
 class EmcVideoPlayer_Qt(EmcVideoPlayer):
 
-    def __init__(self, url: str=None):
-        super().__init__(url)
+    def __init__(self):
+        super().__init__()
         print("INIT VIDEO PLAYER QT")
 
         self._gui = gui.instance()
-        self._qml_obj = self._gui._qml_root.build_video_player(url)
+        self._qml_obj = self._gui._qml_root.activate_section('videoplayer')
 
     def delete(self) -> None:
-        self._qml_obj.emcDestroy()
+        # self._qml_obj.emcDestroy()  # TODO call close() in qml??
+        pass
+
+    @property
+    def url(self) -> str:
+        return self._qml_obj.getProperty('url')
+
+    @url.setter
+    def url(self, url: str) -> None:
+        self._qml_obj.setProperty('url', url)
+
+    @property
+    def position(self) -> int:
+        """ millis """
+        return self._qml_obj.getProperty('position')
+
+    @position.setter
+    def position(self, val: int):
+        self._qml_obj.seek(val)
+
+    def volume_set(self, val: float) -> None:
+        self._qml_obj.setProperty('volume', val / 100.0)
+
+    def play(self) -> None:
+        self._gui._qml_root.activate_section('videoplayer')
+        self._qml_obj.play()
+
+    def pause(self) -> None:
+        self._qml_obj.pause()
 
     def title_set(self, title: str) -> None:
         self._qml_obj.setProperty('title', title)

@@ -80,6 +80,24 @@ class EmcGui(EmcBackendableABC):
             key: 'backend_key_name' => 'EMC_EVENT'
         """
 
+    @abstractmethod
+    def volume_set(self, volume: float) -> None:
+        """ Set the linear volume in the gui (0-100). For sliders,
+            see VideoPlayer / AudioPlayer for logarithimc adjusted volume
+        """
+
+    #
+    #  Utils for implementators
+    #
+
+    @staticmethod
+    def volume_change_request(val: float) -> None:
+        """ The gui request a new volume value (Linear 0-100)
+            This usually comes from a slider changed by user
+        """
+        from nepymc import mediaplayer
+        mediaplayer.volume_set(val)
+
     def key_down_connect(self, func: Optional[Callable[[str], None]]) -> None:
         """ Set a callback to be fired on each key stroke received
             This will be called by the keyb module, so it will receive

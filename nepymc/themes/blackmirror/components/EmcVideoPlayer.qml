@@ -9,22 +9,32 @@ EmcFocusManager {
     objectName: "EmcVideoPlayer"
 
     /* TODO THEME API */
-    property string url
-    property string title
-    property string poster
+    property alias url: emcVideo.source
+    property alias position: emcVideo.position  // readonly
+    property alias volume: emcVideo.volume // log adjusted, 0.0-1.0
+    property string title: ""
+    property string poster: ""
 
-    function emcDestroy() {  /* TODO THEME API */
-        root.opacity = 0.0  // fade out
+    function play() {
+        emcVideo.play()
+    }
+    function pause() {
+        emcVideo.pause()
+    }
+    function seek(position) {
+        emcVideo.seek(position)
+    }
+
+
+    function close() {
+
         root.focusAllow = false
         root.focus = false
-        root.destroy(500)  // destroy after the fadeout
+        root.focus_stack_pop()
+//        root.destroy(500)  // destroy after the fadeout
     }
 
     anchors.fill: parent
-    opacity: 0.0
-
-    Behavior on opacity { NumberAnimation { duration: 350 } }
-    Component.onCompleted: opacity = 1.0
 
     Keys.onSelectPressed: {  // show controls
         emcControls.emcVisible = true
@@ -35,8 +45,8 @@ EmcFocusManager {
             emcControls.emcVisible = false
             emcVideo.forceActiveFocus()
         } else {  // ... or quit videoplayer
-            emcVideo.pause()
-            root.emcDestroy()
+            emcVideo.stop()
+            root.close()
         }
     }
 
@@ -49,9 +59,6 @@ EmcFocusManager {
         id: emcVideo
 
         source: url
-        autoPlay: true
-        volume: emcVolume.emcVolumeValue
-
         anchors.fill: parent
 
         MouseArea {
@@ -60,6 +67,56 @@ EmcFocusManager {
         }
     }
 
+    states: [
+        State {
+            name: "hidden"
+            when: !focus
+            PropertyChanges {
+                target: root
+                opacity: 0.0
+                visible: false
+            }
+        },
+        State {
+            name: "visible"
+            when: focus
+            PropertyChanges {
+                target: root
+                opacity: 1.0
+                visible: true
+            }
+        }
+    ]
+    transitions: [
+        Transition {
+            from: "visible"; to: "hidden";
+            SequentialAnimation {
+                NumberAnimation {
+                    duration: 350
+                    properties: "opacity"
+                }
+                PropertyAnimation {
+                    duration: 0
+                    property: "visible"
+                }
+            }
+        },
+        Transition {
+            from: "hidden"; to: "visible";
+            SequentialAnimation {
+                PropertyAnimation {
+                    duration: 0
+                    property: "visible"
+                }
+                NumberAnimation {
+                    duration: 350
+                    properties: "opacity"
+                }
+            }
+        }
+    ]
+
+    /***  Controls  ***********************************************************/
     Item {
         id: emcControls
 
@@ -125,7 +182,7 @@ EmcFocusManager {
                 icon: "icon/stop"
                 onEmcButtonClicked: {
                     emcVideo.pause()
-                    root.emcDestroy()
+                    root.close()
                 }
                 KeyNavigation.right: emcBtnPlay
             }
@@ -243,7 +300,7 @@ EmcFocusManager {
                     opacity: 1.0
                 }
                 PropertyChanges {
-                    target: emcVolume
+                    target: emcVolumeIndicator  // defined in main.qml
                     emcVisible: true
                 }
             },
@@ -264,7 +321,7 @@ EmcFocusManager {
                     opacity: 0.0
                 }
                 PropertyChanges {
-                    target: emcVolume
+                    target: emcVolumeIndicator  // defined in main.qml
                     emcVisible: false
                 }
             }
@@ -301,10 +358,6 @@ EmcFocusManager {
             }
         ]
 
-    }
-
-    EmcVolumeIndicator {
-        id: emcVolume
     }
 
 }

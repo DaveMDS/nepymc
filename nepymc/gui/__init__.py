@@ -100,3 +100,7 @@ def page_title_set(title: str) -> None:
 def page_icon_set(icon: str) -> None:
     _gui_instance.page_icon_set(icon)
 
+
+def volume_set(volume: float) -> None:
+    _gui_instance.volume_set(volume)
+

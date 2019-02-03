@@ -6,7 +6,6 @@ BorderImage {
     id: root
 
     property bool emcVisible: false
-    property alias emcVolumeValue: emcVolumeSlider.value
 
     source: "../pics/frame_box_bottom.png"
     border { left: 17; right: 17; top: 17; bottom: 0 }
@@ -33,6 +32,8 @@ BorderImage {
             id: emcVolumeSlider
             Layout.fillWidth: true
             Layout.fillHeight: true
+            value: emcLinearVolume
+            onMoved: EmcBackend.volume_change_request(value)
         }
     }
 

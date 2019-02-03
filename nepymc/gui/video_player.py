@@ -29,12 +29,44 @@ class EmcVideoPlayer(EmcBackendableABC):
     backendable_cls = 'EmcVideoPlayer'
 
     @abstractmethod
-    def __init__(self, url: str=None):
-        self._url = url
+    def __init__(self):
+        pass
 
     @abstractmethod
     def delete(self) -> None:
         """ TODOC """
+
+    @property
+    @abstractmethod
+    def url(self) -> str:
+        """ TODOC """
+
+    @url.setter
+    @abstractmethod
+    def url(self, url: str):
+        """ TODOC """
+
+    @property
+    @abstractmethod
+    def position(self) -> int:
+        """ millis """
+
+    @position.setter
+    @abstractmethod
+    def position(self, val: int):
+        """ millis """
+
+    @abstractmethod
+    def volume_set(self, val: float) -> None:
+        """ 0 - 100  (logaritmic adjusted) """
+
+    @abstractmethod
+    def play(self) -> None:
+        """ start playback """
+
+    @abstractmethod
+    def pause(self) -> None:
+        """ pause playback """
 
     @abstractmethod
     def title_set(self, title: str) -> None:
