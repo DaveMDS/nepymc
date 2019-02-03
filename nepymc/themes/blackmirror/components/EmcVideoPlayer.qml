@@ -32,6 +32,7 @@ EmcFocusManager {
 
 
     function close() {
+        emcControls.emcVisible = false
         root.focusAllow = false
         root.focus = false
         root.focus_stack_pop()

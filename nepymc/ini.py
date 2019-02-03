@@ -23,7 +23,7 @@ import configparser
 
 
 def LOG(*args):
-    print('MODULES:', *args)
+    print('INI:', *args)
 
 
 _config = configparser.RawConfigParser()
@@ -34,7 +34,6 @@ def read_from_files(files):
     LOG('Readed config from files:')
     for f in readed:
         LOG(' * ' + f)
-    LOG('')
 
 
 def write_to_file(file):

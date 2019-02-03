@@ -104,10 +104,13 @@ def init():
 
 def shutdown():
     input_events.listener_del("mediaplayer")
+
     if _player:
         _player.delete()
     if _saved_player:
         _saved_player.delete()
+
+    global _play_db
     del _play_db
 
 
@@ -207,6 +210,8 @@ def _play_real(start_from=None, only_audio=False):
         _player.url = url
         _player.position = start_from or 0
         _player.volume_set(volume_adjusted_get())
+        _player.poster_set(_onair_poster)
+        _player.title_set(_onair_title)
         _player.play()
 
         # keep the counts of played/finished urls
