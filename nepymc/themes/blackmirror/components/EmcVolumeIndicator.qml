@@ -6,6 +6,7 @@ BorderImage {
     id: root
 
     property bool emcVisible: false
+    property bool emcKeepVisible: false
 
     source: "../pics/frame_box_bottom.png"
     border { left: 17; right: 17; top: 17; bottom: 0 }
@@ -13,6 +14,21 @@ BorderImage {
     width: 440; height: 55
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.bottom: parent.bottom
+
+    function show_and_autohide() {
+        if (!emcKeepVisible) {
+            emcVisible = true
+            autoHideTimer.restart()
+        }
+    }
+
+    Timer {
+        id: autoHideTimer
+        interval: 3000
+        repeat: false
+        running: false
+        onTriggered: if (!emcKeepVisible) emcVisible = false
+    }
 
     RowLayout {
         anchors.fill: parent

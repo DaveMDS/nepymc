@@ -76,6 +76,10 @@ EmcFocusManager {
                 opacity: 0.0
                 visible: false
             }
+            PropertyChanges {
+                target: emcControls
+                emcVisible: false
+            }
         },
         State {
             name: "visible"
@@ -302,6 +306,7 @@ EmcFocusManager {
                 PropertyChanges {
                     target: emcVolumeIndicator  // defined in main.qml
                     emcVisible: true
+                    emcKeepVisible: true
                 }
             },
             State {
@@ -323,6 +328,7 @@ EmcFocusManager {
                 PropertyChanges {
                     target: emcVolumeIndicator  // defined in main.qml
                     emcVisible: false
+                    emcKeepVisible: false
                 }
             }
         ]

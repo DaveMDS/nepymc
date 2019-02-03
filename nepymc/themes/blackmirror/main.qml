@@ -20,6 +20,9 @@ ApplicationWindow {
     // Linear volume 0.0-1.0, to be used in linear gui elements (sliders)
     property real emcLinearVolume  // value comes from python
 
+    onEmcLinearVolumeChanged: emcVolumeIndicator.show_and_autohide()
+
+
     function activate_section(section) {
         console.log("activate_section: " + section)
         var obj
