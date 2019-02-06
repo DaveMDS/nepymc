@@ -20,5 +20,6 @@
 
 from .mainloop import EmcMainLoop
 from .timer import EmcTimer
+from .idler import EmcIdler
 from .url import EmcUrl
 from .exec import EmcExec

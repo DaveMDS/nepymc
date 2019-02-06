@@ -27,7 +27,7 @@ from nepymc import mediaplayer
 from nepymc import storage
 from nepymc import utils
 from nepymc.themoviedb import CastPanel
-from nepymc.mainloop import EmcTimer, EmcUrl, EmcExec
+from nepymc.mainloop import EmcTimer, EmcIdler, EmcUrl, EmcExec
 from nepymc.browser import EmcBrowser, \
     EmcItemClass, BackItemClass, FolderItemClass
 from nepymc.gui import EmcDialog, EmcSourcesManager, EmcFolderSelector
@@ -488,7 +488,7 @@ class Test_Timer(GenericItemClass):
     def item_selected(self, url, user_data):
         self.dialog = dia = EmcDialog('EmcTimer test', 'Press "create"')
         dia.button_add('Close test', self.close_test)
-        dia.button_add('destroy()', lambda b: self.timer.delete())
+        dia.button_add('delete()', lambda b: self.timer.delete())
         dia.button_add('stop()', lambda b: self.timer.stop())
         dia.button_add('start()', lambda b: self.timer.start())
         dia.button_add('reset()', lambda b: self.timer.reset())
@@ -511,6 +511,41 @@ class Test_Timer(GenericItemClass):
     def close_test(self, btn):
         if self.timer:
             self.timer.delete()
+        self.dialog.delete()
+
+
+class Test_Idler(GenericItemClass):
+    def __init__(self):
+        super().__init__()
+        self.dialog = None
+        self.idler = None
+        self.iter_count = 0
+
+    def item_selected(self, url, user_data):
+        self.dialog = dia = EmcDialog('EmcIdler test', 'Press "create"')
+        dia.button_add('Close test', self.close_test)
+        dia.button_add('delete()', lambda b: self.idler.delete())
+        dia.button_add('resume()', lambda b: self.idler.resume())
+        dia.button_add('pause()', lambda b: self.idler.pause())
+        dia.button_add('Create oneshot', self.idler_create_oneshot)
+        dia.button_add('Create', self.idler_create)
+
+    def idler_create(self, btn):
+        self.iter_count = 0
+        self.idler = EmcIdler(self.idler_cb)
+
+    def idler_create_oneshot(self, btn):
+        self.iter_count = 0
+        self.idler = EmcIdler(self.idler_cb, oneshot=True, key1="V1", key2="V2")
+
+    def idler_cb(self, key1=None, key2=None):
+        self.iter_count += 1
+        self.dialog.text_set("Triggered: %d<br>key1=%s key2=%s" % (
+                             self.iter_count, key1, key2))
+
+    def close_test(self, btn):
+        if self.idler:
+            self.idler.delete()
         self.dialog.delete()
 
 
@@ -1109,6 +1144,7 @@ class UiTestsModule(EmcModule):
     def populate_root(self, browser, url):
 
         browser.item_add(Test_Timer(), 'uitest://timer', 'EmcTimer')
+        browser.item_add(Test_Idler(), 'uitest://idler', 'EmcIdler')
         browser.item_add(Test_Url(), 'uitest://download', 'EmcUrl')
         browser.item_add(Test_Exec(), 'uitest://exe', 'EmcExec')
 
