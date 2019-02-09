@@ -21,6 +21,7 @@
 from .gui import EmcGui
 from .dialog import EmcDialog, EmcDialogListItem
 from .video_player import EmcVideoPlayer
+from .notify import EmcNotify
 
 from .more import EmcFolderSelector
 from .more import EmcSourcesManager

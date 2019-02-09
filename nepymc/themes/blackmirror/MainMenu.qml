@@ -186,7 +186,7 @@ EmcFocusManager {
                 anchors.margins: 16
             }
 
-            EmcTextBigger {
+            EmcText {
                 id: item_text
 
                 text: model.label

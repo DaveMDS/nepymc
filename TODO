@@ -6,6 +6,7 @@ TODO
 
  * EmcExec -> EmcExe
 
+ * EmcTimer: bring back interval in seconds ? seems more user friendly
 
 CHANGES:
 ========
@@ -15,6 +16,10 @@ EmcUrl:
  * progress_cb => prog_cb
  * done_cb(url, success, dest)
  * prog_cb(url, total, received)
+
+EmcNotify
+ * icon => image
+ * close => delete()
 
 
 

@@ -20,4 +20,5 @@
 
 from .gui_qt import EmcGui_Qt as EmcGui
 from .dialog_qt import EmcDialog_Qt as EmcDialog
+from .notify_qt import EmcNotify_Qt as EmcNotify
 from .video_player_qt import EmcVideoPlayer_Qt as EmcVideoPlayer

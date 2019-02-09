@@ -30,9 +30,10 @@ from nepymc.themoviedb import CastPanel
 from nepymc.mainloop import EmcTimer, EmcIdler, EmcUrl, EmcExec
 from nepymc.browser import EmcBrowser, \
     EmcItemClass, BackItemClass, FolderItemClass
-from nepymc.gui import EmcDialog, EmcSourcesManager, EmcFolderSelector
-# from epymc.gui import EmcDialog, EmcVKeyboard, EmcFolderSelector, \
-#    EmcButton, EmcNotify, EmcMenu, DownloadManager, EmcSlider
+from nepymc.gui import EmcDialog, EmcNotify, \
+    EmcSourcesManager, EmcFolderSelector
+# from epymc.gui import  EmcVKeyboard, EmcFolderSelector, \
+#    EmcButton, EmcMenu, DownloadManager, EmcSlider
 
 # import epymc.events as events
 # import epymc.ini as ini
@@ -148,25 +149,6 @@ class MyItemClass(EmcItemClass):
       # Event Emit
       elif url == 'uitest://ev_emit':
          events.event_emit('TEST_EVENT')
-
-      # Notify
-      elif url == 'uitest://notify':
-         EmcNotify('<title>Title 1</><br>' \
-             'Without icon.<br>' \
-             'Will hide in 10 seconds.',
-              hidein=20)
-         EmcNotify('<title>Title 2</><br>' \
-             'This one with an image.',
-              icon = 'dvd_cover_blank.png')
-         EmcNotify('<title>Title 3</><br>' \
-             'This one with an icon',
-              icon = 'icon/movie')
-         EmcNotify('<title>Title 4</><br>' \
-             'Test longer text and tags.<br>' \
-             '<b>bold</b> <i>italic</i> <u>underline</u> <link>link</link> ' \
-             '<info>info</info> <success>success</success> ' \
-             '<warning>warning</warning> <failure>failure</failure>.',
-              icon = 'icon/movie')
 
       # Menu
       elif url == 'uitest://menu':
@@ -972,6 +954,40 @@ class Test_Dialog(GenericItemClass):
             EmcTimer(200, _progress_timer2)
 
 
+class Test_Notify(GenericItemClass):
+
+    def item_selected(self, url, user_data):
+        EmcNotify('<title>Title 1</><br>'
+                  'With an image. hide in 2 seconds.',
+                  image='image/dvd_cover_blank.png',
+                  hidein=2)
+        n = EmcNotify('Will hide in 10 seconds.', 'icon/check_off', hidein=10)
+        n.counter = 11
+        # TODO TIMER SHOULD BE CHILD OF NOTIFY FOR AUTODELETE !!!
+        n.timer = EmcTimer(1000, self._timer_cb, onstart=True, notify=n)
+        EmcNotify('<title>Title 3</><br>'
+                  'This one with an icon',
+                  image='icon/movie')
+        EmcNotify('<title>Title 4</><br>'
+                  'Test longer text and tags.<br>'
+                  'Test longer text and tags.<br>'
+                  'Test longer text and tags.<br>'
+                  '<b>bold</b> <i>italic</i> <u>underline</u> <link>link</link>'
+                  ' <info>info</info> <success>success</success>'
+                  ' <warning>warning</warning> <failure>failure</failure>.',
+                  image='icon/star')
+
+    def _timer_cb(self, notify):
+        notify.counter -= 1
+        notify.text_set('Will hide in %d seconds' % notify.counter)
+        if notify.image == 'icon/check_on':
+            notify.image_set('icon/check_off')
+        else:
+            notify.image_set('icon/check_on')
+        if notify.counter <= 1:
+            notify.timer.delete()
+
+
 class Test_FolderSelector(GenericItemClass):
     def item_selected(self, url, user_data):
         EmcFolderSelector(title='Choose a path or a file',
@@ -1149,6 +1165,7 @@ class UiTestsModule(EmcModule):
         browser.item_add(Test_Exec(), 'uitest://exe', 'EmcExec')
 
         browser.item_add(Test_Dialog(), 'uitest://dialog', 'EmcDialog')
+        browser.item_add(Test_Notify(), 'uitest://notify', 'EmcNotify')
 
         browser.item_add(Test_Storage(), 'uitest://storage',
                                          'Storage Devices')
@@ -1189,7 +1206,6 @@ class UiTestsModule(EmcModule):
         # browser.item_add(MainPageItemClass(), 'uitest://movies_name', 'Movies name test')
         # browser.item_add(MainPageItemClass(), 'uitest://sniffer', 'Event Sniffer')
         # browser.item_add(MainPageItemClass(), 'uitest://ev_emit', 'Event Emit')
-        # browser.item_add(MainPageItemClass(), 'uitest://notify', 'Notify Stack')
         # browser.item_add(MainPageItemClass(), 'uitest://icons', 'Icons gallery')
         # browser.item_add(MainPageItemClass(), 'uitest://imagegal', 'Images gallery')
         # browser.item_add(Test_Styles(), 'uitest://styles', 'Text styles')

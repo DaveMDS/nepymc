@@ -114,6 +114,12 @@ ApplicationWindow {
         source: "components/EmcVideoPlayer.qml"
     }
 
+    NotifyStack {
+        id: emcNotifyStack
+        anchors.fill: parent
+        anchors.topMargin: 70
+    }
+
     EmcVolumeIndicator {
         id: emcVolumeIndicator
         emcVisible: false

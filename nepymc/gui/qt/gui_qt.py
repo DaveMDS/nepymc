@@ -34,6 +34,8 @@ from nepymc import mediaplayer
 from nepymc.gui import EmcGui
 from nepymc.model import EmcModelViewInterface
 
+from .notify_qt import NotifyModel
+
 
 def LOG(*args):
     print('GUI_QT:', *args)
@@ -336,7 +338,6 @@ class GuiCommunicator(QtCore.QObject):
             mediaplayer.stop()
 
 
-
 class QMLNetworkDiskCache(QtNetwork.QAbstractNetworkCache):
     """ Provide on-file cache for all QML net requests """
 
@@ -480,6 +481,9 @@ class EmcGui_Qt(EmcGui):
 
         # ctxt.setContextProperty('NavigatorModel', self._navigator_proxymodel)
 
+        self._notify_model = NotifyModel()
+        ctxt.setContextProperty('EmcNotifyModel', self._notify_model)
+
         # inject the Communicator class
         self._backend_instance = GuiCommunicator(self)
         ctxt.setContextProperty('EmcBackend', self._backend_instance)
@@ -500,6 +504,7 @@ class EmcGui_Qt(EmcGui):
 
         # all the keyboard input must be forwarded to EMC and ignored
         self._events_manager = EventManager(self)
+        # TODO try QCoreApplication::installNativeEventFilter instead !!!!!!!!!!!
         QtGui.QGuiApplication.instance().installEventFilter(self._events_manager)
 
         # startup with correct volume value
