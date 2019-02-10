@@ -504,7 +504,6 @@ class EmcGui_Qt(EmcGui):
 
         # all the keyboard input must be forwarded to EMC and ignored
         self._events_manager = EventManager(self)
-        # TODO try QCoreApplication::installNativeEventFilter instead !!!!!!!!!!!
         QtGui.QGuiApplication.instance().installEventFilter(self._events_manager)
 
         # startup with correct volume value
