@@ -153,7 +153,7 @@ class EmcDatabase(object):
 
     def _delayed_sync(self):
         if self._sync_timer is None:
-            self._sync_timer = EmcTimer(5000, self._sync_timer_cb, oneshot=True)
+            self._sync_timer = EmcTimer(5.0, self._sync_timer_cb, oneshot=True)
         else:
             self._sync_timer.reset()
 
@@ -172,7 +172,7 @@ def init():
 
     _queue = Queue()
 
-    _queue_timer = EmcTimer(200, _process_queue)
+    _queue_timer = EmcTimer(0.2, _process_queue)
 
 
 def shutdown():

@@ -41,7 +41,7 @@ class EmcNotify(EmcObject, EmcBackendableABC):
             self.hidein(hidein)
 
     def hidein(self, hidein):
-        self._timer = EmcTimer(int(hidein * 1000), self._hide_timer_cb,
+        self._timer = EmcTimer(hidein, self._hide_timer_cb,
                                parent=self)
 
     def _hide_timer_cb(self):

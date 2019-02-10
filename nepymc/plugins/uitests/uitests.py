@@ -481,12 +481,12 @@ class Test_Timer(GenericItemClass):
 
     def timer_create_onstart(self, btn):
         self.iter_count = 0
-        self.timer = EmcTimer(1000, self.timer_cb, parent=self.dialog,
+        self.timer = EmcTimer(1.0, self.timer_cb, parent=self.dialog,
                               onstart=True, key1='V1', key2='V2')
 
     def timer_create_oneshot(self, btn):
         self.iter_count = 0
-        self.timer = EmcTimer(1000, self.timer_cb, parent=self.dialog,
+        self.timer = EmcTimer(1.0, self.timer_cb, parent=self.dialog,
                               oneshot=True, key1='V1', key2='V2')
 
     def timer_cb(self, key1=None, key2=None):
@@ -864,7 +864,7 @@ class Test_Dialog(GenericItemClass):
                 d.button_add("btn2", selected_cb=lambda b: print('btn2 callback'))
                 d.button_add("btn3", selected_cb=lambda b: print('btn3 callback'))
             self._progress = 0.0
-            t = EmcTimer(200, _progress_timer)
+            t = EmcTimer(0.2, _progress_timer)
 
         # Dialog - List
         elif url.endswith('/list'):
@@ -961,7 +961,7 @@ class Test_Dialog(GenericItemClass):
 
             d = EmcDialog(style='buffering', title=_('Buffering'))
             self._progress = 0.0
-            EmcTimer(200, _progress_timer2)
+            EmcTimer(0.2, _progress_timer2)
 
 
 class Test_Notify(GenericItemClass):
@@ -973,7 +973,7 @@ class Test_Notify(GenericItemClass):
                   hidein=2)
         n = EmcNotify('Will hide in 10 seconds.', 'icon/check_off', hidein=10)
         n.counter = 11
-        EmcTimer(1000, self._timer_cb, onstart=True, parent=n, notify=n)
+        EmcTimer(1.0, self._timer_cb, onstart=True, parent=n, notify=n)
         EmcNotify('<title>Title 3</><br>'
                   'This one with an icon',
                   image='icon/movie')

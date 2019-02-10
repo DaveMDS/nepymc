@@ -31,12 +31,12 @@ class EmcTimer(EmcObject, EmcBackendableABC):
     backendable_cls = 'EmcTimer'
 
     @abstractmethod
-    def __init__(self, interval: int, callback: callable,
+    def __init__(self, interval: float, callback: callable,
                  parent: Optional[EmcObject] = None,
                  oneshot: bool = False, onstart: bool = False, **kargs):
         """
         Params:
-            interval: milliseconds between each call
+            interval: seconds between each call
             callback: user function to call when timer expire
             parent: owner object
             oneshot: Call just one time and then autodelete
@@ -51,9 +51,6 @@ class EmcTimer(EmcObject, EmcBackendableABC):
         self._cb_kargs = kargs
         if onstart:
             self._call_user_callback()
-        # try to catch old (deprecated) call in seconds
-        if interval < 200 or isinstance(interval, float):
-            raise RuntimeError('EmcTimer: milliseconds !!!!')
 
     @abstractmethod
     def start(self) -> None:

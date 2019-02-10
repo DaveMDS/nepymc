@@ -228,7 +228,7 @@ class EmcDeviceManagerUdev():
 
         # queue + timer to syncronize the udev thread
         self.queue = queue.Queue()  # items: (action, device)
-        self.qtimer = EmcTimer(3000, self.queue_timer_cb)
+        self.qtimer = EmcTimer(3.0, self.queue_timer_cb)
 
         # start monitoring udev for events
         monitor = pyudev.Monitor.from_netlink(self.udev)
