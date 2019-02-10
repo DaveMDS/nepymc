@@ -27,7 +27,7 @@ from nepymc import mediaplayer
 from nepymc import storage
 from nepymc import utils
 from nepymc.themoviedb import CastPanel
-from nepymc.mainloop import EmcTimer, EmcIdler, EmcUrl, EmcExec
+from nepymc.mainloop import EmcTimer, EmcIdler, EmcUrl, EmcExe
 from nepymc.browser import EmcBrowser, \
     EmcItemClass, BackItemClass, FolderItemClass
 from nepymc.gui import EmcDialog, EmcNotify, \
@@ -1090,7 +1090,7 @@ class Test_Url(GenericItemClass):
         self.dia.progress_set(received / total if total else 0)
 
 
-class Test_Exec(GenericItemClass):
+class Test_Exe(GenericItemClass):
 
     path = os.path.dirname(__file__)
     infinite_path = os.path.join(path, 'infinite.py')
@@ -1101,7 +1101,7 @@ class Test_Exec(GenericItemClass):
         self.exe = None
 
     def item_selected(self, url, user_data):
-        self.dia = EmcDialog(title='EmcExec test',
+        self.dia = EmcDialog(title='EmcExe test',
                              text='Press a button to run a command')
         self.dia.button_add('Close', lambda b: self.dia.delete())
         self.dia.button_add('delete()', lambda b: self.exe.delete())
@@ -1114,10 +1114,10 @@ class Test_Exec(GenericItemClass):
     def run_btn_cb(self, btn, pars):
         cmd = pars[0]
         params = pars[1:]
-        self.exe = EmcExec(cmd, params, grab_output=True,
-                           done_cb=self.exe_done_cb,
-                           parent=self.dia,
-                           asd1='asd_1', asd2='asd_2')
+        self.exe = EmcExe(cmd, params, grab_output=True,
+                          done_cb=self.exe_done_cb,
+                          parent=self.dia,
+                          asd1='asd_1', asd2='asd_2')
         self.dia.text_set('Running: "{} {}"<br><br>'
                           .format(cmd, ' '.join(params)))
 
@@ -1172,7 +1172,7 @@ class UiTestsModule(EmcModule):
         browser.item_add(Test_Timer(), 'uitest://timer', 'EmcTimer')
         browser.item_add(Test_Idler(), 'uitest://idler', 'EmcIdler')
         browser.item_add(Test_Url(), 'uitest://download', 'EmcUrl')
-        browser.item_add(Test_Exec(), 'uitest://exe', 'EmcExec')
+        browser.item_add(Test_Exe(), 'uitest://exe', 'EmcExe')
 
         browser.item_add(Test_Dialog(), 'uitest://dialog', 'EmcDialog')
         browser.item_add(Test_Notify(), 'uitest://notify', 'EmcNotify')

@@ -24,11 +24,11 @@ from typing import Iterable, Callable, Optional
 from nepymc.utils import EmcBackendableABC, EmcObject
 
 
-class EmcExec(EmcObject, EmcBackendableABC):
+class EmcExe(EmcObject, EmcBackendableABC):
     """ Execute external command in async way """
 
     backendable_pkg = 'mainloop'
-    backendable_cls = 'EmcExec'
+    backendable_cls = 'EmcExe'
 
     @abstractmethod
     def __init__(self, cmd: str, params: Iterable[str] = None,

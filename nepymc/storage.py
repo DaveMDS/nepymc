@@ -24,7 +24,7 @@ from operator import attrgetter
 
 import nepymc.ini as ini
 import nepymc.events as events
-from nepymc.mainloop import EmcTimer, EmcExec
+from nepymc.mainloop import EmcTimer, EmcExe
 
 
 def DBG(*args):
@@ -204,9 +204,9 @@ def check_mount(device_node):
 
 def try_mount(device, mount_cb):
     # cmd = 'udevil mount ' + device.device
-    EmcExec('udisksctl',
-            ('mount', '--no-user-interaction', '-b', device.device),
-            done_cb=lambda ret, out, d: mount_cb(d), d=device)
+    EmcExe('udisksctl',
+           ('mount', '--no-user-interaction', '-b', device.device),
+           done_cb=lambda ret, out, d: mount_cb(d), d=device)
 
 
 # ####### UDEV MODULE ##########################################################

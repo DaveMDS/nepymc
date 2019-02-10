@@ -20,10 +20,10 @@
 
 from PySide2.QtCore import QProcess
 
-from nepymc.mainloop import EmcExec
+from nepymc.mainloop import EmcExe
 
 
-class EmcExec_Qt(EmcExec):
+class EmcExe_Qt(EmcExe):
     """ PySide2 implementation of the EmcExec """
 
     def __init__(self, *args, **kargs):

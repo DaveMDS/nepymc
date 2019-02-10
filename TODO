@@ -4,8 +4,6 @@ TODO
 
  * EmcDialog API is bad, especially the buttons stuff...
 
- * EmcExec -> EmcExe
-
  * EmcTimer: bring back interval in seconds ? seems more user friendly
 
 CHANGES:

@@ -22,4 +22,4 @@ from .mainloop_qt import EmcMainLoop_Qt as EmcMainLoop
 from .timer_qt import EmcTimer_Qt as EmcTimer
 from .idler_qt import EmcIdler_Qt as EmcIdler
 from .url_qt import EmcUrl_Qt as EmcUrl
-from .exec_qt import EmcExec_Qt as EmcExec
+from .exe_qt import EmcExe_Qt as EmcExe
