@@ -26,18 +26,18 @@ from nepymc.mainloop import EmcIdler
 class EmcIdler_Qt(EmcIdler):
     """ PySide2 implementation of the EmcIdler """
 
-    def __init__(self, callback: callable, oneshot: bool = False, **kargs):
-        super().__init__(callback, oneshot, **kargs)
+    def __init__(self, *args, **kargs):
+        super().__init__(*args, **kargs)
 
         self._animator = Animator(self)
         self._animator.start()
 
     def delete(self) -> None:
+        super().delete()
         if self._animator:
             self._animator.stop()
             del self._animator
             self._animator = None
-        del self
 
     def pause(self) -> None:
         if self._animator:

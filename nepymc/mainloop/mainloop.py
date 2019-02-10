@@ -20,21 +20,18 @@
 
 from abc import abstractmethod
 
-from nepymc.utils import EmcBackendableABC
+from nepymc.utils import EmcBackendableABC, EmcObject
 
 
-class EmcMainLoop(EmcBackendableABC):
+class EmcMainLoop(EmcObject, EmcBackendableABC):
 
     backendable_pkg = 'mainloop'
     backendable_cls = 'EmcMainLoop'
 
     def __init__(self, argv=None):
+        super().__init__(None)  # mainloop does not have a parent
         self._argv = argv
 
     @abstractmethod
     def run(self):
-        pass
-
-    @abstractmethod
-    def exit(self):
         pass

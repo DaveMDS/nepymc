@@ -32,7 +32,7 @@ from nepymc.model import EmcModelViewInterface
 _gui_instance = None
 
 
-def init(loop) -> bool:   # TODO remove loop !!!!!!
+def init(loop):   # TODO remove loop !!!!!!
     """ return: False=failed True=ok """
     global _gui_instance
 
@@ -52,8 +52,7 @@ def init(loop) -> bool:   # TODO remove loop !!!!!!
 def shutdown():
     global _gui_instance
 
-    _gui_instance.destroy()
-    del _gui_instance
+    _gui_instance.delete()
     _gui_instance = None
 
 

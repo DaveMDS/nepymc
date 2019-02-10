@@ -19,39 +19,33 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from abc import abstractmethod
+from typing import Optional
 
-from nepymc.utils import EmcBackendableABC
+from nepymc.utils import EmcBackendableABC, EmcObject
 from nepymc.mainloop import EmcTimer
 
 
-class EmcNotify(EmcBackendableABC):
+class EmcNotify(EmcObject, EmcBackendableABC):
     """  TODOC """
     backendable_pkg = 'gui'
     backendable_cls = 'EmcNotify'
 
     @abstractmethod
-    def __init__(self, text, image='icon/star', hidein=5.0, close_cb=None):
+    def __init__(self, text: str, image: str = 'icon/star',
+                 hidein: float = 5.0, parent: Optional[EmcObject] = None):
+        super().__init__(parent)
         self.text = text
         self.image = image
-        self._close_cb = close_cb
         self._timer = None
         if hidein:
             self.hidein(hidein)
 
-    @abstractmethod
-    def delete(self):
-        if self._timer:
-            self._timer.delete()
-
     def hidein(self, hidein):
-        if self._timer:
-            self._timer.delete()
-        self._timer = EmcTimer(int(hidein * 1000), self._hide_timer_cb)
+        self._timer = EmcTimer(int(hidein * 1000), self._hide_timer_cb,
+                               parent=self)
 
     def _hide_timer_cb(self):
         self.delete()
-    #     if callable(self.close_cb):
-    #         self.close_cb()
 
     @abstractmethod
     def text_set(self, text):

@@ -23,7 +23,8 @@ import getpass
 import re
 import importlib
 import hashlib
-from abc import ABC
+from abc import ABC, abstractmethod
+from typing import Optional, Callable, List, Tuple, Dict
 
 from nepymc import ini
 
@@ -199,7 +200,7 @@ class Singleton(object):
 
 
 class EmcBackendableABC(ABC):
-    """ TODO DOC """
+    """ TODOC """
 
     backendable_pkg = 'Subclass MUST override'  # fe: 'mainloop', 'gui'
     backendable_cls = 'Subclass MUST override'  # fe: 'EmcTimer', 'EmcDialog'
@@ -220,3 +221,124 @@ class EmcBackendableABC(ABC):
         # instantiate the class from the backend package
         pkg_cls = getattr(pkg, cls.backendable_cls)
         return super().__new__(pkg_cls)
+
+
+class EmcObject(ABC):
+    """ Base class for all emc objects
+
+    The purpose of this class is to standardize the object lifetime
+    management for all different objects.
+
+    Basically there are two way to create objects: with or without a parent.
+
+    With a parent:
+    If you pass a parent (EmcObject) in the constructor then the parent object
+    will become the owner of the object, parent keep a children list and thus
+    will keep the child alive until the parent is deleted. Deleting an object
+    will also delete all it's children.
+
+    Without a parent:
+    If you don't give a parent in the constructor you MUST keep a reference
+    to the object to keep it alive and you are responsable of deleting
+    the object when appropriate.
+
+    In the case you are keeping a reference to an object (both with a parent
+    or not) it is advisable to monitor the deletion of the object using
+    the on_delete function to be notifyed on object deletion and thus
+    remove your reference, that will otherwise become invalid.
+
+    Keep in mind that, also if you are keeping a reference to an object, is
+    it still possible that it will be deleted "under your feet" (fe a dialog
+    can be deleted by the user pressing the BACK key). The on_delete callback
+    should always be used when keeping references.
+
+    Params:
+        parent (EmcObject): the owner object
+
+    Properties (READONLY):
+        parent (EmcObject): the owner object
+        children (list): list of EmcObject that are direct children
+        deleted (bool): whenever the object has been already deleted
+
+    """
+
+    def __init__(self, parent: Optional['EmcObject'] = None):
+        # public "readonly" properties
+        self.parent: Optional['EmcObject'] = parent
+        self.children: List['EmcObject'] = []
+        self.deleted: bool = False
+
+        # private members
+        self._del_cbs: List[Tuple[Callable, Dict]] = []  # list of (cb, kargs)
+
+        if parent is not None:
+            if not isinstance(parent, EmcObject):
+                raise TypeError('EmcObject parent MUST be an EmcObject')
+            parent.children.append(self)
+
+        print("__init__()", self)
+
+    # TODO THIS IS ONLY FOR DEBUG, SHOULD BE REMOVE FOR RELEASE !!!
+    def __del__(self):
+        print("__del__()", self)
+        # if not self.deleted:
+        #     self.delete()
+        if not self.deleted:
+            raise RuntimeError('Deleting before delete()')
+        if self.children:
+            raise RuntimeError('Deleting a parent with live children')
+
+    def __repr__(self):
+        return '<{} children:{} parent:{}>'.format(
+               self.__class__.__name__, len(self.children), self.parent)
+
+    @abstractmethod
+    def delete(self) -> bool:
+        """ Delete the object and free all internal resources.
+
+        This call will recursively delete() all children objects, set the
+        deleted flag to True and at the end will call the user defined callbacks
+
+        return (bool):
+            True if the object is been deleted or False otherwise (fe the
+            object was already deleted)
+
+        """
+        print("delete()", self)
+
+        # never delete twice
+        if self.deleted:
+            print('WARNING: Object already deleted', self)
+            return False
+
+        # delete all child objects
+        # reversed because child.delete() will remove from the walked list
+        for child in reversed(self.children):
+            child.delete()
+
+        # remove ourself from the parent children list
+        if self.parent:
+            self.parent.children.remove(self)
+
+        # mark the object as already deleted
+        self.deleted = True
+
+        # call the user on_delete callbacks
+        for cb, kargs in self._del_cbs:
+            cb(self, **kargs)
+
+        return True
+
+    def on_delete(self, callback: Callable, **kargs) -> None:
+        """ Add a new callback to be called on object deletion
+
+        Params:
+            callback (callable): the function to call on object deletion
+            **kargs: Any other keywords arguments will be passed back
+                     in the callback as keyword arguments
+
+        Callback signature:
+            func(obj, **kargs)
+
+        """
+        self._del_cbs.append((callback, kargs))

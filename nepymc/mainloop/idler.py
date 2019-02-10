@@ -19,33 +19,31 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from abc import abstractmethod
+from typing import Optional
 
-from nepymc.utils import EmcBackendableABC
+from nepymc.utils import EmcBackendableABC, EmcObject
 
 
-class EmcIdler(EmcBackendableABC):
+class EmcIdler(EmcObject, EmcBackendableABC):
     """ TODOC """
 
     backendable_pkg = 'mainloop'
     backendable_cls = 'EmcIdler'
 
     @abstractmethod
-    def __init__(self, callback: callable, oneshot: bool=False, **kargs):
+    def __init__(self, callback: callable, oneshot: bool = False,
+                 parent: Optional[EmcObject] = None, **kargs):
         """
         Params:
             callback: user function to call when the mainloop is idle
             oneshot: Call just one time and then autodelete
+            parent: EmcObject parent
             **kargs: any other keyword arguments will be passed back in callback
         """
+        super().__init__(parent)
         self._callback = callback
         self._oneshot = oneshot
         self._cb_kargs = kargs
-
-    @abstractmethod
-    def delete(self) -> None:
-        """ Stop the idler and free internal resource,
-            no more methods can be used after this call
-        """
 
     @abstractmethod
     def pause(self) -> None:

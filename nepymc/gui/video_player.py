@@ -19,22 +19,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from abc import abstractmethod
+from typing import Optional
 
-from nepymc.utils import EmcBackendableABC
+from nepymc.utils import EmcBackendableABC, EmcObject
 
 
-class EmcVideoPlayer(EmcBackendableABC):
+class EmcVideoPlayer(EmcObject, EmcBackendableABC):
     """ TODO DOC """
     backendable_pkg = 'gui'
     backendable_cls = 'EmcVideoPlayer'
 
     @abstractmethod
-    def __init__(self):
-        pass
-
-    @abstractmethod
-    def delete(self) -> None:
-        """ TODOC """
+    def __init__(self, parent: Optional[EmcObject] = None):
+        super().__init__(parent)
 
     @property
     @abstractmethod

@@ -21,19 +21,20 @@
 from abc import abstractmethod
 from typing import Iterable, Callable, Optional
 
-from nepymc.utils import EmcBackendableABC
+from nepymc.utils import EmcBackendableABC, EmcObject
 
 
-class EmcExec(EmcBackendableABC):
+class EmcExec(EmcObject, EmcBackendableABC):
     """ Execute external command in async way """
 
     backendable_pkg = 'mainloop'
     backendable_cls = 'EmcExec'
 
     @abstractmethod
-    def __init__(self, cmd: str, params: Iterable[str]=None,
-                 grab_output: bool=False, decode: Optional[str]='utf8',
-                 done_cb: Callable=None, **kargs):
+    def __init__(self, cmd: str, params: Iterable[str] = None,
+                 grab_output: bool = False, decode: Optional[str] = 'utf8',
+                 done_cb: Callable = None, parent: Optional[EmcObject] = None,
+                 **kargs):
         """
         Params:
             cmd (str): the command to run
@@ -43,6 +44,7 @@ class EmcExec(EmcBackendableABC):
                 None: no decoding will be performed, you will get a bytearray
                 'utf8': (the default) will decode to str
             done_cb: function to call when the program ends.
+            parent: EmcObject parent
             **kargs: any other keywords arguments will be passed back in done_cb
 
         Callback signatures:
@@ -53,6 +55,7 @@ class EmcExec(EmcBackendableABC):
                     The type of outbuffer depend on the decode argument
                 **kargs are the ones passed in constructor
         """
+        super().__init__(parent)
         self._cmd = cmd
         self._params = params
         self._grab_output = grab_output
@@ -61,11 +64,6 @@ class EmcExec(EmcBackendableABC):
         self._cb_kargs = kargs
         # backend will fill this bytearray list with chunks received on stdout
         self._out_buffer = []
-
-    @abstractmethod
-    def delete(self) -> None:
-        """ TODOC """
-        del self  # not really sure about this :/
 
     def _call_user_callback(self, exit_code):
         if callable(self._done_cb):

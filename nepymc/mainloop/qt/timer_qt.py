@@ -21,26 +21,25 @@
 from PySide2.QtCore import QTimer
 
 from nepymc.mainloop import EmcTimer
+from nepymc.utils import EmcObject
 
 
 class EmcTimer_Qt(EmcTimer):
     """ PySide2 implementation of the EmcTimer """
 
-    def __init__(self, interval: int, callback: callable,
-                 oneshot: bool=False, onstart: bool=False, **kargs):
-        super().__init__(interval, callback, oneshot, onstart, **kargs)
+    def __init__(self, *args, **kargs):
+        super().__init__(*args, **kargs)
 
         self._timer = QTimer()
         self._timer.timeout.connect(self._call_user_callback)
-        self._timer.setInterval(interval)
+        self._timer.setInterval(self._interval)
         self._timer.start()
 
     def delete(self) -> None:
+        super().delete()
         if self._timer:
             self._timer.stop()
-            del self._timer
             self._timer = None
-        del self
 
     def start(self) -> None:
         if self._timer:

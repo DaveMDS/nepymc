@@ -24,10 +24,10 @@ from abc import abstractmethod
 from urllib.parse import quote as urllib_quote
 from typing import Optional
 
-from nepymc.utils import EmcBackendableABC
+from nepymc.utils import EmcBackendableABC, EmcObject
 
 
-class EmcUrl(EmcBackendableABC):
+class EmcUrl(EmcObject, EmcBackendableABC):
     """ Async fetch a remote url content in memory or to file
 
     A class to async retrive an url content.
@@ -75,10 +75,14 @@ class EmcUrl(EmcBackendableABC):
     backendable_cls = 'EmcUrl'
 
     @abstractmethod
-    def __init__(self, url: str, dest: str='::mem::',
-                 done_cb: callable=None, prog_cb: callable=None,
-                 min_size: int=0, headers: dict=None, urlencode: bool=True,
-                 decode: Optional[str]='utf8', *args, **kargs):
+    def __init__(self, url: str, dest: str = '::mem::',
+                 done_cb: callable = None, prog_cb: callable = None,
+                 min_size: int = 0, headers: dict = None, urlencode: bool = True,
+                 decode: Optional[str] = 'utf8',
+                 parent: Optional[EmcObject] = None,
+                 *args, **kargs):
+
+        super().__init__(parent)
 
         # urlencode the url (but not the http:// part, or ':' will be converted)
         if urlencode:
@@ -112,14 +116,6 @@ class EmcUrl(EmcBackendableABC):
         self._cb_kargs = kargs
         self._headers = headers
         self._decode = decode
-
-    def __repr__(self):
-        return '<EmcUrl dest:"{0._dest}">'.format(self)
-
-    @abstractmethod
-    def delete(self) -> None:
-        """ Abort the corrent download and delete the class """
-        del self  # not sure about this :/
 
     @property
     def url(self) -> str:

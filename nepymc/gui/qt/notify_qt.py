@@ -27,8 +27,8 @@ from nepymc import gui
 class EmcNotify_Qt(EmcNotify):
     """ PySide2 implementation of the EmcNotify """
 
-    def __init__(self, text, image='icon/star', hidein=5.0, close_cb=None):
-        super().__init__(text, image, hidein, close_cb)
+    def __init__(self, *args, **kargs):
+        super().__init__(*args, **kargs)
         self._model = gui.instance()._notify_model
         self._model.insert_item(self)
 

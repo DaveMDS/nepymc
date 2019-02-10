@@ -468,32 +468,42 @@ class Test_Timer(GenericItemClass):
         self.iter_count = 0
 
     def item_selected(self, url, user_data):
+        self.timer = None
         self.dialog = dia = EmcDialog('EmcTimer test', 'Press "create"')
-        dia.button_add('Close test', self.close_test)
+        dia.on_delete(self.dialog_deleted, dkey1='val1', dkey2=2)
+        dia.button_add('Close test', lambda b: self.dialog.delete())
         dia.button_add('delete()', lambda b: self.timer.delete())
         dia.button_add('stop()', lambda b: self.timer.stop())
         dia.button_add('start()', lambda b: self.timer.start())
         dia.button_add('reset()', lambda b: self.timer.reset())
-        dia.button_add('Create onstart', self.timer_create_onstart)
         dia.button_add('Create oneshot', self.timer_create_oneshot)
-
-    def timer_create_oneshot(self, btn):
-        self.iter_count = 0
-        self.timer = EmcTimer(1000, self.timer_cb, oneshot=True, key1="V1", key2="V2")
+        dia.button_add('Create onstart', self.timer_create_onstart)
 
     def timer_create_onstart(self, btn):
         self.iter_count = 0
-        self.timer = EmcTimer(1000, self.timer_cb, onstart=True)
+        self.timer = EmcTimer(1000, self.timer_cb, parent=self.dialog,
+                              onstart=True, key1='V1', key2='V2')
+
+    def timer_create_oneshot(self, btn):
+        self.iter_count = 0
+        self.timer = EmcTimer(1000, self.timer_cb, parent=self.dialog,
+                              oneshot=True, key1='V1', key2='V2')
 
     def timer_cb(self, key1=None, key2=None):
+        assert key1 == 'V1'
+        assert key2 == 'V2'
         self.iter_count += 1
-        self.dialog.text_set("Triggered: %d<br>key1=%s key2=%s" % (
+        self.dialog.text_set('Triggered: %d<br>key1=%s key2=%s' % (
                              self.iter_count, key1, key2))
 
-    def close_test(self, btn):
-        if self.timer:
-            self.timer.delete()
-        self.dialog.delete()
+    def dialog_deleted(self, dia, dkey1, dkey2):
+        assert dia is self.dialog
+        assert dkey1 == 'val1'
+        assert dkey2 == 2
+        assert self.dialog.deleted is True
+        assert self.timer is None or self.timer.deleted is True
+        del self.dialog  # remove our reference
+        del self.timer  # remove our reference
 
 
 class Test_Idler(GenericItemClass):
@@ -514,11 +524,12 @@ class Test_Idler(GenericItemClass):
 
     def idler_create(self, btn):
         self.iter_count = 0
-        self.idler = EmcIdler(self.idler_cb)
+        self.idler = EmcIdler(self.idler_cb, parent=self.dialog)
 
     def idler_create_oneshot(self, btn):
         self.iter_count = 0
-        self.idler = EmcIdler(self.idler_cb, oneshot=True, key1="V1", key2="V2")
+        self.idler = EmcIdler(self.idler_cb, parent=self.dialog, oneshot=True,
+                              key1="V1", key2="V2")
 
     def idler_cb(self, key1=None, key2=None):
         self.iter_count += 1
@@ -526,9 +537,9 @@ class Test_Idler(GenericItemClass):
                              self.iter_count, key1, key2))
 
     def close_test(self, btn):
-        if self.idler:
-            self.idler.delete()
         self.dialog.delete()
+        self.idler = None
+        self.dialog = None
 
 
 class Test_MediaPlayer(GenericItemClass):
@@ -796,7 +807,6 @@ class Test_Dialog(GenericItemClass):
         # Dialog - Info
         elif url.endswith('/info'):
             print("DIALOG INFO", url, user_data)
-            # EmcDialog(title='Dialog - Info', text=LOREM, style='info')
             EmcDialog(title='Dialog - Info', text=LOREM, style='info')
 
         # Dialog - Warning
@@ -963,8 +973,7 @@ class Test_Notify(GenericItemClass):
                   hidein=2)
         n = EmcNotify('Will hide in 10 seconds.', 'icon/check_off', hidein=10)
         n.counter = 11
-        # TODO TIMER SHOULD BE CHILD OF NOTIFY FOR AUTODELETE !!!
-        n.timer = EmcTimer(1000, self._timer_cb, onstart=True, notify=n)
+        EmcTimer(1000, self._timer_cb, onstart=True, parent=n, notify=n)
         EmcNotify('<title>Title 3</><br>'
                   'This one with an icon',
                   image='icon/movie')
@@ -977,15 +986,14 @@ class Test_Notify(GenericItemClass):
                   ' <warning>warning</warning> <failure>failure</failure>.',
                   image='icon/star')
 
-    def _timer_cb(self, notify):
+    @staticmethod
+    def _timer_cb(notify):
         notify.counter -= 1
         notify.text_set('Will hide in %d seconds' % notify.counter)
         if notify.image == 'icon/check_on':
             notify.image_set('icon/check_off')
         else:
             notify.image_set('icon/check_on')
-        if notify.counter <= 1:
-            notify.timer.delete()
 
 
 class Test_FolderSelector(GenericItemClass):
@@ -1060,7 +1068,8 @@ class Test_Url(GenericItemClass):
         self.dia.text_set('Download started...')
         dest = '::tmp::' if url == self.url1 else '::mem::'
         self.dload = EmcUrl(url, dest=dest, done_cb=self.done_cb,
-                            prog_cb=self.prog_cb, decode=None)
+                            prog_cb=self.prog_cb, decode=None,
+                            parent=self.dia)
 
     def done_cb(self, url, success, dest):
         print("DONE", success)
@@ -1107,6 +1116,7 @@ class Test_Exec(GenericItemClass):
         params = pars[1:]
         self.exe = EmcExec(cmd, params, grab_output=True,
                            done_cb=self.exe_done_cb,
+                           parent=self.dia,
                            asd1='asd_1', asd2='asd_2')
         self.dia.text_set('Running: "{} {}"<br><br>'
                           .format(cmd, ' '.join(params)))

@@ -210,6 +210,8 @@ def start_emc(standalone=False):
     # thumbnailer.shutdown()
     sdb.shutdown()
 
+    loop.delete()
+
     print('Bye Bye...')
     return 0
 

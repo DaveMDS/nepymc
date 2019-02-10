@@ -21,7 +21,7 @@
 from abc import abstractmethod
 from typing import Callable, Optional
 
-from nepymc.utils import EmcBackendableABC
+from nepymc.utils import EmcBackendableABC, EmcObject
 from nepymc.model import EmcModelViewInterface
 from nepymc.mainloop import EmcMainLoop
 
@@ -35,13 +35,13 @@ def DBG(*args):
     pass
 
 
-class EmcGui(EmcBackendableABC):
+class EmcGui(EmcObject, EmcBackendableABC):
 
     backendable_pkg = 'gui'
     backendable_cls = 'EmcGui'
 
     def __init__(self, mainloop: EmcMainLoop, theme_name: str):
-        DBG('Window.__init__()')
+        super().__init__(mainloop)  # mainloop is the gui parent
         self._mainloop = mainloop
         self._theme_name = theme_name
         self._key_down_func = None
@@ -49,10 +49,6 @@ class EmcGui(EmcBackendableABC):
     @abstractmethod
     def create(self) -> bool:
         return False
-
-    @abstractmethod
-    def destroy(self) -> None:
-        pass
 
     @abstractmethod
     def activate_section(self, section: str) -> None:

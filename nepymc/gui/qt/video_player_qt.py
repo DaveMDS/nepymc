@@ -41,16 +41,16 @@ def DBG(*args):
 
 class EmcVideoPlayer_Qt(EmcVideoPlayer):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kargs):
+        super().__init__(*args, **kargs)
         print("INIT VIDEO PLAYER QT")
 
         self._gui = gui.instance()
         self._qml_obj = self._gui._qml_root.activate_section('videoplayer')
 
     def delete(self) -> None:
+        super().delete()
         # self._qml_obj.emcDestroy()  # TODO call close() in qml??
-        pass
 
     @property
     def url(self) -> str:

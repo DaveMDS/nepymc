@@ -31,13 +31,9 @@ _manager = None
 class EmcUrl_Qt(EmcUrl):
     """ PySide2 implementation of the EmcUrl abstract"""
 
-    def __init__(self, url: str, dest: str='::mem::',
-                 done_cb: callable=None, prog_cb: callable=None,
-                 min_size: int=0, headers: dict=None, urlencode: bool=True,
-                 decode: str='utf8', *args, **kargs):
+    def __init__(self, *args, **kargs):
 
-        super().__init__(url, dest, done_cb, prog_cb, min_size, headers,
-                         urlencode, decode, *args, **kargs)
+        super().__init__(*args, **kargs)
 
         # lazy creation of the NetworkManager
         global _manager
@@ -55,19 +51,19 @@ class EmcUrl_Qt(EmcUrl):
             self._dest_fp = None
 
         # build and send the GET request
-        request = QNetworkRequest(url)
-        if headers is not None:
-            for key in headers:
-                request.setHeader(key, headers[key])
+        request = QNetworkRequest(self.url)
+        if self._headers is not None:
+            for key in self._headers:
+                request.setHeader(key, self._headers[key])
         self._reply = _manager.get(request)
         self._reply.finished.connect(self._finished_cb)
         self._reply.downloadProgress.connect(self._progress_cb)
         if self.dest != '::mem::':
             self._reply.readyRead.connect(self._data_ready_cb)
 
-        self._autoref = self  # keep an auto reference so user don't have to
-
     def delete(self) -> None:
+        super().delete()
+
         self._reply.abort()
         del self._reply
 
@@ -75,7 +71,6 @@ class EmcUrl_Qt(EmcUrl):
             self._dest_fp.close()
             self._dest_fp = None
 
-        super().delete()
 
     def _progress_cb(self, received, totals):
         self._notify_prog(totals, received)

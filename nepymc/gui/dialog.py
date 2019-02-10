@@ -21,7 +21,7 @@
 from typing import Any, Optional
 from abc import abstractmethod
 
-from nepymc.utils import EmcBackendableABC
+from nepymc.utils import EmcBackendableABC, EmcObject
 
 
 class EmcDialogListItem(object):
@@ -34,7 +34,7 @@ class EmcDialogListItem(object):
         self.data = {}  # dict free for user
 
 
-class EmcDialog(EmcBackendableABC):
+class EmcDialog(EmcObject, EmcBackendableABC):
     """  TODO BETTER DOCS
       style can be 'panel' or 'minimal'
 
@@ -54,15 +54,16 @@ class EmcDialog(EmcBackendableABC):
     backendable_pkg = 'gui'
     backendable_cls = 'EmcDialog'
 
-    # minimal_styles = ['info', 'error', 'warning', 'yesno', 'cancel', 'progress']
     list_styles = ['list', 'image_list_landscape', 'image_list_portrait']
 
     @abstractmethod
-    def __init__(self, title: str=None, text: str=None,
+    def __init__(self, title: str = None, text: str = None,
                  content=None,  # TODO type ??
-                 spinner: bool=False, style: str='panel',
-                 done_cb: callable=None, canc_cb: callable=None,
-                 user_data: Any=None):
+                 spinner: bool = False, style: str = 'panel',
+                 done_cb: callable = None, canc_cb: callable = None,
+                 user_data: Any = None,
+                 parent: Optional[EmcObject] = None):
+        super().__init__(parent)
         self._title = title
         self._text = text
         self._content = content
@@ -74,10 +75,6 @@ class EmcDialog(EmcBackendableABC):
 
         if style in ('image_list', 'image_list_horiz', 'image_list_vert'):
             raise RuntimeError('EmcDialog: DEPRECATED style')
-
-    @abstractmethod
-    def delete(self) -> None:
-        """ TODOC """
 
     @abstractmethod
     def button_add(self, label: str,

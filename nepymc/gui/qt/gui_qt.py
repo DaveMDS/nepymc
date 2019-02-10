@@ -511,7 +511,8 @@ class EmcGui_Qt(EmcGui):
 
         return True
 
-    def destroy(self) -> None:
+    def delete(self) -> None:
+        super().delete()
         del self._qml_engine
         del self._model1
         del self._browser_model_qt

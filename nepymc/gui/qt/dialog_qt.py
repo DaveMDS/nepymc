@@ -95,43 +95,31 @@ class DialogListModel(QAbstractListModel):
 
 
 class EmcDialog_Qt(EmcDialog):
-    """ PySide2 implementation of the EmcDialog
+    """ PySide2 implementation of the EmcDialog """
 
-      style can be 'panel' or 'minimal'
-      or you can also apply special style that perform specific task:
-         'info', 'error', 'warning', 'yesno', 'cancel', 'progress',
-         'list', 'image_list_landscape', 'image_list_portrait',
-         'buffering'
-    """
-
-    def __init__(self, title=None, text=None, content=None, spinner=False,
-                 style='panel', done_cb=None, canc_cb=None, user_data=None):
-        super().__init__(title, text, content, spinner, style,
-                         done_cb, canc_cb, user_data)
+    def __init__(self, *args, **kargs):
+        super().__init__(*args, **kargs)
 
         print("INIT DIALOG QT")
-        if style in self.list_styles:
+        if self._style in self.list_styles:
             self._list_model = DialogListModel(self)
         else:
             self._list_model = None
         self._buttons = []
         self._gui = gui.instance()
-        self._qml_obj = self._gui._qml_root.build_dialog(title, style, text,
-                                                         content, spinner,
-                                                         self._list_model)
+        self._qml_obj = self._gui._qml_root.build_dialog(
+                            self._title, self._style, self._text,
+                            self._content, self._spinner,
+                            self._list_model)
         self._qml_obj.emcQuitRequested.connect(self._quit_requested_cb)
-
-        # This is needed to keep the object alive (the qt model in particular)
-        # maybe the user don't keep a ref because dialog can auto-delete
-        self._auto_reference = self
 
         # automatic buttons
         self._create_auto_buttons()
 
     def delete(self) -> None:
-        self._auto_reference = None
-        self._qml_obj.emcDestroy()
         super().delete()
+        self._qml_obj.emcDestroy()
+        self._qml_obj = None
 
     def _quit_requested_cb(self):
         self._call_user_canc_callback()

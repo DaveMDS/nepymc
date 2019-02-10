@@ -19,27 +19,31 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from abc import abstractmethod
+from typing import Optional
 
-from nepymc.utils import EmcBackendableABC
+from nepymc.utils import EmcBackendableABC, EmcObject
 
 
-class EmcTimer(EmcBackendableABC):
+class EmcTimer(EmcObject, EmcBackendableABC):
     """ TODOC """
 
     backendable_pkg = 'mainloop'
     backendable_cls = 'EmcTimer'
 
     @abstractmethod
-    def __init__(self, interval: int, callback: callable=None,
-                 oneshot: bool=False, onstart: bool=False, **kargs):
+    def __init__(self, interval: int, callback: callable,
+                 parent: Optional[EmcObject] = None,
+                 oneshot: bool = False, onstart: bool = False, **kargs):
         """
         Params:
             interval: milliseconds between each call
             callback: user function to call when timer expire
+            parent: owner object
             oneshot: Call just one time and then autodelete
             onstart: whenever to trigger the callback on start
             **kargs: any other keyword arguments will be passed back in callback
         """
+        super().__init__(parent)
         self._interval = interval
         self._callback = callback
         self._oneshot = oneshot
@@ -50,10 +54,6 @@ class EmcTimer(EmcBackendableABC):
         # try to catch old (deprecated) call in seconds
         if interval < 200 or isinstance(interval, float):
             raise RuntimeError('EmcTimer: milliseconds !!!!')
-
-    @abstractmethod
-    def delete(self) -> None:
-        """ TODOC """
 
     @abstractmethod
     def start(self) -> None:
