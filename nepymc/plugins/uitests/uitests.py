@@ -616,9 +616,9 @@ class Test_Browser(GenericItemClass):
         browser.item_add(self, url + '/poster',
                          'with poster only')
         browser.item_add(self, url + '/cover',
-                         'with cover only')
+                         'with cover only + fanart1')
         browser.item_add(self, url + '/poster_cover',
-                         'with poster and cover')
+                         'with poster and cover + fanart2')
 
     def label_end_get(self, url, user_data):
         if url.endswith(('/two_labels', '/two_labels_one_icon',
@@ -651,6 +651,12 @@ class Test_Browser(GenericItemClass):
     def cover_get(self, url, user_data):
         if url.endswith(('/cover', '/poster_cover')):
             return os.path.join(self.path, 'cover.jpg')
+
+    def fanart_get(self, url, user_data):
+        if url.endswith('/cover'):
+            return os.path.join(self.path, 'backdrop.jpg')
+        if url.endswith('/poster_cover'):
+            return os.path.join(self.path, 'backdrop2.jpg')
 
 
 class Test_ImageDialog(GenericItemClass):

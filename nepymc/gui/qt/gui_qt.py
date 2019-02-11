@@ -145,6 +145,7 @@ class BrowserModel(QtCore.QAbstractListModel):
     info_role = QtCore.Qt.UserRole + 5
     poster_role = QtCore.Qt.UserRole + 6
     cover_role = QtCore.Qt.UserRole + 7
+    fanart_role = QtCore.Qt.UserRole + 8
     role_names_qt = {
         label_role: b'label',
         label_end_role: b'label_end',
@@ -153,6 +154,7 @@ class BrowserModel(QtCore.QAbstractListModel):
         info_role: b'info',
         poster_role: b'poster',
         cover_role: b'cover',
+        fanart_role: b'fanart',
     }
     role_names = {
         label_role: 'label',
@@ -162,6 +164,7 @@ class BrowserModel(QtCore.QAbstractListModel):
         info_role: 'info',
         poster_role: 'poster',
         cover_role: 'cover',
+        fanart_role: 'fanart',
     }
 
     def __init__(self, gui, parent=None):

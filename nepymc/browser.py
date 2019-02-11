@@ -228,6 +228,8 @@ class BrowserModel(EmcModelViewInterface):
             return item_class.poster_get(url, user_data) or ''
         if field_name == 'cover':
             return item_class.cover_get(url, user_data) or ''
+        if field_name == 'fanart':
+            return item_class.fanart_get(url, user_data) or ''
 
     def item_count_get(self):
         return len(self._browser.items)

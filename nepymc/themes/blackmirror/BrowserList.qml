@@ -37,6 +37,16 @@ Item {
         }
     }
 
+    Timer {  // backdrop (fanart) still more delayed
+        id: emcBackdropDelayTimer
+        interval: 1000; running: false; repeat: false
+        onTriggered: {
+            var data = BrowserModel.get(currentIndex, "fanart")
+            if (data)
+                emcApplicationWindow.backdropSource = data
+        }
+    }
+
     /**  List View (inside a big frame)  **************************************/
     BorderImage {
         anchors.fill: parent
@@ -48,7 +58,10 @@ Item {
         ListView {
             id: emcBrowserList
 
-            onCurrentIndexChanged: emcInfoDelayTimer.restart()
+            onCurrentIndexChanged: {
+                emcInfoDelayTimer.restart()
+                emcBackdropDelayTimer.restart()
+            }
 
             anchors {
                 fill: parent
