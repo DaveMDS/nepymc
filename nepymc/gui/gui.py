@@ -82,6 +82,10 @@ class EmcGui(EmcObject, EmcBackendableABC):
             see VideoPlayer / AudioPlayer for logarithimc adjusted volume
         """
 
+    @abstractmethod
+    def backdrop_set(self, image: str) -> None:
+        """ Change the background image of the whole UI """
+
     #
     #  Utils for implementators
     #

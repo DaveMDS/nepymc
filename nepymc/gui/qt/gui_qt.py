@@ -545,3 +545,6 @@ class EmcGui_Qt(EmcGui):
 
     def volume_set(self, volume: float) -> None:
         self._qml_root.setProperty('emcLinearVolume', volume / 100.0)
+
+    def backdrop_set(self, image: str) -> None:
+        self._qml_root.setProperty('backdropSource', image)

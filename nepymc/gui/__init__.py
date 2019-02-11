@@ -61,24 +61,8 @@ def instance() -> EmcGui:
     return _gui_instance
 
 
-def background_set(image: str) -> None:
-    # global _backdrop_curr
-
-    # if image == _backdrop_curr.file[0]:
-    #    return
-    #
-    # if _backdrop_curr == _backdrop_im1:
-    #    _backdrop_curr = _backdrop_im2
-    #    signal = 'backdrop,show,2'
-    # else:
-    #    _backdrop_curr = _backdrop_im1
-    #    signal = 'backdrop,show,1'
-    #
-    # try:
-    #    _backdrop_curr.file_set(image)
-    #    signal_emit(signal)
-    # except: pass
-    raise NotImplementedError("background_set " + image)
+def backdrop_set(image: str) -> None:
+    _gui_instance.backdrop_set(image)
 
 
 def activate_section(section: str) -> None:

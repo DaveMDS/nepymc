@@ -13,6 +13,8 @@ ApplicationWindow {
     visible: true
     title: EmcBackend.application_name()
 
+    property url backdropSource: "pics/background.jpg"
+
     property var emcFocusStack: []  // TODO find a better place for this
 
     /* theme API TODOC */
@@ -88,11 +90,10 @@ ApplicationWindow {
 //        print(emcFocusStack)
 //    }
 
-    Image {
+    BackdropCrossfader {
+        id: emc_backdrop
         anchors.fill: parent
-        source: "pics/background.jpg"
-//        source: "pics/TESTBG.jpg"
-        fillMode: Image.PreserveAspectCrop
+        source: backdropSource
     }
 
     Browser {

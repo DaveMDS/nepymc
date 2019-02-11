@@ -26,6 +26,7 @@ from nepymc import mainmenu
 from nepymc import mediaplayer
 from nepymc import storage
 from nepymc import utils
+from nepymc import gui
 from nepymc.themoviedb import CastPanel
 from nepymc.mainloop import EmcTimer, EmcIdler, EmcUrl, EmcExe
 from nepymc.browser import EmcBrowser, \
@@ -996,6 +997,23 @@ class Test_Notify(GenericItemClass):
             notify.image_set('icon/check_on')
 
 
+class Test_BG(GenericItemClass):
+
+    backdrop1 = os.path.join(os.path.dirname(__file__), 'backdrop.jpg')
+    backdrop2 = os.path.join(os.path.dirname(__file__), 'backdrop2.jpg')
+
+    def __init__(self):
+        super().__init__()
+        self.bg = None
+
+    def item_selected(self, url, user_data):
+        if self.bg == self.backdrop1:
+            self.bg = self.backdrop2
+        else:
+            self.bg = self.backdrop1
+        gui.backdrop_set(self.bg)
+
+
 class Test_FolderSelector(GenericItemClass):
     def item_selected(self, url, user_data):
         EmcFolderSelector(title='Choose a path or a file',
@@ -1176,6 +1194,8 @@ class UiTestsModule(EmcModule):
 
         browser.item_add(Test_Dialog(), 'uitest://dialog', 'EmcDialog')
         browser.item_add(Test_Notify(), 'uitest://notify', 'EmcNotify')
+
+        browser.item_add(Test_BG(), 'uitest://backdrop', 'Backdrop changer')
 
         browser.item_add(Test_Storage(), 'uitest://storage',
                                          'Storage Devices')
