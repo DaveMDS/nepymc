@@ -24,6 +24,8 @@ from typing import Callable, Optional
 from nepymc.utils import EmcBackendableABC, EmcObject
 from nepymc.model import EmcModelViewInterface
 from nepymc.mainloop import EmcMainLoop
+from nepymc import input_events
+from nepymc import ini
 
 
 def LOG(*args):
@@ -45,6 +47,17 @@ class EmcGui(EmcObject, EmcBackendableABC):
         self._mainloop = mainloop
         self._theme_name = theme_name
         self._key_down_func = None
+
+        input_events.listener_add('EmcGuiBase', self._input_events_cb)
+
+    #
+    #  Methods that must be implemented by backends
+    #
+
+    @abstractmethod
+    def delete(self):
+        super().delete()
+        input_events.listener_del('EmcGuiBase')
 
     @abstractmethod
     def create(self) -> bool:
@@ -86,9 +99,22 @@ class EmcGui(EmcObject, EmcBackendableABC):
     def backdrop_set(self, image: str) -> None:
         """ Change the background image of the whole UI """
 
+    @abstractmethod
+    def fullscreen_get(self) -> bool:
+        """ Get the fullscreen status of the main window """
+
+    @abstractmethod
+    def fullscreen_set(self, fullscreen: bool) -> None:
+        """ Change the fullscreen status of the main window """
+
     #
     #  Utils for implementators
     #
+
+    @staticmethod
+    def boot_in_fullscreen() -> bool:
+        """ Get whenever the gui should startup in fullscreen mode """
+        return ini.get_bool('general', 'fullscreen')
 
     @staticmethod
     def volume_change_request(val: float) -> None:
@@ -111,3 +137,11 @@ class EmcGui(EmcObject, EmcBackendableABC):
         """
         if callable(self._key_down_func):
             self._key_down_func(key)
+
+    #
+    #  Private
+    #
+
+    def _input_events_cb(self, event):
+        if event == 'TOGGLE_FULLSCREEN':
+            self.fullscreen_set(not self.fullscreen_get())

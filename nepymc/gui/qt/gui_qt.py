@@ -512,6 +512,9 @@ class EmcGui_Qt(EmcGui):
         # startup with correct volume value
         self.volume_set(mediaplayer.volume_get())
 
+        # startup with correct fullscreen state
+        self.fullscreen_set(self.boot_in_fullscreen())
+
         return True
 
     def delete(self) -> None:
@@ -551,3 +554,10 @@ class EmcGui_Qt(EmcGui):
 
     def backdrop_set(self, image: str) -> None:
         self._qml_root.setProperty('backdropSource', image)
+
+    def fullscreen_get(self) -> bool:
+        return self._qml_root.property('visibility') == QtGui.QWindow.FullScreen
+
+    def fullscreen_set(self, fullscreen: bool) -> None:
+        vis = QtGui.QWindow.FullScreen if fullscreen else QtGui.QWindow.Windowed
+        self._qml_root.setProperty('visibility', vis)

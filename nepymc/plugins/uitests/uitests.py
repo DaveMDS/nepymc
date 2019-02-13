@@ -1201,7 +1201,7 @@ class UiTestsModule(EmcModule):
         browser.item_add(Test_Dialog(), 'uitest://dialog', 'EmcDialog')
         browser.item_add(Test_Notify(), 'uitest://notify', 'EmcNotify')
 
-        browser.item_add(Test_BG(), 'uitest://backdrop', 'Backdrop changer')
+        browser.item_add(Test_BG(), 'uitest://backdrop', 'Backdrop crossfader')
 
         browser.item_add(Test_Storage(), 'uitest://storage',
                                          'Storage Devices')
