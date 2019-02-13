@@ -23,7 +23,7 @@ from typing import Callable, Optional
 
 from nepymc.utils import EmcBackendableABC, EmcObject
 from nepymc.model import EmcModelViewInterface
-from nepymc.mainloop import EmcMainLoop
+from nepymc.mainloop import EmcMainLoop, EmcTimer
 from nepymc import input_events
 from nepymc import ini
 
@@ -47,6 +47,9 @@ class EmcGui(EmcObject, EmcBackendableABC):
         self._mainloop = mainloop
         self._theme_name = theme_name
         self._key_down_func = None
+
+        self._mouse_hide_timer = EmcTimer(3.0, self._mouse_hide_timer_cb,
+                                          parent=self)
 
         input_events.listener_add('EmcGuiBase', self._input_events_cb)
 
@@ -107,6 +110,10 @@ class EmcGui(EmcObject, EmcBackendableABC):
     def fullscreen_set(self, fullscreen: bool) -> None:
         """ Change the fullscreen status of the main window """
 
+    @abstractmethod
+    def mouse_cursor_hidden_set(self, hide: bool) -> None:
+        """ Change the mouse cursor hidden state on the main window """
+
     #
     #  Utils for implementators
     #
@@ -138,10 +145,23 @@ class EmcGui(EmcObject, EmcBackendableABC):
         if callable(self._key_down_func):
             self._key_down_func(key)
 
+    def mouse_move_event(self) -> None:
+        """ This MUST be called by backend implementation on every mouse
+            move event, it is used to manage the automatic mouse
+            show/hide feature
+        """
+        self._mouse_hide_timer.reset()
+        self.mouse_cursor_hidden_set(False)
+
     #
     #  Private
     #
 
+    def _mouse_hide_timer_cb(self):
+        if ini.get_bool('general', 'hide_mouse'):
+            self.mouse_cursor_hidden_set(True)
+
     def _input_events_cb(self, event):
         if event == 'TOGGLE_FULLSCREEN':
             self.fullscreen_set(not self.fullscreen_get())
+            return input_events.EVENT_BLOCK

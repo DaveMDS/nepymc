@@ -412,6 +412,9 @@ class EventManager(QtCore.QObject):
 
     This object will then receive the EMC input event and forward it to QML as
     a standard qt key event.
+
+    This class is also used to forward mouse move event to the EmcGui base
+    class, needed to automatically show/hide the mouse cursor
     """
     def __init__(self, gui):
         super().__init__()
@@ -422,8 +425,14 @@ class EventManager(QtCore.QObject):
 
     def eventFilter(self, obj, qt_event):
         """ Qt keys events => EMC events """
+        event_type = qt_event.type()
 
-        if qt_event.type() != QtCore.QEvent.KeyPress:
+        # notify the EmcGui base class of mouse moves
+        if event_type == QtCore.QEvent.MouseMove:
+            self._gui.mouse_move_event()
+            return False  # let Qt manage the event
+
+        if event_type != QtCore.QEvent.KeyPress:
             return False  # not a key event, let Qt manage it
 
         if not qt_event.spontaneous():
@@ -454,7 +463,8 @@ class EmcGui_Qt(EmcGui):
 
     def __init__(self, *args, **kargs):
         super().__init__(*args, **kargs)
-        self._qml_engine = None
+        self._qapp = None  # QGuiApplication
+        self._qml_engine = None  # QQmlApplicationEngine
         self._qml_root = None
         self._model1 = None
         self._browser_model_qt = None
@@ -462,6 +472,7 @@ class EmcGui_Qt(EmcGui):
         self._backend_instance = None
         self._nam_factory = None
         self._events_manager = None
+        self._mouse_is_hidden = False
 
     def create(self) -> bool:
         # search the main QML file
@@ -505,9 +516,12 @@ class EmcGui_Qt(EmcGui):
         # keep a reference of the main QML object for fast access
         self._qml_root = roots[0]
 
+        # keep a reference of the main QGuiApplication for faster access
+        self._qapp = QtGui.QGuiApplication.instance()
+
         # all the keyboard input must be forwarded to EMC and ignored
         self._events_manager = EventManager(self)
-        QtGui.QGuiApplication.instance().installEventFilter(self._events_manager)
+        self._qapp.installEventFilter(self._events_manager)
 
         # startup with correct volume value
         self.volume_set(mediaplayer.volume_get())
@@ -561,3 +575,14 @@ class EmcGui_Qt(EmcGui):
     def fullscreen_set(self, fullscreen: bool) -> None:
         vis = QtGui.QWindow.FullScreen if fullscreen else QtGui.QWindow.Windowed
         self._qml_root.setProperty('visibility', vis)
+
+    def mouse_cursor_hidden_set(self, hide: bool) -> None:
+        if hide:
+            # do not set twice (it's a stack)
+            if not self._mouse_is_hidden:
+                self._qapp.setOverrideCursor(QtGui.QCursor(Qt.BlankCursor))
+                self._mouse_is_hidden = True
+        else:
+            if self._mouse_is_hidden:
+                self._qapp.restoreOverrideCursor()
+                self._mouse_is_hidden = False
