@@ -26,6 +26,7 @@ from operator import attrgetter
 import nepymc.ini as ini
 import nepymc.events as events
 from nepymc.mainloop import EmcTimer, EmcExe
+from nepymc.utils import EmcObject
 
 
 def DBG(*args):
@@ -119,7 +120,7 @@ def init():
 def shutdown():
     DBG('shutdown')
     if _udev_module:
-        _udev_module.__shutdown__()
+        _udev_module.delete()
 
 
 def list_devices(filter_type=None):
@@ -203,19 +204,21 @@ def check_mount(device_node):
     return mount_point or None
 
 
-def try_mount(device, mount_cb):
+def try_mount(device, mount_cb, exe_parent=None):
     # cmd = 'udevil mount ' + device.device
     EmcExe('udisksctl',
            ('mount', '--no-user-interaction', '-b', device.device),
-           done_cb=lambda ret, out, d: mount_cb(d), d=device)
+           done_cb=lambda ret, out, d: mount_cb(d),
+           parent=exe_parent, d=device)
 
 
 # ####### UDEV MODULE ##########################################################
-class EmcDeviceManagerUdev(object):
+class EmcDeviceManagerUdev(EmcObject):
 
     managed_subsystems = 'block'
 
     def __init__(self):
+        super().__init__()
 
         # lazy/conditional loading of needed modules
         import pyudev
@@ -239,10 +242,11 @@ class EmcDeviceManagerUdev(object):
 
         # search for existing devices
         for udevice in self.udev.list_devices(subsystem=self.managed_subsystems):
-            self.udev_device_filter('add', udevice)
+            self.udev_device_filter('add', udevice, thread=False)
         self.queue_timer_cb()
 
-    def __shutdown__(self):
+    def delete(self):
+        super().delete()
         self.qtimer.delete()
         monitor = self.observer.monitor
         self.observer.stop()
@@ -262,7 +266,7 @@ class EmcDeviceManagerUdev(object):
                                                         EmcDevType.DVD):
                     device_added(device)
                 else:  # TODO make this configurable
-                    try_mount(device, self.device_mounted_cb)
+                    try_mount(device, self.device_mounted_cb, self)
 
             elif action == 'remove':  # device is uniq_id
                 device_removed(device)
@@ -272,6 +276,8 @@ class EmcDeviceManagerUdev(object):
         device.mount_point = check_mount(device.device)
         if device.mount_point is None:
             LOG('Cannot mount ' + device.device)
+        else:
+            LOG('Mounted %s in %s' % (device.device, device.mount_point))
         device_added(device)
 
     def udev_device_filter(self, action, udevice, thread=True):

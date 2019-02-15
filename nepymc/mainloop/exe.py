@@ -25,7 +25,12 @@ from nepymc.utils import EmcBackendableABC, EmcObject
 
 
 class EmcExe(EmcObject, EmcBackendableABC):
-    """ Execute external command in async way """
+    """ Execute external command in async way
+
+    NOTE: this object autodelete once the process is completed, thus you don't
+          need to call delete() yourself. But don't forget to keep a reference
+          or set a parent!
+    """
 
     backendable_pkg = 'mainloop'
     backendable_cls = 'EmcExe'
