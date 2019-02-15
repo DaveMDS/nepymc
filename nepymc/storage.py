@@ -20,6 +20,7 @@
 
 import os
 import platform
+import subprocess
 from operator import attrgetter
 
 import nepymc.ini as ini
@@ -47,14 +48,14 @@ _udev_module = None  # EmcDeviceManagerUdev instance
 # ####### PUBLIC API ###########################################################
 
 class EmcDevType:
-    SYSTEM     = 1  # like home and root
-    FAVORITE   = 2  # user favorite folders  (TOBEDONE)
-    HARDDISK   = 3  # internal hard drives
-    DVD        = 4  # dvd video discs
-    AUDIOCD    = 5  # audio cd discs
-    DATADISK   = 6  # cdrom disc
+    SYSTEM = 1  # like home and root
+    FAVORITE = 2  # user favorite folders  (TOBEDONE)
+    HARDDISK = 3  # internal hard drives
+    DVD = 4  # dvd video discs
+    AUDIOCD = 5  # audio cd discs
+    DATADISK = 6  # cdrom disc
     THUMBDRIVE = 7  # usb thumbdrives
-    NETSHARE   = 8  # networks shares (samba, ntfs) (TOBEDONE)
+    NETSHARE = 8  # networks shares (samba, ntfs) (TOBEDONE)
 
 
 class EmcDevice(object):
@@ -128,7 +129,7 @@ def list_devices(filter_type=None):
     Returns:
        A filtered and sorted list of EmcDevice instances
     """
-    l = []
+    li = []
     for key, device in _devices.items():
         if isinstance(filter_type, int):
             if device.type != filter_type:
@@ -137,13 +138,15 @@ def list_devices(filter_type=None):
             if device.type not in filter_type:
                 continue
         if device.type == EmcDevType.SYSTEM:
-            if device.mount_point == '/' and not ini.get_bool('storage', 'show_root'):
+            if device.mount_point == '/' and \
+                    not ini.get_bool('storage', 'show_root'):
                 continue
-            if device.mount_point == os.getenv('HOME') and not ini.get_bool('storage', 'show_home'):
+            if device.mount_point == os.getenv('HOME') and \
+                    not ini.get_bool('storage', 'show_home'):
                 continue
-        l.append(device)
-    l.sort(key=attrgetter('type', 'sort_key', 'label'))
-    return l
+        li.append(device)
+    li.sort(key=attrgetter('type', 'sort_key', 'label'))
+    return li
 
 
 def device_added(device):
@@ -161,20 +164,20 @@ def device_removed(uniq_id):
         # TODO more accurate notification system
 
 
-def partition_hum_size(bytes):
+def partition_hum_size(num_bytes):
     """ Get the human readable size like reported by UDisk2 """
-    bytes = float(bytes)
-    if bytes > 1000000000000:
-        size = bytes / 1000000000000
+    num_bytes = float(num_bytes)
+    if num_bytes > 1000000000000:
+        size = num_bytes / 1000000000000
         unit = 'TB'
-    elif bytes > 1000000000:
-        size = bytes / 1000000000
+    elif num_bytes > 1000000000:
+        size = num_bytes / 1000000000
         unit = 'GB'
-    elif bytes > 1000000:
-        size = bytes / 1000000
+    elif num_bytes > 1000000:
+        size = num_bytes / 1000000
         unit = 'MB'
     else:
-        size = bytes / 1000
+        size = num_bytes / 1000
         unit = 'KB'
 
     if size < 10:
@@ -185,11 +188,9 @@ def partition_hum_size(bytes):
 
 # ####### MOUNT HELPERS ########################################################
 
-import subprocess
-
-
 def check_mount(device_node):
-    cmd = ['findmnt','-n','--raw','--output=target','-f','--source',device_node]
+    cmd = ['findmnt', '-n', '--raw', '--output=target', '-f',
+           '--source', device_node]
     try:
         mount_point = subprocess.check_output(cmd, universal_newlines=True)
     except subprocess.CalledProcessError:
@@ -210,7 +211,7 @@ def try_mount(device, mount_cb):
 
 
 # ####### UDEV MODULE ##########################################################
-class EmcDeviceManagerUdev():
+class EmcDeviceManagerUdev(object):
 
     managed_subsystems = 'block'
 
@@ -266,7 +267,8 @@ class EmcDeviceManagerUdev():
             elif action == 'remove':  # device is uniq_id
                 device_removed(device)
 
-    def device_mounted_cb(self, device):
+    @staticmethod
+    def device_mounted_cb(device):
         device.mount_point = check_mount(device.device)
         if device.mount_point is None:
             LOG('Cannot mount ' + device.device)
@@ -345,23 +347,31 @@ class EmcDeviceManagerUdev():
             else:
                 fs_label = udevice.get('ID_FS_LABEL_ENC') or \
                            udevice.get('ID_FS_LABEL')
-                vendor = udevice.get('ID_VENDOR_ENC') or udevice.get('ID_VENDOR')
-                model = udevice.get('ID_MODEL_ENC') or udevice.get('ID_MODEL')
+                vendor = udevice.get('ID_VENDOR_ENC') or \
+                         udevice.get('ID_VENDOR')
+                model = udevice.get('ID_MODEL_ENC') or \
+                        udevice.get('ID_MODEL')
 
                 # I really cannot understand the pyudev encoding... :/
-                if fs_label: fs_label = fs_label.replace('\\x20', ' ').strip()
-                if vendor: vendor = vendor.replace('\\x20', ' ').strip()
-                if model: model = model.replace('\\x20', ' ').strip()
+                if fs_label:
+                    fs_label = fs_label.replace('\\x20', ' ').strip()
+                if vendor:
+                    vendor = vendor.replace('\\x20', ' ').strip()
+                if model:
+                    model = model.replace('\\x20', ' ').strip()
 
                 if fs_label:
                     label = fs_label
                 elif size > 0:
                     if emc_type == EmcDevType.HARDDISK:
-                        label = _('{} Hard disk').format(partition_hum_size(size))
+                        label = _('{} Hard disk').format(
+                                  partition_hum_size(size))
                     elif emc_type == EmcDevType.THUMBDRIVE:
-                        label = _('{} Thumb drive').format(partition_hum_size(size))
+                        label = _('{} Thumb drive').format(
+                                  partition_hum_size(size))
                     else:
-                        label = _('{} Volume').format(partition_hum_size(size))
+                        label = _('{} Volume').format(
+                                  partition_hum_size(size))
                 elif vendor and model:
                     label = '{} {}'.format(vendor, model)
                 elif model or vendor:
@@ -372,8 +382,8 @@ class EmcDeviceManagerUdev():
             # choose icon
             if mount_point == '/':
                 icon = 'icon/folder'  # TODO better icon
-            elif emc_type in (
-            EmcDevType.AUDIOCD, EmcDevType.DVD, EmcDevType.DATADISK):
+            elif emc_type in (EmcDevType.AUDIOCD, EmcDevType.DVD,
+                              EmcDevType.DATADISK):
                 icon = 'icon/optical'
             elif emc_type == EmcDevType.HARDDISK:
                 icon = 'icon/harddisk'
@@ -381,6 +391,8 @@ class EmcDeviceManagerUdev():
                 icon = 'icon/thumbdrive'
             elif emc_type == EmcDevType.NETSHARE:
                 icon = 'icon/netshare'
+            else:
+                icon = 'icon/harddisk'
 
             # number of audio tracks for AudioCD
             if emc_type == EmcDevType.AUDIOCD:
@@ -402,7 +414,8 @@ class EmcDeviceManagerUdev():
         else:
             ERR("Unknow ACTION", action)
 
-    def dump_udevice(self, udevice):
+    @staticmethod
+    def dump_udevice(udevice):
         print("=" * 40)
         print(udevice)
         print("subsystem", udevice.subsystem)
@@ -455,22 +468,3 @@ class EmcDeviceManagerSamba(object):
       for entry in entries:
          print(entry)
 """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
