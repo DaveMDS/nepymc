@@ -22,6 +22,7 @@ import os
 import platform
 import subprocess
 from operator import attrgetter
+from enum import Enum
 
 import nepymc.ini as ini
 import nepymc.events as events
@@ -48,7 +49,7 @@ _udev_module = None  # EmcDeviceManagerUdev instance
 
 # ####### PUBLIC API ###########################################################
 
-class EmcDevType:
+class EmcDevType(Enum):
     SYSTEM = 1  # like home and root
     FAVORITE = 2  # user favorite folders  (TOBEDONE)
     HARDDISK = 3  # internal hard drives
@@ -90,7 +91,8 @@ class EmcDevice(object):
 
     @property
     def require_eject(self):
-        pass
+        """ This is not used ATM """
+        return False
 
     def eject(self):
         pass
