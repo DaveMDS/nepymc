@@ -1,0 +1,9 @@
+PySide2
+xdg
+dbus
+pyudev
+beautifulsoup4
+lxml
+pillow
+mutagen
+discid

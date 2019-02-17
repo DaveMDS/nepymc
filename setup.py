@@ -88,9 +88,9 @@ class check_runtime_deps(Command):
             ('PyUdev', 'pyudev', 'python-pyudev'),
             ('DiscID', 'discid', 'python-discid'),
             ('Mutagen', 'mutagen', 'python-mutagen'),
-            ('BeautifulSoup', 'bs4', 'python-bs4 or python-beautifulsoup4'),
+            ('BeautifulSoup', 'bs4', 'python-beautifulsoup4'),
             ('LXML', 'lxml', 'python-lxml'),
-            ('PIL', 'PIL', 'python-pillow or python-pil'),
+            ('PIL', 'PIL', 'python-pillow'),
         ]
         for name, module, pkg in deps:
             try:
