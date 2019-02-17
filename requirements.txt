@@ -1,6 +1,6 @@
 PySide2
 xdg
-dbus
+dbus-python
 pyudev
 beautifulsoup4
 lxml
