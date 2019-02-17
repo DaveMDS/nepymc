@@ -3,8 +3,6 @@ dist: xenial
 language: python
 
 python:
-  - "3.4"
-  - "3.5"
   - "3.6"
   - "3.7"
   # PyPy versions
@@ -12,5 +10,5 @@ python:
 
 # command to run tests
 script:
-  - python setup.py build
+  - python setup.py install
   - python setup.py test

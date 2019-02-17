@@ -30,12 +30,75 @@ import fnmatch
 from distutils.core import setup, Command
 from distutils.command.clean import clean
 from distutils.command.build import build
+from distutils.command.install import install
 from distutils.log import warn, info, error
 from distutils.file_util import copy_file
 from distutils.dir_util import mkpath
 from distutils.dep_util import newer
 
 from nepymc import __version__ as emc_version
+
+
+class check_runtime_deps(Command):
+    description = 'Check for all needed runtime dependencies'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def check_failed(self, msg):
+        raise SystemExit(
+            'error: runtime dependency not found!'
+            '\n\n' + msg + '\n\n'
+            'NOTE: this dependency is not needed for building, but '
+            'is mandatory at runtime.\n\n'
+            'You can skip this test for the install stages using: \n'
+            'setup.py install --no-runtime-deps-check\n')
+
+    def run(self):
+        import importlib
+
+        # checking for python
+        min_py_version = (3, 6, 0)
+        if sys.version_info < min_py_version:
+            msg = 'Python too old. Found: %d.%d.%d  (need >= %d.%d.%d)' % (
+                sys.version_info[0], sys.version_info[1], sys.version_info[2],
+                min_py_version[0], min_py_version[1], min_py_version[2])
+            self.check_failed(msg)
+
+        # checking for disc id (or libdiscid)
+        try:
+            from libdiscid.compat import discid
+        except ImportError:
+            try:
+                import discid
+            except ImportError:
+                msg = "Cannot find DiscID on this system. " \
+                      "Please install python-discid or python-libdiscid"
+                self.check_failed(msg)
+
+        # checking all other simpler deps
+        deps = [
+            ('Qt for Python', 'PySide2', 'PySide2'),
+            ('XDG', 'xdg', 'python-xdg'),
+            ('DBus', 'dbus', 'python-dbus'),
+            ('PyUdev', 'pyudev', 'python-pyudev'),
+            ('DiscID', 'discid', 'python-discid'),
+            ('Mutagen', 'mutagen', 'python-mutagen'),
+            ('BeautifulSoup', 'bs4', 'python-bs4 or python-beautifulsoup4'),
+            ('LXML', 'lxml', 'python-lxml'),
+            ('PIL', 'PIL', 'python-pillow or python-pil'),
+        ]
+        for name, module, pkg in deps:
+            try:
+                importlib.import_module(module)
+            except ImportError:
+                msg = "Cannot find %s on this system. " \
+                      "You must install the package: %s" % (name, pkg)
+                self.check_failed(msg)
 
 
 class build_i18n(Command):
@@ -150,6 +213,25 @@ class CustomBuildCommand(build):
         # self.run_command("build_themes")
         self.run_command("build_i18n")
         build.run(self)
+
+
+# noinspection PyAttributeOutsideInit
+class CustomInstallCommand(install):
+    user_options = install.user_options + [
+                    ('no-runtime-deps-check', None,
+                     'disable the check for runtime dependencies')]
+
+    def initialize_options(self):
+        install.initialize_options(self)
+        self.no_runtime_deps_check = False
+
+    def finalize_options(self):
+        install.finalize_options(self)
+
+    def run(self):
+        if not self.no_runtime_deps_check:
+            self.run_command("check_runtime_deps")
+        install.run(self)
 
 
 # noinspection PyAttributeOutsideInit
@@ -313,11 +395,13 @@ setup(
 
     cmdclass={
         'build': CustomBuildCommand,
+        'install': CustomInstallCommand,
         'clean': CustomCleanCommand,
         'develop': DevelopCommand,
         'test': TestCommand,
         'build_i18n': build_i18n,
         'update_po': update_po,
         'check_po': check_po,
+        'check_runtime_deps': check_runtime_deps,
     },
 )
