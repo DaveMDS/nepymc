@@ -28,7 +28,7 @@ class EmcMainLoop_Qt(EmcMainLoop):
 
     def __init__(self, argv=None):
         super().__init__(argv)
-        self._app = QGuiApplication(argv)
+        self._app = QGuiApplication(argv or [])
 
     def delete(self):
         super().delete()

@@ -26,7 +26,7 @@ from nepymc import mainmenu
 from nepymc import mediaplayer
 from nepymc import storage
 from nepymc import utils
-from nepymc import gui
+from nepymc.gui import EmcGui
 from nepymc.themoviedb import CastPanel
 from nepymc.mainloop import EmcTimer, EmcIdler, EmcUrl, EmcExe
 from nepymc.browser import EmcBrowser, \
@@ -1017,7 +1017,7 @@ class Test_BG(GenericItemClass):
             self.bg = self.backdrop2
         else:
             self.bg = self.backdrop1
-        gui.backdrop_set(self.bg)
+        EmcGui.instance().backdrop_set(self.bg)
 
 
 class Test_FolderSelector(GenericItemClass):

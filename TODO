@@ -18,6 +18,7 @@ EmcNotify
  * icon => image
  * close => delete()
 
+MyClass(Singleton)  =>  MyClass(bases, metaclass=Singleton)
 
 
 DOCUMENT IMAGE SPECIAL URLS SOMEWHERE

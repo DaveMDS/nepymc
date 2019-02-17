@@ -8,6 +8,7 @@
 # python setup.py build_i18n
 # python setup.py update_po
 # python setup.py check_po    (need polib)
+# python setup.py test [-a ...]  (run the full test suite, need pytest)
 #
 # TODO:
 # python setup.py install [--prefix=]
@@ -203,6 +204,25 @@ class DevelopCommand(Command):
         sys.exit(start_emc())
 
 
+# noinspection PyAttributeOutsideInit
+class TestCommand(Command):
+    description = 'Run all the available unit tests'
+    user_options = [("pytest-args=", "a", "Arguments to pass to pytest")]
+
+    def initialize_options(self):
+        self.pytest_args = ""
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        import shlex
+        import pytest
+
+        errno = pytest.main(shlex.split(self.pytest_args))
+        sys.exit(errno)
+
+
 setup(
     name="nepymc",
     version=emc_version,
@@ -232,6 +252,7 @@ setup(
         # 'dbus',
         'pyudev',
         # 'libdiscid',
+        'pytest',  # for tests only
     ],
 
     provides=['emc'],
@@ -294,6 +315,7 @@ setup(
         'build': CustomBuildCommand,
         'clean': CustomCleanCommand,
         'develop': DevelopCommand,
+        'test': TestCommand,
         'build_i18n': build_i18n,
         'update_po': update_po,
         'check_po': check_po,
