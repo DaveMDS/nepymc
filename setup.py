@@ -327,7 +327,7 @@ setup(
 
     requires=[
         'PySide2 (>= 5.12.0)',
-        'pyxdg',
+        'xdg',
         # 'beautifulsoup4',
         'lxml',
         # 'mutagen',
