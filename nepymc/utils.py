@@ -23,7 +23,7 @@ import getpass
 import re
 import importlib
 import hashlib
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, ABCMeta
 from typing import Optional, Callable, List, Tuple, Dict
 
 from nepymc import ini
@@ -190,13 +190,36 @@ def clamp(val, lower, upper):
     return lower if val < lower else upper if val > upper else val
 
 
-class Singleton(object):
-    __single = None
+class Singleton(ABCMeta):
+    """ Singleton implementation using a metaclass (this is a metaclass!)
 
-    def __new__(cls, *args, **kwargs):
-        if cls != type(cls.__single):
-            cls.__single = object.__new__(cls, *args, **kwargs)
-        return cls.__single
+    Define your class as:
+        class MyClass(bases, metaclass=Singleton)
+
+    Create the first (and only) instance using:
+        instance = MyClass(*args, **kargs)
+
+    Then you can get the single instance using:
+        instance = MyClass()  # NOTE: any args/kargs passed here are ignored
+    or:
+        instance = MyClass.instance()
+
+    NOTE: the __init__ function of your class will be called only once,
+          on the first instantiation.
+
+    NOTE: this metaclass inherit from ABCMeta so that Singleton can be used in
+          tandem with EmcObject and/or EmcBackendableABC without conflicts
+    """
+
+    _instances_ = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances_:
+            cls._instances_[cls] = super().__call__(*args, **kwargs)
+        return cls._instances_[cls]
+
+    def instance(cls):
+        return cls._instances_[cls]
 
 
 class EmcBackendableABC(ABC):
@@ -209,7 +232,7 @@ class EmcBackendableABC(ABC):
 
         # get the backend to use from ini [backend] backendable_pkg
         backend_name = ini.get('backend', cls.backendable_pkg)
-        if backend_name is None:
+        if not backend_name:
             raise RuntimeError(
                 'Cannot find backend "%s" in ini file section "backend"' %
                 cls.backendable_pkg)

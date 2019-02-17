@@ -111,7 +111,7 @@ def dump_everything():
         LOG(b)
 
 
-class EmcItemClass(utils.Singleton):
+class EmcItemClass(metaclass=utils.Singleton):
     """ TODO Class doc """
 
     def item_selected(self, url, user_data):
