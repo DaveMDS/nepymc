@@ -20,8 +20,7 @@
 
 from PySide2 import QtCore
 
-from nepymc.gui import EmcNotify
-from nepymc import gui
+from nepymc.gui import EmcGui, EmcNotify
 
 
 class EmcNotify_Qt(EmcNotify):
@@ -29,7 +28,7 @@ class EmcNotify_Qt(EmcNotify):
 
     def __init__(self, *args, **kargs):
         super().__init__(*args, **kargs)
-        self._model = gui.instance()._notify_model
+        self._model = EmcGui.instance()._notify_model
         self._model.insert_item(self)
 
     def delete(self):

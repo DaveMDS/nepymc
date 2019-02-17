@@ -94,6 +94,11 @@ def get(section, option, default_value=None):
         return default_value
 
 
+def set_default(section, option, default_value):
+    if not _config.has_option(section, option):
+        set(section, option, default_value)
+
+
 def get_string_list(section, option, separator=' '):
     if not _config.has_option(section, option):
         return []

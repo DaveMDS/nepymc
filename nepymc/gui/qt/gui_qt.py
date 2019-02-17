@@ -461,18 +461,17 @@ class EventManager(QtCore.QObject):
 class EmcGui_Qt(EmcGui):
     """ PySide2 implementation of the EmcWindow """
 
-    def __init__(self, *args, **kargs):
-        super().__init__(*args, **kargs)
-        self._qapp = None  # QGuiApplication
-        self._qml_engine = None  # QQmlApplicationEngine
-        self._qml_root = None
-        self._model1 = None
-        self._browser_model_qt = None
-        # self._navigator_proxymodel = NavigatorProxyModel(self)
-        self._backend_instance = None
-        self._nam_factory = None
-        self._events_manager = None
-        self._mouse_is_hidden = False
+    def __init__(self):
+        super().__init__()
+        self._qapp = None              # type: QtGui.QGuiApplication
+        self._qml_engine = None        # type: QtQml.QQmlApplicationEngine
+        self._qml_root = None          # type: QtGui.QWindow
+        self._backend_instance = None  # type: GuiCommunicator
+        self._nam_factory = None       # type: QMLNetworkAccessManagerFactory
+        self._events_manager = None    # type: EventManager
+        self._mainmenu_qtmodel = None  # type: MainMenuModel
+        self._browser_qtmodel = None   # type: BrowserModel
+        self._mouse_is_hidden = False  # type: bool
 
     def create(self) -> bool:
         # search the main QML file
@@ -487,11 +486,11 @@ class EmcGui_Qt(EmcGui):
 
         # inject MainMenu and Browser model
         ctxt = self._qml_engine.rootContext()
-        self._model1 = MainMenuModel()
-        ctxt.setContextProperty('MainMenuModel', self._model1)
+        self._mainmenu_qtmodel = MainMenuModel()
+        ctxt.setContextProperty('MainMenuModel', self._mainmenu_qtmodel)
 
-        self._browser_model_qt = BrowserModel(self)
-        ctxt.setContextProperty('BrowserModel', self._browser_model_qt)
+        self._browser_qtmodel = BrowserModel(self)
+        ctxt.setContextProperty('BrowserModel', self._browser_qtmodel)
 
         # ctxt.setContextProperty('NavigatorModel', self._navigator_proxymodel)
 
@@ -527,15 +526,15 @@ class EmcGui_Qt(EmcGui):
         self.volume_set(mediaplayer.volume_get())
 
         # startup with correct fullscreen state
-        self.fullscreen_set(self.boot_in_fullscreen())
+        self.fullscreen_set(self._boot_in_fullscreen)
 
         return True
 
     def delete(self) -> None:
         super().delete()
         del self._qml_engine
-        del self._model1
-        del self._browser_model_qt
+        del self._mainmenu_qtmodel
+        del self._browser_qtmodel
 
     def activate_section(self, section: str) -> None:
         self._qml_root.activate_section(section)
@@ -546,7 +545,7 @@ class EmcGui_Qt(EmcGui):
     def model_set(self, section: str, model: EmcModelViewInterface):
         if section == 'browser':
             # self._browser_model_qt.beginResetModel()
-            self._browser_model_qt.emc_model = model
+            self._browser_qtmodel.emc_model = model
             # self._browser_model_qt.endResetModel()
         # elif section == 'navigator':
         #     self._navigator_proxymodel.emc_model = model

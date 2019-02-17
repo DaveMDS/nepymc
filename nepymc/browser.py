@@ -32,7 +32,7 @@ import sys
 
 from nepymc import utils
 from nepymc import ini
-from nepymc import gui
+from nepymc.gui import EmcGui
 from nepymc.model import EmcModelViewInterface
 
 
@@ -338,7 +338,7 @@ class EmcBrowser(object):
             self.current_view = view
 
         # TODO is this the correct place for this???
-        gui.model_set('browser', self._model)  # TODO needed every time ??
+        EmcGui.instance().model_set('browser', self._model)  # TODO needed every time ??
 
         # switch to the new page
         self._populate_page(page)
@@ -432,8 +432,8 @@ class EmcBrowser(object):
 
     def show(self):
         """ TODO Function doc """
-        gui.activate_section('browser')
-        gui.page_icon_set(self.icon)
+        EmcGui.instance().activate_section('browser')
+        EmcGui.instance().page_icon_set(self.icon)
 
         # global _active_browser
         # _active_browser = self
@@ -443,7 +443,7 @@ class EmcBrowser(object):
     def hide(self):
         """ TODO Function doc """
         # input_events.listener_del('browser-' + self.name)
-        gui.hide_section('browser')
+        EmcGui.instance().hide_section('browser')
 
     @property
     def freezed(self):
@@ -474,7 +474,7 @@ class EmcBrowser(object):
     def _populate_page(self, page, is_back=False, is_refresh=False,
                        is_unfreeze=False):
         full = ' > '.join([p['title'] for p in self.pages])
-        gui.page_title_set(full)
+        EmcGui.instance().page_title_set(full)
 
         # clear the items list
         self.items = []

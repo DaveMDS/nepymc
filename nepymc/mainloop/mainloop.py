@@ -20,10 +20,10 @@
 
 from abc import abstractmethod
 
-from nepymc.utils import EmcBackendableABC, EmcObject
+from nepymc.utils import EmcObject, EmcBackendableABC, Singleton
 
 
-class EmcMainLoop(EmcObject, EmcBackendableABC):
+class EmcMainLoop(EmcObject, EmcBackendableABC, metaclass=Singleton):
 
     backendable_pkg = 'mainloop'
     backendable_cls = 'EmcMainLoop'

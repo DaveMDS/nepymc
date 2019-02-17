@@ -22,8 +22,7 @@ import sys
 
 # from PySide2.QtCore import Qt, QObject, Slot, QAbstractListModel
 
-from nepymc import gui
-from nepymc.gui import EmcVideoPlayer
+from nepymc.gui import EmcGui, EmcVideoPlayer
 
 
 def LOG(*args):
@@ -45,7 +44,7 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
         super().__init__(*args, **kargs)
         print("INIT VIDEO PLAYER QT")
 
-        self._gui = gui.instance()
+        self._gui = EmcGui.instance()
         self._qml_obj = self._gui._qml_root.activate_section('videoplayer')
 
     def delete(self) -> None:

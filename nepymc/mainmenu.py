@@ -21,7 +21,7 @@
 import sys
 from typing import Callable, Iterable
 
-from nepymc import gui
+from nepymc.gui import EmcGui
 # from nepymc import input_events
 from nepymc.model import EmcModelViewInterface
 
@@ -152,14 +152,14 @@ def item_activate(name: str) -> None:
 
 
 def show():
-    gui.activate_section('mainmenu')
+    EmcGui.instance().activate_section('mainmenu')
     # input_events.listener_add('mainmenu', input_event_cb)
     raise DeprecationWarning('should not explicitly show the menu')
 
 
 def hide():
     # input_events.listener_del('mainmenu')
-    gui.hide_section('mainmenu')
+    EmcGui.instance().hide_section('mainmenu')
     raise DeprecationWarning('should not explicitly hide the menu')
 
 

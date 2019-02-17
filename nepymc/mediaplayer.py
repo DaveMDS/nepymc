@@ -26,7 +26,7 @@ import os
 
 from nepymc import utils
 from nepymc import ini
-from nepymc import gui
+from nepymc.gui import EmcGui, EmcDialog, EmcVideoPlayer
 from nepymc.sdb import EmcDatabase
 from nepymc import input_events
 # from nepymc import events
@@ -129,7 +129,7 @@ def play_url(url, only_audio=False, start_from=None):
     # check url
     if url.startswith('file://') and not os.path.exists(url[7:]):
         text = '<b>%s:</b><br>%s' % (_('File not found'), url)
-        gui.EmcDialog(text=text, style='error')
+        EmcDialog(text=text, style='error')
         return
 
     DBG('play_url: %s' % url)
@@ -179,10 +179,10 @@ def play_url(url, only_audio=False, start_from=None):
 
     # ask the user if resume or not
     time = utils.millis_to_duration(pos, True)
-    gui.EmcDialog(style='yesno', title=_('Resume playback'),
-                  text=_('Continue from %s ?') % time,
-                  done_cb=_resume_yes_cb, canc_cb=_resume_no_cb,
-                  user_data=pos)
+    EmcDialog(style='yesno', title=_('Resume playback'),
+              text=_('Continue from %s ?') % time,
+              done_cb=_resume_yes_cb, canc_cb=_resume_no_cb,
+              user_data=pos)
 
 
 def _resume_yes_cb(dia):
@@ -206,7 +206,7 @@ def _play_real(start_from=None, only_audio=False):
         _player.url = url
     else:
         if _player is None:
-            _player = gui.EmcVideoPlayer()
+            _player = EmcVideoPlayer()
         _player.url = url
         _player.position = start_from or 0
         _player.volume_set(volume_adjusted_get())
@@ -255,7 +255,7 @@ def stop(emit_playback_finished=False):
     DBG('Stop()')
 
     # update play counts (only for videos)
-    if isinstance(_player, gui.EmcVideoPlayer):
+    if isinstance(_player, EmcVideoPlayer):
         counts = play_counts_get(_onair_url)
         if position_percent_get() >= 0.99:  # 1% from the end
             counts['finished'] += 1
@@ -383,7 +383,7 @@ def volume_set(vol: float) -> None:
         return
 
     _volume = vol
-    gui.volume_set(vol)
+    EmcGui.instance().volume_set(vol)
     ini.set('mediaplayer', 'volume', _volume)
     # events.event_emit('VOLUME_CHANGED')
 

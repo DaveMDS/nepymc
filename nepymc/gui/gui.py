@@ -21,7 +21,7 @@
 from abc import abstractmethod
 from typing import Callable, Optional
 
-from nepymc.utils import EmcBackendableABC, EmcObject
+from nepymc.utils import EmcObject, EmcBackendableABC, Singleton
 from nepymc.model import EmcModelViewInterface
 from nepymc.mainloop import EmcMainLoop, EmcTimer
 from nepymc import input_events
@@ -37,20 +37,36 @@ def DBG(*args):
     pass
 
 
-class EmcGui(EmcObject, EmcBackendableABC):
+class EmcGui(EmcObject, EmcBackendableABC, metaclass=Singleton):
 
     backendable_pkg = 'gui'
     backendable_cls = 'EmcGui'
 
-    def __init__(self, mainloop: EmcMainLoop, theme_name: str):
-        super().__init__(mainloop)  # mainloop is the gui parent
-        self._mainloop = mainloop
-        self._theme_name = theme_name
-        self._key_down_func = None
+    def __init__(self):
+        super().__init__(EmcMainLoop.instance())  # mainloop is the gui parent
 
+        # setup default ini values
+        ini.set_default('general', 'theme', 'blackmirror')
+        ini.set_default('general', 'fps', 30)
+        ini.set_default('general', 'scale', 1.0)
+        ini.set_default('general', 'fullscreen', False)
+        ini.set_default('general', 'hide_mouse', False)
+        ini.set_default('general', 'time_format', '%H:%M')
+        ini.set_default('general', 'date_format', '%A %d %B')
+        ini.set_default('general', 'keyb_layouts', 'en_abc symbols')
+
+        # public members
+        self._theme_name = ini.get('general', 'theme')
+
+        # protected memebrs
+        self._boot_in_fullscreen = ini.get_bool('general', 'fullscreen')
+
+        # private members
+        self._key_down_func = None
         self._mouse_hide_timer = EmcTimer(3.0, self._mouse_hide_timer_cb,
                                           parent=self)
 
+        # listen for input events
         input_events.listener_add('EmcGuiBase', self._input_events_cb)
 
     #
@@ -117,11 +133,6 @@ class EmcGui(EmcObject, EmcBackendableABC):
     #
     #  Utils for implementators
     #
-
-    @staticmethod
-    def boot_in_fullscreen() -> bool:
-        """ Get whenever the gui should startup in fullscreen mode """
-        return ini.get_bool('general', 'fullscreen')
 
     @staticmethod
     def volume_change_request(val: float) -> None:

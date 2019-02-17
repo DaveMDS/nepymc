@@ -24,6 +24,7 @@ import locale
 import gettext
 import argparse
 
+
 from nepymc import utils
 from nepymc import __version__ as emc_v
 from nepymc import modules
@@ -32,8 +33,8 @@ from nepymc import browser
 from nepymc import config_gui
 from nepymc import mediaplayer
 from nepymc.mainloop import EmcMainLoop
+from nepymc.gui import EmcGui
 from nepymc import ini
-from nepymc import gui
 from nepymc import sdb
 from nepymc import storage
 # from nepymc import thumbnailer
@@ -105,13 +106,15 @@ def start_emc(standalone=False):
     ])
     ini.setup_defaults()
 
-    # create the mainloop instance
+    # create the mainloop singleton instance
     loop = EmcMainLoop(sys.argv)
+
+    # create the gui singleton instance
+    gui = EmcGui()
 
     # init internal components
     sdb.init()
     # thumbnailer.init()
-    gui.init(loop)
     browser.init()
     mainmenu.init()
     config_gui.init()
@@ -191,7 +194,7 @@ def start_emc(standalone=False):
     """
 
     # create and show the main gui
-    if not gui.instance().create():
+    if not gui.create():
         ERR('Cannot create the GUI')
         return 1
 
@@ -206,10 +209,10 @@ def start_emc(standalone=False):
     ini.write_to_file(os.path.join(utils.user_conf_dir, 'nepymc.conf'))
     mediaplayer.shutdown()
     browser.shutdown()
-    gui.shutdown()
     # thumbnailer.shutdown()
     sdb.shutdown()
 
+    gui.delete()
     loop.delete()
 
     print('Bye Bye...')

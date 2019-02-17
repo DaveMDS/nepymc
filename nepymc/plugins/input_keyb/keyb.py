@@ -20,10 +20,9 @@
 
 from nepymc.modules import EmcModule
 from nepymc.browser import EmcItemClass
-from nepymc.gui import EmcDialog
+from nepymc.gui import EmcGui, EmcDialog
 from nepymc import input_events
 from nepymc import config_gui
-from nepymc import gui
 from nepymc import ini
 
 
@@ -48,7 +47,7 @@ class KeyboardModule(EmcModule):
         section = 'keyboard'
         if not ini.has_section(section):
             ini.add_section(section)
-            defs = gui.instance().default_keymap_get()
+            defs = EmcGui.instance().default_keymap_get()
             for key, event in defs.items():
                 ini.set(section, key, event)
 
@@ -64,12 +63,12 @@ class KeyboardModule(EmcModule):
                                  callback=self.config_panel_cb)
 
         # ask the gui to forward key events to us
-        gui.instance().key_down_connect(self._key_down_cb)
+        EmcGui.instance().key_down_connect(self._key_down_cb)
 
     def __shutdown__(self):
         DBG('Shutdown module')
         config_gui.root_item_del('keyb')
-        gui.instance().key_down_connect(None)
+        EmcGui.instance().key_down_connect(None)
 
     def _key_down_cb(self, key):
         DBG('Key: %s' % key)

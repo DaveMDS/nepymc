@@ -26,7 +26,7 @@ from typing import Any, Optional
 from PySide2.QtCore import Qt, Slot, QAbstractListModel
 
 # from nepymc import utils
-from nepymc import gui
+from nepymc.gui import EmcGui
 from nepymc.gui import EmcDialog, EmcDialogListItem
 
 
@@ -106,7 +106,7 @@ class EmcDialog_Qt(EmcDialog):
         else:
             self._list_model = None
         self._buttons = []
-        self._gui = gui.instance()
+        self._gui = EmcGui.instance()
         self._qml_obj = self._gui._qml_root.build_dialog(
                             self._title, self._style, self._text,
                             self._content, self._spinner,
