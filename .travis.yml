@@ -8,6 +8,9 @@ python:
   # PyPy versions
   # - "pypy3.5"
 
+before_install:
+  - sudo apt-get install -y libdiscid
+
 # command to run tests
 script:
   - python setup.py install
