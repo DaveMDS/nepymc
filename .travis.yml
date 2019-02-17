@@ -1,12 +1,12 @@
 language: python
 
 python:
-  - "3.4"
-  - "3.5"
+  # - "3.4"
+  # - "3.5"
   - "3.6"
-  - "3.7"
+  # - "3.7"
   # PyPy versions
   # - "pypy3.5"
 
 # command to run tests
-script: pytest
+script: python setup.py test
