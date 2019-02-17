@@ -10,7 +10,7 @@ python:
 
 before_install:
   - sudo apt-get install -y libdiscid0
-  - sudo apt-get install -y python-dbus
+  - sudo apt-get install -y libdbus-glib-1-dev
 
 # command to run tests
 script:
