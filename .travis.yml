@@ -1,14 +1,27 @@
-dist: xenial
+# Travis Continuous Integration Configuration File
 
 language: python
+
+dist: xenial
+
+os:
+  - linux
+  - osx
+  - windows
 
 python:
   - "3.6"
   - "3.7"
 
-before_install:
-  - sudo apt-get install -y libdiscid0
-  - sudo apt-get install -y libdbus-glib-1-dev
+addons:
+  apt:
+    packages:
+      - libdiscid0
+      - libdbus-glib-1-dev
+
+#before_install:
+#  - sudo apt-get install -y libdiscid0
+#  - sudo apt-get install -y libdbus-glib-1-dev
 
 # command to run tests
 script:
