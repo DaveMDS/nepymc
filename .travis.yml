@@ -6,8 +6,8 @@ dist: xenial
 
 os:
   - linux
-  - osx
-  - windows
+#  - osx # python 3.6/3.7 are not supported on the osx build environment
+#  - windows # python is currently unsupported on the Windows Build Environment
 
 python:
   - "3.6"
@@ -18,10 +18,6 @@ addons:
     packages:
       - libdiscid0
       - libdbus-glib-1-dev
-
-#before_install:
-#  - sudo apt-get install -y libdiscid0
-#  - sudo apt-get install -y libdbus-glib-1-dev
 
 # command to run tests
 script:
