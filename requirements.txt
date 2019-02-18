@@ -1,9 +1,10 @@
-PySide2
+PySide2 >= 5.12
 xdg
-dbus-python
-pyudev
 beautifulsoup4
 lxml
 pillow
 mutagen
 discid
+# Linux only requirements
+dbus-python; platform_system == 'Linux'
+pyudev; platform_system == 'Linux'
