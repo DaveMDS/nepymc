@@ -26,7 +26,6 @@ from nepymc import mainmenu
 from nepymc import mediaplayer
 from nepymc import storage
 from nepymc import utils
-from nepymc.gui import EmcGui
 from nepymc.themoviedb import CastPanel
 from nepymc.mainloop import EmcTimer, EmcIdler, EmcUrl, EmcExe
 from nepymc.browser import EmcBrowser, \
@@ -151,36 +150,7 @@ class MyItemClass(EmcItemClass):
       elif url == 'uitest://ev_emit':
          events.event_emit('TEST_EVENT')
 
-      # Menu
-      elif url == 'uitest://menu':
-         def _cb_menu(menu, item):
-            print("Selected item: " + item.text)
-
-         m = EmcMenu()
-         m.item_add("Item 1", callback=_cb_menu)
-         m.item_add("Item 2", callback=_cb_menu)
-         m.item_add("Item 3", callback=_cb_menu)
-         m.item_separator_add()
-         m.item_add("Item 4", "icon/evas", callback=_cb_menu)
-         m.item_add("Item 5", "icon/home", "icon/volume", callback=_cb_menu)
-         m.item_separator_add()
-         it = m.item_add("Disabled", callback=_cb_menu)
-         it.disabled = True
-         it = m.item_add("Disabled", 'icon/home', callback=_cb_menu)
-         it.disabled = True
-         m.item_add("Item 8", None, 'icon/volume', callback=_cb_menu)
-         it = m.item_add("Item 9 (disabled)", callback=_cb_menu)
-         it.disabled = True
-         m.show()
-
-      elif url == 'uitest://menu_long':
-         def _cb_menu(menu, item):
-            print('Selected item: ' + item.text)
-
-         m = EmcMenu(dismiss_on_select=False)
-         for i in range(1, 100):
-            m.item_add('Item %d' % i, 'icon/home', 'icon/volume', callback=_cb_menu)
-         m.show()
+ 
 
       # TMDB
       # elif url == 'uitest://tmdb':
@@ -548,9 +518,9 @@ class Test_MediaPlayer(GenericItemClass):
 
         # Mediaplayer Local Video
         if url == 'uitest://mpv':
-            f = os.path.expanduser('~/Video/testvideo.avi')
-            # f = os.path.expanduser('~/Video/testvideo.mp4')
-            mediaplayer.play_url(f)  # , start_from=0)
+            # f = os.path.expanduser('~/Video/testvideo.avi')
+            f = os.path.expanduser('~/Video/testvideo.mp4')
+            mediaplayer.play_url(f, start_from=0)
             mediaplayer.title_set('Testing title')
             mediaplayer.poster_set('image/dvd_cover_blank.png')
 
@@ -1233,8 +1203,6 @@ class UiTestsModule(EmcModule):
         # browser.item_add(MainPageItemClass(), 'uitest://focus_3', 'Focus corner case 3')
 
         # browser.item_add(MainPageItemClass(), 'uitest://mbrainz', 'Music Brainz AudioCD (/dev/cdrom)')
-        # browser.item_add(MainPageItemClass(), 'uitest://menu', 'Menu small (dismiss on select)')
-        # browser.item_add(MainPageItemClass(), 'uitest://menu_long', 'Menu long (no dismiss on select)')
         # browser.item_add(MainPageItemClass(), 'uitest://sliders', 'Sliders')
         # browser.item_add(MainPageItemClass(), 'uitest://vkbd', 'Virtual Keyboard')
         # browser.item_add(MainPageItemClass(), 'uitest://encoding', 'Various string encoding tests')

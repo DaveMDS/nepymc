@@ -19,10 +19,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
+from typing import Callable
 
-# from PySide2.QtCore import Qt, QObject, Slot, QAbstractListModel
+from PySide2 import QtCore
 
 from nepymc.gui import EmcGui, EmcVideoPlayer
+from nepymc import mediaplayer
 
 
 def LOG(*args):
@@ -38,6 +40,126 @@ def DBG(*args):
     pass
 
 
+class MenuItem(object):
+    def __init__(self, label: str = None, icon: str = None,
+                 checkable: bool = False, checked: bool = False,
+                 disabled: bool = False, is_separator: bool = False,
+                 callback: Callable = None, **kargs):
+        self.label = label
+        self.icon = icon
+        self.checkable = checkable
+        self.checked = checked
+        self.disabled = disabled
+        self.is_separator = is_separator
+        self.callback = callback
+        self.callback_kargs = kargs
+
+    def activate(self):
+        if callable(self.callback):
+            self.callback(self, **self.callback_kargs)
+
+
+class MenuModelBase(QtCore.QAbstractListModel):
+    label_role = QtCore.Qt.UserRole + 1
+    icon_role = QtCore.Qt.UserRole + 2
+    is_separator = QtCore.Qt.UserRole + 4
+    checkable = QtCore.Qt.UserRole + 5
+    checked = QtCore.Qt.UserRole + 6
+    disabled = QtCore.Qt.UserRole + 7
+
+    role_names = {
+        label_role: b'label',
+        icon_role: b'icon',
+        is_separator: b'is_separator',
+        checkable: b'checkable',
+        checked: b'checked',
+        disabled: b'disabled',
+    }
+
+    def __init__(self):
+        super().__init__()
+        self.items = []
+
+    def roleNames(self):
+        return self.role_names
+
+    def rowCount(self, index):
+        return len(self.items)
+
+    def data(self, index, role):
+        item = self.items[index.row()]  # type: MenuItem
+        if role == self.label_role:
+            return item.label or ''
+        elif role == self.icon_role:
+            return item.icon or ''
+        elif role == self.is_separator:
+            return item.is_separator
+        elif role == self.checkable:
+            return item.checkable
+        elif role == self.checked:
+            return item.checked
+        elif role == self.disabled:
+            return item.disabled
+
+    # below methods are to be called from QML
+    @QtCore.Slot()
+    def populate(self):
+        """ Called from QML just before showing the menu """
+        self.beginResetModel()
+        self.endResetModel()
+
+    @QtCore.Slot(int)
+    def item_activated(self, index):
+        item = self.items[index]
+        item.activate()
+
+
+class AudioMenuModel(MenuModelBase):
+    def populate(self):
+        self.beginResetModel()
+        self.items = []
+        self.items.append(MenuItem('TODO audio tracks', disabled=True))
+        self.items.append(MenuItem(is_separator=True))
+        self.items.append(MenuItem(_('Mute'), 'icon/mute', checkable=True,
+                                   checked=mediaplayer.volume_mute_get(),
+                                   callback=self.mute_toggle))
+        self.endResetModel()
+
+    @staticmethod
+    def mute_toggle(item):
+        mediaplayer.volume_mute_toggle()
+
+
+class VideoMenuModel(MenuModelBase):
+    def populate(self):
+        self.beginResetModel()
+        self.items = []
+        self.items.append(MenuItem('TODO video tracks', disabled=True))
+        self.items.append(MenuItem(is_separator=True))
+        self.items.append(MenuItem(_('Download video'), icon='icon/download'))
+        self.endResetModel()
+
+
+class SubsMenuModel(MenuModelBase):
+    def populate(self):
+        self.beginResetModel()
+        self.items = []
+        self.items.append(MenuItem('Disabled', disabled=True))
+        self.items.append(MenuItem('separator'))
+        self.items.append(MenuItem(is_separator=True))
+        self.items.append(MenuItem('Checked', checkable=True, checked=True))
+        self.items.append(MenuItem('Checkable', checkable=True, checked=False))
+        self.items.append(MenuItem(is_separator=True))
+        self.items.append(MenuItem(is_separator=True))
+        self.items.append(MenuItem(is_separator=True))
+        self.items.append(MenuItem('Home', icon='icon/home'))
+        self.items.append(MenuItem('Disabled', disabled=True))
+        self.items.append(MenuItem('Disabled', disabled=True))
+        self.items.append(MenuItem('Disabled', disabled=True))
+        self.items.append(MenuItem(is_separator=True))
+        self.endResetModel()
+
+
 class EmcVideoPlayer_Qt(EmcVideoPlayer):
 
     def __init__(self, *args, **kargs):
@@ -45,6 +167,15 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
         print("INIT VIDEO PLAYER QT")
 
         self._gui = EmcGui.instance()
+
+        self._audio_menu_model = AudioMenuModel()
+        self._video_menu_model = VideoMenuModel()
+        self._subs_menu_model = SubsMenuModel()
+
+        self._gui.model_set('AudioMenuModel', self._audio_menu_model)
+        self._gui.model_set('VideoMenuModel', self._video_menu_model)
+        self._gui.model_set('SubsMenuModel', self._subs_menu_model)
+
         self._qml_obj = self._gui._qml_root.activate_section('videoplayer')
 
     def delete(self) -> None:
@@ -75,6 +206,9 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
 
     def volume_set(self, val: float) -> None:
         self._qml_obj.setProperty('volume', val / 100.0)
+
+    def volume_mute_set(self, muted: bool) -> None:
+        self._qml_obj.setProperty('muted', muted)
 
     def play(self) -> None:
         # make sure the videplayer is visible and focused

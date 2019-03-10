@@ -63,6 +63,10 @@ class EmcVideoPlayer(EmcObject, EmcBackendableABC):
         """ 0 - 100  (logaritmic adjusted) """
 
     @abstractmethod
+    def volume_mute_set(self, muted: bool) -> None:
+        """ set muted volume """
+
+    @abstractmethod
     def play(self) -> None:
         """ start playback """
 

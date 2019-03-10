@@ -13,6 +13,7 @@ EmcFocusManager {
     property alias position: emcVideo.position  // readonly
     property alias duration: emcVideo.duration  // readonly
     property alias volume: emcVideo.volume // log adjusted, 0.0-1.0
+    property alias muted: emcVideo.muted  // bool r/w
     property string title: ""
     property string poster: ""
 

@@ -423,19 +423,21 @@ def volume_dec():
     volume_set(volume_get() - volume_step_get())
 
 
-# def volume_mute_set(mute):
-#     global _volume_muted
-#
-#     _volume_muted = bool(mute)
+def volume_mute_set(mute):
+    global _volume_muted
+
+    _volume_muted = bool(mute)
+    if _player:
+        _player.volume_mute_set(_volume_muted)
 #     events.event_emit('VOLUME_CHANGED')
-#
-#
-# def volume_mute_get():
-#     return _volume_muted
-#
-#
-# def volume_mute_toggle():
-#     volume_mute_set(not _volume_muted)
+
+
+def volume_mute_get():
+    return _volume_muted
+
+
+def volume_mute_toggle():
+    volume_mute_set(not _volume_muted)
 
 
 # ---- input events ----
