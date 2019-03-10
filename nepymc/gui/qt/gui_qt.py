@@ -311,7 +311,7 @@ class GuiCommunicator(QtCore.QObject):
 
     @QtCore.Slot(str, result=str)
     def i18n(self, string):
-        return string + 'pippo'
+        return _(string)
 
     @QtCore.Slot(None, result=str)
     def application_name(self):
@@ -547,8 +547,10 @@ class EmcGui_Qt(EmcGui):
             # self._browser_model_qt.beginResetModel()
             self._browser_qtmodel.emc_model = model
             # self._browser_model_qt.endResetModel()
-        # elif section == 'navigator':
-        #     self._navigator_proxymodel.emc_model = model
+        else:
+            # used for: AudioMenuModel, VideoMenuModel, SubsMenuModel
+            ctxt = self._qml_engine.rootContext()
+            ctxt.setContextProperty(section, model)
 
     def page_title_set(self, title: str):
         self._qml_root.page_title_set(title)

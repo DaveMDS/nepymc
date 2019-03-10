@@ -209,6 +209,7 @@ EmcFocusManager {
                 id: emcBtnFFwd
                 icon: "icon/ffwd"
                 onEmcButtonClicked: EmcBackend.player_action_request("ffwd")
+                KeyNavigation.right: emcAudioBtn
             }
         }
 
@@ -220,14 +221,37 @@ EmcFocusManager {
             anchors.top: parent.top
             anchors.topMargin: 7
 
-            EmcButton {  // action: Audio
-                label: "Audio"
+            EmcButton {  // menu: Audio
+                id: emcAudioBtn
+                label: EmcBackend.i18n("Audio")
+                onEmcButtonClicked: {
+                    emcAudioMenuLoader.setSource("EmcMenu.qml",
+                                                 { model: AudioMenuModel,
+                                                   parent: emcAudioBtn })
+                }
+                Loader { id: emcAudioMenuLoader }
+                KeyNavigation.right: emcVideoBtn
             }
-            EmcButton {  // action: Video
-                label: "Video"
+            EmcButton {  // menu: Video
+                id: emcVideoBtn
+                label: EmcBackend.i18n("Video")
+                onEmcButtonClicked: {
+                    emcVideoMenuLoader.setSource("EmcMenu.qml",
+                                                 { model: VideoMenuModel,
+                                                   parent: emcVideoBtn })
+                }
+                Loader { id: emcVideoMenuLoader }
+                KeyNavigation.right: emcSubsBtn
             }
-            EmcButton {  // action: Subtitles
-                label: "Subtitles"
+            EmcButton {  // menu: Subtitles
+                id: emcSubsBtn
+                label: EmcBackend.i18n("Subtitles")
+                onEmcButtonClicked: {
+                    emcSubsMenuLoader.setSource("EmcMenu.qml",
+                                                 { model: SubsMenuModel,
+                                                   parent: emcSubsBtn })
+                }
+                Loader { id: emcSubsMenuLoader }
             }
         }
 //        DebugRect{anchors.fill: emcControlsButtonRow}

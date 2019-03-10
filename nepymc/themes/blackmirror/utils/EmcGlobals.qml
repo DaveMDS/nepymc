@@ -12,6 +12,9 @@ Item {
     // font for the mainmenu
     property FontLoader font3: FontLoader { source: "../fonts/Sansation-Regular.ttf" }
 
+    // UI element colors
+    property color widgetBgColor: "#FF404040" // solid gray
+
     // font colors
     property color fontColor: "#FFFFFFFF"
     property color fontColorShadow: "#AA000000"  // white
