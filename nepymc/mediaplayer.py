@@ -22,7 +22,7 @@
 import os
 # import random
 # from datetime import datetime
-# from collections import namedtuple
+from collections import namedtuple
 
 from nepymc import utils
 from nepymc import ini
@@ -50,6 +50,10 @@ video_extensions = [
     '.rv', '.webm', '.vid', '.h264', '.rm'
 ]
 audio_extensions = ['.mp3', '.ogg', '.oga', '.flac', '.m4a', '.wav', '.opus']
+
+
+MediaTrack = namedtuple('MediaTrack', 'idx lang name codec active')
+
 
 _volume = 0.0  # Linear volume between 0 and MAX (100 by default)
 _volume_muted = False
@@ -210,6 +214,7 @@ def _play_real(start_from=None, only_audio=False):
         _player.url = url
         _player.position = start_from or 0
         _player.volume_set(volume_adjusted_get())
+        # _player.selected_subtitle_track = -1
         _player.poster_set(_onair_poster)
         _player.title_set(_onair_title)
         _player.play()
@@ -438,6 +443,36 @@ def volume_mute_get():
 
 def volume_mute_toggle():
     volume_mute_set(not _volume_muted)
+
+
+def audio_tracks_get():
+    if _player:
+        return _player.audio_tracks
+
+
+def audio_track_set(idx: int):
+    if _player:
+        _player.selected_audio_track = idx
+
+
+def video_tracks_get():
+    if _player:
+        return _player.video_tracks
+
+
+def video_track_set(idx: int):
+    if _player:
+        _player.selected_video_track = idx
+
+
+def subtitle_tracks_get():
+    if _player:
+        return _player.subtitle_tracks
+
+
+def subtitle_track_set(idx: int):
+    if _player:
+        _player.selected_subtitle_track = idx
 
 
 # ---- input events ----

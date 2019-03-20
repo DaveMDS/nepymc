@@ -112,7 +112,7 @@ ApplicationWindow {
         id: emcVideoPlayerLoader
         active: false
         anchors.fill: parent
-        source: "components/EmcVideoPlayer.qml"
+        source: "components/EmcVideoPlayerControls.qml"
     }
 
     NotifyStack {

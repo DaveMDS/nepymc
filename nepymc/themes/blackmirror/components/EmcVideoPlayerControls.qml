@@ -1,21 +1,31 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtMultimedia 5.12
 import "../utils/"
 import "../utils/utils.js" as Utils
 
 EmcFocusManager {
     id: root
-    objectName: "EmcVideoPlayer"
+    objectName: "EmcVideoPlayerControls"
 
     /* TODO THEME API */
+    property string title: ""
+    property string poster: ""
+
+    // Supported by QTAV and QtMultimedia
     property alias url: emcVideo.source
     property alias position: emcVideo.position  // readonly
     property alias duration: emcVideo.duration  // readonly
     property alias volume: emcVideo.volume // log adjusted, 0.0-1.0
     property alias muted: emcVideo.muted  // bool r/w
-    property string title: ""
-    property string poster: ""
+
+    // QtAV specific
+    property alias audioTracks: emcVideo.internalAudioTracks
+    property alias audioTrack: emcVideo.audioTrack
+    property alias videoTracks: emcVideo.internalVideoTracks
+    property alias videoTrack: emcVideo.videoTrack
+    property alias subtitleTracks: emcVideo.internalSubtitleTracks
+    property alias subtitleTrack: emcVideo.internalSubtitleTrack
+
 
     function play() {
         emcVideo.play()
@@ -61,10 +71,10 @@ EmcFocusManager {
         color: "black"
     }
 
-    Video {  // the actual video object
+    // TODO make the player user-selectable in some way
+    EmcVideoPlayer_QtAV { // the actual video player
+    //EmcVideoPlayer_QtMultimedia { // the actual video player
         id: emcVideo
-
-        source: url
         anchors.fill: parent
 
         MouseArea {
@@ -72,6 +82,7 @@ EmcFocusManager {
             onClicked: emcControls.emcVisible = !emcControls.emcVisible
         }
     }
+
 
     states: [
         State {
@@ -187,17 +198,18 @@ EmcFocusManager {
                 id: emcBtnStop
                 icon: "icon/stop"
                 onEmcButtonClicked: EmcBackend.player_action_request("stop")
+                KeyNavigation.right: emcBtnPause
+            }
+            EmcButton {  // button: Pause
+                id: emcBtnPause
+                icon: "icon/pause"
+                onEmcButtonClicked: EmcBackend.player_action_request("pause")
                 KeyNavigation.right: emcBtnPlay
             }
-            EmcButton {  // button: Play / Pause
+            EmcButton {  // button: Play
                 id: emcBtnPlay
-                icon: emcVideo.playbackState == MediaPlayer.PlayingState ? "icon/pause" : "icon/play"
-                onEmcButtonClicked: {
-                    if (emcVideo.playbackState == MediaPlayer.PlayingState)
-                        EmcBackend.player_action_request("pause")
-                    else
-                        EmcBackend.player_action_request("play")
-                }
+                icon: "icon/play"
+                onEmcButtonClicked: EmcBackend.player_action_request("play")
                 KeyNavigation.right: emcBtnFwd
             }
             EmcButton {  // button: Forward

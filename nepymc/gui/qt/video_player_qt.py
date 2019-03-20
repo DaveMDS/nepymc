@@ -19,12 +19,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from typing import Callable
+from typing import Callable, List
 
 from PySide2 import QtCore
 
 from nepymc.gui import EmcGui, EmcVideoPlayer
 from nepymc import mediaplayer
+from nepymc.mediaplayer import MediaTrack
 
 
 def LOG(*args):
@@ -118,7 +119,10 @@ class AudioMenuModel(MenuModelBase):
     def populate(self):
         self.beginResetModel()
         self.items = []
-        self.items.append(MenuItem('TODO audio tracks', disabled=True))
+        for t in mediaplayer.audio_tracks_get():
+            self.items.append(MenuItem('%s - %s' % (t.name, t.lang),
+                                       checkable=True, checked=t.active,
+                                       callback=self.change_track, track=t))
         self.items.append(MenuItem(is_separator=True))
         self.items.append(MenuItem(_('Mute'), 'icon/mute', checkable=True,
                                    checked=mediaplayer.volume_mute_get(),
@@ -129,21 +133,37 @@ class AudioMenuModel(MenuModelBase):
     def mute_toggle(item):
         mediaplayer.volume_mute_toggle()
 
+    @staticmethod
+    def change_track(item, track):
+        mediaplayer.audio_track_set(track.idx)
+
 
 class VideoMenuModel(MenuModelBase):
     def populate(self):
         self.beginResetModel()
         self.items = []
-        self.items.append(MenuItem('TODO video tracks', disabled=True))
+        for t in mediaplayer.video_tracks_get():
+            self.items.append(MenuItem('%s - %s' % (t.name, t.lang),
+                                       checkable=True, checked=t.active,
+                                       callback=self.change_track, track=t))
         self.items.append(MenuItem(is_separator=True))
         self.items.append(MenuItem(_('Download video'), icon='icon/download'))
         self.endResetModel()
+
+    @staticmethod
+    def change_track(item, track):
+        mediaplayer.audio_track_set(track.idx)
 
 
 class SubsMenuModel(MenuModelBase):
     def populate(self):
         self.beginResetModel()
         self.items = []
+        for t in mediaplayer.subtitle_tracks_get():
+            self.items.append(MenuItem('%s - %s' % (t.name, t.lang),
+                                       checkable=True, checked=t.active,
+                                       callback=self.change_track, track=t))
+        self.items.append(MenuItem(is_separator=True))
         self.items.append(MenuItem('Disabled', disabled=True))
         self.items.append(MenuItem('separator'))
         self.items.append(MenuItem(is_separator=True))
@@ -158,6 +178,10 @@ class SubsMenuModel(MenuModelBase):
         self.items.append(MenuItem('Disabled', disabled=True))
         self.items.append(MenuItem(is_separator=True))
         self.endResetModel()
+
+    @staticmethod
+    def change_track(item, track):
+        mediaplayer.subtitle_track_set(track.idx)
 
 
 class EmcVideoPlayer_Qt(EmcVideoPlayer):
@@ -226,3 +250,81 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
 
     def poster_set(self, poster: str) -> None:
         self._qml_obj.setProperty('poster', poster)
+
+    @property
+    def audio_tracks(self) -> List[MediaTrack]:
+        li = []
+        tracks = self._qml_obj.property('audioTracks')
+
+        # The QtMultimedia player return a QJSValue, not a list as QtAV... :/
+        if not isinstance(tracks, list):
+            return li
+
+        current = self.selected_audio_track
+        for i, t in enumerate(tracks):
+            mt = MediaTrack(t['id'], t['language'],
+                            t.get('title', _('Track %d') % (i + 1)),
+                            t.get('codec').data().decode('utf8'),
+                            t.get('id') == current)
+            li.append(mt)
+        return li
+
+    @property
+    def selected_audio_track(self) -> int:
+        return self._qml_obj.property('audioTrack')
+
+    @selected_audio_track.setter
+    def selected_audio_track(self, idx: int) -> None:
+        self._qml_obj.setProperty('audioTrack', idx)
+
+    @property
+    def video_tracks(self) -> List[MediaTrack]:
+        li = []
+        tracks = self._qml_obj.property('videoTracks')
+
+        # The QtMultimedia player return a QJSValue, not a list as QtAV... :/
+        if not isinstance(tracks, list):
+            return li
+
+        current = self.selected_video_track
+        for i, t in enumerate(tracks):
+            mt = MediaTrack(t['id'], t['language'],
+                            t.get('title', _('Track %d') % (i + 1)),
+                            t.get('codec').data().decode('utf8'),
+                            t.get('id') == current)
+            li.append(mt)
+        return li
+
+    @property
+    def selected_video_track(self) -> int:
+        return self._qml_obj.property('videoTrack')
+
+    @selected_video_track.setter
+    def selected_video_track(self, idx: int) -> None:
+        self._qml_obj.setProperty('videoTrack', idx)
+
+    @property
+    def subtitle_tracks(self) -> List[MediaTrack]:
+        li = []
+        tracks = self._qml_obj.property('subtitleTracks')
+
+        # The QtMultimedia player return a QJSValue, not a list as QtAV... :/
+        if not isinstance(tracks, list):
+            return li
+
+        current = self.selected_subtitle_track
+        for i, t in enumerate(tracks):
+            mt = MediaTrack(t['id'], t['language'],
+                            t.get('title', _('Track %d') % (i + 1)),
+                            t.get('codec').data().decode('utf8'),
+                            t.get('id') == current)
+            li.append(mt)
+        return li
+
+    @property
+    def selected_subtitle_track(self) -> int:
+        return self._qml_obj.property('subtitleTrack')
+
+    @selected_subtitle_track.setter
+    def selected_subtitle_track(self, idx: int) -> None:
+        self._qml_obj.setProperty('subtitleTrack', idx)

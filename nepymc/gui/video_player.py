@@ -19,7 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from abc import abstractmethod
-from typing import Optional
+from typing import Optional, List
 
 from nepymc.utils import EmcBackendableABC, EmcObject
 
@@ -86,3 +86,47 @@ class EmcVideoPlayer(EmcObject, EmcBackendableABC):
     def poster_set(self, poster: str) -> None:
         """ TODOC """
 
+    @property
+    @abstractmethod
+    def audio_tracks(self) -> List['MediaTrack']:
+        """ list of mediaplayer.MediaTrack """
+
+    @property
+    @abstractmethod
+    def selected_audio_track(self) -> int:
+        """ idx of current audio track """
+
+    @selected_audio_track.setter
+    @abstractmethod
+    def selected_audio_track(self, idx: int) -> None:
+        """ set the current audio track """
+
+    @property
+    @abstractmethod
+    def video_tracks(self) -> List['MediaTrack']:
+        """ list of mediaplayer.MediaTrack """
+
+    @property
+    @abstractmethod
+    def selected_video_track(self) -> int:
+        """ idx of current video track """
+
+    @selected_video_track.setter
+    @abstractmethod
+    def selected_video_track(self, idx: int) -> None:
+        """ set the current video track """
+
+    @property
+    @abstractmethod
+    def subtitle_tracks(self) -> List['MediaTrack']:
+        """ list of mediaplayer.MediaTrack """
+
+    @property
+    @abstractmethod
+    def selected_subtitle_track(self) -> int:
+        """ idx of current subtitle track """
+
+    @selected_subtitle_track.setter
+    @abstractmethod
+    def selected_subtitle_track(self, idx: int) -> None:
+        """ set the current subtitle track """
