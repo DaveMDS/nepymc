@@ -62,15 +62,13 @@ class EmcUrl_Qt(EmcUrl):
             self._reply.readyRead.connect(self._data_ready_cb)
 
     def delete(self) -> None:
-        super().delete()
-
-        self._reply.abort()
-        del self._reply
+        if super().delete() is True:
+            self._reply.abort()
+            del self._reply
 
         if self._dest_fp:
             self._dest_fp.close()
             self._dest_fp = None
-
 
     def _progress_cb(self, received, totals):
         self._notify_prog(totals, received)

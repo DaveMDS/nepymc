@@ -34,6 +34,10 @@ class EmcUrl(EmcObject, EmcBackendableABC):
     The download will automatically start on class instantiation.
     The downloaded data (bytes) will be converted to str using utf8 encoding.
 
+    This object autodelete itself just after calling the done_cb, so you never
+    need to delete, unless you want to abort an operation. But remember to
+    remove your reference in the done_cb.
+
     Properties:
         url (str): the url being downloaded
         dest (str): the resolved destination file, or '::mem::'
@@ -44,7 +48,7 @@ class EmcUrl(EmcObject, EmcBackendableABC):
             written to that file (created and overwritten if necessary, also the
             necessary parent directories are created).
             If dest is omitted (or is '::mem::') than the data will be only be
-            saved to a mem buffer and returned as a dest param in the done cb.
+            saved to a mem buffer and returned as the dest param in the done cb.
             If dest '::tmp::' than the data will be written to a random created
             new temp file.
         done_cb (callable): function to call when the operation is completed
@@ -125,7 +129,7 @@ class EmcUrl(EmcObject, EmcBackendableABC):
     def dest(self) -> str:
         return self._dest
 
-    def _notify_done(self, success: bool, data: bytes=None):
+    def _notify_done(self, success: bool, data: bytes = None):
         """ utility for backends
         Params:
             status (bool): True is success
@@ -135,10 +139,10 @@ class EmcUrl(EmcObject, EmcBackendableABC):
         # if file size or data size < min_size: report as error
         if success and self._min_size:
             if self._dest == '::mem::':
-                if len(data) < self.min_size:
+                if len(data) < self._min_size:
                     success = False
             else:
-                if os.path.getsize(self.dest) < self.min_size:
+                if os.path.getsize(self.dest) < self._min_size:
                     success = False
 
         # on errors delete the downloaded file
@@ -147,20 +151,24 @@ class EmcUrl(EmcObject, EmcBackendableABC):
 
         # call the user callback
         if callable(self._done_cb):
-            if self.dest == '::mem::':
+            if self.dest != '::mem::':
+                data = self.dest  # data is the destination file path
+            elif data is not None:
                 if self._decode == 'utf8':
                     data = data.decode('utf8')
+                elif self._decode == 'json':
+                    import json  # lazy load
+                    data = json.loads(data)
                 elif not self._decode:
                     pass  # no decoding at all
-                elif self._decode == 'json':
-                    raise NotImplementedError('EmcUrl: Json decoder to be done')
                 else:
                     raise RuntimeError('EmcUrl: Unknown decode method "{}"'
                                        .format(self._decode))
-            else:
-                data = self.dest  # data is the destination file path
             self._done_cb(self, success, data,
                           *self._cb_args, **self._cb_kargs)
+
+        # autodelete !
+        self.delete()
 
     def _notify_prog(self, total: int, received: int):
         """ utility for backends

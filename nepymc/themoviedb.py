@@ -18,7 +18,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import json
 import os
 from operator import itemgetter
 from urllib.parse import urlencode
@@ -143,18 +142,18 @@ class TMDBv3(object):
     def _api_call(self, callback, cb_data, entry_point, **kargs):
         url = self._api_url(entry_point, **kargs)
         DBG('TMDB API CALL: ' + url)
-        self.api_handler = EmcUrl(url, dest='::mem::',
+        self.api_handler = EmcUrl(url, dest='::mem::', decode='json',
+                                  urlencode=False,
                                   done_cb=self._api_call_done_cb,
                                   user_callback=callback,
                                   user_data=cb_data)
 
     def _api_call_done_cb(self, url, success, data, user_callback, user_data):
         self.api_handler = None
-        api_data = json.loads(data)
         if user_data:
-            user_callback(api_data, user_data)
+            user_callback(data, user_data)
         else:
-            user_callback(api_data)
+            user_callback(data)
 
     def _img_url(self, final_part, size):
         if final_part:

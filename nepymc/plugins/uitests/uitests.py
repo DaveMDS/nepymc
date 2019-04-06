@@ -1054,16 +1054,20 @@ class Test_Url(GenericItemClass):
         self.dia = EmcDialog(style='progress', title=user_data,
                              text='Press start to test a 5MB download')
         self.dia.button_add('Close', lambda b: self.dia.delete())
-        self.dia.button_add('delete()', lambda b: self.dload.delete())
-        self.dia.button_add('To file (5M)', self.start_cb, self.url1)
-        self.dia.button_add('To mem (13K)', self.start_cb, self.url2)
+        self.dia.button_add('delete()', self.delete_btn_cb)
+        self.dia.button_add('To file (5M)', self.start_btn_cb, self.url1)
+        self.dia.button_add('To mem (13K)', self.start_btn_cb, self.url2)
 
-    def start_cb(self, btn, url):
+    def start_btn_cb(self, btn, url):
         self.dia.text_set('Download started...')
         dest = '::tmp::' if url == self.url1 else '::mem::'
         self.dload = EmcUrl(url, dest=dest, done_cb=self.done_cb,
                             prog_cb=self.prog_cb, decode=None,
                             parent=self.dia)
+
+    def delete_btn_cb(self, btn):
+        if self.dload:
+            self.dload.delete()
 
     def done_cb(self, url, success, dest):
         print("DONE", success)
@@ -1078,6 +1082,7 @@ class Test_Url(GenericItemClass):
                               'File size: {} '.format(dest, size))
         else:
             self.dia.text_set("Error !!")
+        self.dload = None
 
     def prog_cb(self, url, total, received):
         print("PROGRESS", url, total, received)
