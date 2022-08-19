@@ -184,10 +184,10 @@ class DevelopCommand(Command):
             os.environ[name] = value
 
     def run(self):
-        self.run_command("clean")
+        self.run_command('clean')
 
         if self.from_build:
-            self.run_command("build")
+            self.run_command('build')
             bins_path = './build/scripts-{0}.{1}/'.format(*sys.version_info)
             modules_path = os.path.abspath('./build/lib/')
 
@@ -233,12 +233,12 @@ class TestCommand(Command):
 
 
 setup(
-    name="nepymc",
+    name='nepymc',
     version=emc_version,
     author='Davide <davemds> Andreoli',
     author_email='dave@gurumeditation.it',
     description='NepyMC is a free Media Center Platform written in Python',
-    url='http://github.com/DaveMDS/emc',
+    url='http://github.com/DaveMDS/nepyemc',
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',

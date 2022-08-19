@@ -21,7 +21,7 @@
 import sys
 from typing import Callable, List
 
-from PySide2 import QtCore
+from PySide6 import QtCore
 
 from nepymc.gui import EmcGui, EmcVideoPlayer
 from nepymc import mediaplayer

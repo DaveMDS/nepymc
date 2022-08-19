@@ -23,7 +23,7 @@ from typing import Any, Optional
 
 # from PySide2.QtCore import Qt, QObject, Slot, QAbstractListModel
 
-from PySide2.QtCore import Qt, Slot, QAbstractListModel
+from PySide6.QtCore import Qt, Slot, QAbstractListModel
 
 # from nepymc import utils
 from nepymc.gui import EmcGui

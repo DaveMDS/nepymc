@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from PySide2.QtNetwork import QNetworkAccessManager, QNetworkRequest, \
+from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest, \
     QNetworkReply
 
 from nepymc.mainloop import EmcUrl

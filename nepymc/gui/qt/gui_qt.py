@@ -21,11 +21,8 @@
 import os
 import sys
 
-from PySide2 import QtCore
-from PySide2 import QtGui
-from PySide2 import QtQml
-from PySide2 import QtNetwork
-from PySide2.QtCore import Qt
+from PySide6 import QtCore, QtGui, QtQml, QtNetwork
+from PySide6.QtCore import Qt
 
 from nepymc import utils
 from nepymc import mainmenu
