@@ -8,7 +8,7 @@ BorderImage {
     property bool emcVisible: false
     property bool emcKeepVisible: false
 
-    source: "../pics/frame_box_bottom.png"
+    source: "pics/frame_box_bottom.png"
     border { left: 17; right: 17; top: 17; bottom: 0 }
 
     width: 440; height: 55
