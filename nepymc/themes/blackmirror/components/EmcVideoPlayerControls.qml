@@ -1,5 +1,5 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick
+import QtQuick.Controls
 import "../utils/"
 import "../utils/utils.js" as Utils
 
@@ -78,7 +78,6 @@ EmcFocusManager {
             onClicked: emcControls.emcVisible = !emcControls.emcVisible
         }
     }
-
 
     states: [
         State {
