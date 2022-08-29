@@ -21,7 +21,7 @@
 import sys
 from typing import Callable, List
 
-from PySide6 import QtCore
+from PySide6 import QtCore, QtMultimedia
 
 from nepymc.gui import EmcGui, EmcVideoPlayer
 from nepymc import mediaplayer
@@ -79,7 +79,7 @@ class MenuModelBase(QtCore.QAbstractListModel):
 
     def __init__(self):
         super().__init__()
-        self.items = []
+        self.items: List[MenuItem] = []
 
     def roleNames(self):
         return self.role_names
@@ -143,7 +143,7 @@ class VideoMenuModel(MenuModelBase):
         self.beginResetModel()
         self.items = []
         for t in mediaplayer.video_tracks_get():
-            self.items.append(MenuItem('%s - %s' % (t.name, t.lang),
+            self.items.append(MenuItem(t.name,
                                        checkable=True, checked=t.active,
                                        callback=self.change_track, track=t))
         self.items.append(MenuItem(is_separator=True))
@@ -163,20 +163,20 @@ class SubsMenuModel(MenuModelBase):
             self.items.append(MenuItem('%s - %s' % (t.name, t.lang),
                                        checkable=True, checked=t.active,
                                        callback=self.change_track, track=t))
-        self.items.append(MenuItem(is_separator=True))
-        self.items.append(MenuItem('Disabled', disabled=True))
-        self.items.append(MenuItem('separator'))
-        self.items.append(MenuItem(is_separator=True))
-        self.items.append(MenuItem('Checked', checkable=True, checked=True))
-        self.items.append(MenuItem('Checkable', checkable=True, checked=False))
-        self.items.append(MenuItem(is_separator=True))
-        self.items.append(MenuItem(is_separator=True))
-        self.items.append(MenuItem(is_separator=True))
-        self.items.append(MenuItem('Home', icon='icon/home'))
-        self.items.append(MenuItem('Disabled', disabled=True))
-        self.items.append(MenuItem('Disabled', disabled=True))
-        self.items.append(MenuItem('Disabled', disabled=True))
-        self.items.append(MenuItem(is_separator=True))
+        # self.items.append(MenuItem(is_separator=True))
+        # self.items.append(MenuItem('Disabled', disabled=True))
+        # self.items.append(MenuItem('separator'))
+        # self.items.append(MenuItem(is_separator=True))
+        # self.items.append(MenuItem('Checked', checkable=True, checked=True))
+        # self.items.append(MenuItem('Checkable', checkable=True, checked=False))
+        # self.items.append(MenuItem(is_separator=True))
+        # self.items.append(MenuItem(is_separator=True))
+        # self.items.append(MenuItem(is_separator=True))
+        # self.items.append(MenuItem('Home', icon='icon/home'))
+        # self.items.append(MenuItem('Disabled', disabled=True))
+        # self.items.append(MenuItem('Disabled', disabled=True))
+        # self.items.append(MenuItem('Disabled', disabled=True))
+        # self.items.append(MenuItem(is_separator=True))
         self.endResetModel()
 
     @staticmethod
@@ -255,17 +255,15 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
     def audio_tracks(self) -> List[MediaTrack]:
         li = []
         tracks = self._qml_obj.property('audioTracks')
-
-        # The QtMultimedia player return a QJSValue, not a list as QtAV... :/
-        if not isinstance(tracks, list):
-            return li
-
-        current = self.selected_audio_track
         for i, t in enumerate(tracks):
-            mt = MediaTrack(t['id'], t['language'],
-                            t.get('title', _('Track %d') % (i + 1)),
-                            t.get('codec').data().decode('utf8'),
-                            t.get('id') == current)
+            title = t.stringValue(QtMultimedia.QMediaMetaData.Key.Title)
+            mt = MediaTrack(
+                i,
+                t.stringValue(QtMultimedia.QMediaMetaData.Key.Language),
+                title or _('Track %d') % (i + 1),
+                t.stringValue(QtMultimedia.QMediaMetaData.Key.AudioCodec),
+                i == self.selected_audio_track
+            )
             li.append(mt)
         return li
 
@@ -281,17 +279,15 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
     def video_tracks(self) -> List[MediaTrack]:
         li = []
         tracks = self._qml_obj.property('videoTracks')
-
-        # The QtMultimedia player return a QJSValue, not a list as QtAV... :/
-        if not isinstance(tracks, list):
-            return li
-
-        current = self.selected_video_track
         for i, t in enumerate(tracks):
-            mt = MediaTrack(t['id'], t['language'],
-                            t.get('title', _('Track %d') % (i + 1)),
-                            t.get('codec').data().decode('utf8'),
-                            t.get('id') == current)
+            title = t.stringValue(QtMultimedia.QMediaMetaData.Key.Title)
+            mt = MediaTrack(
+                i,
+                t.stringValue(QtMultimedia.QMediaMetaData.Key.Language),
+                title or _('Track %d') % (i + 1),
+                t.stringValue(QtMultimedia.QMediaMetaData.Key.VideoCodec),
+                i == self.selected_video_track
+            )
             li.append(mt)
         return li
 
@@ -307,17 +303,15 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
     def subtitle_tracks(self) -> List[MediaTrack]:
         li = []
         tracks = self._qml_obj.property('subtitleTracks')
-
-        # The QtMultimedia player return a QJSValue, not a list as QtAV... :/
-        if not isinstance(tracks, list):
-            return li
-
-        current = self.selected_subtitle_track
         for i, t in enumerate(tracks):
-            mt = MediaTrack(t['id'], t['language'],
-                            t.get('title', _('Track %d') % (i + 1)),
-                            t.get('codec').data().decode('utf8'),
-                            t.get('id') == current)
+            title = t.stringValue(QtMultimedia.QMediaMetaData.Key.Title)
+            mt = MediaTrack(
+                i,
+                t.stringValue(QtMultimedia.QMediaMetaData.Key.Language),
+                title or _('Track %d') % (i + 1),
+                None,  # codec?
+                i == self.selected_subtitle_track
+            )
             li.append(mt)
         return li
 

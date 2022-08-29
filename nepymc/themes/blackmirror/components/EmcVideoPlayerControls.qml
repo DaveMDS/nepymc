@@ -11,20 +11,18 @@ EmcFocusManager {
     property string title: ""
     property string poster: ""
 
-    // Supported by QTAV and QtMultimedia
     property alias url: emcVideo.source
     property alias position: emcVideo.position  // readonly
     property alias duration: emcVideo.duration  // readonly
     property alias volume: emcVideo.volume // log adjusted, 0.0-1.0
     property alias muted: emcVideo.muted  // bool r/w
 
-    // QtAV specific
-    property alias audioTracks: emcVideo.internalAudioTracks
+    property alias audioTracks: emcVideo.audioTracks
     property alias audioTrack: emcVideo.audioTrack
-    property alias videoTracks: emcVideo.internalVideoTracks
+    property alias videoTracks: emcVideo.videoTracks
     property alias videoTrack: emcVideo.videoTrack
-    property alias subtitleTracks: emcVideo.internalSubtitleTracks
-    property alias subtitleTrack: emcVideo.internalSubtitleTrack
+    property alias subtitleTracks: emcVideo.subtitleTracks
+    property alias subtitleTrack: emcVideo.subtitleTrack
 
 
     function play() {
@@ -71,9 +69,7 @@ EmcFocusManager {
         color: "black"
     }
 
-    // TODO make the player user-selectable in some way
-    EmcVideoPlayer_QtAV { // the actual video player
-    //EmcVideoPlayer_QtMultimedia { // the actual video player
+    EmcVideoPlayer { // the actual video player
         id: emcVideo
         anchors.fill: parent
 

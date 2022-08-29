@@ -57,7 +57,7 @@ MediaTrack = namedtuple('MediaTrack', 'idx lang name codec active')
 
 _volume = 0.0  # Linear volume between 0 and MAX (100 by default)
 _volume_muted = False
-_player = None  # EmcVideoPlayer or EmcAudioPlayer instance, or None
+_player: EmcVideoPlayer | None = None  # EmcVideoPlayer or EmcAudioPlayer instance, or None
 _saved_player = None  # EmcAudioPlayer while EmcVideoPlayer is active
 _onair_url = None
 _onair_title = None
