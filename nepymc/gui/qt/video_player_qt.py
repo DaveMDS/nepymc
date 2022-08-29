@@ -130,11 +130,11 @@ class AudioMenuModel(MenuModelBase):
         self.endResetModel()
 
     @staticmethod
-    def mute_toggle(item):
+    def mute_toggle(_item):
         mediaplayer.volume_mute_toggle()
 
     @staticmethod
-    def change_track(item, track):
+    def change_track(_item, track):
         mediaplayer.audio_track_set(track.idx)
 
 
@@ -151,7 +151,7 @@ class VideoMenuModel(MenuModelBase):
         self.endResetModel()
 
     @staticmethod
-    def change_track(item, track):
+    def change_track(_item, track):
         mediaplayer.audio_track_set(track.idx)
 
 
@@ -180,7 +180,7 @@ class SubsMenuModel(MenuModelBase):
         self.endResetModel()
 
     @staticmethod
-    def change_track(item, track):
+    def change_track(_item, track):
         mediaplayer.subtitle_track_set(track.idx)
 
 
@@ -200,7 +200,7 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
         self._gui.model_set('VideoMenuModel', self._video_menu_model)
         self._gui.model_set('SubsMenuModel', self._subs_menu_model)
 
-        self._qml_obj = self._gui._qml_root.activate_section('videoplayer')
+        self._qml_obj = self._gui.activate_section('videoplayer')
 
     def delete(self) -> None:
         super().delete()
@@ -236,7 +236,7 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
 
     def play(self) -> None:
         # make sure the videplayer is visible and focused
-        self._gui._qml_root.activate_section('videoplayer')
+        self._gui.activate_section('videoplayer')
         self._qml_obj.play()
 
     def pause(self) -> None:
