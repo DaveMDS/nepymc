@@ -200,7 +200,7 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
         self._gui.model_set('VideoMenuModel', self._video_menu_model)
         self._gui.model_set('SubsMenuModel', self._subs_menu_model)
 
-        self._qml_obj = self._gui.activate_section('videoplayer')
+        self._qml_obj = self._gui._qml_root.activate_section('videoplayer')
 
     def delete(self) -> None:
         super().delete()
