@@ -77,7 +77,11 @@ Item {
             delegate: emcBrowserListItemComponent
 
             ScrollBar.vertical: ScrollBar { }
-
+            boundsMovement: Flickable.StopAtBounds
+            highlightMoveDuration: 0
+            highlightMoveVelocity: -1
+            pixelAligned: true
+            reuseItems: true
         }
     }
 
