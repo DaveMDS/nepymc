@@ -93,12 +93,12 @@ class EmcVideoPlayer(EmcObject, EmcBackendableABC):
 
     @property
     @abstractmethod
-    def selected_audio_track(self) -> int:
+    def active_audio_track(self) -> int:
         """ idx of current audio track """
 
-    @selected_audio_track.setter
+    @active_audio_track.setter
     @abstractmethod
-    def selected_audio_track(self, idx: int) -> None:
+    def active_audio_track(self, idx: int) -> None:
         """ set the current audio track """
 
     @property
@@ -108,12 +108,12 @@ class EmcVideoPlayer(EmcObject, EmcBackendableABC):
 
     @property
     @abstractmethod
-    def selected_video_track(self) -> int:
+    def active_video_track(self) -> int:
         """ idx of current video track """
 
-    @selected_video_track.setter
+    @active_video_track.setter
     @abstractmethod
-    def selected_video_track(self, idx: int) -> None:
+    def active_video_track(self, idx: int) -> None:
         """ set the current video track """
 
     @property
@@ -123,10 +123,10 @@ class EmcVideoPlayer(EmcObject, EmcBackendableABC):
 
     @property
     @abstractmethod
-    def selected_subtitle_track(self) -> int:
+    def active_subtitle_track(self) -> int:
         """ idx of current subtitle track """
 
-    @selected_subtitle_track.setter
+    @active_subtitle_track.setter
     @abstractmethod
-    def selected_subtitle_track(self, idx: int) -> None:
+    def active_subtitle_track(self, idx: int) -> None:
         """ set the current subtitle track """

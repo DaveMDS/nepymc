@@ -23,6 +23,7 @@ import os
 # import random
 # from datetime import datetime
 from collections import namedtuple
+from typing import List
 
 from nepymc import utils
 from nepymc import ini
@@ -214,7 +215,7 @@ def _play_real(start_from=None, only_audio=False):
         _player.url = url
         _player.position = start_from or 0
         _player.volume_set(volume_adjusted_get())
-        # _player.selected_subtitle_track = -1
+        # _player.active_subtitle_track = -1
         _player.poster_set(_onair_poster)
         _player.title_set(_onair_title)
         _player.play()
@@ -445,46 +446,43 @@ def volume_mute_toggle():
     volume_mute_set(not _volume_muted)
 
 
-def audio_tracks_get():
-    if _player:
-        return _player.audio_tracks
+def audio_tracks_get() -> List[MediaTrack]:
+    return _player.audio_tracks if _player else []
 
 
 def audio_track_get() -> int:
-    return _player.selected_audio_track if _player else -1
+    return _player.active_audio_track if _player else -1
 
 
 def audio_track_set(idx: int):
     if _player:
-        _player.selected_audio_track = idx
+        _player.active_audio_track = idx
 
 
-def video_tracks_get():
-    if _player:
-        return _player.video_tracks
+def video_tracks_get() -> List[MediaTrack]:
+    return _player.video_tracks if _player else []
 
 
 def video_track_get() -> int:
-    return _player.selected_video_track if _player else -1
+    return _player.active_video_track if _player else -1
 
 
 def video_track_set(idx: int):
     if _player:
-        _player.selected_video_track = idx
+        _player.active_video_track = idx
 
 
-def subtitle_tracks_get():
-    if _player:
-        return _player.subtitle_tracks
+def subtitle_tracks_get() -> List[MediaTrack]:
+    return _player.subtitle_tracks if _player else []
 
 
 def subtitle_track_get() -> int:
-    return _player.selected_subtitle_track if _player else -1
+    return _player.active_subtitle_track if _player else -1
 
 
 def subtitle_track_set(idx: int):
     if _player:
-        _player.selected_subtitle_track = idx
+        _player.active_subtitle_track = idx
 
 
 # ---- input events ----

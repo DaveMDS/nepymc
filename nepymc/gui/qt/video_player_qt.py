@@ -259,17 +259,17 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
                 t.stringValue(QtMultimedia.QMediaMetaData.Key.Language),
                 title or _('Track %d') % (i + 1),
                 t.stringValue(QtMultimedia.QMediaMetaData.Key.AudioCodec),
-                i == self.selected_audio_track
+                i == self.active_audio_track
             )
             li.append(mt)
         return li
 
     @property
-    def selected_audio_track(self) -> int:
+    def active_audio_track(self) -> int:
         return self._qml_obj.property('audioTrack')
 
-    @selected_audio_track.setter
-    def selected_audio_track(self, idx: int) -> None:
+    @active_audio_track.setter
+    def active_audio_track(self, idx: int) -> None:
         self._qml_obj.setProperty('audioTrack', idx)
 
     @property
@@ -283,17 +283,17 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
                 t.stringValue(QtMultimedia.QMediaMetaData.Key.Language),
                 title or _('Track %d') % (i + 1),
                 t.stringValue(QtMultimedia.QMediaMetaData.Key.VideoCodec),
-                i == self.selected_video_track
+                i == self.active_video_track
             )
             li.append(mt)
         return li
 
     @property
-    def selected_video_track(self) -> int:
+    def active_video_track(self) -> int:
         return self._qml_obj.property('videoTrack')
 
-    @selected_video_track.setter
-    def selected_video_track(self, idx: int) -> None:
+    @active_video_track.setter
+    def active_video_track(self, idx: int) -> None:
         self._qml_obj.setProperty('videoTrack', idx)
 
     @property
@@ -307,15 +307,15 @@ class EmcVideoPlayer_Qt(EmcVideoPlayer):
                 t.stringValue(QtMultimedia.QMediaMetaData.Key.Language),
                 title or _('Track %d') % (i + 1),
                 None,  # codec?
-                i == self.selected_subtitle_track
+                i == self.active_subtitle_track
             )
             li.append(mt)
         return li
 
     @property
-    def selected_subtitle_track(self) -> int:
+    def active_subtitle_track(self) -> int:
         return self._qml_obj.property('subtitleTrack')
 
-    @selected_subtitle_track.setter
-    def selected_subtitle_track(self, idx: int) -> None:
+    @active_subtitle_track.setter
+    def active_subtitle_track(self, idx: int) -> None:
         self._qml_obj.setProperty('subtitleTrack', idx)
