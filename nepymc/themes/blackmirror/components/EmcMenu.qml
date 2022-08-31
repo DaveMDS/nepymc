@@ -8,9 +8,6 @@ Popup {
 
     property var model  // must be set on component creation
 
-    width: 200  // TOSCALE
-    height: emcMenuList.height
-
     modal: true
     focus: true
     padding: 0
@@ -36,10 +33,12 @@ Popup {
     contentItem: ListView {
         id: emcMenuList
 
-        focus: true
-         //width: contentWidth  // fail :/
-        height: contentHeight  // OK
+        // TODO width should match items width...
+        // https://stackoverflow.com/questions/41364799/qt-quick-controls-listview-size-issue
+        implicitWidth: 400 // <== contentWidth not supported by ListView
+        implicitHeight: contentHeight
 
+        focus: true
         model: root.model
         delegate: emcMenuItem
 
@@ -88,7 +87,7 @@ Popup {
             property bool is_disabled: model.disabled
 
             height: is_separator ? 5 : emcLabel.height
-            width: parent.width
+            width: contentWidth
             enabled: is_disabled || is_separator ? false : true
 
             Image {  // separator item
