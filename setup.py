@@ -268,6 +268,10 @@ setup(
 
     packages=[
         'nepymc',
+        'nepymc.gui',
+        'nepymc.gui.qt',
+        'nepymc.mainloop',
+        'nepymc.mainloop.qt',
         # 'nepymc.extapi',
         'nepymc.plugins.input_keyb',
         # 'nepymc.plugins.input_lirc',
@@ -290,7 +294,8 @@ setup(
     ],
 
     package_data={
-        'nepymc': ['themes/*/*', 'themes/*/*/*', 'locale/*/LC_MESSAGES/*.mo'],
+        'nepymc': ['themes/*/*', 'themes/*/*/*', 'themes/*/*/*/*',
+                   'locale/*/LC_MESSAGES/*.mo'],
         # 'epymc.plugins.movies': ['*.png'],
         # 'epymc.plugins.tvshows': ['*.png'],
         # 'epymc.plugins.mame': ['*.png', '*.jpg'],
