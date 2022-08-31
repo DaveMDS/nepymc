@@ -20,8 +20,6 @@ Popup {
     Component.onCompleted: {
         y = parent.height  // open below the parent
         // TODO open above parent if the parent is in the bottom of the screen
-        model.populate()
-        root.open()
     }
 
     enter: Transition {

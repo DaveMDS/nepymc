@@ -233,33 +233,43 @@ EmcFocusManager {
                 id: emcAudioBtn
                 label: EmcBackend.i18n("Audio")
                 onEmcButtonClicked: {
-                    emcAudioMenuLoader.setSource("EmcMenu.qml",
-                                                 { model: AudioMenuModel,
-                                                   parent: emcAudioBtn })
+                    AudioMenuModel.populate()
+                    emcAudioMenu.open()
                 }
-                Loader { id: emcAudioMenuLoader }
                 KeyNavigation.right: emcVideoBtn
+                EmcMenu {
+                    id: emcAudioMenu
+                    parent: emcAudioBtn
+                    model: AudioMenuModel
+                }
             }
             EmcButton {  // menu: Video
                 id: emcVideoBtn
                 label: EmcBackend.i18n("Video")
                 onEmcButtonClicked: {
-                    emcVideoMenuLoader.setSource("EmcMenu.qml",
-                                                 { model: VideoMenuModel,
-                                                   parent: emcVideoBtn })
+                    VideoMenuModel.populate()
+                    emcVideoMenu.open()
                 }
-                Loader { id: emcVideoMenuLoader }
+                EmcMenu {
+                    id: emcVideoMenu
+                    parent: emcVideoBtn
+                    model: VideoMenuModel
+                }
                 KeyNavigation.right: emcSubsBtn
             }
             EmcButton {  // menu: Subtitles
                 id: emcSubsBtn
                 label: EmcBackend.i18n("Subtitles")
                 onEmcButtonClicked: {
-                    emcSubsMenuLoader.setSource("EmcMenu.qml",
-                                                 { model: SubsMenuModel,
-                                                   parent: emcSubsBtn })
+                    SubsMenuModel.populate()
+                    emcSubsMenu.open()
                 }
                 Loader { id: emcSubsMenuLoader }
+                EmcMenu {
+                    id: emcSubsMenu
+                    parent: emcSubsBtn
+                    model: SubsMenuModel
+                }
             }
         }
 //        DebugRect{anchors.fill: emcControlsButtonRow}
