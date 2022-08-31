@@ -158,30 +158,27 @@ class VideoMenuModel(MenuModelBase):
 class SubsMenuModel(MenuModelBase):
     def populate(self):
         self.beginResetModel()
-        self.items = []
-        for t in mediaplayer.subtitle_tracks_get():
+        tracks = mediaplayer.subtitle_tracks_get()
+        self.items = [
+            MenuItem(_('No subtitles'), checkable=True,
+                     checked=mediaplayer.subtitle_track_get() == -1,
+                     callback=self.disable_subs),
+        ]
+        if len(tracks) > 0:
+            self.items.append(MenuItem(is_separator=True))
+        for t in tracks:
             self.items.append(MenuItem('%s - %s' % (t.name, t.lang),
                                        checkable=True, checked=t.active,
                                        callback=self.change_track, track=t))
-        # self.items.append(MenuItem(is_separator=True))
-        # self.items.append(MenuItem('Disabled', disabled=True))
-        # self.items.append(MenuItem('separator'))
-        # self.items.append(MenuItem(is_separator=True))
-        # self.items.append(MenuItem('Checked', checkable=True, checked=True))
-        # self.items.append(MenuItem('Checkable', checkable=True, checked=False))
-        # self.items.append(MenuItem(is_separator=True))
-        # self.items.append(MenuItem(is_separator=True))
-        # self.items.append(MenuItem(is_separator=True))
-        # self.items.append(MenuItem('Home', icon='icon/home'))
-        # self.items.append(MenuItem('Disabled', disabled=True))
-        # self.items.append(MenuItem('Disabled', disabled=True))
-        # self.items.append(MenuItem('Disabled', disabled=True))
-        # self.items.append(MenuItem(is_separator=True))
         self.endResetModel()
 
     @staticmethod
     def change_track(_item, track):
         mediaplayer.subtitle_track_set(track.idx)
+
+    @staticmethod
+    def disable_subs(_item):
+        mediaplayer.subtitle_track_set(-1)
 
 
 class EmcVideoPlayer_Qt(EmcVideoPlayer):

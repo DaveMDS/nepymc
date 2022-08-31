@@ -450,6 +450,10 @@ def audio_tracks_get():
         return _player.audio_tracks
 
 
+def audio_track_get() -> int:
+    return _player.selected_audio_track if _player else -1
+
+
 def audio_track_set(idx: int):
     if _player:
         _player.selected_audio_track = idx
@@ -460,6 +464,10 @@ def video_tracks_get():
         return _player.video_tracks
 
 
+def video_track_get() -> int:
+    return _player.selected_video_track if _player else -1
+
+
 def video_track_set(idx: int):
     if _player:
         _player.selected_video_track = idx
@@ -468,6 +476,10 @@ def video_track_set(idx: int):
 def subtitle_tracks_get():
     if _player:
         return _player.subtitle_tracks
+
+
+def subtitle_track_get() -> int:
+    return _player.selected_subtitle_track if _player else -1
 
 
 def subtitle_track_set(idx: int):
